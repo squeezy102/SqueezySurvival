@@ -11,7 +11,7 @@ Tolerance is tracked at two levels (resolves OQ-022):
 - **Food tolerance:** one meter per individual food (apple, banana, coconut).
 - **Category tolerance:** one meter per food category (Fruit, Meat, Fish).
 
-Every serving lowers both: its own food's meter sharply, and its category's meter by a fraction of that. Meters run from 100% (happy to eat it) to 0% (cannot stomach it), read higher-is-better like every other bar (resolves OQ-021), and recover over time.
+Every serving lowers both: its own food's meter sharply, and its category's meter by a fraction of that. Meters run from 100% (happy to eat it) to 0% (cannot stomach it) and read higher-is-better like every other bar (resolves OQ-021). They recover over time (fully within a week) and slightly whenever the survivor eats something else.
 
 - Five apples in a row: apple tolerance drops sharply; Fruit tolerance drops only a little.
 - Five each of apples, bananas and grapes: each food drops sharply, and together they drive Fruit tolerance down. Persisting locks out the whole category until it recovers.
@@ -39,7 +39,8 @@ Illness is specified in its own system (planned).
 |---|---|---|
 | Tolerance lost per serving | Set per food; coconut -15% | The 4th coconut in a row brings tolerance to the diminishing threshold. |
 | Category tolerance lost per serving | One third of the food's loss; coconut -5% Fruit | 5 coconuts: coconut 25%, Fruit 75%. 5 each of three fruits (15 servings): Fruit 25%. About 20 fruit servings in a row lock out Fruit. |
-| Tolerance recovery | +1% per hour for every food and category | From 0% to 100% in a little over 4 days; from 50% in about 2 days. |
+| Tolerance recovery over time | 100% per week: about +0.6% per hour (100 / 168) for every food and category | A food or category at 0% fully recovers after a week without eating it; from 50%, in about 3.5 days. |
+| Tolerance recovery from variety | Each serving restores +1% to every other food and every other category | Eating a varied diet speeds recovery, but less than time: six varied servings a day add about 6%, against about 14% a day from time. |
 | Food restored multiplier | 100% above 50% tolerance; falls linearly from 100% at 50% tolerance to 25% at 0% | `multiplier = 0.25 + 0.75 x tolerance / 50` for tolerance from 0 to 50. |
 | Contentment penalty | Set per food; grows as tolerance falls | Values set during balancing. |
 | Sanity penalty | Set per food; grows as tolerance falls | Values set during balancing. |
