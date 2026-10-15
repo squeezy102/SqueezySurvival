@@ -1,0 +1,34 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SqueezySurvival.Launcher.Core", "SqueezySurvival.Launcher.Core\SqueezySurvival.Launcher.Core.csproj", "{3A746235-ECA8-586F-B292-7DAF8704E968}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SqueezySurvival.Launcher", "SqueezySurvival.Launcher\SqueezySurvival.Launcher.csproj", "{63BF6AC5-CD61-50E1-B88A-3EFA9C069B5F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SqueezySurvival.Launcher.Tests", "SqueezySurvival.Launcher.Tests\SqueezySurvival.Launcher.Tests.csproj", "{203B3ABE-239B-5022-8B7C-51DEC7F5AC5E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3A746235-ECA8-586F-B292-7DAF8704E968}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A746235-ECA8-586F-B292-7DAF8704E968}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A746235-ECA8-586F-B292-7DAF8704E968}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A746235-ECA8-586F-B292-7DAF8704E968}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63BF6AC5-CD61-50E1-B88A-3EFA9C069B5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63BF6AC5-CD61-50E1-B88A-3EFA9C069B5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63BF6AC5-CD61-50E1-B88A-3EFA9C069B5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63BF6AC5-CD61-50E1-B88A-3EFA9C069B5F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{203B3ABE-239B-5022-8B7C-51DEC7F5AC5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{203B3ABE-239B-5022-8B7C-51DEC7F5AC5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{203B3ABE-239B-5022-8B7C-51DEC7F5AC5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{203B3ABE-239B-5022-8B7C-51DEC7F5AC5E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

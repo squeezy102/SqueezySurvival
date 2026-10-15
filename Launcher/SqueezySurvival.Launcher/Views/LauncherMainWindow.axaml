@@ -1,0 +1,62 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:SqueezySurvival.Launcher.Core.ViewModels"
+        x:Class="SqueezySurvival.Launcher.Views.LauncherMainWindow"
+        x:DataType="vm:LauncherMainWindowViewModel"
+        Title="SqueezySurvival"
+        Width="960"
+        Height="540"
+        CanResize="False"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <!-- Placeholder background (sky, sea, sand). Replaced by artwork; see Docs/Design/Launcher.md. -->
+        <Rectangle>
+            <Rectangle.Fill>
+                <LinearGradientBrush StartPoint="0%,0%" EndPoint="0%,100%">
+                    <GradientStop Offset="0.00" Color="#FF1E3C5A" />
+                    <GradientStop Offset="0.50" Color="#FFF0A868" />
+                    <GradientStop Offset="0.51" Color="#FF1F6F94" />
+                    <GradientStop Offset="0.75" Color="#FF3D9DB3" />
+                    <GradientStop Offset="0.76" Color="#FFE6D3A3" />
+                    <GradientStop Offset="1.00" Color="#FFCDB57E" />
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+
+        <Border VerticalAlignment="Bottom" Background="#B3000000" Padding="24,16">
+            <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto">
+                <TextBlock Grid.Row="0"
+                           Grid.ColumnSpan="3"
+                           Margin="0,0,0,8"
+                           Text="{Binding StatusText}"
+                           IsVisible="{Binding StatusText, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+
+                <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" Spacing="12">
+                    <Button Classes="accent" MinWidth="120" Content="Play" Command="{Binding PlayCommand}" />
+                    <Button Command="{Binding CheckForUpdateCommand}">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBlock VerticalAlignment="Center" Text="Check for update" />
+                            <Border Width="18"
+                                    Height="18"
+                                    CornerRadius="9"
+                                    Background="#FFE5484D"
+                                    IsVisible="{Binding IsUpdateAvailable}"
+                                    ToolTip.Tip="{Binding UpdateIndicatorTooltip}">
+                                <TextBlock HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           FontWeight="Bold"
+                                           Foreground="White"
+                                           Text="!" />
+                            </Border>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+
+                <TextBlock Grid.Row="1"
+                           Grid.Column="2"
+                           VerticalAlignment="Center"
+                           Text="{Binding InstalledVersionText}" />
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

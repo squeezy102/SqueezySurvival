@@ -1,0 +1,16 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="SqueezySurvival.Launcher.Views.PromptDialogWindow"
+        Width="440"
+        SizeToContent="Height"
+        CanResize="False"
+        ShowInTaskbar="False"
+        WindowStartupLocation="CenterOwner">
+    <StackPanel Margin="24" Spacing="20">
+        <TextBlock x:Name="MessageTextBlock" TextWrapping="Wrap" />
+        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Spacing="12">
+            <Button x:Name="ConfirmButton" Classes="accent" MinWidth="88" IsDefault="True" Click="OnConfirmClicked" />
+            <Button x:Name="CancelButton" MinWidth="88" IsCancel="True" Click="OnCancelClicked" />
+        </StackPanel>
+    </StackPanel>
+</Window>

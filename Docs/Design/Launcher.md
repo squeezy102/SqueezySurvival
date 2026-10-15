@@ -21,7 +21,8 @@ The launcher is what players open from the desktop shortcut. It shows the instal
 | Background artwork | Fills the window | Placeholder art during development. Source and license recorded when added. |
 | Play button | Bottom left | Primary action. |
 | Check for update button | Bottom left, right of Play | Shows an update indicator when a newer version is known. |
-| Installed version | Bottom right | Format `v{MAJOR}.{MINOR}.{PATCH}`. |
+| Status line | Above the buttons | Shows checking, download percentage and installing progress. Hidden when idle. |
+| Installed version | Bottom right | Format `v{MAJOR}.{MINOR}.{PATCH}`. Shows "Development build" when run from source. |
 
 Window: fixed size, not resizable, centered on screen, titled "SqueezySurvival".
 
@@ -59,7 +60,7 @@ On **Update**:
 1. Disable Play and Check for update.
 2. Show download progress as a percentage.
 3. When the download completes, apply the update and restart the launcher on the new version.
-4. If the download fails, show an error, re-enable the buttons, and leave the installed version untouched.
+4. If the download fails, show "The update couldn't be downloaded. Your installed version has not changed. Check your internet connection and try again.", re-enable the buttons, and leave the installed version untouched.
 
 ## States
 

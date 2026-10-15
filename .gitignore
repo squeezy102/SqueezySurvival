@@ -115,3 +115,9 @@ InitTestScene*.unity*
 
 # Local output from developer tool scripts
 /[Tt]ools/[Oo]utput/
+
+# Launcher: keep its solution and project files (excluded above for Unity-generated files)
+!/Launcher/*.sln
+!/Launcher/**/*.csproj
+/Launcher/**/bin/
+/Launcher/**/obj/
