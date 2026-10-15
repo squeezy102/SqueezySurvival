@@ -4,6 +4,7 @@ Unresolved design decisions. When one is resolved, record the answer in the owni
 
 | ID | Area | Question | Owner doc |
 |---|---|---|---|
+| OQ-022 | Food | Is tolerance tracked per individual food (categories only group the display) or per category (eating mango also lowers coconut, because both are fruit)? | Systems/Food |
 | OQ-004 | Stats | Stat ranges, decay rates per time unit, thresholds and their effects. | Systems/SurvivalStats |
 | OQ-005 | Research | Does research progress in the background while other actions are performed, or does it occupy the survivor's time? | Systems/Research (planned) |
 | OQ-006 | Research | Can multiple research items progress at once, or is there a queue? | Systems/Research (planned) |

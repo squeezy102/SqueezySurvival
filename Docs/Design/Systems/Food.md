@@ -35,9 +35,12 @@ Illness is specified in its own system (planned).
 
 ### Display
 
-**Food Tolerance window.** Clicking the Food bar opens a window listing every food's tolerance meter.
+**Food Tolerance window.** Clicking the Food bar opens a window of tolerance meters grouped by food category.
 
-- Ordered from lowest tolerance to highest, so the foods to avoid are at the top.
+- Categories: Meat, Fish, Fruit, Vegetables, Dairy, and others as foods are added. The category list is data.
+- Each category expands to list its individual foods.
+- Only foods the survivor has discovered or eaten are listed; categories with none are hidden ([You only know what you know](../GameDesignDocument.md#pillars)).
+- Ordered from lowest tolerance to highest, so the foods to avoid are at the top. Whether tolerance is tracked per food or per category: [OQ-022](../OpenQuestions.md).
 - Hovering a meter shows its exact value and current penalties.
 - A side panel explains the thresholds (the table above) in plain language.
 - Wherever the player chooses food, its tolerance and current effect are stated in words, for example "Getting tired of coconuts: restores 70%".

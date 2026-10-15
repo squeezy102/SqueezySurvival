@@ -23,6 +23,7 @@ Presentation is pictures, text, windows and progress bars. Depth comes from syst
 1. **Everything is measured in time units.** Time advances only through actions. Every action declares its duration. See [Time](Systems/Time.md).
 2. **Every action costs something.** Time at minimum; often also energy, stats, tool durability or materials. There are no free actions.
 3. **Discovery drives progression.** Finding a resource for the first time unlocks research that uses it.
+   - **You only know what you know.** The game never shows information about anything the survivor has not encountered: no hidden foods in lists, no undiscovered resources in tables, no unknown recipes. Knowledge is earned through play and appears as it is gained.
 4. **Clarity over clutter.** The UI must make state, costs and consequences obvious. This is the primary differentiator from our influences.
    - Bars and meters always read "higher is better".
    - Iconography shows meaning everywhere, for example end-cap icons on every bar showing what empty and full mean. The player should never have to wonder what is good and what is bad.
