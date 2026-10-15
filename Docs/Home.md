@@ -28,7 +28,7 @@ The single source of truth for the design, engineering and decisions behind Sque
 
 ## Documentation policy
 
-1. **Docs first.** A system is designed and documented before it is implemented.
+1. **Docs first.** A system is designed and documented before it is implemented. The project is currently in the design phase: no gameplay code until the core designs are concrete.
 2. **Docs are part of done.** A change is not complete until every affected document is updated in the same commit.
 3. **One home per fact.** Each rule, formula or value is defined in exactly one document and linked from elsewhere, never copied.
 4. **Decisions are recorded.** Any significant or hard-to-reverse choice gets an ADR.
