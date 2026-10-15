@@ -12,6 +12,7 @@ The single source of truth for the design, engineering and decisions behind Sque
 - [Coding Standards](Engineering/CodingStandards.md) - testability, naming, architecture, warnings policy.
 - [Project Setup](Engineering/ProjectSetup.md) - editor version, packages, folder layout.
 - [Source Control](Engineering/SourceControl.md) - branching, commits, Git LFS.
+- [Release Pipeline](Engineering/ReleasePipeline.md) - building, packaging and publishing player builds.
 - Spikes - time-boxed experiments that answer a technical question:
   - [SPIKE-001: Velopack with a Unity player](Engineering/Spikes/SPIKE-001-Velopack-With-Unity.md)
 
@@ -43,6 +44,7 @@ Docs/
     CodingStandards.md
     ProjectSetup.md
     SourceControl.md
+    ReleasePipeline.md
     Spikes/
       SPIKE-NNN-*.md
   Decisions/

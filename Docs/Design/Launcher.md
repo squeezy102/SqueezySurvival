@@ -76,6 +76,5 @@ On **Update**:
 ## Out of scope
 
 - Updating from inside the game. The launcher is the only update path (resolves OQ-015).
-
 - News, patch notes, settings, accounts.
 - Animation.

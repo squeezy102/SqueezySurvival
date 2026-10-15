@@ -30,7 +30,14 @@ Package choices and rationale: [ADR-0003](../Decisions/ADR-0003-Package-Baseline
 | `Library/`, `Temp/`, `Logs/`, `UserSettings/` | Generated locally by Unity | No |
 | `*.sln`, `*.csproj` | Generated IDE files | No |
 
-The layout inside `Assets/` is defined when the first code and content are added.
+### Inside `Assets/`
+
+| Path | Contents | Assembly |
+|---|---|---|
+| `Assets/SqueezySurvival/Editor/` | Editor-only tooling, such as the release build | `SqueezySurvival.Editor` |
+| `Assets/SqueezySurvival/Tests/Editor/` | Edit Mode tests | `SqueezySurvival.Editor.Tests` |
+
+All project code lives under `Assets/SqueezySurvival/` in assembly definitions, never in the default `Assembly-CSharp`. Runtime assemblies are added with the first gameplay code.
 
 ## First-time setup
 
@@ -48,3 +55,4 @@ Machine setup and diagnostics are scripted in `Tools/` so every step is repeatab
 | `Check-DevEnvironment.cmd` | Reports Windows, .NET SDK, Git, Git LFS and winget versions. |
 | `Build-Launcher.cmd` | Builds the launcher solution with warnings as errors and runs its unit tests. |
 | `Run-Launcher.cmd` | Runs the launcher from source for visual checks. Update actions are disabled when not installed. |
+| `Publish-Release.cmd` | Builds, tests, packages and publishes a release. See [Release Pipeline](ReleasePipeline.md). |
