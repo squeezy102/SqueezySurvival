@@ -7,6 +7,7 @@ Canonical terms. Code, UI text and documents use these words with these meanings
 | Action | Anything the survivor does. Has a duration, costs, requirements, outcomes and risks. See [Actions](Design/Systems/Actions.md). |
 | Biome | A category of environment (for example Beach) that defines which resources can be found. |
 | Cost | What an action consumes: time, and optionally stats, materials or tool durability. |
+| Food satiety | A per-food meter (0-100%) of how sick the survivor is of that food. High satiety reduces what the food restores and causes penalties. See [Food](Design/Systems/Food.md). |
 | Ground pool | The set of resources unearthed in a zone and lying on the ground there. Not part of the inventory. |
 | Inventory | Items the survivor is carrying. |
 | Light level | Bright, Dim or Dark. Derived from the day phase and light sources; gates and penalizes actions. See [Actions](Design/Systems/Actions.md#light-level). |
