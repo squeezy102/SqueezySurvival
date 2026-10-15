@@ -34,4 +34,4 @@ Work is committed to `main` while the project is in pre-production. A branching 
 
 ## Versioning
 
-Releases follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) and are tagged `vMAJOR.MINOR.PATCH`. Pre-1.0 versions (`0.x.y`) signal that save compatibility and features may change.
+Releases follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) and are tagged `vMAJOR.MINOR.PATCH`. The current version is the `VERSION` file at the repository root. Pre-1.0 versions (`0.x.y`) signal that save compatibility and features may change.

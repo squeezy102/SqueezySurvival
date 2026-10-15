@@ -5,12 +5,10 @@
 .DESCRIPTION
     Implements Docs/Engineering/ReleasePipeline.md. Any failing step stops the release.
 .PARAMETER Version
-    Release version in MAJOR.MINOR.PATCH form.
+    Release version in MAJOR.MINOR.PATCH form. Defaults to the contents of the VERSION file.
 #>
 [CmdletBinding()]
 param(
-    [Parameter(Mandatory = $true)]
-    [ValidatePattern('^\d+\.\d+\.\d+$')]
     [string] $Version
 )
 
@@ -18,6 +16,13 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
 $RepositoryRoot = Split-Path -Parent $PSScriptRoot
+
+if (-not $Version) {
+    $Version = (Get-Content -LiteralPath (Join-Path $RepositoryRoot 'VERSION') -TotalCount 1).Trim()
+}
+if ($Version -notmatch '^\d+\.\d+\.\d+$') {
+    throw "Version must be MAJOR.MINOR.PATCH, but was '$Version'."
+}
 $OutputDirectory = Join-Path $PSScriptRoot 'Output'
 $PipelineLogFile = Join-Path $OutputDirectory 'Publish-Release.log'
 $UnityTestLogFile = Join-Path $OutputDirectory 'Unity-Tests.log'

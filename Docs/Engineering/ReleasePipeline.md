@@ -6,16 +6,17 @@ How a player build is produced and published. Decisions: [ADR-0004](../Decisions
 
 ## Usage
 
-1. Close the Unity Editor. Unity cannot build a project from the command line while the editor has it open.
-2. Commit all changes. The pipeline refuses to publish from a working tree with uncommitted changes.
-3. Double-click `Tools/Publish-Release.cmd` and enter the version, for example `0.0.2`.
-4. Read `Tools/Output/Publish-Release.log`.
+1. Set the new version in the `VERSION` file at the repository root and commit it. `VERSION` is the single source of truth for the release version.
+2. Close the Unity Editor. Unity cannot build a project from the command line while the editor has it open.
+3. Confirm the working tree is clean. The pipeline refuses to publish uncommitted changes.
+4. Double-click `Tools/Publish-Release.cmd`. It takes no input.
+5. Read `Tools/Output/Publish-Release.log`.
 
 ## Steps
 
 | # | Step | Tool | Fails the release when |
 |---|---|---|---|
-| 1 | Validate version (`MAJOR.MINOR.PATCH`) and token | PowerShell | Version malformed or token missing |
+| 1 | Read `VERSION`, validate it (`MAJOR.MINOR.PATCH`) and the token | PowerShell | Version malformed or token missing |
 | 2 | Verify the working tree is clean | `git status` | Uncommitted changes |
 | 3 | Build and test the launcher | `dotnet build`, `dotnet test` | Any warning, error or failing test |
 | 4 | Run Unity Edit Mode tests | Unity `-runTests` | Any failing test |
