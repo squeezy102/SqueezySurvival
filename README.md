@@ -6,7 +6,7 @@ A graphically basic, strategically deep, single-player survival game built in Un
 
 ## Play
 
-Distribution is in design. See [ADR-0004](Docs/Decisions/ADR-0004-Distribution-And-Self-Update.md).
+Player builds are published to the public [SqueezySurvival-Releases](https://github.com/squeezy102/SqueezySurvival-Releases) repository. Windows only at this stage. Distribution design: [ADR-0004](Docs/Decisions/ADR-0004-Distribution-And-Self-Update.md).
 
 ## Documentation
 

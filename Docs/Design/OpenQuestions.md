@@ -15,5 +15,5 @@ Unresolved design decisions. When one is resolved, record the answer in the owni
 | OQ-009 | Weather | Which weather states exist and how do they affect stats and actions? | Systems/Weather (planned) |
 | OQ-010 | Failure | What ends a run (death conditions) and what persists between runs? | GameDesignDocument |
 | OQ-011 | Saving | Save model: manual, autosave, single slot, or permadeath? | GameDesignDocument |
-| OQ-012 | Distribution | Source repo private with a public releases-only repo, or source public? | ADR-0004 |
-| OQ-013 | Distribution | Target platforms for shared builds: Windows only, or also macOS? | ADR-0004 |
+
+Resolved: OQ-012 and OQ-013 (see [ADR-0004](../Decisions/ADR-0004-Distribution-And-Self-Update.md)). IDs are never reused.

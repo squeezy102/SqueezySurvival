@@ -15,7 +15,10 @@ A shareable build is a primary, non-negotiable deliverable from the first build 
 
 | Concern | Choice |
 |---|---|
-| Hosting | GitHub Releases. Build output is never committed to the source repository. |
+| Source repository | `squeezy102/SqueezySurvival`, private. |
+| Releases repository | `squeezy102/SqueezySurvival-Releases`, public. Contains only a player-facing README and GitHub Releases with build artifacts. No source code. |
+| Hosting | GitHub Releases on the releases repository. Build output is never committed to either repository. |
+| Platforms | Windows (x64) only for now. Other platforms are not excluded; see Portability. |
 | Packaging and updates | [Velopack](https://docs.velopack.io/) (open source). Produces a per-user `Setup.exe` that installs without admin rights and creates a desktop shortcut, plus a portable zip. Provides update checks and delta updates. |
 | In-game update | On launch the game checks for a newer release and shows an update button. Updating downloads, applies and restarts. |
 | Build trigger | An editor menu command that builds, versions, packages and publishes. Automated builds on GitHub Actions are deferred; see Consequences. |
@@ -29,11 +32,23 @@ A shareable build is a primary, non-negotiable deliverable from the first build 
 
 The ADR is accepted only when this test passes.
 
+## Portability
+
+Windows is the only shipped platform, but nothing in the design is Windows-specific outside a replaceable boundary:
+
+- Game code depends on an update-service interface, never on Velopack or Windows APIs directly. Each platform supplies its own implementation.
+- The build pipeline takes the target platform as a parameter rather than hard-coding Windows.
+- Velopack also supports macOS and Linux, so a port would reuse the same release flow. macOS additionally requires a paid Apple developer account for signing and notarization.
+
 ## Open items
 
-- **Repository visibility ([OQ-012](../Design/OpenQuestions.md)).** The source repository is private, so its releases are not downloadable by others. Options: a public releases-only repository, or a public source repository.
-- **Platforms ([OQ-013](../Design/OpenQuestions.md)).** Windows only, or also macOS.
 - **Velopack with Unity.** Velopack targets .NET applications. Using it with a Unity player executable must be proven by a spike before this ADR is accepted.
+- **Publishing credentials.** Publishing to the releases repository requires a GitHub token on the build machine, scoped to that repository only, and never committed.
+
+## Resolved
+
+- [OQ-012](../Design/OpenQuestions.md): source private, releases public in a separate repository.
+- [OQ-013](../Design/OpenQuestions.md): Windows only for now, designed for portability.
 
 ## Alternatives considered
 
