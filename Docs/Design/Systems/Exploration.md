@@ -14,7 +14,7 @@ Exploring a zone is how the survivor finds resources, features and the way to ot
 Exploration combines two things:
 
 1. **Progress:** each zone has an exploration percentage. Exploring raises it, uncovering the zone's fixed features. Significant discoveries happen at progress milestones.
-2. **Finds:** every explore also draws loose items from the zone's find pool. Finds continue after the zone is fully explored.
+2. **Finds:** every explore also draws loose items from the zone's find pool. Exploring a fully explored zone still draws finds, indefinitely: loose items never run out.
 
 ## First explores are scripted
 
