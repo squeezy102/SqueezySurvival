@@ -21,6 +21,8 @@ Time is the game's core currency ([Pillar 1](../GameDesignDocument.md#pillars)).
 | Nap | 240 TU | 4 hours |
 | Sleep | 480 TU | 8 hours |
 
+Wait and Rest are always available. Nap and Sleep are unavailable while any survival stat is dangerous, and a stat becoming dangerous ends them early (resolves OQ-018). See [Actions: condition gates](Actions.md#condition-gates).
+
 What Rest, Nap and Sleep restore, and how they differ beyond duration, depends on survival stats ([OQ-004](../OpenQuestions.md)) and is specified there.
 
 ## Rates
@@ -61,7 +63,7 @@ Direction of effect only. Each owning system specifies its own values.
 | Affected | Dawn | Morning | Midday | Afternoon | Dusk | Night | Owner |
 |---|---|---|---|---|---|---|---|
 | Temperature | Coldest, rising | Warming | Hottest | Hot, easing | Cooling | Cold | Weather (planned) |
-| Visibility | Reduced | Full | Full | Full | Reduced | Low | Exploration (planned) |
+| Light level | Dim | Bright | Bright | Bright | Dim | Dark | [Actions](Actions.md#light-level) |
 | Active wildlife | Crepuscular | Diurnal | Diurnal | Diurnal | Crepuscular | Nocturnal | Wildlife (planned) |
 | Fishing catches | Phase-specific species tables | | | | | | Fishing (planned) |
 | Foraging | Some plants available only in certain phases | | | | | | Foraging (planned) |
@@ -79,6 +81,3 @@ Crepuscular animals are active at dawn and dusk.
 - Game time is stored as a whole number of TU elapsed since the start of the run. Clock and day are derived from it, never stored separately.
 - Time advances only through one simulation entry point, so every time-dependent system sees the same duration in the same order. This keeps the simulation deterministic and unit testable.
 
-## Open questions
-
-[OQ-018](../OpenQuestions.md).

@@ -7,7 +7,8 @@ The single source of truth for the design, engineering and decisions behind Sque
 - [Open Questions](Design/OpenQuestions.md) - unresolved design decisions.
 - [Launcher](Design/Launcher.md) - launcher layout, behavior and states.
 - Systems:
-  - [Time](Design/Systems/Time.md) - time units, passing time, clock.
+  - [Time](Design/Systems/Time.md) - time units, passing time, day phases.
+  - [Actions](Design/Systems/Actions.md) - action anatomy, availability, light level, condition gates.
 - [Glossary](Glossary.md) - canonical game terms.
 
 ## Engineering
@@ -43,6 +44,7 @@ Docs/
     Launcher.md
     Systems/
       Time.md
+      Actions.md
     OpenQuestions.md
   Engineering/
     CodingStandards.md
