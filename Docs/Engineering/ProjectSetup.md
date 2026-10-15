@@ -55,4 +55,5 @@ Machine setup and diagnostics are scripted in `Tools/` so every step is repeatab
 | `Check-DevEnvironment.cmd` | Reports Windows, .NET SDK, Git, Git LFS and winget versions. |
 | `Build-Launcher.cmd` | Builds the launcher solution with warnings as errors and runs its unit tests. |
 | `Run-Launcher.cmd` | Runs the launcher from source for visual checks. Update actions are disabled when not installed. |
+| `Set-ReleaseToken.cmd` | Stores the GitHub release token for the current Windows user, with hidden input. |
 | `Publish-Release.cmd` | Builds, tests, packages and publishes a release. See [Release Pipeline](ReleasePipeline.md). |

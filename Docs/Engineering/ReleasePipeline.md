@@ -58,6 +58,7 @@ Publishing needs a GitHub fine-grained personal access token:
 | Repository access | Only `squeezy102/SqueezySurvival-Releases` |
 | Permissions | Contents: Read and write ([GitHub REST: create a release](https://docs.github.com/en/rest/releases/releases#create-a-release)) |
 | Storage | Windows user environment variable `SQUEEZYSURVIVAL_RELEASES_TOKEN`. Never committed. |
+| Setup | Run `Tools/Set-ReleaseToken.cmd` and paste the token at the hidden prompt. |
 
 The script passes the token to `vpk` through the `VPK_TOKEN` environment variable of its own process, so it never appears on a command line or in logs. `vpk` reads any option from a `VPK_`-prefixed environment variable (Velopack source, `BaseCommand.cs`).
 
