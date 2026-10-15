@@ -37,6 +37,37 @@ Rates that change over time (stat decay, research progress, weather effects) are
 
 Indicative only; each action's cost is set in its own specification.
 
+## Start of a run
+
+A run starts on **Day 1 at 6:00 AM**, during Dawn: the survivor wakes on the beach with a full day ahead (resolves OQ-016).
+
+## Day phases
+
+The day is divided into six phases. Other systems read the current phase; none hard-codes clock times. Phase boundaries are data, so they can be tuned without code changes (resolves OQ-017).
+
+| Phase | Starts | Ends | Length |
+|---|---|---|---|
+| Dawn | 5:00 AM | 7:00 AM | 2 hr |
+| Morning | 7:00 AM | 11:00 AM | 4 hr |
+| Midday | 11:00 AM | 2:00 PM | 3 hr |
+| Afternoon | 2:00 PM | 6:00 PM | 4 hr |
+| Dusk | 6:00 PM | 10:00 PM | 4 hr |
+| Night | 10:00 PM | 5:00 AM | 7 hr |
+
+### What phases affect
+
+Direction of effect only. Each owning system specifies its own values.
+
+| Affected | Dawn | Morning | Midday | Afternoon | Dusk | Night | Owner |
+|---|---|---|---|---|---|---|---|
+| Temperature | Coldest, rising | Warming | Hottest | Hot, easing | Cooling | Cold | Weather (planned) |
+| Visibility | Reduced | Full | Full | Full | Reduced | Low | Exploration (planned) |
+| Active wildlife | Crepuscular | Diurnal | Diurnal | Diurnal | Crepuscular | Nocturnal | Wildlife (planned) |
+| Fishing catches | Phase-specific species tables | | | | | | Fishing (planned) |
+| Foraging | Some plants available only in certain phases | | | | | | Foraging (planned) |
+
+Crepuscular animals are active at dawn and dusk.
+
 ## Display
 
 - Clock in 12-hour format with AM/PM (for example `7:45 AM`).
@@ -50,4 +81,4 @@ Indicative only; each action's cost is set in its own specification.
 
 ## Open questions
 
-[OQ-016](../OpenQuestions.md), [OQ-017](../OpenQuestions.md), [OQ-018](../OpenQuestions.md).
+[OQ-018](../OpenQuestions.md).
