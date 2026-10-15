@@ -24,6 +24,8 @@ Presentation is pictures, text, windows and progress bars. Depth comes from syst
 2. **Every action costs something.** Time at minimum; often also energy, stats, tool durability or materials. There are no free actions.
 3. **Discovery drives progression.** Finding a resource for the first time unlocks research that uses it.
 4. **Clarity over clutter.** The UI must make state, costs and consequences obvious. This is the primary differentiator from our influences.
+   - Bars and meters always read "higher is better".
+   - Iconography shows meaning everywhere, for example end-cap icons on every bar showing what empty and full mean. The player should never have to wonder what is good and what is bad.
 
 ## Presentation
 
@@ -58,6 +60,8 @@ Assess state -> Choose action -> Pay cost (time + other) -> Resolve outcome
 ## Survivor
 
 ### Survival stats (concept)
+
+Specified in [Survival Stats](Systems/SurvivalStats.md). The table below is the original concept list.
 
 | Stat | Concept |
 |---|---|

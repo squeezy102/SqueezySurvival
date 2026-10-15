@@ -12,7 +12,8 @@ Canonical terms. Code, UI text and documents use these words with these meanings
 | Light level | Bright, Dim or Dark. Derived from the day phase and light sources; gates and penalizes actions. See [Actions](Design/Systems/Actions.md#light-level). |
 | Recipe | A definition of inputs, tools and time required to produce an item. |
 | Research | The passive, time-based process that turns a discovered recipe into a craftable one. |
-| Survival stat | A tracked condition of the survivor, such as Hunger or Thirst. |
+| Macro | Informal name for a survival stat. |
+| Survival stat | A core condition of the survivor shown as a bar where higher is always better, such as Food or Water. See [Survival Stats](Design/Systems/SurvivalStats.md). |
 | Day | 1,440 TU (24 hours of game time). |
 | Day phase | One of six named parts of the day (Dawn, Morning, Midday, Afternoon, Dusk, Night) that other systems use to vary behavior. See [Time](Design/Systems/Time.md). |
 | Time unit (TU) | The smallest unit of game time: 1 minute. See [Time](Design/Systems/Time.md). |

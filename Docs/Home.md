@@ -9,6 +9,7 @@ The single source of truth for the design, engineering and decisions behind Sque
 - Systems:
   - [Time](Design/Systems/Time.md) - time units, passing time, day phases.
   - [Actions](Design/Systems/Actions.md) - action anatomy, availability, light level, condition gates.
+  - [Survival Stats](Design/Systems/SurvivalStats.md) - macros, bar conventions, bands.
 - [Glossary](Glossary.md) - canonical game terms.
 
 ## Engineering
@@ -45,6 +46,7 @@ Docs/
     Systems/
       Time.md
       Actions.md
+      SurvivalStats.md
     OpenQuestions.md
   Engineering/
     CodingStandards.md
