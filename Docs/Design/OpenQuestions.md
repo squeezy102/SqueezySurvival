@@ -6,6 +6,7 @@ Unresolved design decisions. When one is resolved, record the answer in the owni
 |---|---|---|---|
 | OQ-003 | Stats | How do Hunger and Satiation differ? (For example: Hunger = nutrition need, Satiation = stomach fullness.) | Systems/SurvivalStats |
 | OQ-004 | Stats | Stat ranges, decay rates per time unit, thresholds and their effects. | Systems/SurvivalStats |
+| OQ-019 | Stats | How is body temperature displayed, given that both extremes are bad? Proposal: a centered bar with a cold icon left, a hot icon right and a highlighted comfort zone in the middle, as the one documented exception to "higher is better". | Systems/SurvivalStats |
 | OQ-005 | Research | Does research progress in the background while other actions are performed, or does it occupy the survivor's time? | Systems/Research (planned) |
 | OQ-006 | Research | Can multiple research items progress at once, or is there a queue? | Systems/Research (planned) |
 | OQ-007 | Exploration | Is exploration yield random, weighted by zone, or depleting over time? | Systems/Exploration (planned) |

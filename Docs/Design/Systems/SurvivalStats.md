@@ -16,10 +16,20 @@ Survival stats (also called **macros**) are the survivor's core conditions, each
 |---|---|---|---|
 | Food | Small stomach | Full stomach | Relationship to a separate satiation stat: [OQ-003](../OpenQuestions.md). |
 | Water | To be designed | To be designed | |
-| Rest | To be designed | To be designed | Filled by Rest, Nap and Sleep. |
+| Stamina | To be designed | To be designed | Short-term physical exertion. Drained by chaining physical actions; recovered by Wait and Rest. Low stamina makes the survivor tired. |
+| Wakefulness | To be designed | To be designed | Long-term need for sleep. Drained by time awake; restored by Nap and Sleep. Going too long without sleep causes sanity loss and other penalties. |
+| Body temperature | Cold icon | Hot icon | See [Body temperature](#body-temperature). |
 | Sanity | Swirl | Peace sign | Drained while any stat is dangerous ([Actions: condition gates](Actions.md#condition-gates)). |
 | Contentment | Frown | Smile | |
 | Cleanliness | To be designed | To be designed | Starts low: the survivor wakes filthy. |
+
+## Body temperature
+
+Body temperature is the one stat where the middle is best: too cold and too hot are both dangerous. It cannot follow "higher is better" ([OQ-019](../OpenQuestions.md)).
+
+- **Overheating:** demanding actions in high heat raise body temperature.
+- **Freezing:** staying sedentary in cold temperatures lowers it, and can kill.
+- Ambient temperature comes from the day phase and weather ([Time: day phases](Time.md#day-phases)).
 
 The stat list is not final. Names, icons, decay rates and effects are specified as each stat is designed.
 
@@ -39,4 +49,4 @@ Proposed values; not yet approved. Bands may differ per stat.
 
 ## Open questions
 
-[OQ-003](../OpenQuestions.md), [OQ-004](../OpenQuestions.md).
+[OQ-003](../OpenQuestions.md), [OQ-004](../OpenQuestions.md), [OQ-019](../OpenQuestions.md).
