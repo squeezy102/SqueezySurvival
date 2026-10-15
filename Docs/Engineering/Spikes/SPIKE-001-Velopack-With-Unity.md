@@ -33,12 +33,10 @@ SqueezySurvival (installed by Velopack)
 
 | Component | Responsibility |
 |---|---|
-| Launcher (.NET console or minimal window app) | Runs `VelopackApp.Build().Run()` first in `Main()`. Checks GitHub Releases for updates, downloads and applies them, then starts the Unity player and exits. |
-| Unity game | Knows nothing about Velopack. Shows its version. Reads the release feed to detect a newer version and, when the player chooses to update, starts the launcher in update mode and quits. |
+| Launcher (Avalonia app, [ADR-0005](../../Decisions/ADR-0005-Launcher-Technology.md)) | Runs `VelopackApp.Build().Run()` first in `Main()`. Checks GitHub Releases for updates, downloads and applies them, and starts the Unity player. UI and behavior: [Launcher](../../Design/Launcher.md). |
+| Unity game | Knows nothing about Velopack. |
 
 Benefits: Unity code stays engine-portable and IL2CPP-compatible; the update path is ordinary, documented Velopack usage; a future macOS or Linux port reuses the launcher pattern.
-
-The game-to-launcher update request is designed in a follow-up document before implementation.
 
 ## Questions
 
@@ -47,13 +45,10 @@ The game-to-launcher update request is designed in a follow-up document before i
 | Q1 | Can `vpk pack` package the launcher plus the Unity player folder, with the launcher as the main executable? | `Setup.exe` and feed produced without errors or warnings. |
 | Q2 | Does `Setup.exe` install per-user with no admin prompt, create a desktop shortcut and launch the game? | Verified on a clean Windows PC. |
 | Q3 | Does the launcher detect, download and apply a newer release and then start the new game version? | v0.0.1 updates to v0.0.2. |
-| Q4 | Can the game trigger an update through the launcher? | Update started from inside v0.0.1 results in v0.0.2 running. |
+| Q4 | Does the launcher's Check for update flow (indicator, prompt, progress, restart) behave as specified in [Launcher](../../Design/Launcher.md)? | All states in the Launcher state table observed. |
 | Q5 | Does uninstall remove the game and its shortcuts? | Nothing left except user data we choose to keep. |
 
-## Open research before implementation
-
-- Launcher publish mode: self-contained .NET versus Native AOT, judged on output size, startup time and Velopack compatibility.
-- Launcher user interface during download (console, minimal window, or none).
+Launcher technology and publish mode are decided in [ADR-0005](../../Decisions/ADR-0005-Launcher-Technology.md).
 
 ## Superseded approach
 
