@@ -35,7 +35,7 @@ Rates that change over time (stat decay, research progress, weather effects) are
 | Eat a coconut | 5 TU |
 | Break a rock | 10 TU |
 | Skin a fish | 15 TU |
-| Explore an area | 60 TU |
+| Explore | 15 TU |
 
 Indicative only; each action's cost is set in its own specification.
 

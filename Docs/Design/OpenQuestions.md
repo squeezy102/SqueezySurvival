@@ -7,7 +7,7 @@ Unresolved design decisions. When one is resolved, record the answer in the owni
 | OQ-004 | Stats | Stat ranges, decay rates per time unit, thresholds and their effects. | Systems/SurvivalStats |
 | OQ-005 | Research | Does research progress in the background while other actions are performed, or does it occupy the survivor's time? | Systems/Research (planned) |
 | OQ-006 | Research | Can multiple research items progress at once, or is there a queue? | Systems/Research (planned) |
-| OQ-023 | Exploration | How fast does progress rise? Proposal: about 10% per 60-minute explore, so the starting zone takes about 10 explores (10 hours) to map fully - roughly the first day and a half. | Systems/Exploration |
+| OQ-023 | Exploration | How fast does progress rise? Proposal: 5% per 15-minute explore, so the starting zone takes 20 explores (5 hours) to map fully, and the 25% milestone arrives right after the scripted first explores. | Systems/Exploration |
 | OQ-024 | Exploration | Do loose items and resource nodes run out, and do they come back (for example, the tide washes up new items each day)? | Systems/Exploration |
 | OQ-025 | Exploration | How does exploring work at Dawn, Dusk and Night (light level penalties, hazard and injury chances)? | Systems/Exploration |
 | OQ-008 | Zones | How large is the island at MVP: how many beach zones, and how are they connected? | Systems/World (planned) |

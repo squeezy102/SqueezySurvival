@@ -4,6 +4,11 @@
 
 Exploring a zone is how the survivor finds resources, features and the way to other zones (resolves OQ-007).
 
+## The Explore action
+
+- **Duration: 15 TU** (a short walk).
+- Exploring is always a worthwhile choice when the player has nothing better to do, and never carries a severe time cost.
+
 ## Model
 
 Exploration combines two things:
