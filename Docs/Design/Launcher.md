@@ -1,6 +1,6 @@
 # Launcher
 
-**Status:** Draft
+**Status:** Approved
 
 The launcher is what players open from the desktop shortcut. It shows the installed version, starts the game, and installs updates. Technology: [ADR-0005](../Decisions/ADR-0005-Launcher-Technology.md). Distribution: [ADR-0004](../Decisions/ADR-0004-Distribution-And-Self-Update.md).
 
@@ -42,7 +42,7 @@ Window: fixed size, not resizable, centered on screen, titled "SqueezySurvival".
 ### Play
 
 1. Start the installed game executable.
-2. Close the launcher. See [OQ-014](OpenQuestions.md).
+2. Close the launcher, so an update is never applied while game files are in use (resolves OQ-014).
 
 If the game executable is missing or fails to start, show an error message and keep the launcher open.
 
@@ -73,6 +73,8 @@ On **Update**:
 | Not installed (development run) | Enabled | Disabled | Hidden |
 
 ## Out of scope
+
+- Updating from inside the game. The launcher is the only update path (resolves OQ-015).
 
 - News, patch notes, settings, accounts.
 - Animation.

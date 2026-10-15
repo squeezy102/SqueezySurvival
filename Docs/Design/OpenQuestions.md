@@ -15,7 +15,5 @@ Unresolved design decisions. When one is resolved, record the answer in the owni
 | OQ-009 | Weather | Which weather states exist and how do they affect stats and actions? | Systems/Weather (planned) |
 | OQ-010 | Failure | What ends a run (death conditions) and what persists between runs? | GameDesignDocument |
 | OQ-011 | Saving | Save model: manual, autosave, single slot, or permadeath? | GameDesignDocument |
-| OQ-014 | Launcher | After Play, does the launcher close, minimize, or stay open? Recommendation: close, so updates are never attempted while game files are in use. | Launcher |
-| OQ-015 | Distribution | Is an update control also needed inside the game, or is the launcher the only place updates happen? | Launcher |
 
-Resolved: OQ-012 and OQ-013 (see [ADR-0004](../Decisions/ADR-0004-Distribution-And-Self-Update.md)). IDs are never reused.
+Resolved: OQ-012 and OQ-013 (see [ADR-0004](../Decisions/ADR-0004-Distribution-And-Self-Update.md)), OQ-014 and OQ-015 (see [Launcher](Launcher.md)). IDs are never reused.

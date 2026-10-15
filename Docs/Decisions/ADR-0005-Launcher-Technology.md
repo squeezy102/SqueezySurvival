@@ -1,6 +1,6 @@
 # ADR-0005: Launcher technology
 
-**Status:** Proposed
+**Status:** Accepted
 **Date:** 2026-10-15
 
 ## Context

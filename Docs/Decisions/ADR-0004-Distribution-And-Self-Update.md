@@ -9,7 +9,7 @@ A shareable build is a primary, non-negotiable deliverable from the first build 
 
 1. Friends and family download the game from GitHub.
 2. They double-click a desktop icon and the game opens, with no other installation steps or prerequisites.
-3. After the first download, updates are installed from the launcher with one click. Originally stated as an in-game update; see [OQ-015](../Design/OpenQuestions.md).
+3. After the first download, updates are installed from the launcher with one click. No update control exists inside the game (OQ-015).
 
 ## Proposed decision
 
@@ -21,7 +21,7 @@ A shareable build is a primary, non-negotiable deliverable from the first build 
 | Platforms | Windows (x64) only for now. Other platforms are not excluded; see Portability. |
 | Packaging and updates | [Velopack](https://docs.velopack.io/) (open source). Produces a per-user `Setup.exe` that installs without admin rights and creates a desktop shortcut, plus a portable zip. Provides update checks and delta updates. |
 | Launcher | A small .NET launcher is Velopack's main executable. It handles Velopack hooks and updates, then starts the Unity player. The Unity game has no Velopack dependency. Rationale and precedent: [SPIKE-001](../Engineering/Spikes/SPIKE-001-Velopack-With-Unity.md). |
-| Update flow | The launcher shows an indicator when a newer release exists and installs it on request. Specification: [Launcher](../Design/Launcher.md). Whether the game also offers updating is [OQ-015](../Design/OpenQuestions.md). |
+| Update flow | The launcher shows an indicator when a newer release exists and installs it on request. Specification: [Launcher](../Design/Launcher.md). |
 | Build trigger | An editor menu command that builds, versions, packages and publishes. Automated builds on GitHub Actions are deferred; see Consequences. |
 | Versioning | Semantic Versioning, shown on the main menu. |
 
