@@ -12,6 +12,6 @@ Canonical terms. Code, UI text and documents use these words with these meanings
 | Recipe | A definition of inputs, tools and time required to produce an item. |
 | Research | The passive, time-based process that turns a discovered recipe into a craftable one. |
 | Survival stat | A tracked condition of the survivor, such as Hunger or Thirst. |
-| Day | 96 TU (24 hours of game time). |
-| Time unit (TU) | The smallest unit of game time: 15 minutes. See [Time](Design/Systems/Time.md). |
+| Day | 1,440 TU (24 hours of game time). |
+| Time unit (TU) | The smallest unit of game time: 1 minute. See [Time](Design/Systems/Time.md). |
 | Zone | A discrete location belonging to a biome, connected to other zones. |

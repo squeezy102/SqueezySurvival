@@ -7,21 +7,35 @@ Time is the game's core currency ([Pillar 1](../GameDesignDocument.md#pillars)).
 ## Rules
 
 1. **Time advances only through player actions.** Nothing happens between actions. There is no real-time clock.
-2. **The time unit (TU) is 15 minutes of game time.** It is the smallest unit of time; no duration is fractional.
+2. **The time unit (TU) is 1 minute of game time.** It is the smallest unit of time; no duration is fractional. Minute resolution lets quick actions (drinking, eating, breaking a rock) cost realistically little without being free.
 3. **Every action costs at least 1 TU** ([Pillar 2](../GameDesignDocument.md#pillars)).
-4. **A day is 96 TU** (24 hours x 4 TU per hour).
+4. **A day is 1,440 TU** (24 hours x 60 minutes).
 5. **When an action resolves, all time-dependent systems advance by its full duration** (stat changes, research progress, weather).
 
 ## Passing time deliberately
 
 | Action | Duration | Game time |
 |---|---|---|
-| Wait | 1 TU | 15 minutes |
-| Rest | 4 TU | 1 hour |
-| Nap | 16 TU | 4 hours |
-| Sleep | 32 TU | 8 hours |
+| Wait | 15 TU | 15 minutes |
+| Rest | 60 TU | 1 hour |
+| Nap | 240 TU | 4 hours |
+| Sleep | 480 TU | 8 hours |
 
 What Rest, Nap and Sleep restore, and how they differ beyond duration, depends on survival stats ([OQ-004](../OpenQuestions.md)) and is specified there.
+
+## Rates
+
+Rates that change over time (stat decay, research progress, weather effects) are authored per hour, the unit designers reason in, and applied for the exact minutes an action takes. Values that can change by less than one whole point per minute are stored with fractional precision.
+
+| Example action | Indicative cost |
+|---|---|
+| Drink | 1 TU |
+| Eat a coconut | 5 TU |
+| Break a rock | 10 TU |
+| Skin a fish | 15 TU |
+| Explore an area | 60 TU |
+
+Indicative only; each action's cost is set in its own specification.
 
 ## Display
 
