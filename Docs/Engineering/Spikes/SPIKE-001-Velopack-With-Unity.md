@@ -1,49 +1,63 @@
 # SPIKE-001: Velopack with a Unity player
 
-**Status:** Planned
+**Status:** Revised (launcher approach)
 **Decides:** [ADR-0004](../../Decisions/ADR-0004-Distribution-And-Self-Update.md)
 
 ## Goal
 
-Prove or disprove that Velopack can install, launch and self-update a Unity Windows player, end to end, from the public releases repository.
+Prove that Velopack can install, launch and self-update a Unity Windows game, end to end, from the public releases repository.
 
-## Background
+## Research findings
 
-| Fact | Source |
+| Finding | Source |
 |---|---|
-| Velopack NuGet package 1.2.161 targets .NET Standard 2.0, .NET Framework 4.7.2 and .NET 8 to 10. | [NuGet: Velopack](https://www.nuget.org/packages/velopack) |
-| The .NET Standard 2.0 build depends on `Newtonsoft.Json` and `Microsoft.Win32.Registry`. | [NuGet: Velopack](https://www.nuget.org/packages/velopack) |
-| `VelopackApp.Build().Run()` must run once, as early as possible at startup, to handle install, update and uninstall hooks. Windows hooks time out after 30 seconds (install, uninstall) and 15 seconds (update). | [Velopack: Integrating](https://docs.velopack.io/integrating/overview) |
-| The `vpk` packaging tool 1.2.161 is a .NET tool targeting .NET 8. | [NuGet: vpk](https://www.nuget.org/packages/vpk) |
-| Packing produces `Setup.exe`, a portable zip and a `releases.{channel}.json` feed. | [Velopack: Packaging](https://docs.velopack.io/packaging/overview) |
+| Velopack maintainers have no working Unity sample, with or without a launcher, and are not familiar with Unity. | [velopack#164](https://github.com/velopack/velopack/issues/164) |
+| The shipping precedent (a commercial Unity card game in beta) uses a small C# launcher as the Velopack-managed process, with the Unity player as payload. It works on Windows. | [velopack#164](https://github.com/velopack/velopack/issues/164) |
+| The maintainer endorses "a sample Unity game that is just the payload", with the launcher built from the standard Velopack quick start. | [velopack#164](https://github.com/velopack/velopack/issues/164) |
+| `System.Diagnostics.Process` does not work under IL2CPP, which Velopack's in-process update path relies on unless a custom implementation is supplied. | [velopack#164](https://github.com/velopack/velopack/issues/164) |
+| `VelopackApp.Build().Run()` must be the first code in `Main()`. Unity players have no `Main()`; the earliest game hook runs after the engine starts. | [Velopack: Integrating](https://docs.velopack.io/integrating/overview) |
+| Velopack NuGet 1.2.161 targets .NET Standard 2.0, .NET Framework 4.7.2 and .NET 8 to 10. `vpk` 1.2.161 targets .NET 8. | [NuGet: Velopack](https://www.nuget.org/packages/velopack), [NuGet: vpk](https://www.nuget.org/packages/vpk) |
+| `vpk pack` creates `Setup.exe`, a portable zip and a release feed. Shortcuts default to Desktop and Start menu. | [vpk CLI (Windows)](https://docs.velopack.io/reference/cli/content/vpk-windows) |
+| `vpk download github` and `vpk upload github` (with `--repoUrl`, `--token`, `--publish`) fetch the previous release for delta generation and publish the new one. | [vpk CLI (Windows)](https://docs.velopack.io/reference/cli/content/vpk-windows) |
 
-Unity players have no `Main()` method. The earliest hook available to game code is `[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]`, which runs after the Unity engine has started.
+## Decision
+
+Embedding Velopack in the Unity player has no precedent and conflicts with Velopack's documented startup contract. The spike uses the precedented launcher architecture instead.
+
+```
+SqueezySurvival (installed by Velopack)
+  SqueezySurvival.Launcher.exe   Velopack main executable: hooks, update check, apply
+  Game/
+    SqueezySurvival.exe          Unity player, no Velopack dependency
+```
+
+| Component | Responsibility |
+|---|---|
+| Launcher (.NET console or minimal window app) | Runs `VelopackApp.Build().Run()` first in `Main()`. Checks GitHub Releases for updates, downloads and applies them, then starts the Unity player and exits. |
+| Unity game | Knows nothing about Velopack. Shows its version. Reads the release feed to detect a newer version and, when the player chooses to update, starts the launcher in update mode and quits. |
+
+Benefits: Unity code stays engine-portable and IL2CPP-compatible; the update path is ordinary, documented Velopack usage; a future macOS or Linux port reuses the launcher pattern.
+
+The game-to-launcher update request is designed in a follow-up document before implementation.
 
 ## Questions
 
 | ID | Question | Pass criterion |
 |---|---|---|
-| Q1 | Do the Velopack library and its dependencies load in a Unity Mono player? | No load errors in the player log. |
-| Q2 | Does calling `VelopackApp.Build().Run()` from `BeforeSceneLoad` handle Velopack's hook invocations within the time limits? | Install, update and uninstall complete without timeout. |
-| Q3 | Can `vpk pack` package a Unity player folder with `SqueezySurvival.exe` as the main executable? | `Setup.exe` and feed produced without errors. |
-| Q4 | Does `Setup.exe` install per-user with no admin prompt, create a desktop shortcut and launch the game? | Verified on a clean Windows PC. |
-| Q5 | Can `UpdateManager` with a GitHub source detect, download and apply a newer release and restart? | v0.0.1 updates itself to v0.0.2 from inside the game. |
-| Q6 | Does uninstall remove the game and its shortcuts? | Nothing left except user data we choose to keep. |
+| Q1 | Can `vpk pack` package the launcher plus the Unity player folder, with the launcher as the main executable? | `Setup.exe` and feed produced without errors or warnings. |
+| Q2 | Does `Setup.exe` install per-user with no admin prompt, create a desktop shortcut and launch the game? | Verified on a clean Windows PC. |
+| Q3 | Does the launcher detect, download and apply a newer release and then start the new game version? | v0.0.1 updates to v0.0.2. |
+| Q4 | Can the game trigger an update through the launcher? | Update started from inside v0.0.1 results in v0.0.2 running. |
+| Q5 | Does uninstall remove the game and its shortcuts? | Nothing left except user data we choose to keep. |
 
-## Method
+## Open research before implementation
 
-1. Install the .NET SDK on the development machine. Pin `vpk` as a local .NET tool (`.config/dotnet-tools.json`) so every machine uses the same version.
-2. Add the Velopack package to Unity through NuGetForUnity, so NuGet dependencies are declared and versioned rather than hand-copied DLLs.
-3. Build a minimal scene showing the version number and an update button. Mono scripting backend for the spike.
-4. Pack v0.0.1, publish to the releases repository, install on a clean PC.
-5. Pack and publish v0.0.2, update from inside v0.0.1.
-6. Record the result for each question in this document.
+- Launcher publish mode: self-contained .NET versus Native AOT, judged on output size, startup time and Velopack compatibility.
+- Launcher user interface during download (console, minimal window, or none).
 
-Spike code lives on branch `spike/velopack` and is not merged. Production code is written afterwards to the [Coding Standards](../CodingStandards.md), behind an update-service interface.
+## Superseded approach
 
-## Fallback
-
-If Q1 or Q2 fails, use Velopack for packaging only and add a small .NET launcher executable as the main executable. The launcher handles Velopack hooks and updates, then starts the Unity player. If Velopack fails Q3 to Q5, re-evaluate alternatives in ADR-0004.
+The first plan called `VelopackApp.Build().Run()` from `[RuntimeInitializeOnLoadMethod(BeforeSceneLoad)]` inside the Unity player, with Velopack added through NuGetForUnity. It was abandoned before running because it had no precedent and conflicts with the documented requirement that `Run()` be the first code in `Main()`.
 
 ## Results
 

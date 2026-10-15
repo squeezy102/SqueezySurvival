@@ -20,7 +20,8 @@ A shareable build is a primary, non-negotiable deliverable from the first build 
 | Hosting | GitHub Releases on the releases repository. Build output is never committed to either repository. |
 | Platforms | Windows (x64) only for now. Other platforms are not excluded; see Portability. |
 | Packaging and updates | [Velopack](https://docs.velopack.io/) (open source). Produces a per-user `Setup.exe` that installs without admin rights and creates a desktop shortcut, plus a portable zip. Provides update checks and delta updates. |
-| In-game update | On launch the game checks for a newer release and shows an update button. Updating downloads, applies and restarts. |
+| Launcher | A small .NET launcher is Velopack's main executable. It handles Velopack hooks and updates, then starts the Unity player. The Unity game has no Velopack dependency. Rationale and precedent: [SPIKE-001](../Engineering/Spikes/SPIKE-001-Velopack-With-Unity.md). |
+| In-game update | The game detects a newer release and shows an update button. Updating hands off to the launcher, which downloads, applies and restarts the game. |
 | Build trigger | An editor menu command that builds, versions, packages and publishes. Automated builds on GitHub Actions are deferred; see Consequences. |
 | Versioning | Semantic Versioning, shown on the main menu. |
 
@@ -42,7 +43,7 @@ Windows is the only shipped platform, but nothing in the design is Windows-speci
 
 ## Open items
 
-- **Velopack with Unity.** Velopack targets .NET applications. Using it with a Unity player executable must be proven by a spike before this ADR is accepted.
+- **Velopack with Unity.** Velopack targets .NET applications. Using it with a Unity player executable must be proven by [SPIKE-001](../Engineering/Spikes/SPIKE-001-Velopack-With-Unity.md) before this ADR is accepted.
 - **Publishing credentials.** Publishing to the releases repository requires a GitHub token on the build machine, scoped to that repository only, and never committed.
 
 ## Resolved
