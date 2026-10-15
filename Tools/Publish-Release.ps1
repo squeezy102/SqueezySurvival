@@ -30,7 +30,8 @@ $PackageId = 'Squeezy102.SqueezySurvival'
 $PackageTitle = 'SqueezySurvival'
 $PackageAuthors = 'squeezy102'
 $LauncherExecutableFileName = 'SqueezySurvivalLauncher.exe'
-$PackageExcludePattern = '.*\.pdb|.*_DoNotShip.*'
+$PackageExcludePattern = '.*\.pdb'
+$PackageRuntime = 'win-x64'
 $ReleaseTag = "v$Version"
 
 $LauncherSolution = Join-Path $RepositoryRoot 'Launcher\SqueezySurvival.Launcher.sln'
@@ -155,9 +156,11 @@ try {
             'vpk', 'download', 'github', '--repoUrl', $ReleasesRepositoryUrl, '--outputDir', $ReleasesDirectory)
 
         Write-Step '9. Package'
+        # Unity marks debug-only output folders *_DoNotShip; they must not reach players.
+        Get-ChildItem -LiteralPath $GameDirectory -Directory -Filter '*_DoNotShip' | Remove-Item -Recurse -Force
         Invoke-NativeCommand 'vpk pack' 'dotnet' @(
             'vpk', 'pack',
-            '--packId', $PackageId, '--packVersion', $Version, '--packDir', $StagingDirectory,
+            '--packId', $PackageId, '--packVersion', $Version, '--runtime', $PackageRuntime, '--packDir', $StagingDirectory,
             '--mainExe', $LauncherExecutableFileName, '--packTitle', $PackageTitle, '--packAuthors', $PackageAuthors,
             '--exclude', $PackageExcludePattern, '--outputDir', $ReleasesDirectory)
 

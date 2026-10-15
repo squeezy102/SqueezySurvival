@@ -23,7 +23,7 @@ How a player build is produced and published. Decisions: [ADR-0004](../Decisions
 | 6 | Build the Unity Windows player into `Game/` | Unity `-executeMethod` | Non-zero exit |
 | 7 | Restore `vpk` at the pinned version | `dotnet tool restore` | Non-zero exit |
 | 8 | Download the latest published release for delta generation | `vpk download github` | Non-zero exit. No previous release is not a failure. |
-| 9 | Package | `vpk pack` | Non-zero exit |
+| 9 | Remove `*_DoNotShip` folders from `Game/`, then package | `vpk pack` | Non-zero exit |
 | 10 | Create and publish the GitHub release | `vpk upload github` | Non-zero exit, or the tag already exists |
 
 The source repository is tagged `v{version}` after a successful publish.
@@ -46,8 +46,9 @@ Game/
 | Main executable | `SqueezySurvivalLauncher.exe` | The launcher handles Velopack hooks. |
 | Title | `SqueezySurvival` | Shortcut and installer display name. |
 | Channel | `win` (Velopack default) | One channel until other platforms ship. |
+| Runtime | `win-x64` | Without `--runtime`, `vpk pack` defaults the package to x86. |
 | Release tag | `v{version}` | Matches the source repository tag. |
-| Excluded from package | `*.pdb`, `*_DoNotShip*` | Debug symbols and Unity debug folders marked not to ship. |
+| Excluded from package | `*.pdb` | Debug symbols. Unity `*_DoNotShip` folders (Burst debug information) are deleted from the staging folder before packaging, because a file exclude leaves an empty directory entry. |
 
 ## Credentials
 
@@ -61,6 +62,28 @@ Publishing needs a GitHub fine-grained personal access token:
 | Setup | Run `Tools/Set-ReleaseToken.cmd` and paste the token at the hidden prompt. |
 
 The script passes the token to `vpk` through the `VPK_TOKEN` environment variable of its own process, so it never appears on a command line or in logs. `vpk` reads any option from a `VPK_`-prefixed environment variable (Velopack source, `BaseCommand.cs`).
+
+## Known warnings
+
+Every warning in a release log is either fixed or listed here with the reason it cannot be.
+
+| Warning | Source | Reason it remains |
+|---|---|---|
+| `No signing parameters provided, N file(s) will not be signed.` | `vpk pack` | Signing requires a paid code-signing certificate. Consequence documented in [ADR-0004](../Decisions/ADR-0004-Distribution-And-Self-Update.md#consequences). |
+| `No releases found` / `No full / applicable release was found to download.` | `vpk download` | Expected only for the first release, which has no predecessor for delta generation. |
+
+## Files written by the Unity build
+
+URP and the engine save these files during every player build. Their post-build state is committed so builds leave the working tree clean.
+
+| File | Writer (verified in package source) |
+|---|---|
+| `Assets/Settings/UniversalRP.asset` | URP `ShaderBuildPreprocessor` saves shader prefiltering settings. |
+| `Assets/UniversalRenderPipelineGlobalSettings.asset` | Core RP `RenderPipelineGraphicsSettingsContainer` fills runtime settings only while building a player. |
+| `Assets/DefaultVolumeProfile.asset` | URP `URPPreprocessBuild` adds missing default overrides. |
+| `ProjectSettings/ProjectSettings.asset` | Engine writes the Standalone batching default. |
+
+Changing render features or post-processing changes these files again; commit the result of the next build. Precedent: [Unity Discussions](https://discussions.unity.com/t/urp-build-issue-universalrenderpipelineglobalsettings-asset-gets-modified-every-build/1552440).
 
 ## Output
 

@@ -19,7 +19,6 @@ Keep only packages the MVP needs or that the architecture expects soon.
 | Test Framework | Unit testing |
 | Visual Studio integration | IDE support |
 | Audio and Animation modules | Planned features; kept to avoid later rework |
-| `com.unity.pipeline` (experimental) | Added by Unity Hub's "Use Unity CLI" option. Removed if it produces warnings |
 
 | Removed | Reason |
 |---|---|
@@ -30,6 +29,7 @@ Keep only packages the MVP needs or that the architecture expects soon.
 | Tilemap, Tilemap Extras, Sprite Shape | No tile or spline-based worlds |
 | PSD and Aseprite importers, 2D Tooling, 2D Animation | Not needed for placeholder art; re-add with animation work |
 | Rider integration | Visual Studio is the IDE |
+| `com.unity.pipeline` (experimental) | Added by Unity Hub's "Use Unity CLI" option. Removed 2026-10-15: logged a warning in every player build and is not used. |
 | 3D physics, terrain, cloth, vehicles, wind, VR, XR, video, analytics modules | Not applicable to a 2D single-player game |
 
 ## Consequences
