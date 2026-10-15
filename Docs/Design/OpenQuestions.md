@@ -6,7 +6,7 @@ Unresolved design decisions. When one is resolved, record the answer in the owni
 |---|---|---|---|
 | OQ-003 | Stats | How do Hunger and Satiation differ? (For example: Hunger = nutrition need, Satiation = stomach fullness.) | Systems/SurvivalStats |
 | OQ-004 | Stats | Stat ranges, decay rates per time unit, thresholds and their effects. | Systems/SurvivalStats |
-| OQ-019 | Stats | How is body temperature displayed, given that both extremes are bad? Proposal: a centered bar with a cold icon left, a hot icon right and a highlighted comfort zone in the middle, as the one documented exception to "higher is better". | Systems/SurvivalStats |
+| OQ-020 | UI | How does the body temperature icon show its state? Proposal: the icon tints from blue (cold) through neutral to red (hot) and shows a warning marker in dangerous ranges; hovering shows the exact temperature and band. | UI/HUD |
 | OQ-005 | Research | Does research progress in the background while other actions are performed, or does it occupy the survivor's time? | Systems/Research (planned) |
 | OQ-006 | Research | Can multiple research items progress at once, or is there a queue? | Systems/Research (planned) |
 | OQ-007 | Exploration | Is exploration yield random, weighted by zone, or depleting over time? | Systems/Exploration (planned) |
@@ -15,4 +15,4 @@ Unresolved design decisions. When one is resolved, record the answer in the owni
 | OQ-010 | Failure | What ends a run (death conditions) and what persists between runs? | GameDesignDocument |
 | OQ-011 | Saving | Save model: manual, autosave, single slot, or permadeath? | GameDesignDocument |
 
-Resolved: OQ-012 and OQ-013 (see [ADR-0004](../Decisions/ADR-0004-Distribution-And-Self-Update.md)), OQ-014 and OQ-015 (see [Launcher](Launcher.md)), OQ-001, OQ-002, OQ-016, OQ-017 and OQ-018 (see [Time](Systems/Time.md)). IDs are never reused.
+Resolved: OQ-012 and OQ-013 (see [ADR-0004](../Decisions/ADR-0004-Distribution-And-Self-Update.md)), OQ-014 and OQ-015 (see [Launcher](Launcher.md)), OQ-001, OQ-002, OQ-016, OQ-017 and OQ-018 (see [Time](Systems/Time.md)), OQ-019 (see [HUD](UI/HUD.md)). IDs are never reused.
