@@ -34,6 +34,7 @@ The single source of truth for the design, engineering and decisions behind Sque
 4. **Decisions are recorded.** Any significant or hard-to-reverse choice gets an ADR.
 5. **Format.** Markdown (`.md`) only. Plain hyphens, no em dashes. Units are imperial where applicable.
 6. **Status markers.** Design documents carry a status: `Concept`, `Draft`, `Approved`, or `Implemented`.
+7. **Designs are working drafts.** System designs are introductory and expected to change as the game is built and played. Changes are made in the owning document and recorded in its history, never by working around it.
 
 ## Document map
 

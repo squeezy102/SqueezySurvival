@@ -33,7 +33,7 @@ Body temperature is the one stat where the middle is best: too cold and too hot 
 
 The stat list is not final. Names, icons, decay rates and effects are specified as each stat is designed.
 
-## Bands (proposed)
+## Bands (draft)
 
 Each stat is in one band at a time. Bands drive gates and penalties; for example, any stat in Dangerous blocks sleep.
 
@@ -45,7 +45,7 @@ Each stat is in one band at a time. Bands drive gates and penalties; for example
 | Dangerous | 10-24 |
 | Critical | 0-9 |
 
-Proposed values; not yet approved. Bands may differ per stat.
+Draft starting values, to be tuned in play. Bands may differ per stat.
 
 ## Open questions
 
