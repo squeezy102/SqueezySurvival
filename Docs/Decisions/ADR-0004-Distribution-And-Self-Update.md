@@ -33,6 +33,8 @@ A shareable build is a primary, non-negotiable deliverable from the first build 
 
 The ADR is accepted only when this test passes.
 
+**Status of the test (2026-10-15):** v0.0.1 published successfully with launcher and Unity tests passing. Steps 2 and 3 (clean-PC install, in-launcher update to v0.0.2) are deferred and not yet run.
+
 ## Portability
 
 Windows is the only shipped platform, but nothing in the design is Windows-specific outside a replaceable boundary:
