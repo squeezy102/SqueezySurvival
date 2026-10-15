@@ -13,6 +13,7 @@ The single source of truth for the design, engineering and decisions behind Sque
   - [Food](Design/Systems/Food.md) - eating and per-food tolerance.
   - [Exploration](Design/Systems/Exploration.md) - progress, finds, milestones, scripted first explores.
   - [Resource Nodes](Design/Systems/ResourceNodes.md) - renewable and destructive harvesting, replenishment.
+  - [Decay](Design/Systems/Decay.md) - item deterioration as a resource sink.
 - UI:
   - [HUD](Design/UI/HUD.md) - static status area, temperature, weather icons.
 - [Glossary](Glossary.md) - canonical game terms.
@@ -56,6 +57,7 @@ Docs/
       Food.md
       Exploration.md
       ResourceNodes.md
+      Decay.md
     UI/
       HUD.md
     OpenQuestions.md

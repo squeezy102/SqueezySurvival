@@ -7,6 +7,8 @@ Unresolved design decisions. When one is resolved, record the answer in the owni
 | OQ-004 | Stats | Stat ranges, decay rates per time unit, thresholds and their effects. | Systems/SurvivalStats |
 | OQ-005 | Research | Does research progress in the background while other actions are performed, or does it occupy the survivor's time? | Systems/Research (planned) |
 | OQ-006 | Research | Can multiple research items progress at once, or is there a queue? | Systems/Research (planned) |
+| OQ-026 | Decay | Should stone decay? Proposal: no - stone and other inorganic materials do not decay on their own; a separate rule (for example, items left on the beach are buried by sand or washed away by the tide) can remove them if a sink is needed. | Systems/Decay |
+| OQ-027 | Decay | Does storage stop decay or only slow it? Proposal: containers and sheltered shelves slow decay (food still spoils, but far more slowly); later items such as a smokehouse or salt preserve food. | Systems/Decay |
 | OQ-025 | Exploration | How does exploring work at Dawn, Dusk and Night (light level penalties, hazard and injury chances)? | Systems/Exploration |
 | OQ-008 | Zones | How large is the island at MVP: how many beach zones, and how are they connected? | Systems/World (planned) |
 | OQ-009 | Weather | Which weather states exist and how do they affect stats and actions? | Systems/Weather (planned) |
