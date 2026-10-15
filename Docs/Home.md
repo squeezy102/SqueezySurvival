@@ -10,7 +10,7 @@ The single source of truth for the design, engineering and decisions behind Sque
   - [Time](Design/Systems/Time.md) - time units, passing time, day phases.
   - [Actions](Design/Systems/Actions.md) - action anatomy, availability, light level, condition gates.
   - [Survival Stats](Design/Systems/SurvivalStats.md) - macros, bar conventions, bands.
-  - [Food](Design/Systems/Food.md) - eating and per-food satiety.
+  - [Food](Design/Systems/Food.md) - eating and per-food tolerance.
 - UI:
   - [HUD](Design/UI/HUD.md) - static status area, temperature, weather icons.
 - [Glossary](Glossary.md) - canonical game terms.

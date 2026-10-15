@@ -2,22 +2,24 @@
 
 **Status:** Draft
 
-Eating restores the Food survival stat ([Survival Stats](SurvivalStats.md)). Food satiety stops any single food from sustaining the survivor indefinitely.
+Eating restores the Food survival stat ([Survival Stats](SurvivalStats.md)). Food tolerance stops any single food from sustaining the survivor indefinitely.
 
-## Food satiety
+## Food tolerance
 
-Every food type has its own satiety meter, from 0% to 100%. Eating a food raises its meter; time lowers it. A high meter means the survivor is sick of that food.
+Every food type has its own tolerance meter, from 100% (happy to eat it) down to 0% (cannot stomach it). Eating a food lowers its tolerance; time restores it. The meter reads higher-is-better like every other bar (resolves OQ-021).
 
 Purpose: the player cannot survive the whole game on coconuts. Variety is required.
 
-### Effects by satiety
+### Effects by tolerance
 
-| Satiety before eating | Food restored | Contentment | Sanity | Other |
+Tolerance is checked before each serving.
+
+| Tolerance | Food restored | Contentment | Sanity | Other |
 |---|---|---|---|---|
-| 0-49% | Full | - | - | - |
-| 50-74% | Diminishing | Penalty | - | - |
-| 75-99% | Diminishing | Penalty | Penalty | - |
-| 100% | None | - | - | Survivor becomes ill. Eating that food is unavailable ("can't stomach another") until satiety falls below 100%. |
+| 51-100% | Full | - | - | - |
+| 26-50% | Diminishing | Penalty | - | - |
+| 1-25% | Diminishing | Penalty | Penalty | - |
+| 0% | None | - | - | Survivor becomes ill. Eating that food is unavailable ("can't stomach another") until tolerance recovers above 0%. |
 
 Illness is specified in its own system (planned).
 
@@ -25,20 +27,18 @@ Illness is specified in its own system (planned).
 
 | Quantity | Proposal | Effect |
 |---|---|---|
-| Satiety gained per serving | Set per food; coconut +15% | 4 coconuts in a row reach the diminishing threshold. |
-| Satiety recovery | -1% per hour for every food | A food at 100% recovers to 0% in a little over 4 days; at 50%, in about 2 days. |
-| Food restored multiplier | 100% below 50% satiety; falls linearly from 100% at 50% satiety to 25% at 100% satiety | `multiplier = 1 - 0.75 x (satiety - 50) / 50` for satiety from 50 to 100. |
-| Contentment penalty | Set per food; scales with satiety | Values set during balancing. |
-| Sanity penalty | Set per food; scales with satiety | Values set during balancing. |
+| Tolerance lost per serving | Set per food; coconut -15% | The 4th coconut in a row brings tolerance to the diminishing threshold. |
+| Tolerance recovery | +1% per hour for every food | From 0% to 100% in a little over 4 days; from 50% in about 2 days. |
+| Food restored multiplier | 100% above 50% tolerance; falls linearly from 100% at 50% tolerance to 25% at 0% | `multiplier = 0.25 + 0.75 x tolerance / 50` for tolerance from 0 to 50. |
+| Contentment penalty | Set per food; grows as tolerance falls | Values set during balancing. |
+| Sanity penalty | Set per food; grows as tolerance falls | Values set during balancing. |
 
 ### Display
 
-**Food Satiety window.** Clicking the Food bar opens a window listing every food's satiety meter.
+**Food Tolerance window.** Clicking the Food bar opens a window listing every food's tolerance meter.
 
-- Ordered from most sick of to least sick of.
+- Ordered from lowest tolerance to highest, so the foods to avoid are at the top.
 - Hovering a meter shows its exact value and current penalties.
 - A side panel explains the thresholds (the table above) in plain language.
-- How the meters read under the higher-is-better rule: [OQ-021](../OpenQuestions.md).
-
-
-Each food shows its satiety wherever the player chooses to eat it, with the current effect stated in words (for example "Getting sick of coconuts: restores 70%"). The meter follows the [color rule](../GameDesignDocument.md#pillars): color is never the only signal.
+- Wherever the player chooses food, its tolerance and current effect are stated in words, for example "Getting tired of coconuts: restores 70%".
+- Follows the [color rule](../GameDesignDocument.md#pillars): color is never the only signal.
