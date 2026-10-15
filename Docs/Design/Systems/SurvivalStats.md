@@ -49,4 +49,4 @@ Proposed values; not yet approved. Bands may differ per stat.
 
 ## Open questions
 
-[OQ-003](../OpenQuestions.md), [OQ-004](../OpenQuestions.md), [OQ-020](../OpenQuestions.md).
+[OQ-003](../OpenQuestions.md), [OQ-004](../OpenQuestions.md).
