@@ -6,6 +6,8 @@ The single source of truth for the design, engineering and decisions behind Sque
 - [Game Design Document](Design/GameDesignDocument.md) - vision, pillars, core loop, MVP scope.
 - [Open Questions](Design/OpenQuestions.md) - unresolved design decisions.
 - [Launcher](Design/Launcher.md) - launcher layout, behavior and states.
+- Systems:
+  - [Time](Design/Systems/Time.md) - time units, passing time, clock.
 - [Glossary](Glossary.md) - canonical game terms.
 
 ## Engineering
@@ -39,6 +41,8 @@ Docs/
   Design/
     GameDesignDocument.md
     Launcher.md
+    Systems/
+      Time.md
     OpenQuestions.md
   Engineering/
     CodingStandards.md

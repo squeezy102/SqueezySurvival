@@ -20,7 +20,7 @@ Presentation is pictures, text, windows and progress bars. Depth comes from syst
 
 ## Pillars
 
-1. **Everything is measured in time units.** Time advances only through actions. Every action declares its duration.
+1. **Everything is measured in time units.** Time advances only through actions. Every action declares its duration. See [Time](Systems/Time.md).
 2. **Every action costs something.** Time at minimum; often also energy, stats, tool durability or materials. There are no free actions.
 3. **Discovery drives progression.** Finding a resource for the first time unlocks research that uses it.
 4. **Clarity over clutter.** The UI must make state, costs and consequences obvious. This is the primary differentiator from our influences.

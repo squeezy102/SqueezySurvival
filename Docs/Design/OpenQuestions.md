@@ -4,8 +4,6 @@ Unresolved design decisions. When one is resolved, record the answer in the owni
 
 | ID | Area | Question | Owner doc |
 |---|---|---|---|
-| OQ-001 | Time | What real-world duration is one time unit (for example 15 minutes)? | Systems/Time (planned) |
-| OQ-002 | Time | Does time advance only through actions, or is there also a wait/rest action to fast-forward? | Systems/Time (planned) |
 | OQ-003 | Stats | How do Hunger and Satiation differ? (For example: Hunger = nutrition need, Satiation = stomach fullness.) | Systems/SurvivalStats (planned) |
 | OQ-004 | Stats | Stat ranges, decay rates per time unit, thresholds and their effects. | Systems/SurvivalStats (planned) |
 | OQ-005 | Research | Does research progress in the background while other actions are performed, or does it occupy the survivor's time? | Systems/Research (planned) |
@@ -15,5 +13,8 @@ Unresolved design decisions. When one is resolved, record the answer in the owni
 | OQ-009 | Weather | Which weather states exist and how do they affect stats and actions? | Systems/Weather (planned) |
 | OQ-010 | Failure | What ends a run (death conditions) and what persists between runs? | GameDesignDocument |
 | OQ-011 | Saving | Save model: manual, autosave, single slot, or permadeath? | GameDesignDocument |
+| OQ-016 | Time | What time of day does the run start (for example 6:00 AM, waking on the beach)? | Systems/Time |
+| OQ-017 | Time | Are there day phases (dawn, day, dusk, night) that change actions, visibility or danger? | Systems/Time |
+| OQ-018 | Time | Can long actions such as Sleep be interrupted by events (weather, animals, a stat reaching a critical level)? | Systems/Time |
 
-Resolved: OQ-012 and OQ-013 (see [ADR-0004](../Decisions/ADR-0004-Distribution-And-Self-Update.md)), OQ-014 and OQ-015 (see [Launcher](Launcher.md)). IDs are never reused.
+Resolved: OQ-012 and OQ-013 (see [ADR-0004](../Decisions/ADR-0004-Distribution-And-Self-Update.md)), OQ-014 and OQ-015 (see [Launcher](Launcher.md)), OQ-001 and OQ-002 (see [Time](Systems/Time.md)). IDs are never reused.
