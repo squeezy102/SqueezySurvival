@@ -35,10 +35,21 @@ A run's first explores of the starting zone are fixed, not random, so every play
 | Resource nodes | Semi-permanent features that can be harvested repeatedly. | Palm trees, tide pools, seagull nests, driftwood, a large carcass such as a beached turtle |
 | Zone connections | The way into a connected zone. | A palm grove, a bay, a river inlet |
 
+## Pace
+
+Each zone defines how many explores it takes to map fully (resolves OQ-023). Each explore adds `100% / explores to map` progress.
+
+| Zone size | Explores to map | Exploring time |
+|---|---|---|
+| Starting zone | 24 | 6 hours |
+| Typical zones | 24-48 | 6-12 hours (half a day to a day of exploring) |
+
+Time spent on everything else (crafting, eating, resting) spreads this across more game days.
+
 ## Milestones
 
 Significant discoveries (resource nodes, zone connections) are tied to progress milestones, for example 25%, 50%, 75% and 100%. Exact milestones and what each reveals are set per zone as the world is designed.
 
 ## Open questions
 
-[OQ-023](../OpenQuestions.md), [OQ-024](../OpenQuestions.md), [OQ-025](../OpenQuestions.md).
+[OQ-024](../OpenQuestions.md), [OQ-025](../OpenQuestions.md).
