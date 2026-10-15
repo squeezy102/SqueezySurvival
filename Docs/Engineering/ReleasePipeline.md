@@ -26,8 +26,8 @@ How a player build is produced and published. Decisions: [ADR-0004](../Decisions
 | 8 | Download the latest published release for delta generation | `vpk download github` | Non-zero exit. No previous release is not a failure. |
 | 9 | Remove `*_DoNotShip` folders from `Game/`, then package | `vpk pack` | Non-zero exit |
 | 10 | Create and publish the GitHub release | `vpk upload github` | Non-zero exit, or the tag already exists |
+| 11 | Tag the source commit `v{version}` and push tags | `git tag`, `git push --tags` | Non-zero exit |
 
-The source repository is tagged `v{version}` after a successful publish.
 
 ## Package layout
 
@@ -72,6 +72,12 @@ Every warning in a release log is either fixed or listed here with the reason it
 |---|---|---|
 | `No signing parameters provided, N file(s) will not be signed.` | `vpk pack` | Signing requires a paid code-signing certificate. Consequence documented in [ADR-0004](../Decisions/ADR-0004-Distribution-And-Self-Update.md#consequences). |
 | `No releases found` / `No full / applicable release was found to download.` | `vpk download` | Expected only for the first release, which has no predecessor for delta generation. |
+
+## Open issues
+
+| Issue | Status |
+|---|---|
+| A batch-mode player build sets `m_Enabled: 1` in `ProjectSettings/UnityConnectSettings.asset`; opening the editor sets it back to `0`. All individual services (analytics, crash reporting, ads, purchasing, performance reporting) remain disabled. The build log shows the editor then trying to reach Unity Cloud hosts. Matches Unity issue "Unity Services are not disabled and cause longer build times when the project is not connected to Unity Cloud" ([tracker](https://issuetracker.unity.com/issues/6472)). Root cause not yet confirmed. | Under investigation. Until resolved, the change is reverted after each release so the next release passes the clean-tree check. |
 
 ## Files written by the Unity build
 

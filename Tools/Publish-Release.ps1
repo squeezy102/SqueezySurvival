@@ -178,6 +178,14 @@ try {
         Remove-Item Env:\VPK_TOKEN -ErrorAction SilentlyContinue
     }
 
+    Write-Step '11. Tag source repository'
+    $existingTag = & git -C $RepositoryRoot tag --list $ReleaseTag
+    if (-not $existingTag) {
+        Invoke-NativeCommand 'git tag' 'git' @('-C', $RepositoryRoot, 'tag', '--annotate', $ReleaseTag, '--message', "SqueezySurvival $ReleaseTag")
+    }
+    # Pushes every local tag so a tag left unpushed by an earlier run is not lost.
+    Invoke-NativeCommand 'git push tags' 'git' @('-C', $RepositoryRoot, 'push', 'origin', '--tags')
+
     Write-Step "Published $ReleaseTag"
     Write-Host "$ReleasesRepositoryUrl/releases/tag/$ReleaseTag"
 }
