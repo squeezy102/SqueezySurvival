@@ -26,6 +26,7 @@ Presentation is pictures, text, windows and progress bars. Depth comes from syst
 4. **Clarity over clutter.** The UI must make state, costs and consequences obvious. This is the primary differentiator from our influences.
    - Bars and meters always read "higher is better".
    - Iconography shows meaning everywhere, for example end-cap icons on every bar showing what empty and full mean. The player should never have to wonder what is good and what is bad.
+   - **Color is never the only signal.** Every state shown by color is also shown by shape, icon, fill level, pattern or text, so the game is fully playable with color blindness ([WCAG 2.2, 1.4.1 Use of Color](https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html)). At least one playtester is color blind; UI palettes are checked against red-green and blue-yellow color blindness before release.
 
 ## Presentation
 
