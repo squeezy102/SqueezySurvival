@@ -33,4 +33,12 @@ Illness is specified in its own system (planned).
 
 ### Display
 
+**Food Satiety window.** Clicking the Food bar opens a window listing every food's satiety meter.
+
+- Ordered from most sick of to least sick of.
+- Hovering a meter shows its exact value and current penalties.
+- A side panel explains the thresholds (the table above) in plain language.
+- How the meters read under the higher-is-better rule: [OQ-021](../OpenQuestions.md).
+
+
 Each food shows its satiety wherever the player chooses to eat it, with the current effect stated in words (for example "Getting sick of coconuts: restores 70%"). The meter follows the [color rule](../GameDesignDocument.md#pillars): color is never the only signal.
