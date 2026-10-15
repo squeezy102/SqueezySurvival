@@ -18,6 +18,8 @@ Every serving lowers both: its own food's meter sharply, and its category's mete
 - Five apples in a row: apple tolerance drops sharply; Fruit tolerance drops only a little.
 - Five each of apples, bananas and grapes: each food drops sharply, and together they drive Fruit tolerance down. Persisting makes every fruit sicken the survivor until Fruit tolerance recovers.
 
+**Early game.** Food tolerance must never punish a player for the limited choices of the early game. This is guaranteed by content, not by exceptions in the rules: the starting zone offers broad food variety ([GDD: beach resources](../GameDesignDocument.md#beach-resources-initial-list)).
+
 **Food is never locked.** The survivor can always eat anything they have. The cost of a poor diet comes from reduced food restored, contentment and sanity penalties, and illness.
 
 **Governing tolerance:** a serving's effects use the lower of the food's tolerance and its category's tolerance.

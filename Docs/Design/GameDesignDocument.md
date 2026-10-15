@@ -107,6 +107,10 @@ Initial actions:
 
 Coconuts, palm trees, crabs, shells, sand, sticks, rocks, big rocks. This list will grow.
 
+Food sources: coconuts, bananas, conches, crabs, seagulls, bugs, seeds, bushes and herbs.
+
+**Content rule:** the starting zone always offers enough food variety, across several categories, that a player is never forced into a diet that food tolerance punishes ([Food](Systems/Food.md)).
+
 ### Early interactions (initial list)
 
 | Interaction | Notes |
