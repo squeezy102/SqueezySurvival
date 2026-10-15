@@ -9,11 +9,15 @@ Canonical terms. Code, UI text and documents use these words with these meanings
 | Cost | What an action consumes: time, and optionally stats, materials or tool durability. |
 | Food category | A grouping of foods such as Meat, Fish, Fruit, Vegetables or Dairy. Has its own tolerance meter. |
 | Food tolerance | A per-food meter (100% to 0%) of how willing the survivor is to eat that food. Falls with each serving, recovers over time; low tolerance reduces what the food restores and causes penalties. See [Food](Design/Systems/Food.md). |
+| Exploration progress | A zone's explored percentage. Rises with each explore; milestones trigger significant discoveries. See [Exploration](Design/Systems/Exploration.md). |
+| Find pool | The weighted set of loose items an explore can draw in a zone. |
 | Ground pool | The set of resources unearthed in a zone and lying on the ground there. Not part of the inventory. |
+| Hazard | A danger met while exploring, such as a jellyfish or sea urchin. |
 | Inventory | Items the survivor is carrying. |
 | Known | Encountered by the survivor. Only known things are ever shown in the UI. |
 | Light level | Bright, Dim or Dark. Derived from the day phase and light sources; gates and penalizes actions. See [Actions](Design/Systems/Actions.md#light-level). |
 | Recipe | A definition of inputs, tools and time required to produce an item. |
+| Resource node | A semi-permanent zone feature that can be harvested repeatedly, such as a palm tree or tide pool. |
 | Research | The passive, time-based process that turns a discovered recipe into a craftable one. |
 | Macro | Informal name for a survival stat. |
 | Survival stat | A core condition of the survivor shown as a bar where higher is always better, such as Food or Water. See [Survival Stats](Design/Systems/SurvivalStats.md). |
@@ -21,3 +25,4 @@ Canonical terms. Code, UI text and documents use these words with these meanings
 | Day phase | One of six named parts of the day (Dawn, Morning, Midday, Afternoon, Dusk, Night) that other systems use to vary behavior. See [Time](Design/Systems/Time.md). |
 | Time unit (TU) | The smallest unit of game time: 1 minute. See [Time](Design/Systems/Time.md). |
 | Zone | A discrete location belonging to a biome, connected to other zones. |
+| Zone connection | A discovered route from one zone into another. |

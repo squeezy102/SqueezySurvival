@@ -11,6 +11,7 @@ The single source of truth for the design, engineering and decisions behind Sque
   - [Actions](Design/Systems/Actions.md) - action anatomy, availability, light level, condition gates.
   - [Survival Stats](Design/Systems/SurvivalStats.md) - macros, bar conventions, bands.
   - [Food](Design/Systems/Food.md) - eating and per-food tolerance.
+  - [Exploration](Design/Systems/Exploration.md) - progress, finds, milestones, scripted first explores.
 - UI:
   - [HUD](Design/UI/HUD.md) - static status area, temperature, weather icons.
 - [Glossary](Glossary.md) - canonical game terms.
@@ -52,6 +53,7 @@ Docs/
       Actions.md
       SurvivalStats.md
       Food.md
+      Exploration.md
     UI/
       HUD.md
     OpenQuestions.md
