@@ -8,6 +8,7 @@ Exploring a zone is how the survivor finds resources, features and the way to ot
 
 - **Duration: 15 TU** (a short walk).
 - Exploring is always a worthwhile choice when the player has nothing better to do, and never carries a severe time cost.
+- Finds are unlimited. The limit is the survivor: every explore taxes time, stamina, food, water, exposure to the elements and the risk of hazards.
 
 ## Model
 
@@ -32,7 +33,7 @@ A run's first explores of the starting zone are fixed, not random, so every play
 |---|---|---|
 | Loose items | Items placed in the zone's ground pool. | Stones, big rocks, sticks, seaweed, conches, crabs, coconuts, seashells, dead fish |
 | Hazards | Dangers met while exploring; effects depend on the survivor's gear. | Washed-up jellyfish or sea urchins that sting bare feet. Unlikely in the starting zone. |
-| Resource nodes | Semi-permanent features that can be harvested repeatedly. | Palm trees, tide pools, seagull nests, driftwood, a large carcass such as a beached turtle |
+| Resource nodes | Fixed features harvested with actions; some replenish, some are consumed. See [Resource Nodes](ResourceNodes.md). | Palm trees, tide pools, seagull nests, driftwood, a large carcass such as a beached turtle |
 | Zone connections | The way into a connected zone. | A palm grove, a bay, a river inlet |
 
 ## Pace
@@ -52,4 +53,4 @@ Significant discoveries (resource nodes, zone connections) are tied to progress 
 
 ## Open questions
 
-[OQ-024](../OpenQuestions.md), [OQ-025](../OpenQuestions.md).
+[OQ-025](../OpenQuestions.md).

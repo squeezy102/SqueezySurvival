@@ -17,7 +17,7 @@ Canonical terms. Code, UI text and documents use these words with these meanings
 | Known | Encountered by the survivor. Only known things are ever shown in the UI. |
 | Light level | Bright, Dim or Dark. Derived from the day phase and light sources; gates and penalizes actions. See [Actions](Design/Systems/Actions.md#light-level). |
 | Recipe | A definition of inputs, tools and time required to produce an item. |
-| Resource node | A semi-permanent zone feature that can be harvested repeatedly, such as a palm tree or tide pool. |
+| Resource node | A fixed zone feature harvested with actions, such as a banana tree or spring. Renewable actions let it replenish; destructive actions consume it. See [Resource Nodes](Design/Systems/ResourceNodes.md). |
 | Research | The passive, time-based process that turns a discovered recipe into a craftable one. |
 | Macro | Informal name for a survival stat. |
 | Survival stat | A core condition of the survivor shown as a bar where higher is always better, such as Food or Water. See [Survival Stats](Design/Systems/SurvivalStats.md). |

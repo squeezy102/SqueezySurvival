@@ -12,6 +12,7 @@ The single source of truth for the design, engineering and decisions behind Sque
   - [Survival Stats](Design/Systems/SurvivalStats.md) - macros, bar conventions, bands.
   - [Food](Design/Systems/Food.md) - eating and per-food tolerance.
   - [Exploration](Design/Systems/Exploration.md) - progress, finds, milestones, scripted first explores.
+  - [Resource Nodes](Design/Systems/ResourceNodes.md) - renewable and destructive harvesting, replenishment.
 - UI:
   - [HUD](Design/UI/HUD.md) - static status area, temperature, weather icons.
 - [Glossary](Glossary.md) - canonical game terms.
@@ -54,6 +55,7 @@ Docs/
       SurvivalStats.md
       Food.md
       Exploration.md
+      ResourceNodes.md
     UI/
       HUD.md
     OpenQuestions.md
