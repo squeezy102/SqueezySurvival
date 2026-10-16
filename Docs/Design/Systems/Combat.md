@@ -96,7 +96,13 @@ Records each species the survivor has encountered. Entries appear only after a f
 
 - Defense is a [skill](Skills.md), raised by successful defends.
 - A shield in the offhand raises defense further, but only alongside a one-handed weapon. Shields range from improvised (driftwood, a pot lid) to crafted shields.
-- Weapons are one-handed or two-handed. Which weapons are two-handed: [OQ-041](../OpenQuestions.md).
+- Each weapon is one-handed or two-handed, independent of its class (resolves OQ-041):
+
+| Handedness | Weapons | Offhand |
+|---|---|---|
+| One-handed | Short swords, knives, hatchets, hand axes, clubs | Free: a shield if desired |
+| Two-handed | Long swords, spears, axes, mauls | Unavailable |
+| Ranged | Bows, slings | Holds the ammunition: a quiver or ammo pouch |
 
 ## Deck draws
 
