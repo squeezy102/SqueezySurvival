@@ -19,6 +19,7 @@ The single source of truth for the design, engineering and decisions behind Sque
   - [Exertion](Design/Systems/Exertion.md) - stamina, exertion risk, injury, passing out.
 - UI:
   - [HUD](Design/UI/HUD.md) - static status area, temperature, weather icons, event log.
+  - [Controls](Design/UI/Controls.md) - mouse and modifiers, hotkeys, remapping.
 - [Glossary](Glossary.md) - canonical game terms.
 
 ## Engineering
@@ -66,6 +67,7 @@ Docs/
       Exertion.md
     UI/
       HUD.md
+      Controls.md
     OpenQuestions.md
   Engineering/
     CodingStandards.md
