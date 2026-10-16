@@ -36,7 +36,14 @@ Light level is a requirement and penalty source for many actions. It is derived 
 | Dim | Dawn, Dusk | Some actions gain penalties (time, failure chance, risk). |
 | Dark | Night | Many actions are unavailable. Some remain available with penalties. |
 
-Light sources raise the light level for the survivor while active. The first is the **primitive torch**: an early craftable that is finicky, fragile and short-lived. A campfire is also a light source. Light sources are specified in their own system (planned).
+Light sources raise the light level while active.
+
+| Kind | Examples |
+|---|---|
+| Carried | The **primitive torch** (an early craftable: finicky, fragile and short-lived), candles |
+| Placed | Campfires, fixed torches, candelabras |
+
+Carried light goes with the survivor; placed light lights the zone or sub-zone it is in. Light sources are specified in their own system (planned).
 
 ### Acting in the dark
 

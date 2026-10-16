@@ -43,7 +43,9 @@ Canonical terms. Code, UI text and documents use these words with these meanings
 | Research | The passive, time-based process that turns a topic into recipes. Topics are unlocked only by discovering a material. One topic at a time, with up to 3 queued. See [Research](Design/Systems/Research.md). |
 | Resource node | A fixed zone feature harvested with actions, such as a banana tree or spring. Renewable actions let it replenish; destructive actions consume it. See [Resource Nodes](Design/Systems/ResourceNodes.md). |
 | Run | One survivor's life, from waking on the beach to death. See [Runs](Design/Systems/Runs.md). |
+| Shelter | Protection from weather: a shelter the player has built in a zone, or a sheltered sub-zone such as a cave. Automatically makes Wait, Rest, Nap and Sleep sheltered. See [Time](Design/Systems/Time.md#sheltered-variants). |
 | Skill | The survivor's proficiency at an activity, such as melee fighting or first aid. See [Skills](Design/Systems/Skills.md). |
+| Sub-zone | A smaller place inside a zone, such as a cave, with its own ground pool and features. Moving in and out is free. See [Zones](Design/Systems/Zones.md#sub-zones). |
 | Survival points | Earned per day survived in a run; spent on perks and boosts. See [Runs](Design/Systems/Runs.md). |
 | Survival stat | A core condition of the survivor shown as a bar where higher is always better, such as Food or Water. See [Survival Stats](Design/Systems/SurvivalStats.md). |
 | Tell | A truthful combat hint. Rule-out tells eliminate one of an animal's three options; at mastery, explicit tells sometimes state its action. |

@@ -23,6 +23,12 @@ Time is the game's core currency ([Pillar 1](../GameDesignDocument.md#pillars)).
 
 Wait and Rest are always available. Nap and Sleep are unavailable while any survival stat is dangerous, and a stat becoming dangerous ends them early (resolves OQ-018). See [Actions: condition gates](Actions.md#condition-gates).
 
+### Sheltered variants
+
+Wait, Rest, Nap and Sleep automatically become their sheltered versions when the survivor is sheltered: inside a sheltered [sub-zone](Zones.md#sub-zones) such as a cave, or in a zone with a shelter the player has built. The player never has to click the shelter to use it. Same durations; the survivor spends them protected from the [weather](Weather.md#weather-effects). Otherwise, they are spent in the open.
+
+Design intent: in Card Survival, a player who forgets to click their shelter sleeps on the ground and suffers for it. Owning a shelter is what matters, not remembering to use it.
+
 What Rest, Nap and Sleep restore, and how they differ beyond duration, depends on survival stats ([OQ-004](../OpenQuestions.md)) and is specified there.
 
 ## Rates

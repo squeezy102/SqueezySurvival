@@ -21,7 +21,7 @@ The single source of truth for the design, engineering and decisions behind Sque
 | | [Exertion](Design/Systems/Exertion.md) | Stamina, exertion risk, passing out. |
 | | [Injuries and Health](Design/Systems/Injuries.md) | Two-layer health, body locations, injuries, treatment. |
 | | [Skills](Design/Systems/Skills.md) | Skills identified so far. |
-| World | [Zones](Design/Systems/Zones.md) | Island, biomes, zones, ground pool. |
+| World | [Zones](Design/Systems/Zones.md) | Island, biomes, zones, sub-zones, ground pool. |
 | | [Exploration](Design/Systems/Exploration.md) | Progress, finds, milestones, scripted first explores. |
 | | [Resource Nodes](Design/Systems/ResourceNodes.md) | Renewable and destructive harvesting, replenishment. |
 | | [Encounters](Design/Systems/Encounters.md) | Wildlife encounters, fight or flight, ambushes. |
