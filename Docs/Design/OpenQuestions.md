@@ -26,3 +26,4 @@ Design questions still waiting for an answer. The full history of every question
 | OQ-047 | Runs | What perks, boosts and challenge unlocks can survival and challenge points buy, and at what prices? (Earn rates: 1 survival point per day, 1 challenge point per 30 days.) Deferred to a dedicated session. | Systems/Runs |
 | OQ-049 | Runs | Easy mode: how much lower are penalties, decay and stat depletion? (Points settled: survival points at 1/5 value, no challenge points.) | Systems/Runs |
 | OQ-050 | Runs | Casual saves: when all 5 save instances are in use, which is replaced? Proposal: a new autosave replaces the oldest autosave; a manual save asks which save to overwrite. | Systems/Runs |
+| OQ-051 | Runs | Hard mode: how much higher are penalties, decay and stat depletion, and how many more points does it earn? Proposal: double survival and challenge points. | Systems/Runs |

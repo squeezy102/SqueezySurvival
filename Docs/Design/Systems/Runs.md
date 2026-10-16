@@ -29,14 +29,19 @@ Run options change what a run earns ([Run options](#run-options)).
 
 ## Run options
 
-Two independent checkboxes, chosen when starting a run. Either, both or neither can be ticked.
+Checkboxes chosen when starting a run. Casual and easy mode can be combined; hard mode excludes both.
 
 | Option | Effect | Points |
 |---|---|---|
 | Casual mode | Free saving and loading; death is not final ([Saving](#saving)). | **None.** The checkbox states this explicitly: "Casual runs earn no points." |
 | Easy mode | The game is easier: lower penalties, slower decay, slower stat depletion and similar. | Survival points at 1/5 value: 1 per 5 days survived. **No challenge points.** |
 
-A run with both options earns no points.
+| Hard mode | The game is harder: higher penalties, faster decay, faster stat depletion and similar. | More survival and challenge points ([OQ-051](../OpenQuestions.md)). |
+
+| Combination | Allowed |
+|---|---|
+| Casual + Easy | Yes. Earns no points. |
+| Hard + Casual, Hard + Easy | No: ticking hard mode clears and disables the other two, and the reverse. |
 
 How much easier easy mode is: [OQ-049](../OpenQuestions.md).
 
