@@ -47,4 +47,13 @@ All of these must be true:
 - **Organic resources** in the zone are turned to charcoal or destroyed outright.
 - **Structures** in the zone are damaged and need repairs, or are destroyed.
 
-Wildfire chance, how long the zone stays closed, how much is lost, and what happens to a survivor asleep in the zone when it starts: [OQ-054](../OpenQuestions.md).
+### Waking to a wildfire
+
+An unattended fire caused by sleeping means the survivor is in the zone when the wildfire starts.
+
+1. **The survivor wakes immediately**, like any other sleep interruption ([Actions: condition gates](Actions.md#condition-gates)).
+2. **Escape window: 15-30 minutes** of game time to grab what they can and get out. Picking up items and other actions spend that time as usual.
+3. **Staying too long is dangerous**, and gets worse the longer the survivor stays: burns, smoke inhalation, overheating, dehydration, and finally death.
+4. **Leaving** means travelling to a connected zone. Whatever is left behind is exposed to the fire.
+
+Wildfire chance, how long the zone stays closed, how much is lost, the exact escape window, and how fast harm escalates past it: [OQ-054](../OpenQuestions.md).
