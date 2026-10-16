@@ -12,6 +12,7 @@ An ADR records one significant decision: the context, the choice, and its conseq
 | [0004](ADR-0004-Distribution-And-Self-Update.md) | Distribution and self-update | Proposed |
 | [0005](ADR-0005-Launcher-Technology.md) | Launcher technology | Accepted |
 | [0006](ADR-0006-Public-Source-And-Contribution-Workflow.md) | Public source and contribution workflow | Accepted |
+| [0007](ADR-0007-Runtime-UI-And-Assembly-Layout.md) | Runtime UI technology and assembly layout | Accepted |
 
 ## Template
 

@@ -39,6 +39,7 @@ Planned: Crafting, Buildings, Light Sources, Illness.
 - [Screen Layout](Design/UI/ScreenLayout.md) - main screen regions and organization tools.
 - [HUD](Design/UI/HUD.md) - static status area, temperature, weather icons, event log.
 - [Controls](Design/UI/Controls.md) - mouse and modifiers, hotkeys, remapping.
+- [Startup Flow](Design/UI/StartupFlow.md) - splash logos and main menu.
 - [Launcher](Design/Launcher.md) - launcher layout, behavior and states.
 
 ## Engineering
@@ -47,6 +48,7 @@ Planned: Crafting, Buildings, Light Sources, Illness.
 - [Project Setup](Engineering/ProjectSetup.md) - editor version, packages, folder layout.
 - [Source Control](Engineering/SourceControl.md) - branching, commits, Git LFS.
 - [Release Pipeline](Engineering/ReleasePipeline.md) - building, packaging and publishing player builds.
+- [Asset Credits](Engineering/AssetCredits.md) - source and license of every shipped asset.
 - Spikes - time-boxed experiments that answer a technical question:
   - [SPIKE-001: Velopack with a Unity player](Engineering/Spikes/SPIKE-001-Velopack-With-Unity.md)
 

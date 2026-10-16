@@ -14,6 +14,8 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 - Launcher (Avalonia, Velopack) with unit tests. See [Launcher](Docs/Design/Launcher.md).
 - Release pipeline: `Tools/Publish-Release.cmd`. See [Release Pipeline](Docs/Engineering/ReleasePipeline.md).
 - Developer scripts in `Tools/`.
+- Startup flow: "Made with Unity" and placeholder "Pj's Gameroom" splash logos, and a main menu (New Game, Continue, Load Game, Options, Quit) with the version in the bottom right. See [Startup Flow](Docs/Design/UI/StartupFlow.md).
+- Runtime assemblies `SqueezySurvival.Core` and `SqueezySurvival.Presentation`. See [ADR-0007](Docs/Decisions/ADR-0007-Runtime-UI-And-Assembly-Layout.md).
 
 ### Removed
 - Template packages outside MVP scope. See [ADR-0003](Docs/Decisions/ADR-0003-Package-Baseline.md).

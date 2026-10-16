@@ -34,10 +34,24 @@ Package choices and rationale: [ADR-0003](../Decisions/ADR-0003-Package-Baseline
 
 | Path | Contents | Assembly |
 |---|---|---|
-| `Assets/SqueezySurvival/Editor/` | Editor-only tooling, such as the release build | `SqueezySurvival.Editor` |
-| `Assets/SqueezySurvival/Tests/Editor/` | Edit Mode tests | `SqueezySurvival.Editor.Tests` |
+| `Assets/SqueezySurvival/Core/` | Game and screen logic, no Unity references | `SqueezySurvival.Core` |
+| `Assets/SqueezySurvival/Presentation/` | MonoBehaviours and UI binding | `SqueezySurvival.Presentation` |
+| `Assets/SqueezySurvival/Editor/` | Editor-only tooling: release build, setup commands | `SqueezySurvival.Editor` |
+| `Assets/SqueezySurvival/Tests/Core/` | Edit Mode tests for Core | `SqueezySurvival.Core.Tests` |
+| `Assets/SqueezySurvival/Tests/Editor/` | Edit Mode tests for editor tooling | `SqueezySurvival.Editor.Tests` |
+| `Assets/SqueezySurvival/UI/` | UXML layouts, USS styles, theme and panel settings | - |
+| `Assets/SqueezySurvival/Art/` | Sprites and textures ([Asset Credits](AssetCredits.md)) | - |
+| `Assets/SqueezySurvival/Scenes/` | Scenes | - |
 
-All project code lives under `Assets/SqueezySurvival/` in assembly definitions, never in the default `Assembly-CSharp`. Runtime assemblies are added with the first gameplay code.
+All project code lives under `Assets/SqueezySurvival/` in assembly definitions, never in the default `Assembly-CSharp`. Assembly layout: [ADR-0007](../Decisions/ADR-0007-Runtime-UI-And-Assembly-Layout.md).
+
+## Setup commands
+
+Scenes and assets that must be created inside Unity are made by commands under the **SqueezySurvival** menu, so they are reproducible.
+
+| Command | Does |
+|---|---|
+| SqueezySurvival > Setup > Configure Startup Screens | Imports the placeholder art, sets the splash logos, creates the main menu's panel settings and scene, and puts the scene in the build. Safe to run again. |
 
 ## First-time setup
 

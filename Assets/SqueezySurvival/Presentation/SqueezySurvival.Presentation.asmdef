@@ -1,0 +1,16 @@
+{
+    "name": "SqueezySurvival.Presentation",
+    "rootNamespace": "SqueezySurvival.Presentation",
+    "references": [
+        "SqueezySurvival.Core"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
