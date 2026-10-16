@@ -23,7 +23,7 @@ Ten states, from mildest to most severe (resolves OQ-009). There are no tornadoe
 
 ## Weather effects
 
-Effects below are the design intent. Magnitudes and how weather changes over time: [OQ-052](../OpenQuestions.md). Every effect that happens to the survivor or their things is reported in the [event log](../UI/HUD.md#event-log).
+Effects below are the design intent. Magnitudes and how weather changes over time: [OQ-060](../OpenQuestions.md). Every effect that happens to the survivor or their things is reported in the [event log](../UI/HUD.md#event-log).
 
 ### Clear and fair weather
 
@@ -100,7 +100,7 @@ Sunny - Partly cloudy - Cloudy - Rainy - Heavy rain - Storm - Heavy storm - Hurr
 2. **The season weights each step.** In the Rainy season, steps toward rain are more likely; in the Dry season, steps toward Sunny are. Over days this produces trends the player can feel: "It has been raining a lot lately, and the storms are getting worse," or "It hasn't rained in days. I should conserve water."
 3. **Every state lasts a while** before it can change, so weather never flickers.
 
-This is a Markov chain over the states above, with transition weights set per season. Step weights and minimum durations: [OQ-052](../OpenQuestions.md).
+This is a Markov chain over the states above, with transition weights set per season. Step weights and minimum durations: [OQ-060](../OpenQuestions.md).
 
 ## Wildfire
 
@@ -139,4 +139,4 @@ Either way, once inside:
 2. **Staying too long is dangerous**, and gets worse the longer the survivor stays: burns, smoke inhalation, overheating, dehydration, and finally death.
 3. **Leaving** means travelling to a connected zone. Whatever is left behind is exposed to the fire.
 
-Wildfire chance, how long the zone stays closed, how much is lost, the exact escape window, and how fast harm escalates past it: [OQ-054](../OpenQuestions.md).
+Wildfire chance, how long the zone stays closed, how much is lost, the exact escape window, and how fast harm escalates past it: [OQ-061](../OpenQuestions.md).

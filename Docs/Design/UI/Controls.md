@@ -34,4 +34,4 @@ The rest of the keyboard is reserved for functional hotkeys of this kind. The fu
 Baseline: [Game Accessibility Guidelines](https://gameaccessibilityguidelines.com/full-list/), Basic tier ([GDD](../GameDesignDocument.md#pillars)).
 
 - **All hotkeys and mouse bindings can be remapped** ("Allow controls to be remapped / reconfigured", Basic).
-- Drag alternatives: [OQ-033](../OpenQuestions.md).
+- Drag alternatives: [OQ-033](../OpenQuestions.md). Ideas to explore: click to pick up and click to place; double-click to move; click and hold to move many. Each method needs an alternative that requires neither a drag nor a held button (Intermediate tier).

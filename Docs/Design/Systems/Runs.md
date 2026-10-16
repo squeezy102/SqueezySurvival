@@ -23,7 +23,7 @@ When a run ends, it awards two currencies, based on how long the survivor lived.
 | Survival points | 1 per day survived | Perks and boosts that make the game easier or change how it plays. Ideas: character unlocks, cosmetics, theme packs. |
 | Challenge points | 1 per month survived (30 days) | Unlocks that make the game harder. |
 
-What points can buy: [OQ-047](../OpenQuestions.md). Detailed design is deferred.
+What points can buy: [OQ-058](../OpenQuestions.md). Detailed design is deferred.
 
 Run options change what a run earns ([Run options](#run-options)).
 
@@ -43,7 +43,7 @@ Checkboxes chosen when starting a run. Casual and easy mode can be combined; har
 | Casual + Easy | Yes. Earns no points. |
 | Hard + Casual, Hard + Easy | No: ticking hard mode clears and disables the other two, and the reverse. |
 
-How much easier easy mode and harder hard mode are: [OQ-049](../OpenQuestions.md). All point rates are drafts, tuned during user acceptance testing.
+How much easier easy mode and harder hard mode are: [OQ-059](../OpenQuestions.md). All point rates are drafts, tuned during user acceptance testing.
 
 ## Saving
 

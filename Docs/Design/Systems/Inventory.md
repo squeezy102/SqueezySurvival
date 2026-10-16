@@ -6,7 +6,7 @@ What the survivor carries. Weights are in pounds (lb).
 
 ## Personal inventory
 
-The survivor has a static personal weight limit. It does not grow with progression; carrying more requires carriers. All weight values (the personal limit, carrier capacities, item weights) are a delicate balancing lever and are set in a dedicated weight balancing session ([OQ-029](../OpenQuestions.md)).
+The survivor has a static personal weight limit. It does not grow with progression; carrying more requires carriers. All weight values (the personal limit, carrier capacities, item weights) are a delicate balancing lever and are set in a dedicated weight balancing session ([OQ-056](../OpenQuestions.md)).
 
 ### Load
 
