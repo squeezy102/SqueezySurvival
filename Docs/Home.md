@@ -3,32 +3,42 @@
 The single source of truth for the design, engineering and decisions behind SqueezySurvival.
 
 ## Design
+
 - [Game Design Document](Design/GameDesignDocument.md) - vision, pillars, core loop, MVP scope.
 - [Open Questions](Design/OpenQuestions.md) - unresolved design decisions.
-- [Launcher](Design/Launcher.md) - launcher layout, behavior and states.
-- Systems:
-  - [Time](Design/Systems/Time.md) - time units, passing time, day phases.
-  - [Actions](Design/Systems/Actions.md) - action anatomy, availability, light level, condition gates.
-  - [Survival Stats](Design/Systems/SurvivalStats.md) - macros, bar conventions, bands.
-  - [Food](Design/Systems/Food.md) - eating and per-food tolerance.
-  - [Exploration](Design/Systems/Exploration.md) - progress, finds, milestones, scripted first explores.
-  - [Resource Nodes](Design/Systems/ResourceNodes.md) - renewable and destructive harvesting, replenishment.
-  - [Decay](Design/Systems/Decay.md) - item deterioration as a resource sink.
-  - [Ground Pool](Design/Systems/GroundPool.md) - items on the ground in a zone.
-  - [Inventory](Design/Systems/Inventory.md) - personal weight limit and carriers.
-  - [Exertion](Design/Systems/Exertion.md) - stamina, exertion risk, injury, passing out.
-  - [Encounters](Design/Systems/Encounters.md) - random wildlife encounters, fight or flight.
-  - [Combat](Design/Systems/Combat.md) - animal decks, weapon classes, turn resolution.
-  - [Injuries and Health](Design/Systems/Injuries.md) - two-layer health, body locations, injuries, treatment.
-  - [Equipment](Design/Systems/Equipment.md) - equipment slots and treatment conflicts.
-  - [Skills](Design/Systems/Skills.md) - skills identified so far.
-- UI:
-  - [HUD](Design/UI/HUD.md) - static status area, temperature, weather icons, event log.
-  - [Controls](Design/UI/Controls.md) - mouse and modifiers, hotkeys, remapping.
-  - [Screen Layout](Design/UI/ScreenLayout.md) - main screen regions and organization tools.
 - [Glossary](Glossary.md) - canonical game terms.
 
+### Systems
+
+| Group | Document | Covers |
+|---|---|---|
+| Foundation | [Time](Design/Systems/Time.md) | Time units, passing time, day phases. |
+| | [Actions](Design/Systems/Actions.md) | Action anatomy, availability, light level, condition gates. |
+| Survivor | [Survival Stats](Design/Systems/SurvivalStats.md) | Stat bars, bands, contentment and sanity, body temperature. |
+| | [Food](Design/Systems/Food.md) | Eating and food tolerance. |
+| | [Exertion](Design/Systems/Exertion.md) | Stamina, exertion risk, passing out. |
+| | [Injuries and Health](Design/Systems/Injuries.md) | Two-layer health, body locations, injuries, treatment. |
+| | [Skills](Design/Systems/Skills.md) | Skills identified so far. |
+| World | [Zones](Design/Systems/Zones.md) | Island, biomes, zones, ground pool. |
+| | [Exploration](Design/Systems/Exploration.md) | Progress, finds, milestones, scripted first explores. |
+| | [Resource Nodes](Design/Systems/ResourceNodes.md) | Renewable and destructive harvesting, replenishment. |
+| | [Encounters](Design/Systems/Encounters.md) | Wildlife encounters, fight or flight, ambushes. |
+| | [Combat](Design/Systems/Combat.md) | Animal decks, duds, weapons, tells. |
+| Items | [Inventory](Design/Systems/Inventory.md) | Personal weight limit, load, carriers. |
+| | [Equipment](Design/Systems/Equipment.md) | Slots, loadouts, treatment conflicts. |
+| | [Decay](Design/Systems/Decay.md) | Item deterioration and storage. |
+
+Planned: Weather, Research, Crafting, Light Sources, Illness.
+
+### UI
+
+- [Screen Layout](Design/UI/ScreenLayout.md) - main screen regions and organization tools.
+- [HUD](Design/UI/HUD.md) - static status area, temperature, weather icons, event log.
+- [Controls](Design/UI/Controls.md) - mouse and modifiers, hotkeys, remapping.
+- [Launcher](Design/Launcher.md) - launcher layout, behavior and states.
+
 ## Engineering
+
 - [Coding Standards](Engineering/CodingStandards.md) - testability, naming, architecture, warnings policy.
 - [Project Setup](Engineering/ProjectSetup.md) - editor version, packages, folder layout.
 - [Source Control](Engineering/SourceControl.md) - branching, commits, Git LFS.
@@ -37,6 +47,7 @@ The single source of truth for the design, engineering and decisions behind Sque
   - [SPIKE-001: Velopack with a Unity player](Engineering/Spikes/SPIKE-001-Velopack-With-Unity.md)
 
 ## Decisions
+
 - [Architecture Decision Records](Decisions/README.md) - why things are the way they are.
 
 ## Documentation policy
@@ -49,48 +60,14 @@ The single source of truth for the design, engineering and decisions behind Sque
 6. **Status markers.** Design documents carry a status: `Concept`, `Draft`, `Approved`, or `Implemented`.
 7. **Designs are working drafts.** System designs are introductory and expected to change as the game is built and played. Changes are made in the owning document and recorded in its history, never by working around it.
 
-## Document map
+## Folder layout
 
-```
-README.md                  Project overview and quick start
-CHANGELOG.md               Release history
-Docs/
-  Home.md                  This page
-  Glossary.md
-  Design/
-    GameDesignDocument.md
-    Launcher.md
-    Systems/
-      Time.md
-      Actions.md
-      SurvivalStats.md
-      Food.md
-      Exploration.md
-      ResourceNodes.md
-      Decay.md
-      GroundPool.md
-      Inventory.md
-      Exertion.md
-      Encounters.md
-      Combat.md
-      Injuries.md
-      Equipment.md
-      Skills.md
-    UI/
-      HUD.md
-      Controls.md
-      ScreenLayout.md
-    OpenQuestions.md
-  Engineering/
-    CodingStandards.md
-    ProjectSetup.md
-    SourceControl.md
-    ReleasePipeline.md
-    Spikes/
-      SPIKE-NNN-*.md
-  Decisions/
-    README.md              ADR index and template
-    ADR-NNNN-*.md
-```
+| Folder | Holds |
+|---|---|
+| `Docs/Design/` | The GDD, open questions, and the launcher design. |
+| `Docs/Design/Systems/` | One document per game system. New systems are added here as they move from `Concept` to `Draft`. |
+| `Docs/Design/UI/` | Screens, HUD and controls. |
+| `Docs/Engineering/` | Standards, setup, source control, release pipeline. Spikes in `Spikes/SPIKE-NNN-*.md`. |
+| `Docs/Decisions/` | ADRs as `ADR-NNNN-*.md`, indexed in `README.md`. |
 
-System design documents (for example `Design/Systems/Time.md`) are added under `Design/Systems/` as each system moves from `Concept` to `Draft`.
+The index above is the full list of documents; it is the one place they are listed.

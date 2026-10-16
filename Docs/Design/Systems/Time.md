@@ -64,7 +64,7 @@ Direction of effect only. Each owning system specifies its own values.
 |---|---|---|---|---|---|---|---|
 | Temperature | Coldest, rising | Warming | Hottest | Hot, easing | Cooling | Cold | Weather (planned) |
 | Light level | Dim | Bright | Bright | Bright | Dim | Dark | [Actions](Actions.md#light-level) |
-| Active wildlife | Crepuscular | Diurnal | Diurnal | Diurnal | Crepuscular | Nocturnal | Wildlife (planned) |
+| Active wildlife | Crepuscular | Diurnal | Diurnal | Diurnal | Crepuscular | Nocturnal | [Encounters](Encounters.md) |
 | Fishing catches | Phase-specific species tables | | | | | | Fishing (planned) |
 | Foraging | Some plants available only in certain phases | | | | | | Foraging (planned) |
 

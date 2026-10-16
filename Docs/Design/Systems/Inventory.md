@@ -55,4 +55,4 @@ Carriers are equipment that add their own weight-limited inventory.
 - Worn and held carriers occupy an equipment slot: the hand basket uses the offhand, the belt the belt slot, the backpack the back slot. Example: a backpack might hold 5 more sticks, at the cost of the slot it uses.
 - How vehicles (wagon, cart, sleigh) are moved and used is specified with zone travel.
 
-Equipment slots are specified in Equipment (planned).
+Equipment slots are specified in [Equipment](Equipment.md).

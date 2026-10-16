@@ -27,9 +27,17 @@ Encounters are opt-in. In almost every encounter the survivor sees the animal fi
 - **Only ambush predators ambush.** Some aggressive predators (for example the mountain lion) are tagged as ambush predators. No other animal can force combat.
 - **The first one's free.** An ambush predator cannot ambush the survivor in a zone until the survivor has had a sighting of that species in that zone. A first meeting is always a sighting.
 - **Known threats are shown.** Once the survivor has seen an ambush predator in a zone, the zone shows that this animal is there and when it was seen (for example "Mountain lion - seen at Dusk"). An ambush can only happen when the player ignores that information.
-- **A sighting is still most likely.** When an encounter with a known ambush predator comes up, it is usually still a sighting. Only a small share are ambushes ([OQ-045](../OpenQuestions.md)).
+- **Darkness invites ambushes.** When an encounter with a known ambush predator comes up, the [light level](Actions.md#light-level) decides how likely it is to be an ambush rather than a sighting (resolves OQ-045, draft values):
 
-Exploring a dangerous zone should feel like "probably not, but what if?" The danger never comes out of nowhere ([Pillar 4: clarity](../GameDesignDocument.md#pillars)).
+| Light level | Ambush share |
+|---|---|
+| Bright | 5% (1 in 20) |
+| Dim | 15% (about 1 in 7) |
+| Dark | 50% (a coin flip) |
+
+A light source such as a torch raises the light level, and so lowers the share. Nocturnal predators are also most active at Night ([Time: what phases affect](Time.md#what-phases-affect)), so wandering in the dark where predators are known to live is asking for trouble.
+
+In daylight, exploring a dangerous zone should feel like "probably not, but what if?" The danger never comes out of nowhere ([Pillar 4: clarity](../GameDesignDocument.md#pillars)).
 
 ## Fight or flight
 

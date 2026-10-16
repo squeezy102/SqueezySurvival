@@ -32,7 +32,7 @@ The main gameplay screen. Every region follows [Pillar 4: clarity](../GameDesign
 | Zone bar | Top | Current zone name, the zones reachable from it, the Explore button, and the zone's exploration progress. Travelling is a click on a connected zone. |
 | HUD | Top left corner | Survival stats, outside temperature, body temperature, weather, game clock, carry load, stamina, sanity and other status (clock placement resolves OQ-035). See [HUD](HUD.md). |
 | Zone features | Center, upper | Resource nodes and other permanent or semi-permanent features of the zone. |
-| Ground pool | Center, lower | Items on the ground in the zone ([Ground Pool](../Systems/GroundPool.md)). |
+| Ground pool | Center, lower | Items on the ground in the zone ([Zones: ground pool](../Systems/Zones.md#ground-pool)). |
 | Event log | Lower left | See [HUD: event log](HUD.md#event-log). |
 | Inventory | Bottom | The survivor's inventory. Collapsible. |
 | Nav bar | Right edge | Slim icon bar that expands on hover or click. Each icon opens a gameplay window: crafting, cooking, equipment, research, quests and others. If the player wants to do something, it is probably here. |

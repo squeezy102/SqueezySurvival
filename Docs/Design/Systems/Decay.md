@@ -41,7 +41,7 @@ Food preservation is a core mechanic and one of the player's first goals, alongs
 
 ## Removing inorganic items
 
-Inorganic items decay very slowly, so in practice they leave a ground pool mainly when used or through extreme weather events ([Ground Pool](GroundPool.md#capacity)).
+Inorganic items decay very slowly, so in practice they leave a ground pool mainly when used or through extreme weather events ([Zones: ground pool](Zones.md#capacity)).
 
 ## Open questions
 

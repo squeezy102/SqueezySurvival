@@ -1,8 +1,8 @@
 # Combat
 
-**Status:** Concept
+**Status:** Draft
 
-Turn-based combat with wildlife, entered from an [encounter](Encounters.md). Rough design; expected to be refined.
+Turn-based combat with wildlife, entered from an [encounter](Encounters.md). Expected to be refined.
 
 ## Presentation
 
@@ -20,9 +20,11 @@ Each turn both sides choose one of three actions:
 
 The player chooses freely each turn. The player's Flee succeeds with a chance equal to their Health percentage ([Injuries and Health](Injuries.md)).
 
+There is no hit roll: the matchup of actions alone decides what succeeds (resolves OQ-042). Randomness lives only in the animal's hidden draw, before the player decides, so a correct read is never undone by a dice roll ([Game Developer: the 2 types of randomness](https://www.gamedeveloper.com/game-platforms/the-2-types-of-randomness-and-how-to-apply-them-to-your-board-game)).
+
 ## Animal decks
 
-Every animal has a hidden 10-card deck made of Fight, Defend and Flee cards. Each turn it draws a card at random and commits to that action. The player never sees the deck.
+Every animal has a hidden 10-card deck made of Fight, Defend and Flee cards. Each turn it draws a card and commits to that action. The player never sees the deck.
 
 | Animal | Fight | Defend | Flee | Personality |
 |---|---|---|---|---|
@@ -30,37 +32,32 @@ Every animal has a hidden 10-card deck made of Fight, Defend and Flee cards. Eac
 | Goat | 2 | 2 | 6 | Wary |
 | Mountain lion | 6 | 3 | 1 | Predator |
 
-## Weapons reshape the deck
+### Deck draws
 
-A successful attack turns one of the animal's cards into a **dud**, depending on the weapon's class. A dud stays in the deck; if the animal draws it, it does nothing and the player gets a free turn. The event log explains why.
+Cards are drawn without replacement: a drawn card cannot be drawn again until every card has been drawn, then the whole deck is reshuffled and reused (resolves OQ-039). Attentive players can infer what remains in the deck, which rewards skill without ever showing it.
 
-| Weapon class | Examples | Card turned into a dud | Effect | Example dud text |
-|---|---|---|---|---|
-| Melee | Knife, short sword, hatchet, club | Defend | Breaks the animal's guard. | "The goat stumbled, unable to brace itself." |
-| Reach | Spear, long sword, axe, maul | Fight | Keeps the animal at bay. | "The tiger couldn't get around your spear to attack you!" |
-| Ranged | Sling, bow | Flee | Stops the animal escaping. | "The gull tried to take off, but your stone had clipped its wing." |
+### Duds
 
-Duds rather than removal: removing a card shrinks the deck and makes every other card more likely (removing a Fight card raises the chance to Flee). A dud keeps the deck at 10 cards, so a hit only ever makes the targeted action rarer.
+A successful attack turns one of the animal's cards into a **dud**, depending on the weapon's class. If the animal draws a dud, it does nothing and the player gets a free turn. The event log explains why.
 
-**Duds last for the whole fight**; they never revert. Fights are expected to be short, and losing hard-won progress would feel bad and make no sense.
+- Duds rather than removal: removing a card shrinks the deck and makes every other card more likely (removing a Fight card raises the chance to Flee). A dud keeps the deck at 10 cards, so a hit only ever makes the targeted action rarer.
+- **Duds last for the whole fight**, through reshuffles. Fights are expected to be short, and losing hard-won progress would feel bad and make no sense.
 
-There are three weapon classes: **Melee, Reach and Ranged.** Every weapon shows its class as an icon, and its class is named on hover.
+## Weapons
 
-Weapon choice is therefore tactical: a ranged weapon against a skittish bird, a spear against a predator.
+There are three weapon classes. Every weapon shows its class as an icon, named on hover. A weapon's class decides its handedness (resolves OQ-041) and which card a hit turns into a dud.
 
-## Proposals to complete the design (not approved)
+| Class | Handedness | Weapons | Offhand | Card turned into a dud | Effect | Example dud text |
+|---|---|---|---|---|---|---|
+| Melee | One-handed | Knives, short swords, hatchets, hand axes, clubs | Free: a shield if desired | Defend | Breaks the animal's guard. | "The goat stumbled, unable to brace itself." |
+| Reach | Two-handed | Spears, long swords, axes, mauls | Unavailable | Fight | Keeps the animal at bay. | "The tiger couldn't get around your spear to attack you!" |
+| Ranged | Two-handed | Slings, bows | Holds the ammunition: a quiver or ammo pouch | Flee | Stops the animal escaping. | "The gull tried to take off, but your stone had clipped its wing." |
 
-### Turn resolution ([OQ-038](../OpenQuestions.md))
+Weapon choice is tactical: a ranged weapon against a skittish bird, a spear against a predator.
 
-| Player \ Animal | Fight | Defend | Flee |
-|---|---|---|---|
-| **Fight** | Both attack. The player's attack resolves first. | Player's attack is blocked; no dud is made. | Player's attack resolves first; unless it defeats the animal, the animal escapes. |
-| **Defend** | Animal's attack is blocked. | Nothing happens. | The animal escapes. |
-| **Flee** | Flee roll; on failure the animal's attack lands. | Flee roll. | Both separate; the encounter ends. |
+**Gear is locked for the fight.** Whatever the survivor wears when an encounter starts is what they fight in, for the whole fight. Choosing between gathering gear and combat gear is covered in [Equipment: loadouts](Equipment.md#loadouts).
 
-### Success, skill and information
-
-There is no hit roll: the matchup of actions alone decides what succeeds (resolves OQ-042). Randomness lives only in the animal's hidden draw, before the player decides, so a correct read is never undone by a dice roll ([Game Developer: the 2 types of randomness](https://www.gamedeveloper.com/game-platforms/the-2-types-of-randomness-and-how-to-apply-them-to-your-board-game)).
+## Skill and information
 
 | Progress | Gives | Grows by |
 |---|---|---|
@@ -70,13 +67,17 @@ There is no hit roll: the matchup of actions alone decides what succeeds (resolv
 
 Injuries to the tool-side arm lower damage dealt. See [Skills](Skills.md).
 
+### Defense
+
+- Defense is a [skill](Skills.md), raised by successful defends.
+- A shield in the offhand raises defense further, but only alongside a one-handed (Melee) weapon. Shields range from improvised (driftwood, a pot lid) to crafted shields.
+
 ### Tells
 
 A tell is a hint shown before the player chooses. Tells are always truthful.
 
 - **Rule-out tell:** rules out exactly one of the animal's three options. Example: "The gull isn't looking for a fight." The player still guesses, between two options.
-- **Explicit tell (mastery only):** states the animal's action. Example: "The tiger crouches low, ready to pounce!" Available only once the species is mastered, and only on some turns.
-- **Explicit tell presentation:** the text is accompanied by an icon for the action - sword (Fight), shield (Defend), boot (Flee). Later, the creature's sprite changes pose instead (for example a crouching tiger). Icon plus text keeps the tell readable without relying on color.
+- **Explicit tell (mastery only):** states the animal's action. Example: "The tiger crouches low, ready to pounce!" Available only once the species is mastered, and only on some turns. Shown with an icon for the action - sword (Fight), shield (Defend), boot (Flee) - so it is readable without relying on color. Later, the creature's sprite changes pose instead (for example a crouching tiger).
 
 Tells come from creature familiarity (proposed progression):
 
@@ -92,32 +93,16 @@ Tells come from creature familiarity (proposed progression):
 
 Records each species the survivor has encountered. Entries appear only after a first encounter and fill in as familiarity grows ([You only know what you know](../GameDesignDocument.md#pillars)).
 
-## Defense
+## Damage
 
-- Defense is a [skill](Skills.md), raised by successful defends.
-- A shield in the offhand raises defense further, but only alongside a one-handed weapon. Shields range from improvised (driftwood, a pot lid) to crafted shields.
-- A weapon's class determines its handedness (resolves OQ-041):
+Hits lower current Health and can cause injuries ([Injuries and Health](Injuries.md)). Damage values for weapons and animals, animal health, and which injuries each animal inflicts: [OQ-037](../OpenQuestions.md).
 
-| Class | Handedness | Weapons | Offhand |
+## Turn resolution
+
+Proposed, not approved ([OQ-038](../OpenQuestions.md)).
+
+| Player \ Animal | Fight | Defend | Flee |
 |---|---|---|---|
-| Melee | One-handed | Short swords, knives, hatchets, hand axes, clubs | Free: a shield if desired |
-| Reach | Two-handed | Long swords, spears, axes, mauls | Unavailable |
-| Ranged | Two-handed | Bows, slings | Holds the ammunition: a quiver or ammo pouch |
-
-## Loadouts
-
-Gearing for utility and gearing for combat are a real trade-off.
-
-- **Tools work as weapons, but worse.** A flint knife is a Melee weapon and can be paired with a shield, but deals less damage than a short sword or another purpose-made weapon.
-- **Combat gear costs utility.** A shield in the offhand displaces a hand basket or torch, so the survivor gathers and carries less.
-- **No gear changes during combat.** Whatever the survivor wears when an encounter starts is what they fight in, for the whole fight.
-
-The player is rewarded for having a combat loadout, and pays for being caught in gathering gear. Saved loadouts (one click to switch between gathering and fighting sets outside combat, costing a little time) are proposed in [OQ-043](../OpenQuestions.md).
-
-## Deck draws
-
-Cards are drawn without replacement: a drawn card cannot be drawn again until every card has been drawn, then the whole deck is reshuffled and reused (resolves OQ-039). Duds remain duds through reshuffles. Attentive players can infer what remains in the deck, which rewards skill without ever showing it.
-
-### Damage ([OQ-037](../OpenQuestions.md))
-
-Hits lower current Health and can cause injuries ([Injuries and Health](Injuries.md)). Damage values for weapons and animals, animal health, and which injuries each animal inflicts are not yet designed.
+| **Fight** | Both attack. The player's attack resolves first. | Player's attack is blocked; no dud is made. | Player's attack resolves first; unless it defeats the animal, the animal escapes. |
+| **Defend** | Animal's attack is blocked. | Nothing happens. | The animal escapes. |
+| **Flee** | Flee roll; on failure the animal's attack lands. | Flee roll. | Both separate; the encounter ends. |

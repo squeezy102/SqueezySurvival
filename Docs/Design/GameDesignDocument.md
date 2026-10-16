@@ -61,31 +61,11 @@ Assess state -> Choose action -> Pay cost (time + other) -> Resolve outcome
 
 ## World
 
-- **Setting:** a large island.
-- **Biomes:** each biome has its own resource set. The beach is the first and only MVP biome.
-- **Zones:** discrete locations, each belonging to a biome. Zones connect to one another. Moving between zones is an action that costs time.
-- **Zone resource pool:** exploring a zone unearths resources into that zone's pool ("on the ground"). Items in the pool stay in that zone and are not in the player's inventory.
-- **Weather:** affects the player and the environment. Specifics in [Open Questions](OpenQuestions.md).
+A large island of connected zones, each with a ground pool of items lying there. See [Zones](Systems/Zones.md), [Exploration](Systems/Exploration.md), [Resource Nodes](Systems/ResourceNodes.md) and [Encounters](Systems/Encounters.md).
 
 ## Survivor
 
-### Survival stats (concept)
-
-Specified in [Survival Stats](Systems/SurvivalStats.md). The table below is the original concept list.
-
-| Stat | Concept |
-|---|---|
-| Hunger | Need for food |
-| Thirst | Need for water |
-| Satiation | Distinct from hunger - definition pending ([Open Questions](OpenQuestions.md)) |
-| Sanity | Mental condition |
-| Cleanliness | Filth level; the MVP start is "filthy" |
-
-Stat ranges, decay rates and effects are not yet defined. Each will be specified in a system document before implementation.
-
-### Equipment
-
-Clothing provides protection. The MVP start is tattered clothing with minimal protection.
+The survivor's body and mind are specified in [Survival Stats](Systems/SurvivalStats.md), [Food](Systems/Food.md), [Exertion](Systems/Exertion.md), [Injuries and Health](Systems/Injuries.md), [Equipment](Systems/Equipment.md) and [Skills](Systems/Skills.md).
 
 ## Research
 
@@ -101,9 +81,9 @@ The player wakes on a beach.
 
 | Condition | Starting value |
 |---|---|
-| Hunger | Half |
-| Thirst | Half |
-| Cleanliness | Filthy |
+| Food | Half |
+| Water | Half |
+| Cleanliness | Low: filthy |
 | Clothing | Tattered, minimal protection |
 | Tools | None |
 
