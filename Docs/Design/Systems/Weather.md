@@ -44,6 +44,7 @@ All of these must be true:
 ### Effects
 
 - **The zone burns for a while.** Being in it while it burns is dangerous ([Caught in a wildfire](#caught-in-a-wildfire)).
+- **A wildfire never spreads to another zone.** One mistake costs one zone, never the island.
 - **Damage spreads over time.** From the moment the fire starts, items and structures are progressively charred, damaged or destroyed. The longer it burns, the more is lost.
 - **Organic resources** in the zone are turned to charcoal or destroyed outright.
 - **Structures** in the zone are damaged and need repairs, or are destroyed.
