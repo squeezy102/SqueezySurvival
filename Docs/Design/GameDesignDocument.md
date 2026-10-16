@@ -63,6 +63,10 @@ Assess state -> Choose action -> Pay cost (time + other) -> Resolve outcome
 
 A large island of connected zones, each with a ground pool of items lying there. See [Zones](Systems/Zones.md), [Exploration](Systems/Exploration.md), [Resource Nodes](Systems/ResourceNodes.md) and [Encounters](Systems/Encounters.md).
 
+## Long-term vision
+
+The island grows highly diverse over time: temperate forest, tropical jungle, desert, an arctic hellscape, a thriving atoll and more. Version 1.0 delivers a reasonable set of biomes; the rest are added in later development. The MVP starts with Coast, River and Jungle ([Zones](Systems/Zones.md#mvp-zones)).
+
 ## Survivor
 
 The survivor has **no gender**, and one is never specified. The sprite is androgynous. All game text addresses the player as "you" (as the [event log](UI/HUD.md#event-log) already does) or refers to "the survivor", never with gendered words.
@@ -125,7 +129,7 @@ The first things a player should work towards:
 
 - Animation.
 - Multiple playable characters and starting locations (planned later).
-- Biomes other than the beach.
+- Biomes other than Coast, River and Jungle ([Zones: MVP zones](Systems/Zones.md#mvp-zones)).
 
 ## Distribution
 
