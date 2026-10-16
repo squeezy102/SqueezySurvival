@@ -16,7 +16,7 @@ Survival stats (also called **macros**) are the survivor's core conditions, each
 |---|---|---|---|
 | Food | Small stomach | Full stomach | One bar. Restored by eating, limited by per-food [tolerance](Food.md#food-tolerance) (resolves OQ-003). |
 | Water | To be designed | To be designed | |
-| Stamina | To be designed | To be designed | Short-term physical exertion. Drained by chaining physical actions; recovered by Wait and Rest. Low stamina makes the survivor tired. |
+| Stamina | To be designed | To be designed | Short-term physical exertion. Drained by chaining physical actions; recovered by Wait and Rest. Low stamina makes the survivor tired; at 0 the survivor passes out (proposed). |
 | Wakefulness | To be designed | To be designed | Long-term need for sleep. Drained by time awake; restored by Nap and Sleep. Going too long without sleep causes sanity loss and other penalties. |
 | Body temperature | - | - | Not a bar. Shown as a HUD icon. See [Body temperature](#body-temperature). |
 | Sanity | Swirl | Peace sign | Drained while any stat is dangerous ([Actions: condition gates](Actions.md#condition-gates)). |
