@@ -57,12 +57,17 @@ No save scumming, ever (resolves OQ-011).
 
 ### Casual runs
 
-Resolves OQ-048.
+Resolves OQ-048 and OQ-050.
 
-- Each casual run has its own save folder holding up to **5 save instances**.
+- Each casual run has its own save folder with **6 slots**:
+  - **5 general slots**, each holding a manual save or an autosave.
+  - **1 dedicated autosave slot**, always holding the most recent autosave.
 - **Autosave** at the start of every day.
 - **Manual save** any time, from the Escape menu.
 - **Load** any of the run's saves at any time.
 - **On death**, the run is not deleted: a dialog lists the run's saves and the player picks one to load.
 
-When all 5 are in use: [OQ-050](../OpenQuestions.md).
+| New save | Goes to |
+|---|---|
+| Autosave | Always the dedicated slot. Also a free general slot, or else the general slot with the oldest autosave. **Never replaces a manual save.** If all 5 general slots hold manual saves, only the dedicated slot is written. |
+| Manual save | A free general slot, or else only the save the player chooses to overwrite. Nothing is replaced without the player's choice. |
