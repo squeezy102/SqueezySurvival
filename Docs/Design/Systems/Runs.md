@@ -20,10 +20,10 @@ When a run ends, it awards two currencies, based on how long the survivor lived.
 
 | Currency | Earned per | Spent on |
 |---|---|---|
-| Survival points | Day survived | Perks and boosts that make the game easier or change how it plays. Ideas: character unlocks, cosmetics, theme packs. |
-| Challenge points | Month survived (30 days) | Unlocks that make the game harder. |
+| Survival points | 1 per day survived | Perks and boosts that make the game easier or change how it plays. Ideas: character unlocks, cosmetics, theme packs. |
+| Challenge points | 1 per month survived (30 days) | Unlocks that make the game harder. |
 
-Amounts and what can be bought: [OQ-047](../OpenQuestions.md). Detailed design is deferred.
+What points can buy: [OQ-047](../OpenQuestions.md). Detailed design is deferred.
 
 Run options change what a run earns ([Run options](#run-options)).
 
@@ -34,11 +34,11 @@ Two independent checkboxes, chosen when starting a run. Either, both or neither 
 | Option | Effect | Points |
 |---|---|---|
 | Casual mode | Free saving and loading; death is not final ([Saving](#saving)). | **None.** The checkbox states this explicitly: "Casual runs earn no points." |
-| Easy mode | The game is easier: lower penalties, slower decay, slower stat depletion and similar. | Greatly reduced, for both survival and challenge points. |
+| Easy mode | The game is easier: lower penalties, slower decay, slower stat depletion and similar. | Survival points at 1/5 value: 1 per 5 days survived. **No challenge points.** |
 
 A run with both options earns no points.
 
-Easy mode's exact multipliers and point share: [OQ-049](../OpenQuestions.md).
+How much easier easy mode is: [OQ-049](../OpenQuestions.md).
 
 ## Saving
 
