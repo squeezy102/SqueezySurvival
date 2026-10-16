@@ -34,6 +34,10 @@ All project documentation lives in [`Docs/`](Docs/Home.md). Start at **[Docs/Hom
 
 Full details: [Project Setup](Docs/Engineering/ProjectSetup.md).
 
+## Contributing
+
+See [CONTRIBUTING](CONTRIBUTING.md). Every change goes through a pull request approved by squeezy102.
+
 ## License
 
-All rights reserved. No license is granted at this time.
+All rights reserved. See [LICENSE](LICENSE).
