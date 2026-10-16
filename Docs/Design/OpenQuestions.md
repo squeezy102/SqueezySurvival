@@ -7,7 +7,7 @@ Unresolved design decisions. When one is resolved, record the answer in the owni
 | OQ-004 | Stats | Stat ranges, decay rates per time unit, thresholds and their effects. | Systems/SurvivalStats |
 | OQ-005 | Research | Does research progress in the background while other actions are performed, or does it occupy the survivor's time? | Systems/Research (planned) |
 | OQ-006 | Research | Can multiple research items progress at once, or is there a queue? | Systems/Research (planned) |
-| OQ-029 | Inventory | What is the personal weight limit, and can load exceed 100%? Proposal: 30 lb; picking up an item that would take load past 100% is not allowed. | Systems/Inventory |
+| OQ-029 | Inventory | Weight balancing: the personal weight limit, carrier capacities, item weights, and whether load can exceed 100%. Weight is a delicate balancing lever affecting carrying, exploration, strain, food logistics and crafting. **Deferred to a dedicated weight balancing session.** | Systems/Inventory |
 | OQ-030 | Strain | How does accumulated strain lead to injury? Proposal: strain raises the instant-injury weight of every strenuous action (injury weight x (1 + strain / 25), so 5x at 100 strain); reaching 100 strain causes an injury automatically. | Systems/Strain |
 | OQ-025 | Exploration | How does exploring work at Dawn, Dusk and Night (light level penalties, hazard and injury chances)? | Systems/Exploration |
 | OQ-008 | Zones | How large is the island at MVP: how many beach zones, and how are they connected? | Systems/World (planned) |
