@@ -54,7 +54,15 @@ Weapon choice is therefore tactical: a ranged weapon against a skittish bird, a 
 
 ### Hit chance
 
-An attack has a hit chance that injuries lower: an injured tool-side arm lowers the chance an attack lands. Base hit chance and penalties are set during balancing.
+An attack's hit chance comes from the fighting skill for the weapon's class, lowered by injuries (an injured tool-side arm lowers it). Values are set during balancing.
+
+| Weapon class | Skill |
+|---|---|
+| Close melee | Melee fighting |
+| Reach melee | Pole weapon fighting |
+| Ranged | Ranged fighting |
+
+See [Skills](Skills.md).
 
 ### Deck draws ([OQ-039](../OpenQuestions.md))
 

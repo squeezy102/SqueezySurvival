@@ -28,6 +28,7 @@ Canonical terms. Code, UI text and documents use these words with these meanings
 | Research | The passive, time-based process that turns a discovered recipe into a craftable one. |
 | Macro | Informal name for a survival stat. |
 | Overshield | A stat that absorbs losses before they reach another. Contentment is Sanity's overshield. |
+| Skill | The survivor's proficiency at an activity, such as melee fighting or first aid. See [Skills](Design/Systems/Skills.md). |
 | Survival stat | A core condition of the survivor shown as a bar where higher is always better, such as Food or Water. See [Survival Stats](Design/Systems/SurvivalStats.md). |
 | Carrier | Equipment that adds its own weight-limited inventory, such as a basket, backpack or cart. See [Inventory](Design/Systems/Inventory.md). |
 | Combat | Turn-based fight with an animal, using hidden animal decks. See [Combat](Design/Systems/Combat.md). |

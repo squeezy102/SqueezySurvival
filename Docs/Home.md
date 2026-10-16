@@ -21,6 +21,7 @@ The single source of truth for the design, engineering and decisions behind Sque
   - [Combat](Design/Systems/Combat.md) - animal decks, weapon classes, turn resolution.
   - [Injuries and Health](Design/Systems/Injuries.md) - two-layer health, body locations, injuries, treatment.
   - [Equipment](Design/Systems/Equipment.md) - equipment slots and treatment conflicts.
+  - [Skills](Design/Systems/Skills.md) - skills identified so far.
 - UI:
   - [HUD](Design/UI/HUD.md) - static status area, temperature, weather icons, event log.
   - [Controls](Design/UI/Controls.md) - mouse and modifiers, hotkeys, remapping.
@@ -74,6 +75,7 @@ Docs/
       Combat.md
       Injuries.md
       Equipment.md
+      Skills.md
     UI/
       HUD.md
       Controls.md

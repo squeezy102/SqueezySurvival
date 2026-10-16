@@ -45,14 +45,14 @@ Carriers are equipment that add their own weight-limited inventory.
 
 | Carrier | Availability |
 |---|---|
-| Basket | Early |
+| Hand basket | Early; carried in the offhand, slightly increases carrying capacity |
 | Belt | Early |
 | Backpack | Mid |
 | Wagon, cart, sleigh | Late |
 
 - Each carrier's inventory has its own weight limit.
 - Weight in a carrier does not count against the survivor's personal limit for the purposes of movement.
-- Worn carriers (basket, belt, backpack) occupy an equipment slot. Example: a backpack might hold 5 more sticks, at the cost of the slot it uses.
+- Worn and held carriers occupy an equipment slot: the hand basket uses the offhand, the belt the belt slot, the backpack the back slot. Example: a backpack might hold 5 more sticks, at the cost of the slot it uses.
 - How vehicles (wagon, cart, sleigh) are moved and used is specified with zone travel.
 
 Equipment slots are specified in Equipment (planned).
