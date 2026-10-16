@@ -15,7 +15,7 @@ All project documentation lives in [`Docs/`](Docs/Home.md). Start at **[Docs/Hom
 | Area | Entry point |
 |---|---|
 | Game design | [Game Design Document](Docs/Design/GameDesignDocument.md) |
-| Design questions | [Open Questions](Docs/Design/OpenQuestions.md) |
+| Design questions | [Open Questions](Docs/Design/OpenQuestions.md), [Question Log](Docs/Design/QuestionLog.md) |
 | Engineering standards | [Coding Standards](Docs/Engineering/CodingStandards.md) |
 | Decisions | [Architecture Decision Records](Docs/Decisions/README.md) |
 | Changes | [CHANGELOG](CHANGELOG.md) |

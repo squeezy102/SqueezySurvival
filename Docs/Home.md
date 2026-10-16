@@ -5,7 +5,8 @@ The single source of truth for the design, engineering and decisions behind Sque
 ## Design
 
 - [Game Design Document](Design/GameDesignDocument.md) - vision, pillars, core loop, MVP scope.
-- [Open Questions](Design/OpenQuestions.md) - every design question, open and resolved, with its answer.
+- [Open Questions](Design/OpenQuestions.md) - design questions still waiting for an answer.
+- [Question Log](Design/QuestionLog.md) - every design question in ID order, with its status and resolution.
 - [Glossary](Glossary.md) - canonical game terms.
 
 ### Systems
@@ -65,7 +66,7 @@ Planned: Weather, Crafting, Buildings, Light Sources, Illness.
 
 | Folder | Holds |
 |---|---|
-| `Docs/Design/` | The GDD, open questions, and the launcher design. |
+| `Docs/Design/` | The GDD, open questions, question log, and the launcher design. |
 | `Docs/Design/Systems/` | One document per game system. New systems are added here as they move from `Concept` to `Draft`. |
 | `Docs/Design/UI/` | Screens, HUD and controls. |
 | `Docs/Engineering/` | Standards, setup, source control, release pipeline. Spikes in `Spikes/SPIKE-NNN-*.md`. |

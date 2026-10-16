@@ -1,58 +1,27 @@
 # Open Questions
 
-Every design question raised, in ID order, with its status.
+Design questions still waiting for an answer. The full history of every question, open and resolved, is in the [Question Log](QuestionLog.md).
 
-**Open now:** OQ-004, OQ-008, OQ-009, OQ-010, OQ-011, OQ-025, OQ-029, OQ-032, OQ-033, OQ-036, OQ-037, OQ-038, OQ-040, OQ-043, OQ-044, OQ-046.
+**Process**
 
-- **Question** keeps the original wording, including any proposal made at the time, so the context behind each decision is never lost.
-- **Resolving a question:** record the answer in the owning document, set the status to Resolved, summarize the answer with a link, and remove the ID from the "Open now" list.
-- IDs are never reused.
+1. **New question:** take the next ID, add it here and to the Question Log as Open.
+2. **Resolved:** record the answer in the owning document, remove the row here, and in the Question Log set the status to Resolved with a one-line answer and link. Both files change in the same commit.
 
-| ID | Status | Area | Question | Resolution |
-|---|---|---|---|---|
-| OQ-001 | Resolved | Time | What real-world duration is one time unit (for example 15 minutes)? | 1 TU = 1 minute. [Time](Systems/Time.md) |
-| OQ-002 | Resolved | Time | Does time advance only through actions, or is there also a wait/rest action to fast-forward? | Time passes only through actions; Wait, Rest, Nap and Sleep pass it deliberately. [Time](Systems/Time.md) |
-| OQ-003 | Resolved | Stats | How do Hunger and Satiation differ? (For example: Hunger = nutrition need, Satiation = stomach fullness.) | No separate satiation: one Food bar, limited by per-food tolerance. [Food](Systems/Food.md) |
-| OQ-004 | **Open** | Stats | Stat ranges, decay rates per time unit, thresholds and their effects. | Owner: Systems/SurvivalStats |
-| OQ-005 | Resolved | Research | Does research progress in the background while other actions are performed, or does it occupy the survivor's time? | Passive; never blocks an action. Time is the only cost. [Research](Systems/Research.md) |
-| OQ-006 | Resolved | Research | Can multiple research items progress at once, or is there a queue? | One topic at a time, up to 3 more queued. [Research](Systems/Research.md) |
-| OQ-007 | Resolved | Exploration | Is exploration yield random, weighted by zone, or depleting over time? | Progress uncovers fixed features; finds are unlimited; the first 4-5 explores are scripted. [Exploration](Systems/Exploration.md) |
-| OQ-008 | **Open** | Zones | How large is the island at MVP: how many beach zones, and how are they connected? | Owner: Systems/Zones |
-| OQ-009 | **Open** | Weather | Which weather states exist and how do they affect stats and actions? | Owner: Systems/Weather (planned) |
-| OQ-010 | **Open** | Failure | What ends a run (death conditions) and what persists between runs? | Owner: GameDesignDocument |
-| OQ-011 | **Open** | Saving | Save model: manual, autosave, single slot, or permadeath? | Owner: GameDesignDocument |
-| OQ-012 | Resolved | Distribution | Source repo private with a public releases-only repo, or source public? | Private source repo, public releases-only repo. [ADR-0004-Distribution-And-Self-Update](../Decisions/ADR-0004-Distribution-And-Self-Update.md) |
-| OQ-013 | Resolved | Distribution | Target platforms for shared builds: Windows only, or also macOS? | Windows only for now, kept portable. [ADR-0004-Distribution-And-Self-Update](../Decisions/ADR-0004-Distribution-And-Self-Update.md) |
-| OQ-014 | Resolved | Launcher | After Play, does the launcher close, minimize, or stay open? Recommendation: close, so updates are never attempted while game files are in use. | The launcher closes when the game starts. [Launcher](Launcher.md) |
-| OQ-015 | Resolved | Distribution | Is an update control also needed inside the game, or is the launcher the only place updates happen? | Updates happen only in the launcher. [Launcher](Launcher.md) |
-| OQ-016 | Resolved | Time | What time of day does the run start (for example 6:00 AM, waking on the beach)? | Day 1 at 6:00 AM. [Time](Systems/Time.md) |
-| OQ-017 | Resolved | Time | Are there day phases (dawn, day, dusk, night) that change actions, visibility or danger? | Six data-driven day phases: Dawn, Morning, Midday, Afternoon, Dusk, Night. [Time](Systems/Time.md) |
-| OQ-018 | Resolved | Time | Can long actions such as Sleep be interrupted by events (weather, animals, a stat reaching a critical level)? | Dangerous stats block Nap and Sleep and wake the survivor. [Actions](Systems/Actions.md) |
-| OQ-019 | Resolved | Stats | How is body temperature displayed, given that both extremes are bad? Proposal: a centered bar with a cold icon left, a hot icon right and a highlighted comfort zone in the middle, as the one documented exception to "higher is better". | Not a bar: a thermometer-and-body icon in the HUD. [SurvivalStats](Systems/SurvivalStats.md) |
-| OQ-020 | Resolved | UI | How does the body temperature icon show its state? Proposal: the icon tints from blue (cold) through neutral to red (hot) and shows a warning marker in dangerous ranges; hovering shows the exact temperature and band. | Thermometer fill in thirds (blue, green, red) plus frost or sweat markings. [HUD](UI/HUD.md) |
-| OQ-021 | Resolved | UI | Satiety rises as things get worse, which breaks "higher is better". Proposal: display each food's meter as **Appetite** (100% minus satiety), full when the survivor is happy to eat it and draining as they tire of it; the window then orders lowest appetite first. Internally the value remains satiety. | Renamed food tolerance; meters read 100% = happy to eat it. [Food](Systems/Food.md) |
-| OQ-022 | Resolved | Food | Is tolerance tracked per individual food (categories only group the display) or per category (eating mango also lowers coconut, because both are fruit)? | Both, per food and per category; the lower one governs. [Food](Systems/Food.md) |
-| OQ-023 | Resolved | Exploration | How fast does progress rise? Proposal: 5% per 15-minute explore, so the starting zone takes 20 explores (5 hours) to map fully, and the 25% milestone arrives right after the scripted first explores. | Explores to map set per zone: starting zone 24 (6 hours), typical 24-48. [Exploration](Systems/Exploration.md) |
-| OQ-024 | Resolved | Exploration | Do resource nodes deplete when harvested and regrow over time (proposal: a palm tree regrows coconuts over about 3 days; a tide pool restocks each tide)? Loose items never run out. | Harvest actions are renewable or destructive; replenishment by time, weather or tide. [ResourceNodes](Systems/ResourceNodes.md) |
-| OQ-025 | **Open** | Exploration | How does exploring work at Dawn, Dusk and Night (light level penalties, hazard and injury chances)? | Owner: Systems/Exploration |
-| OQ-026 | Resolved | Decay | Should stone decay? Proposal: no - stone and other inorganic materials do not decay on their own; a separate rule (for example, items left on the beach are buried by sand or washed away by the tide) can remove them if a sink is needed. | Everything decays; inorganic items very slowly, via a per-item multiplier. [Decay](Systems/Decay.md) |
-| OQ-027 | Resolved | Decay | Does storage stop decay or only slow it? Proposal: containers and sheltered shelves slow decay (food still spoils, but far more slowly); later items such as a smokehouse or salt preserve food. | Storage slows decay in tiers; it never stops it. [Decay](Systems/Decay.md) |
-| OQ-028 | Resolved | Decay | How are inorganic items removed from ground pools outside the beach, where there is no tide (forests, mountains)? | Ground pools are unlimited; items leave by use, decay or extreme weather. [Zones](Systems/Zones.md) |
-| OQ-029 | **Open** | Inventory | Weight balancing: the personal weight limit, carrier capacities, item weights, and whether load can exceed 100%. Weight is a delicate balancing lever affecting carrying, exploration, exertion, food logistics and crafting. **Deferred to a dedicated weight balancing session.** | Owner: Systems/Inventory |
-| OQ-030 | Resolved | Strain | How does accumulated strain lead to injury? Proposal: strain raises the instant-injury weight of every strenuous action (injury weight x (1 + strain / 25), so 5x at 100 strain); reaching 100 strain causes an injury automatically. | Strain meter dropped: stamina below 50% carries exertion risk. [Exertion](Systems/Exertion.md) |
-| OQ-031 | Resolved | UI | Event log behavior. Proposal: shows the last few entries and fades when idle (auto-hide is a setting, on by default); clicking it opens the full scrollable history for the run, filterable by type (actions, finds, warnings). | Auto-hide (setting), header controls, searchable and filterable full history. [HUD](UI/HUD.md) |
-| OQ-032 | **Open** | Controls | What does each mouse button and modifier combination do (for example Shift + left click to move a whole stack, Ctrl + left click to move one)? Defined per screen as screens are designed. | Owner: UI/Controls |
-| OQ-033 | **Open** | Controls | Alternatives to drag for moving items. Ideas to explore: click to pick up and click to place; double-click to move; click and hold to move many. Note: the Game Accessibility Guidelines' Intermediate tier asks to avoid requiring both drags and held buttons, so each method needs an alternative that does not. | Owner: UI/Controls |
-| OQ-034 | Resolved | UI | Event log highlights should pulse and glow, but the MVP has no animation. Proposal: the MVP uses a static highlight (colored border, icon and bold text) for a few seconds; the pulse and glow are added with animation later. A reduce-motion setting disables pulsing when it arrives. | Static highlight in MVP; pulse with animation later, plus a reduce-motion setting. [HUD](UI/HUD.md) |
-| OQ-035 | Resolved | UI | Where do the clock, day counter and day phase appear? Proposal: in the top-left HUD next to the weather and outside temperature. | Top-left HUD, with weather and temperatures. [HUD](UI/HUD.md) |
-| OQ-036 | **Open** | Encounters | Encounter chance per minute of action, and per zone, phase and weather. | Owner: Systems/Encounters |
-| OQ-037 | **Open** | Combat | Damage values for weapons and animals, animal health, and which injuries each animal inflicts. | Owner: Systems/Combat |
-| OQ-038 | **Open** | Combat | How does each pair of actions resolve (Fight vs Defend, Flee vs Fight, etc.)? Proposal in [Combat](Systems/Combat.md#turn-resolution). | Owner: Systems/Combat |
-| OQ-039 | Resolved | Combat | Are cards drawn with or without replacement, and when is the deck reshuffled? Proposal in Combat. | Without replacement; reshuffle when the deck is exhausted. Duds persist. [Combat](Systems/Combat.md) |
-| OQ-040 | **Open** | Equipment | Which hand is the tool hand? Stated as left hand = tool, right hand = offhand. Proposal: a dominant-hand setting (right by default) decides which side is the tool hand. | Owner: Systems/Equipment |
-| OQ-041 | Resolved | Combat | Which weapons are two-handed? Proposal: reach weapons (spears, long axes) are two-handed, so they cannot be used with a shield. | Weapon class decides handedness: Melee one-handed, Reach and Ranged two-handed. [Combat](Systems/Combat.md) |
-| OQ-042 | Resolved | Combat | Combat resolution: rock-paper-scissors versus hit rolls, and how skill-based tells work without removing the guess. Proposal: the matchup alone decides success (no hit roll); skill scales damage, defense and tells; a tell rules out at most one of the animal's three options, with deck-level tells ("the tiger is tiring") at high skill. | No hit roll; skill scales damage, defense and tells; tells rule out one option. [Combat](Systems/Combat.md) |
-| OQ-043 | **Open** | Equipment | Saved loadouts: can the player save gear sets and switch between them with one click outside combat, at a small time cost? | Owner: Systems/Equipment |
-| OQ-044 | **Open** | Combat | Thrown stones: sling ammunition only (the earliest ranged weapon is a crafted sling with a pouch), or a separate weak one-handed throw action usable with anything in hand? | Owner: Systems/Combat |
-| OQ-045 | Resolved | Encounters | Ambush share: what fraction of a known ambush predator's encounters are ambushes, and what changes it (light, survivor's state, torches or other deterrents)? | Ambush share by light: Bright 5%, Dim 15%, Dark 50%. [Encounters](Systems/Encounters.md) |
-| OQ-046 | **Open** | Research | Are topics with unmet requirements hidden, or shown locked with their requirements listed? | Owner: Systems/Research |
+| ID | Area | Question | Owner doc |
+|---|---|---|---|
+| OQ-004 | Stats | Stat ranges, decay rates per time unit, thresholds and their effects. | Systems/SurvivalStats |
+| OQ-008 | Zones | How large is the island at MVP: how many beach zones, and how are they connected? | Systems/Zones |
+| OQ-009 | Weather | Which weather states exist and how do they affect stats and actions? | Systems/Weather (planned) |
+| OQ-010 | Failure | What ends a run (death conditions) and what persists between runs? | GameDesignDocument |
+| OQ-011 | Saving | Save model: manual, autosave, single slot, or permadeath? | GameDesignDocument |
+| OQ-025 | Exploration | How does exploring work at Dawn, Dusk and Night (light level penalties, hazard and injury chances)? | Systems/Exploration |
+| OQ-029 | Inventory | Weight balancing: the personal weight limit, carrier capacities, item weights, and whether load can exceed 100%. Weight is a delicate balancing lever affecting carrying, exploration, exertion, food logistics and crafting. **Deferred to a dedicated weight balancing session.** | Systems/Inventory |
+| OQ-032 | Controls | What does each mouse button and modifier combination do (for example Shift + left click to move a whole stack, Ctrl + left click to move one)? Defined per screen as screens are designed. | UI/Controls |
+| OQ-033 | Controls | Alternatives to drag for moving items. Ideas to explore: click to pick up and click to place; double-click to move; click and hold to move many. Note: the Game Accessibility Guidelines' Intermediate tier asks to avoid requiring both drags and held buttons, so each method needs an alternative that does not. | UI/Controls |
+| OQ-036 | Encounters | Encounter chance per minute of action, and per zone, phase and weather. | Systems/Encounters |
+| OQ-037 | Combat | Damage values for weapons and animals, animal health, and which injuries each animal inflicts. | Systems/Combat |
+| OQ-038 | Combat | How does each pair of actions resolve (Fight vs Defend, Flee vs Fight, etc.)? Proposal in [Combat](Systems/Combat.md#turn-resolution). | Systems/Combat |
+| OQ-040 | Equipment | Which hand is the tool hand? Stated as left hand = tool, right hand = offhand. Proposal: a dominant-hand setting (right by default) decides which side is the tool hand. | Systems/Equipment |
+| OQ-043 | Equipment | Saved loadouts: can the player save gear sets and switch between them with one click outside combat, at a small time cost? | Systems/Equipment |
+| OQ-044 | Combat | Thrown stones: sling ammunition only (the earliest ranged weapon is a crafted sling with a pouch), or a separate weak one-handed throw action usable with anything in hand? | Systems/Combat |
+| OQ-046 | Research | Are topics with unmet requirements hidden, or shown locked with their requirements listed? | Systems/Research |
