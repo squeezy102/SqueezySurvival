@@ -35,5 +35,6 @@ Canonical terms. Code, UI text and documents use these words with these meanings
 | Day | 1,440 TU (24 hours of game time). |
 | Day phase | One of six named parts of the day (Dawn, Morning, Midday, Afternoon, Dusk, Night) that other systems use to vary behavior. See [Time](Design/Systems/Time.md). |
 | Time unit (TU) | The smallest unit of game time: 1 minute. See [Time](Design/Systems/Time.md). |
+| Weapon class | Melee, Reach or Ranged. Decides which fighting skill applies and which card a hit removes from an animal's deck. See [Combat](Design/Systems/Combat.md). |
 | Zone | A discrete location belonging to a biome, connected to other zones. |
 | Zone connection | A discovered route from one zone into another. |

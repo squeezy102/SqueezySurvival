@@ -36,9 +36,11 @@ A successful attack also removes one card from the animal's deck, depending on t
 
 | Weapon class | Examples | Card removed on a successful hit | Effect |
 |---|---|---|---|
-| Close melee | Knife, sword | Defend | Breaks the animal's guard. |
-| Reach melee | Spear, axe | Fight | Keeps the animal at bay. |
+| Melee | Knife, sword | Defend | Breaks the animal's guard. |
+| Reach | Spear, axe | Fight | Keeps the animal at bay. |
 | Ranged | Stone, sling, bow | Flee | Stops the animal escaping. |
+
+There are three weapon classes: **Melee, Reach and Ranged.** Every weapon shows its class as an icon, and its class is named on hover.
 
 Weapon choice is therefore tactical: a ranged weapon against a skittish bird, a spear against a predator.
 
@@ -58,8 +60,8 @@ An attack's hit chance comes from the fighting skill for the weapon's class, low
 
 | Weapon class | Skill |
 |---|---|
-| Close melee | Melee fighting |
-| Reach melee | Pole weapon fighting |
+| Melee | Melee fighting |
+| Reach | Reach fighting |
 | Ranged | Ranged fighting |
 
 See [Skills](Skills.md).
