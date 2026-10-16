@@ -5,6 +5,7 @@ Canonical terms. Code, UI text and documents use these words with these meanings
 | Term | Definition |
 |---|---|
 | Action | Anything the survivor does. Has a duration, costs, requirements, outcomes and risks. See [Actions](Design/Systems/Actions.md). |
+| Ambush | A forced combat encounter with no option to flee at the start. Only ambush predators the survivor has already seen in that zone can ambush. See [Encounters](Design/Systems/Encounters.md#ambushes). |
 | Biome | A category of environment (for example Beach) that defines which resources can be found. |
 | Cost | What an action consumes: time, and optionally stats, materials or tool durability. |
 | Food category | A grouping of foods such as Meat, Fish, Fruit, Vegetables or Dairy. Has its own tolerance meter. |

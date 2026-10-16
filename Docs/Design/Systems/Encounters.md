@@ -20,9 +20,20 @@ Random encounters with wildlife while the survivor is outside.
 | Accident | You step on a snake or scorpion; you bump into a beehive. | An immediate consequence (for example a sting), then fight or flight. |
 | Discovery | You happen across an ant mound or termite hill. | A feature is found; may become a [resource node](ResourceNodes.md). |
 
+## Ambushes
+
+Encounters are opt-in. In almost every encounter the survivor sees the animal first and can flee. An ambush is the exception: a forced [combat](Combat.md) encounter with no option to flee at the start.
+
+- **Only ambush predators ambush.** Some aggressive predators (for example the mountain lion) are tagged as ambush predators. No other animal can force combat.
+- **The first one's free.** An ambush predator cannot ambush the survivor in a zone until the survivor has had a sighting of that species in that zone. A first meeting is always a sighting.
+- **Known threats are shown.** Once the survivor has seen an ambush predator in a zone, the zone shows that this animal is there and when it was seen (for example "Mountain lion - seen at Dusk"). An ambush can only happen when the player ignores that information.
+- **A sighting is still most likely.** When an encounter with a known ambush predator comes up, it is usually still a sighting. Only a small share are ambushes ([OQ-045](../OpenQuestions.md)).
+
+Exploring a dangerous zone should feel like "probably not, but what if?" The danger never comes out of nowhere ([Pillar 4: clarity](../GameDesignDocument.md#pillars)).
+
 ## Fight or flight
 
-Every encounter except a pure discovery presents a fight-or-flight choice with risk and reward.
+Every encounter except a pure discovery or an ambush presents a fight-or-flight choice with risk and reward.
 
 - **Fight:** opens a [combat](Combat.md) encounter.
 - **Flight:** avoid or leave. Risks of fleeing an encounter (for example the thief escapes with the item, or the animal pursues) are defined per encounter.
