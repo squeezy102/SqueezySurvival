@@ -11,6 +11,8 @@ Always-visible status shown on every gameplay screen. Follows [Pillar 4: clarity
 | Body temperature | "Thermometer and body" icon | The survivor's own temperature. Shown separately from the survival stat bars because both extremes are bad. See [Body temperature icon](#body-temperature-icon). |
 | Outside temperature | Number with unit, for example `84°F` | Ambient air temperature. Unit is a player setting: Fahrenheit (default) or Celsius. |
 | Weather | Icon | Current weather state. |
+| Game clock | Day, time and day phase, for example `Day 3 - 7:45 AM - Morning` | See [Time](../Systems/Time.md). |
+| Real-world clock | The player's local time | Optional; player setting, off by default. |
 
 ## Body temperature icon
 
@@ -60,7 +62,7 @@ You pulled a muscle!
 - Warnings and serious events are marked with an icon as well as color.
 - Positioned lower left.
 - Hides automatically when idle and reappears when a new event arrives. Auto-hide is a player setting, on by default.
-- **Important events are highlighted** for a couple of seconds, both the entry and the log window: bad (red), good (green), notification (yellow). Each also carries an icon, so color is never the only signal. Highlight animation versus the no-animation MVP: [OQ-034](../OpenQuestions.md).
+- **Important events are highlighted** for a couple of seconds, both the entry and the log window: bad (red), good (green), notification (yellow). Each also carries an icon, so color is never the only signal. The MVP uses a static highlight (colored border, icon and bold text for a few seconds); pulsing and glowing arrive with animation, together with a reduce-motion setting (resolves OQ-034).
 - **Header controls:** clicking the top of the log offers pin, hide, configure, and open the full history.
 - **Full history view:** the whole run, searchable and filterable by type (actions, finds, warnings) (resolves OQ-031).
 

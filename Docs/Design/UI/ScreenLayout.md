@@ -30,7 +30,7 @@ The main gameplay screen. Every region follows [Pillar 4: clarity](../GameDesign
 |---|---|---|
 | Scene | Background, largest area | Art depicting the current zone. May change on each explore to suggest shifting scenery. |
 | Zone bar | Top | Current zone name, the zones reachable from it, the Explore button, and the zone's exploration progress. Travelling is a click on a connected zone. |
-| HUD | Top left corner | Survival stats, outside temperature, body temperature, weather, carry load, stamina, sanity and other status. See [HUD](HUD.md). |
+| HUD | Top left corner | Survival stats, outside temperature, body temperature, weather, game clock, carry load, stamina, sanity and other status (clock placement resolves OQ-035). See [HUD](HUD.md). |
 | Zone features | Center, upper | Resource nodes and other permanent or semi-permanent features of the zone. |
 | Ground pool | Center, lower | Items on the ground in the zone ([Ground Pool](../Systems/GroundPool.md)). |
 | Event log | Lower left | See [HUD: event log](HUD.md#event-log). |
