@@ -37,7 +37,7 @@ Canonical terms. Code, UI text and documents use these words with these meanings
 | Creature familiarity | Per-species knowledge from encounters; unlocks combat tells and bestiary detail. |
 | Day | 1,440 TU (24 hours of game time). |
 | Day phase | One of six named parts of the day (Dawn, Morning, Midday, Afternoon, Dusk, Night) that other systems use to vary behavior. See [Time](Design/Systems/Time.md). |
-| Tell | A combat hint that rules out one of an animal's three options. |
+| Tell | A truthful combat hint. Rule-out tells eliminate one of an animal's three options; at mastery, explicit tells sometimes state its action. |
 | Time unit (TU) | The smallest unit of game time: 1 minute. See [Time](Design/Systems/Time.md). |
 | Weapon class | Melee, Reach or Ranged. Decides which fighting skill applies and which of an animal's cards a hit turns into a dud. See [Combat](Design/Systems/Combat.md). |
 | Zone | A discrete location belonging to a biome, connected to other zones. |

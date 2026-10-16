@@ -72,7 +72,10 @@ Injuries to the tool-side arm lower damage dealt. See [Skills](Skills.md).
 
 ### Tells
 
-A tell is a hint shown before the player chooses. **A tell rules out exactly one of the animal's three options; it never states what is coming.** Example: "The gull isn't looking for a fight." The player still guesses, between two options.
+A tell is a hint shown before the player chooses. Tells are always truthful.
+
+- **Rule-out tell:** rules out exactly one of the animal's three options. Example: "The gull isn't looking for a fight." The player still guesses, between two options.
+- **Explicit tell (mastery only):** states the animal's action. Example: "The tiger crouches low, ready to pounce!" Available only once the species is mastered, and only on some turns.
 
 Tells come from creature familiarity (proposed progression):
 
@@ -82,6 +85,7 @@ Tells come from creature familiarity (proposed progression):
 | About 3 | Occasional |
 | About 10 | Frequent; the bestiary records its temperament ("Skittish: usually flees") |
 | Many | The bestiary shows its rough card makeup |
+| Mastery | About half of turns give an explicit tell; the rest give rule-out tells or none |
 
 ### Bestiary
 
