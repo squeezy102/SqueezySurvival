@@ -25,6 +25,16 @@ Renewable yields return through a trigger, defined per node.
 | Weather | A puddle or spring refills only after rain. |
 | Tide | A tide pool restocks with the tide. |
 
+## Throwing stones
+
+A survivor with stones in their inventory and a free hand can throw them at nodes out of reach. As in [combat](Combat.md#throwing-stones), each thrown stone has a decent chance of landing in the zone's ground pool to be picked up again. Some throws carry risks:
+
+| Target | Result | Risk |
+|---|---|---|
+| High-hanging fruit | Knocks it down | - |
+| Beehive | Knocks it down | The bees may become angry |
+| Bird's nest | Knocks it down | The eggs will probably crack |
+
 ## Access conditions
 
 A harvest action can have requirements beyond tools and light ([Actions](Actions.md)), including conditions on the zone itself.

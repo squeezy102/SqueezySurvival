@@ -51,6 +51,7 @@ Canonical terms. Code, UI text and documents use these words with these meanings
 | Survival stat | A core condition of the survivor shown as a bar where higher is always better, such as Food or Water. See [Survival Stats](Design/Systems/SurvivalStats.md). |
 | Tell | A truthful combat hint. Rule-out tells eliminate one of an animal's three options; at mastery, explicit tells sometimes state its action. |
 | Time unit (TU) | The smallest unit of game time: 1 minute. See [Time](Design/Systems/Time.md). |
+| Tracking | A skill and action for finding an animal that escaped a fight. Injured animals are easier to track. See [Combat](Design/Systems/Combat.md#tracking). |
 | Unattended fire | A fire burning while the survivor starts a full Sleep, or spends an hour or more in another zone. See [Weather](Design/Systems/Weather.md#wildfire). |
 | Wardrobe building | A placeable building that stores whole gear sets for one-action swapping: stick dummy, wardrobe, armoire. See [Equipment](Design/Systems/Equipment.md#saved-loadouts). |
 | Weapon class | Melee, Reach or Ranged. Decides which fighting skill applies and which of an animal's cards a hit turns into a dud. See [Combat](Design/Systems/Combat.md). |

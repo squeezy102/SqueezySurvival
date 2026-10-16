@@ -13,6 +13,7 @@ Skills represent the survivor's proficiency. They are opened from the nav bar or
 | Ranged fighting | Damage with Ranged weapons (sling, bow) |
 | Creature familiarity (per species) | Combat tells about that species, and its bestiary entry ([Combat: tells](Combat.md#tells)) |
 | Defense | Damage blocked by Defend. Raised by successful defends. Shields raise it further ([Combat](Combat.md#defense)). |
+| Tracking | Finding an animal that escaped a fight ([Combat: tracking](Combat.md#tracking)) |
 | First aid | Treating injuries ([Injuries and Health](Injuries.md#treatment)) |
 | Swimming | Risk while swimming ([Exertion](Exertion.md#risk-tiers)) |
 | Climbing | Risk while climbing |

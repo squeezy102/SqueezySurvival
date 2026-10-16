@@ -55,6 +55,21 @@ There are three weapon classes. Every weapon shows its class as an icon, named o
 
 Weapon choice is tactical: a ranged weapon against a skittish bird, a spear against a predator.
 
+### Throwing stones
+
+A survivor fighting **empty-handed** with stones in their inventory chooses how to Fight each turn (resolves OQ-044):
+
+| Choice | Class |
+|---|---|
+| Unarmed | Melee |
+| Throw a stone | Ranged |
+
+- This is the only situation in which the player chooses between Melee and Ranged. Holding anything in the tool hand means fighting with it.
+- A thrown stone is a **very weak** attack. Enough to bring down a seagull with several hits before it flies off, but little else.
+- Each throw uses one stone from the inventory. There is a decent chance it can be recovered afterwards: it lands in the zone's [ground pool](Zones.md#ground-pool); otherwise it is lost.
+
+Throwing stones outside combat: [Resource Nodes: throwing stones](ResourceNodes.md#throwing-stones).
+
 **Gear is locked for the fight.** Whatever the survivor wears when an encounter starts is what they fight in, for the whole fight. Choosing between gathering gear and combat gear is covered in [Equipment: loadouts](Equipment.md#loadouts).
 
 ## Skill and information
@@ -99,10 +114,30 @@ Hits lower current Health and can cause injuries ([Injuries and Health](Injuries
 
 ## Turn resolution
 
-Proposed, not approved ([OQ-038](../OpenQuestions.md)).
+Resolves OQ-038.
 
 | Player \ Animal | Fight | Defend | Flee |
 |---|---|---|---|
 | **Fight** | Both attack. The player's attack resolves first. | Player's attack is blocked; no dud is made. | Player's attack resolves first; unless it defeats the animal, the animal escapes. |
 | **Defend** | Animal's attack is blocked. | Nothing happens. | The animal escapes. |
 | **Flee** | Flee roll; on failure the animal's attack lands. | Flee roll. | Both separate; the encounter ends. |
+
+- **A dud is a free turn:** the player's attack lands, or their Flee succeeds automatically.
+- **A Ranged hit stops a fleeing animal escaping**, as its dud rule describes ([Weapons](#weapons)).
+
+## Tracking
+
+When an animal escapes, the player can try to **track** it.
+
+- Success is more likely the more injured the animal is, and the higher the survivor's Tracking [skill](Skills.md).
+- Tracking is trained by tracking.
+- **Each attempt takes 15 minutes**, longer under action penalties such as darkness, storms, fog or injury ([Actions: availability](Actions.md#availability)).
+- **When found, the fight resumes where it left off**: the animal's injuries and duds carry over.
+- **Badly hurt animals may already have collapsed** when found. No fight is needed: a sharp tool turns a collapsed animal into an animal carcass.
+
+| Animal health when found | Chance it has collapsed |
+|---|---|
+| Below 50% | 50% |
+| Below 25% | 75% |
+
+How injury and Tracking skill combine into the chance of finding the animal: [OQ-055](../OpenQuestions.md).
