@@ -58,7 +58,8 @@ You pulled a muscle!
 - Every game event that changes state is logged: discoveries, item movements, actions and their outcomes, stat warnings, injuries, weather changes.
 - **Every sound cue has a matching log entry**, so sound is never the only signal ([Pillar 4](../GameDesignDocument.md#pillars)).
 - Warnings and serious events are marked with an icon as well as color.
-- May auto-hide when idle. Default behavior and access to the full history: [OQ-031](../OpenQuestions.md).
+- Shows the last few entries and fades when idle. Auto-hide is a player setting, on by default.
+- Clicking the log opens the full scrollable history for the run, filterable by type (actions, finds, warnings) (resolves OQ-031).
 
 ### Voice
 
