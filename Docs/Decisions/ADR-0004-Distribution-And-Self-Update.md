@@ -15,7 +15,7 @@ A shareable build is a primary, non-negotiable deliverable from the first build 
 
 | Concern | Choice |
 |---|---|
-| Source repository | `squeezy102/SqueezySurvival`, private. |
+| Source repository | `squeezy102/SqueezySurvival`, private. *Superseded: the source repository is now public ([ADR-0006](ADR-0006-Public-Source-And-Contribution-Workflow.md)).* |
 | Releases repository | `squeezy102/SqueezySurvival-Releases`, public. Contains only a player-facing README and GitHub Releases with build artifacts. No source code. |
 | Hosting | GitHub Releases on the releases repository. Build output is never committed to either repository. |
 | Platforms | Windows (x64) only for now. Other platforms are not excluded; see Portability. |

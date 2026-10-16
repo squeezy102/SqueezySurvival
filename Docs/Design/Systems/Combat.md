@@ -110,7 +110,7 @@ Records each species the survivor has encountered. Entries appear only after a f
 
 ## Damage
 
-Hits lower current Health and can cause injuries ([Injuries and Health](Injuries.md)). Damage values for weapons and animals, animal health, and which injuries each animal inflicts: [OQ-037](../OpenQuestions.md).
+Hits lower current Health and can cause injuries ([Injuries and Health](Injuries.md)). Damage values for weapons and animals, animal health, and which injuries each animal inflicts: [OQ-057](../OpenQuestions.md).
 
 ## Turn resolution
 
@@ -140,4 +140,4 @@ When an animal escapes, the player can try to **track** it.
 | Below 50% | 50% |
 | Below 25% | 75% |
 
-How injury and Tracking skill combine into the chance of finding the animal: [OQ-055](../OpenQuestions.md).
+How injury and Tracking skill combine into the chance of finding the animal: [OQ-062](../OpenQuestions.md).

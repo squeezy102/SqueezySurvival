@@ -7,7 +7,7 @@
 | Item | Value |
 |---|---|
 | Host | GitHub, `squeezy102/SqueezySurvival` |
-| Visibility | Private |
+| Visibility | Public ([ADR-0006](../Decisions/ADR-0006-Public-Source-And-Contribution-Workflow.md)) |
 | Default branch | `main` |
 
 Player builds are published to a separate public repository, `squeezy102/SqueezySurvival-Releases`. See [ADR-0004](../Decisions/ADR-0004-Distribution-And-Self-Update.md).
@@ -31,7 +31,28 @@ Binary assets (images, audio, fonts, models) are stored with Git LFS. Rules are 
 
 ## Branching
 
-Work is committed to `main` while the project is in pre-production. A branching model is adopted when automated builds or collaborators are introduced, and recorded in an ADR.
+Nobody pushes directly to `main`. Every change, including the owner's, goes through a pull request ([CONTRIBUTING](../../CONTRIBUTING.md)).
+
+1. Create a branch from `main`: `design/...`, `feature/...`, `fix/...` or `docs/...`.
+2. Open a pull request into `main`.
+3. squeezy102 reviews and approves it.
+4. Squash merge; the branch is deleted automatically.
+
+Claude follows the same flow: it pushes a branch and opens the pull request, and squeezy102 merges it.
+
+## Protecting main
+
+A GitHub ruleset on `main` ([GitHub Docs: available rules for rulesets](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/available-rules-for-rulesets)):
+
+| Rule | Setting |
+|---|---|
+| Restrict deletions | On |
+| Block force pushes | On |
+| Require a pull request before merging | On: 1 approval, dismiss stale approvals when new commits are pushed, require review from Code Owners, require approval of the most recent reviewable push |
+| Allowed merge method | Squash |
+| Bypass list | Repository admin (squeezy102), for pull requests only |
+
+`.github/CODEOWNERS` makes squeezy102 the owner of every file, so every pull request needs that approval. Because GitHub does not let authors approve their own pull requests, squeezy102 merges their own (and Claude's) pull requests through the bypass, which still requires a pull request.
 
 ## Versioning
 

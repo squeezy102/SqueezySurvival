@@ -1,0 +1,4 @@
+# Every file is owned by the project owner. With "Require review from Code Owners"
+# on the main ruleset, every pull request needs squeezy102's approval to merge.
+# See Docs/Engineering/SourceControl.md.
+* @squeezy102

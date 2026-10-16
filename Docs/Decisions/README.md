@@ -11,6 +11,7 @@ An ADR records one significant decision: the context, the choice, and its conseq
 | [0003](ADR-0003-Package-Baseline.md) | Package baseline | Accepted |
 | [0004](ADR-0004-Distribution-And-Self-Update.md) | Distribution and self-update | Proposed |
 | [0005](ADR-0005-Launcher-Technology.md) | Launcher technology | Accepted |
+| [0006](ADR-0006-Public-Source-And-Contribution-Workflow.md) | Public source and contribution workflow | Accepted |
 
 ## Template
 
