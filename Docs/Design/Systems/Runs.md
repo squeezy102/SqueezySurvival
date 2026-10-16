@@ -36,14 +36,14 @@ Checkboxes chosen when starting a run. Casual and easy mode can be combined; har
 | Casual mode | Free saving and loading; death is not final ([Saving](#saving)). | **None.** The checkbox states this explicitly: "Casual runs earn no points." |
 | Easy mode | The game is easier: lower penalties, slower decay, slower stat depletion and similar. | Survival points at 1/5 value: 1 per 5 days survived. **No challenge points.** |
 
-| Hard mode | The game is harder: higher penalties, faster decay, faster stat depletion and similar. | More survival and challenge points ([OQ-051](../OpenQuestions.md)). |
+| Hard mode | The game is harder: higher penalties, faster decay, faster stat depletion and similar. | Double: 2 survival points per day, 2 challenge points per 30 days (resolves OQ-051). |
 
 | Combination | Allowed |
 |---|---|
 | Casual + Easy | Yes. Earns no points. |
 | Hard + Casual, Hard + Easy | No: ticking hard mode clears and disables the other two, and the reverse. |
 
-How much easier easy mode is: [OQ-049](../OpenQuestions.md).
+How much easier easy mode and harder hard mode are: [OQ-049](../OpenQuestions.md). All point rates are drafts, tuned during user acceptance testing.
 
 ## Saving
 

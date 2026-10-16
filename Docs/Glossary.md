@@ -28,7 +28,7 @@ Canonical terms. Code, UI text and documents use these words with these meanings
 | Food category | A grouping of foods such as Meat, Fish, Fruit, Vegetables or Dairy. Has its own tolerance meter. |
 | Food tolerance | A per-food meter (100% to 0%) of how willing the survivor is to eat that food. Falls with each serving, recovers over time; low tolerance reduces what the food restores and causes penalties. See [Food](Design/Systems/Food.md). |
 | Ground pool | The items lying on the ground in a zone. Unlimited in size; not part of the inventory. See [Zones](Design/Systems/Zones.md#ground-pool). |
-| Hard mode | A run option that makes the game harder and earns more points. Cannot be combined with casual or easy mode. See [Runs](Design/Systems/Runs.md#run-options). |
+| Hard mode | A run option that makes the game harder and earns double points. Cannot be combined with casual or easy mode. See [Runs](Design/Systems/Runs.md#run-options). |
 | Hazard | A danger met while exploring, such as a jellyfish or sea urchin. |
 | Health | Two-layer bar: current health (lowered by blows, restored by rest) under an injury ceiling (lowered by injuries). See [Injuries and Health](Design/Systems/Injuries.md). |
 | Injury | A specific wound or condition (sprain, laceration, broken bone) that lowers the injury ceiling, has effects and heals over time. |

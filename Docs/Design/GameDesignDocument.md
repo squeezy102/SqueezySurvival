@@ -69,7 +69,7 @@ The survivor's body and mind are specified in [Survival Stats](Systems/SurvivalS
 
 ## Runs
 
-Death ends the run and deletes its save; there is no save scumming. Casual mode (free saving, no points) and easy mode (easier, 1/5 survival points, no challenge points) are optional, as is hard mode (harder, more points). Each run earns points that persist and buy perks or challenges for later runs. See [Runs](Systems/Runs.md).
+Death ends the run and deletes its save; there is no save scumming. Casual mode (free saving, no points) and easy mode (easier, 1/5 survival points, no challenge points) are optional, as is hard mode (harder, double points). Each run earns points that persist and buy perks or challenges for later runs. See [Runs](Systems/Runs.md).
 
 ## Research
 
