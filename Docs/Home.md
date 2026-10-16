@@ -5,7 +5,7 @@ The single source of truth for the design, engineering and decisions behind Sque
 ## Design
 
 - [Game Design Document](Design/GameDesignDocument.md) - vision, pillars, core loop, MVP scope.
-- [Open Questions](Design/OpenQuestions.md) - unresolved design decisions.
+- [Open Questions](Design/OpenQuestions.md) - every design question, open and resolved, with its answer.
 - [Glossary](Glossary.md) - canonical game terms.
 
 ### Systems
