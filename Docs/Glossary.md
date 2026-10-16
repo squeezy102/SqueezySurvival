@@ -39,7 +39,7 @@ Canonical terms. Code, UI text and documents use these words with these meanings
 | Macro | Informal name for a survival stat. |
 | Overshield | A stat that absorbs losses before they reach another. Contentment is Sanity's overshield. |
 | Recipe | A definition of inputs, tools and time required to produce an item. |
-| Research | The passive, time-based process that unlocks recipes. One topic at a time, with up to 3 queued. See [Research](Design/Systems/Research.md). |
+| Research | The passive, time-based process that turns a topic into recipes. Topics are unlocked only by discovering a material. One topic at a time, with up to 3 queued. See [Research](Design/Systems/Research.md). |
 | Resource node | A fixed zone feature harvested with actions, such as a banana tree or spring. Renewable actions let it replenish; destructive actions consume it. See [Resource Nodes](Design/Systems/ResourceNodes.md). |
 | Run | One survivor's life, from waking on the beach to death. See [Runs](Design/Systems/Runs.md). |
 | Skill | The survivor's proficiency at an activity, such as melee fighting or first aid. See [Skills](Design/Systems/Skills.md). |

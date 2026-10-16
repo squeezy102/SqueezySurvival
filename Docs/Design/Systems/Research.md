@@ -8,7 +8,7 @@ Research turns discovered knowledge into craftable recipes and other unlocks.
 
 1. **Research is passive.** It progresses while the survivor does anything else and never blocks or interrupts an action (resolves OQ-005).
 2. **Its only cost is time.** Research progresses by the duration of every action ([Time](Time.md#rules)). The player's job is to keep something researching.
-3. **Completed research unlocks its result**, usually a recipe that becomes craftable.
+3. **Completed research grants recipes**, including blueprints for structures, which become craftable.
 
 ## Queue
 
@@ -18,16 +18,16 @@ Research turns discovered knowledge into craftable recipes and other unlocks.
 
 ## Availability
 
-A topic becomes available only when all its requirements are met:
+**Research topics are unlocked by discovering a material. Nothing else unlocks a topic** (resolves OQ-046). There are no prerequisite topics, building requirements or tool requirements on topics, so no topic is ever shown locked: a topic appears the moment its material is discovered ([You only know what you know](../GameDesignDocument.md#pillars)).
 
-| Requirement | Example |
-|---|---|
-| A discovered resource | Finding a sharp stone for the first time makes stone knapping researchable ([Pillar 3](../GameDesignDocument.md#pillars)). |
-| Prerequisite research | A topic depends on one or more completed topics. |
-| A built structure | A topic requires a building, such as a shelter or a kiln. |
-| A crafted tool | A topic requires a tool, such as a flint knife. |
+Progression chains form naturally, because crafted materials are discoveries too:
 
-Whether a topic with unmet requirements is shown: [OQ-046](../OpenQuestions.md).
+| Discovery | Unlocks topic | Topic grants |
+|---|---|---|
+| Copper ore | Refining and smelting | Recipes for a forge, tongs and a crucible |
+| Copper bar (smelted in a crucible and cooled) | Copper tools, copper weapons, copper armor | Recipes for each |
+
+Requirements such as needing a forge belong to the recipes a topic grants, not to the topic.
 
 ## Idle research
 
