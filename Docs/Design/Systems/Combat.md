@@ -104,6 +104,16 @@ Records each species the survivor has encountered. Entries appear only after a f
 | Reach | Two-handed | Long swords, spears, axes, mauls | Unavailable |
 | Ranged | Two-handed | Bows, slings | Holds the ammunition: a quiver or ammo pouch |
 
+## Loadouts
+
+Gearing for utility and gearing for combat are a real trade-off.
+
+- **Tools work as weapons, but worse.** A flint knife is a Melee weapon and can be paired with a shield, but deals less damage than a short sword or another purpose-made weapon.
+- **Combat gear costs utility.** A shield in the offhand displaces a hand basket or torch, so the survivor gathers and carries less.
+- **No gear changes during combat.** Whatever the survivor wears when an encounter starts is what they fight in, for the whole fight.
+
+The player is rewarded for having a combat loadout, and pays for being caught in gathering gear. Saved loadouts (one click to switch between gathering and fighting sets outside combat, costing a little time) are proposed in [OQ-043](../OpenQuestions.md).
+
 ## Deck draws
 
 Cards are drawn without replacement: a drawn card cannot be drawn again until every card has been drawn, then the whole deck is reshuffled and reused (resolves OQ-039). Duds remain duds through reshuffles. Attentive players can infer what remains in the deck, which rewards skill without ever showing it.
