@@ -24,4 +24,5 @@ Design questions still waiting for an answer. The full history of every question
 | OQ-044 | Combat | Thrown stones: sling ammunition only (the earliest ranged weapon is a crafted sling with a pouch), or a separate weak one-handed throw action usable with anything in hand? | Systems/Combat |
 | OQ-046 | Research | Are topics with unmet requirements hidden, or shown locked with their requirements listed? | Systems/Research |
 | OQ-047 | Runs | How many survival and challenge points does a run award, and what perks, boosts and challenge unlocks can they buy? Deferred to a dedicated session. | Systems/Runs |
-| OQ-048 | Runs | Casual mode: after death, what does the player resume from (the start of that day, or a manual save)? Does casual mode allow manual saves? Do casual runs earn survival and challenge points, fewer, or none? | Systems/Runs |
+| OQ-049 | Runs | Easy mode: how much lower are penalties, decay and stat depletion, and what share of points does an easy run earn? Proposal: 25% of normal points. | Systems/Runs |
+| OQ-050 | Runs | Casual saves: when all 5 save instances are in use, which is replaced? Proposal: a new autosave replaces the oldest autosave; a manual save asks which save to overwrite. | Systems/Runs |

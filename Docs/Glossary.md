@@ -9,7 +9,7 @@ Canonical terms. Code, UI text and documents use these words with these meanings
 | Bestiary | Record of encountered species, filling in with creature familiarity. See [Combat](Design/Systems/Combat.md#bestiary). |
 | Biome | A category of environment (for example Beach) that defines which resources can be found. |
 | Carrier | Equipment that adds its own weight-limited inventory, such as a basket, backpack or cart. See [Inventory](Design/Systems/Inventory.md). |
-| Casual mode | A run option chosen at start: the save is kept on death instead of deleted. The only exception to "no save scumming". See [Runs](Design/Systems/Runs.md#saving). |
+| Casual mode | A run option: free saving and loading (up to 5 saves), and death lets the player load a save. Earns no points. See [Runs](Design/Systems/Runs.md#run-options). |
 | Challenge points | Earned per 30 days survived in a run; spent on unlocks that make the game harder. See [Runs](Design/Systems/Runs.md). |
 | Combat | Turn-based fight with an animal, using hidden animal decks. See [Combat](Design/Systems/Combat.md). |
 | Cost | What an action consumes: time, and optionally stats, materials or tool durability. |
@@ -18,6 +18,7 @@ Canonical terms. Code, UI text and documents use these words with these meanings
 | Day phase | One of six named parts of the day (Dawn, Morning, Midday, Afternoon, Dusk, Night) that other systems use to vary behavior. See [Time](Design/Systems/Time.md). |
 | Decay | Deterioration of items over time, at a per-item rate, slowed by storage. Inorganic items decay very slowly. See [Decay](Design/Systems/Decay.md). |
 | Dud | An animal's combat card disabled by a successful hit; drawing it wastes the animal's turn. Lasts the whole fight. See [Combat](Design/Systems/Combat.md). |
+| Easy mode | A run option that makes the game easier. Earns greatly reduced points. Independent of casual mode. See [Runs](Design/Systems/Runs.md#run-options). |
 | Encounter | A random wildlife event outdoors: thief, sighting, accident or discovery. See [Encounters](Design/Systems/Encounters.md). |
 | Equipment slot | A place the survivor wears or holds an item: tool hand, offhand, head, neck, chest, belt, legs, shoes, gloves, two trinkets, back. See [Equipment](Design/Systems/Equipment.md). |
 | Event log | The on-screen running record of game events in plain language. See [HUD](Design/UI/HUD.md#event-log). |
