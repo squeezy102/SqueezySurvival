@@ -58,17 +58,34 @@ Weapon choice is therefore tactical: a ranged weapon against a skittish bird, a 
 | **Defend** | Animal's attack is blocked. | Nothing happens. | The animal escapes. |
 | **Flee** | Flee roll; on failure the animal's attack lands. | Flee roll. | Both separate; the encounter ends. |
 
-### Hit chance
+### Success, skill and information
 
-An attack's hit chance comes from the fighting skill for the weapon's class, lowered by injuries (an injured tool-side arm lowers it). Values are set during balancing.
+There is no hit roll: the matchup of actions alone decides what succeeds (resolves OQ-042). Randomness lives only in the animal's hidden draw, before the player decides, so a correct read is never undone by a dice roll ([Game Developer: the 2 types of randomness](https://www.gamedeveloper.com/game-platforms/the-2-types-of-randomness-and-how-to-apply-them-to-your-board-game)).
 
-| Weapon class | Skill |
+| Progress | Gives | Grows by |
+|---|---|---|
+| Weapon skill (Melee, Reach or Ranged fighting) | Damage dealt by a successful attack | Fighting with that weapon class |
+| Defense skill | Damage blocked by Defend | Successful defends |
+| Creature familiarity | Tells about that species | Encounters with that species |
+
+Injuries to the tool-side arm lower damage dealt. See [Skills](Skills.md).
+
+### Tells
+
+A tell is a hint shown before the player chooses. **A tell rules out exactly one of the animal's three options; it never states what is coming.** Example: "The gull isn't looking for a fight." The player still guesses, between two options.
+
+Tells come from creature familiarity (proposed progression):
+
+| Encounters with the species | Tells |
 |---|---|
-| Melee | Melee fighting |
-| Reach | Reach fighting |
-| Ranged | Ranged fighting |
+| First | None: pure guessing |
+| About 3 | Occasional |
+| About 10 | Frequent; the bestiary records its temperament ("Skittish: usually flees") |
+| Many | The bestiary shows its rough card makeup |
 
-See [Skills](Skills.md).
+### Bestiary
+
+Records each species the survivor has encountered. Entries appear only after a first encounter and fill in as familiarity grows ([You only know what you know](../GameDesignDocument.md#pillars)).
 
 ## Defense
 

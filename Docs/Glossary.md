@@ -32,9 +32,12 @@ Canonical terms. Code, UI text and documents use these words with these meanings
 | Skill | The survivor's proficiency at an activity, such as melee fighting or first aid. See [Skills](Design/Systems/Skills.md). |
 | Survival stat | A core condition of the survivor shown as a bar where higher is always better, such as Food or Water. See [Survival Stats](Design/Systems/SurvivalStats.md). |
 | Carrier | Equipment that adds its own weight-limited inventory, such as a basket, backpack or cart. See [Inventory](Design/Systems/Inventory.md). |
+| Bestiary | Record of encountered species, filling in with creature familiarity. See [Combat](Design/Systems/Combat.md#bestiary). |
 | Combat | Turn-based fight with an animal, using hidden animal decks. See [Combat](Design/Systems/Combat.md). |
+| Creature familiarity | Per-species knowledge from encounters; unlocks combat tells and bestiary detail. |
 | Day | 1,440 TU (24 hours of game time). |
 | Day phase | One of six named parts of the day (Dawn, Morning, Midday, Afternoon, Dusk, Night) that other systems use to vary behavior. See [Time](Design/Systems/Time.md). |
+| Tell | A combat hint that rules out one of an animal's three options. |
 | Time unit (TU) | The smallest unit of game time: 1 minute. See [Time](Design/Systems/Time.md). |
 | Weapon class | Melee, Reach or Ranged. Decides which fighting skill applies and which of an animal's cards a hit turns into a dud. See [Combat](Design/Systems/Combat.md). |
 | Zone | A discrete location belonging to a biome, connected to other zones. |

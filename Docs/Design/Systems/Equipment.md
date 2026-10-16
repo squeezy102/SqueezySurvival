@@ -33,7 +33,7 @@ Injury treatments attach to the injury, not to an equipment slot ([Injuries and 
 |---|---|---|
 | Bandaged | No gloves; slight work penalty on tool actions | No gloves; reduced carrying (a carried basket holds less, or nothing can be carried on that side) |
 | Broken bone (splinted) | Slot unusable until healed: no gloves, nothing held | Slot unusable until healed: no gloves, nothing held |
-| Any arm injury, in combat | Lowered hit chance ([Combat](Combat.md)) | - |
+| Any arm injury, in combat | Lowered damage dealt ([Combat](Combat.md)) | - |
 
 Broken bones must be splinted to heal properly.
 
