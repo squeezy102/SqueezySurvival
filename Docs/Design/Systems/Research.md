@@ -27,7 +27,7 @@ Progression chains form naturally, because crafted materials are discoveries too
 | Copper ore | Refining and smelting | Recipes for a forge, tongs and a crucible |
 | Copper bar (smelted in a crucible and cooled) | Copper tools, copper weapons, copper armor | Recipes for each |
 
-Requirements such as needing a forge belong to the recipes a topic grants, not to the topic.
+**Content rule:** chains are authored so that discovering a material means the player already has what its topics' recipes need. A copper bar can only be made with a forge, so by the time copper tool topics appear, the player has one. A recipe's own requirements (such as a forge) still exist in its data, and only become visible if the player has since lost them, for example to [decay](Decay.md).
 
 ## Idle research
 
