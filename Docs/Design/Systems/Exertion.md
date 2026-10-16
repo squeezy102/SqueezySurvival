@@ -74,4 +74,4 @@ Falling stamina is reported in the [event log](../UI/HUD.md#event-log) before ri
 
 ## Repetition
 
-Repeating the same kind of work day after day lowers Contentment ([Survival Stats](SurvivalStats.md)). This, not injury, is what discourages days of monotonous work.
+Repetitive work is never penalized. Variety is encouraged through Contentment rewards instead ([Survival Stats: contentment](SurvivalStats.md#contentment)).

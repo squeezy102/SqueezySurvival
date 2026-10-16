@@ -31,6 +31,10 @@ Presentation is pictures, text, windows and progress bars. Depth comes from syst
    - **Sound is never the only signal.** Every event conveyed by sound is also shown on screen.
    - **Accessibility baseline:** the Basic tier of the [Game Accessibility Guidelines](https://gameaccessibilityguidelines.com/full-list/), which includes both rules above ("Ensure no essential information is conveyed by a colour alone" and "...by sounds alone").
 
+## Design principles
+
+- **Reward, don't punish.** Behavior we want to encourage (variety, rest, exploration) is rewarded rather than its absence penalized. Players respond far better to a bonus than to a mechanically equivalent penalty: World of Warcraft's beta XP penalty for long sessions was hated, while the same system reframed as a rested bonus was welcomed ([Psychology of Games](https://www.psychologyofgames.com/2010/03/framing-and-world-of-warcrafts-rest-system/)). Hard consequences remain where survival demands them (starvation, injury, illness).
+
 ## Presentation
 
 - 2D sprites, text, windows and progress bars.

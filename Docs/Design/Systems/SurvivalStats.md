@@ -20,8 +20,20 @@ Survival stats (also called **macros**) are the survivor's core conditions, each
 | Wakefulness | To be designed | To be designed | Long-term need for sleep. Drained by time awake; restored by Nap and Sleep. Going too long without sleep causes sanity loss and other penalties. |
 | Body temperature | - | - | Not a bar. Shown as a HUD icon. See [Body temperature](#body-temperature). |
 | Sanity | Swirl | Peace sign | Drained while any stat is dangerous ([Actions: condition gates](Actions.md#condition-gates)). |
-| Contentment | Frown | Smile | Lowered by repeating the same kind of work day after day ([Exertion: repetition](Exertion.md#repetition)). |
+| Contentment | Frown | Smile | Always waning; raised by stimulation. See [Contentment](#contentment). |
 | Cleanliness | To be designed | To be designed | Starts low: the survivor wakes filthy. |
+
+## Contentment
+
+The mind needs stimulation. Contentment is always slowly waning, and stimulating experiences raise it or at least offset the loss. It is framed only positively: no activity lowers Contentment for being repeated ([GDD: design principles](../GameDesignDocument.md#design-principles)).
+
+| Source | Examples |
+|---|---|
+| Novelty | Starting a new task, taking a walk for the first time, entering a new area, crafting an item for the first time, discovering a new resource |
+| Comfort | Taking a bath, sitting by a warm fire, sleeping in shelter, a good meal |
+| Absorbing calm tasks | Fishing, whittling, sewing |
+
+Some sources raise Contentment; others only offset the waning while they last. Values are set during balancing.
 
 ## Body temperature
 
