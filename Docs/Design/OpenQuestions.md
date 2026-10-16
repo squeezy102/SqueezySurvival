@@ -11,7 +11,6 @@ Design questions still waiting for an answer. The full history of every question
 |---|---|---|---|
 | OQ-004 | Stats | Stat ranges, decay rates per time unit, thresholds and their effects. | Systems/SurvivalStats |
 | OQ-008 | Zones | How large is the island at MVP: how many beach zones, and how are they connected? | Systems/Zones |
-| OQ-009 | Weather | Which weather states exist and how do they affect stats and actions? | Systems/Weather (planned) |
 | OQ-025 | Exploration | How does exploring work at Dawn, Dusk and Night (light level penalties, hazard and injury chances)? | Systems/Exploration |
 | OQ-029 | Inventory | Weight balancing: the personal weight limit, carrier capacities, item weights, and whether load can exceed 100%. Weight is a delicate balancing lever affecting carrying, exploration, exertion, food logistics and crafting. **Deferred to a dedicated weight balancing session.** | Systems/Inventory |
 | OQ-032 | Controls | What does each mouse button and modifier combination do (for example Shift + left click to move a whole stack, Ctrl + left click to move one)? Defined per screen as screens are designed. | UI/Controls |
@@ -24,3 +23,6 @@ Design questions still waiting for an answer. The full history of every question
 | OQ-044 | Combat | Thrown stones: sling ammunition only (the earliest ranged weapon is a crafted sling with a pouch), or a separate weak one-handed throw action usable with anything in hand? | Systems/Combat |
 | OQ-047 | Runs | What perks, boosts and challenge unlocks can survival and challenge points buy, and at what prices? (Earn rates: 1 survival point per day, 1 challenge point per 30 days.) Deferred to a dedicated session. | Systems/Runs |
 | OQ-049 | Runs | Easy and hard mode: how much lower (easy) or higher (hard) are penalties, decay and stat depletion? (Points settled: easy earns 1/5 survival points and no challenge points; hard earns double.) | Systems/Runs |
+| OQ-052 | Weather | What does each weather state do to stats, actions, temperature and the environment, and how does weather change over time (per zone, per phase, per season)? | Systems/Weather |
+| OQ-053 | Weather | Which seasons exist, how long are they, and what changes between them besides wildfire risk? | Systems/Weather |
+| OQ-054 | Weather | Wildfire tuning: the chance an unattended fire starts one, how long the zone stays closed, how much is turned to charcoal, destroyed or damaged, and what happens to a survivor asleep in the zone when it starts? | Systems/Weather |

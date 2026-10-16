@@ -9,7 +9,7 @@ The world the survivor moves through.
 - **Setting:** a large island.
 - **Biomes:** categories of environment, each with its own resource set. The beach is the first and only MVP biome.
 - **Zones:** discrete locations, each belonging to one biome. Zones connect to one another through [zone connections](Exploration.md#what-exploring-can-reveal) found by exploring. Travelling to a connected zone is an action that costs time.
-- **Weather** affects the survivor and the environment (Weather, planned: [OQ-009](../OpenQuestions.md)).
+- **Weather** affects the survivor and the environment ([Weather](Weather.md)).
 
 The MVP island's size and layout: [OQ-008](../OpenQuestions.md).
 
@@ -25,4 +25,4 @@ The ground pool has no capacity limit (resolves OQ-028). Items leave it only by:
 |---|---|
 | The survivor picking them up or using them | Anything |
 | [Decay](Decay.md) | Everything; organic items within days, inorganic items only after a very long time |
-| Extreme weather events (floods, storms, landslides and similar) | Anything |
+| Extreme weather events (floods, storms, landslides and similar) and [wildfires](Weather.md#wildfire) | Anything |

@@ -29,18 +29,7 @@ Always-visible status shown on every gameplay screen. Follows [Pillar 4: clarity
 
 ## Weather icons
 
-| Weather | Category |
-|---|---|
-| Sunny | Normal |
-| Cloudy | Normal |
-| Light rain | Normal |
-| Heavy rain | Normal |
-| Storm | Normal |
-| Hurricane | Disaster event |
-| Tornado | Disaster event |
-| Hail | Disaster event |
-
-The weather states and their effects are specified in Weather (planned, [OQ-009](../OpenQuestions.md)).
+One icon per [weather state](../Systems/Weather.md#weather-states). Severe and disaster states also carry a warning marker, so their severity is never shown by color alone.
 
 ## Event log
 

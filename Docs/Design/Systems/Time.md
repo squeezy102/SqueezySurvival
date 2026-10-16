@@ -62,7 +62,7 @@ Direction of effect only. Each owning system specifies its own values.
 
 | Affected | Dawn | Morning | Midday | Afternoon | Dusk | Night | Owner |
 |---|---|---|---|---|---|---|---|
-| Temperature | Coldest, rising | Warming | Hottest | Hot, easing | Cooling | Cold | Weather (planned) |
+| Temperature | Coldest, rising | Warming | Hottest | Hot, easing | Cooling | Cold | [Weather](Weather.md) |
 | Light level | Dim | Bright | Bright | Bright | Dim | Dark | [Actions](Actions.md#light-level) |
 | Active wildlife | Crepuscular | Diurnal | Diurnal | Diurnal | Crepuscular | Nocturnal | [Encounters](Encounters.md) |
 | Fishing catches | Phase-specific species tables | | | | | | Fishing (planned) |
