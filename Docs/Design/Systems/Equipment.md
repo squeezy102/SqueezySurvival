@@ -9,7 +9,7 @@ What the survivor wears and holds.
 | Slot | Holds |
 |---|---|
 | Tool hand | The main tool or weapon |
-| Offhand | A secondary item (torch, shield, second tool) |
+| Offhand | A secondary item (torch, shield, hand basket). Unavailable while holding a two-handed weapon. |
 | Head | Hats, helmets |
 | Neck | Necklaces, scarves |
 | Chest | Shirts, armor |

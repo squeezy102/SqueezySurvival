@@ -70,6 +70,12 @@ An attack's hit chance comes from the fighting skill for the weapon's class, low
 
 See [Skills](Skills.md).
 
+## Defense
+
+- Defense is a [skill](Skills.md), raised by successful defends.
+- A shield in the offhand raises defense further, but only alongside a one-handed weapon. Shields range from improvised (driftwood, a pot lid) to crafted shields.
+- Weapons are one-handed or two-handed. Which weapons are two-handed: [OQ-041](../OpenQuestions.md).
+
 ## Deck draws
 
 Cards are drawn without replacement: a drawn card cannot be drawn again until every card has been drawn, then the whole deck is reshuffled and reused (resolves OQ-039). Duds remain duds through reshuffles. Attentive players can infer what remains in the deck, which rewards skill without ever showing it.

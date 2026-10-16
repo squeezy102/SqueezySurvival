@@ -11,6 +11,7 @@ Skills represent the survivor's proficiency. They are opened from the nav bar or
 | Melee fighting | Hit chance with Melee weapons (knife, sword) ([Combat](Combat.md)) |
 | Reach fighting | Hit chance with Reach weapons (spear, axe) |
 | Ranged fighting | Hit chance with Ranged weapons (stone, sling, bow) |
+| Defense | Damage blocked by Defend. Raised by successful defends. Shields raise it further ([Combat](Combat.md#defense)). |
 | First aid | Treating injuries ([Injuries and Health](Injuries.md#treatment)) |
 | Swimming | Risk while swimming ([Exertion](Exertion.md#risk-tiers)) |
 | Climbing | Risk while climbing |
