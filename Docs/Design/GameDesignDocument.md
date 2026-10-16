@@ -69,9 +69,7 @@ The survivor's body and mind are specified in [Survival Stats](Systems/SurvivalS
 
 ## Research
 
-- The first time the player finds a resource, recipes that use it become available in the Research tab.
-- Researching a recipe takes time and is passive. Whether it runs alongside other actions is pending ([Open Questions](OpenQuestions.md)).
-- Completed research makes the recipe craftable.
+Passive, time-based unlocking of recipes, queued up to 3 topics ahead. See [Research](Systems/Research.md).
 
 ## MVP scope
 

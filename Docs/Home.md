@@ -24,11 +24,12 @@ The single source of truth for the design, engineering and decisions behind Sque
 | | [Resource Nodes](Design/Systems/ResourceNodes.md) | Renewable and destructive harvesting, replenishment. |
 | | [Encounters](Design/Systems/Encounters.md) | Wildlife encounters, fight or flight, ambushes. |
 | | [Combat](Design/Systems/Combat.md) | Animal decks, duds, weapons, tells. |
+| | [Research](Design/Systems/Research.md) | Passive research, queue, topic requirements, idle warning. |
 | Items | [Inventory](Design/Systems/Inventory.md) | Personal weight limit, load, carriers. |
 | | [Equipment](Design/Systems/Equipment.md) | Slots, loadouts, treatment conflicts. |
 | | [Decay](Design/Systems/Decay.md) | Item deterioration and storage. |
 
-Planned: Weather, Research, Crafting, Light Sources, Illness.
+Planned: Weather, Crafting, Buildings, Light Sources, Illness.
 
 ### UI
 

@@ -1,12 +1,10 @@
 # Open Questions
 
-Unresolved design decisions. When one is resolved, record the answer in the owning document, then remove it from here.
+Unresolved design decisions. When one is resolved, record the answer in the owning document, then move its ID to the resolved table.
 
 | ID | Area | Question | Owner doc |
 |---|---|---|---|
 | OQ-004 | Stats | Stat ranges, decay rates per time unit, thresholds and their effects. | Systems/SurvivalStats |
-| OQ-005 | Research | Does research progress in the background while other actions are performed, or does it occupy the survivor's time? | Systems/Research (planned) |
-| OQ-006 | Research | Can multiple research items progress at once, or is there a queue? | Systems/Research (planned) |
 | OQ-008 | Zones | How large is the island at MVP: how many beach zones, and how are they connected? | Systems/Zones |
 | OQ-009 | Weather | Which weather states exist and how do they affect stats and actions? | Systems/Weather (planned) |
 | OQ-010 | Failure | What ends a run (death conditions) and what persists between runs? | GameDesignDocument |
@@ -21,6 +19,7 @@ Unresolved design decisions. When one is resolved, record the answer in the owni
 | OQ-040 | Equipment | Which hand is the tool hand? Stated as left hand = tool, right hand = offhand. Proposal: a dominant-hand setting (right by default) decides which side is the tool hand. | Systems/Equipment |
 | OQ-043 | Equipment | Saved loadouts: can the player save gear sets and switch between them with one click outside combat, at a small time cost? | Systems/Equipment |
 | OQ-044 | Combat | Thrown stones: sling ammunition only (the earliest ranged weapon is a crafted sling with a pouch), or a separate weak one-handed throw action usable with anything in hand? | Systems/Combat |
+| OQ-046 | Research | Are topics with unmet requirements hidden, or shown locked with their requirements listed? | Systems/Research |
 
 ## Resolved
 
@@ -30,6 +29,7 @@ IDs are never reused.
 |---|---|
 | OQ-001, OQ-002, OQ-016, OQ-017, OQ-018 | [Time](Systems/Time.md) |
 | OQ-003, OQ-021, OQ-022 | [Food](Systems/Food.md) |
+| OQ-005, OQ-006 | [Research](Systems/Research.md) |
 | OQ-007, OQ-023 | [Exploration](Systems/Exploration.md) |
 | OQ-012, OQ-013 | [ADR-0004](../Decisions/ADR-0004-Distribution-And-Self-Update.md) |
 | OQ-014, OQ-015 | [Launcher](Launcher.md) |

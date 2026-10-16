@@ -13,6 +13,7 @@ Always-visible status shown on every gameplay screen. Follows [Pillar 4: clarity
 | Weather | Icon | Current weather state. |
 | Game clock | Day, time and day phase, for example `Day 3 - 7:45 AM - Morning` | See [Time](../Systems/Time.md). |
 | Real-world clock | The player's local time | Optional; player setting, off by default. |
+| Idle research | Atom with "zzz" icon | Shown only while nothing is researching. See [Research: idle research](../Systems/Research.md#idle-research). |
 
 ## Body temperature icon
 
