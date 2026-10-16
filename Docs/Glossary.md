@@ -48,9 +48,9 @@ Canonical terms. Code, UI text and documents use these words with these meanings
 | Survival stat | A core condition of the survivor shown as a bar where higher is always better, such as Food or Water. See [Survival Stats](Design/Systems/SurvivalStats.md). |
 | Tell | A truthful combat hint. Rule-out tells eliminate one of an animal's three options; at mastery, explicit tells sometimes state its action. |
 | Time unit (TU) | The smallest unit of game time: 1 minute. See [Time](Design/Systems/Time.md). |
-| Unattended fire | A fire burning while the survivor starts a full Sleep or leaves the zone. See [Weather](Design/Systems/Weather.md#wildfire). |
+| Unattended fire | A fire burning while the survivor starts a full Sleep, or spends an hour or more in another zone. See [Weather](Design/Systems/Weather.md#wildfire). |
 | Weapon class | Melee, Reach or Ranged. Decides which fighting skill applies and which of an animal's cards a hit turns into a dud. See [Combat](Design/Systems/Combat.md). |
 | Weather state | The current weather in a zone, from Sunny to Hurricane. See [Weather](Design/Systems/Weather.md). |
-| Wildfire | A disaster started by an unattended fire in the dry season. Forces the survivor out of the zone and burns its organic resources and structures. See [Weather](Design/Systems/Weather.md#wildfire). |
+| Wildfire | A disaster started by an unattended fire in the dry season. Gives a survivor in the zone 15-30 minutes to escape, and burns its organic resources and structures. See [Weather](Design/Systems/Weather.md#wildfire). |
 | Zone | A discrete location belonging to a biome, connected to other zones. See [Zones](Design/Systems/Zones.md). |
 | Zone connection | A discovered route from one zone into another. |

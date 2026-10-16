@@ -37,23 +37,27 @@ All of these must be true:
 
 | Condition | Detail |
 |---|---|
-| A fire is left unattended | The survivor starts a full Sleep action while a fire burns in the zone, or leaves the zone while a fire burns there. |
+| A fire is left unattended | The survivor starts a full Sleep action while a fire burns in the zone, or spends **an hour or more** in another zone while a fire burns there. A shorter trip away does not count. |
 | It is the dry season | See [Seasons](#seasons). |
 | The zone has plenty of fuel | Many semi-permanent or permanent bush and foliage features, and bush and foliage resources lying in the [ground pool](Zones.md#ground-pool). |
 
 ### Effects
 
-- **The survivor must leave the zone** and cannot return until the fire has burned out.
+- **The zone burns for a while.** Being in it while it burns is dangerous ([Caught in a wildfire](#caught-in-a-wildfire)).
 - **Organic resources** in the zone are turned to charcoal or destroyed outright.
 - **Structures** in the zone are damaged and need repairs, or are destroyed.
 
-### Waking to a wildfire
+### Caught in a wildfire
 
-An unattended fire caused by sleeping means the survivor is in the zone when the wildfire starts.
+The survivor is caught in a wildfire in two ways:
 
-1. **The survivor wakes immediately**, like any other sleep interruption ([Actions: condition gates](Actions.md#condition-gates)).
-2. **Escape window: 15-30 minutes** of game time to grab what they can and get out. Picking up items and other actions spend that time as usual.
-3. **Staying too long is dangerous**, and gets worse the longer the survivor stays: burns, smoke inhalation, overheating, dehydration, and finally death.
-4. **Leaving** means travelling to a connected zone. Whatever is left behind is exposed to the fire.
+- **Waking to one:** the fire was left burning during Sleep. The survivor wakes immediately, like any other sleep interruption ([Actions: condition gates](Actions.md#condition-gates)).
+- **Entering one:** the survivor returns to, or travels into, a zone that is burning. The zone is shown as burning before they commit to travelling ([Pillar 4: clarity](../GameDesignDocument.md#pillars)).
+
+Either way:
+
+1. **Escape window: 15-30 minutes** of game time to grab what they can and get out. Picking up items and other actions spend that time as usual.
+2. **Staying too long is dangerous**, and gets worse the longer the survivor stays: burns, smoke inhalation, overheating, dehydration, and finally death.
+3. **Leaving** means travelling to a connected zone. Whatever is left behind is exposed to the fire.
 
 Wildfire chance, how long the zone stays closed, how much is lost, the exact escape window, and how fast harm escalates past it: [OQ-054](../OpenQuestions.md).
