@@ -76,6 +76,7 @@ A tell is a hint shown before the player chooses. Tells are always truthful.
 
 - **Rule-out tell:** rules out exactly one of the animal's three options. Example: "The gull isn't looking for a fight." The player still guesses, between two options.
 - **Explicit tell (mastery only):** states the animal's action. Example: "The tiger crouches low, ready to pounce!" Available only once the species is mastered, and only on some turns.
+- **Explicit tell presentation:** the text is accompanied by an icon for the action - sword (Fight), shield (Defend), boot (Flee). Later, the creature's sprite changes pose instead (for example a crouching tiger). Icon plus text keeps the tell readable without relying on color.
 
 Tells come from creature familiarity (proposed progression):
 
