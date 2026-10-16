@@ -19,6 +19,7 @@ The single source of truth for the design, engineering and decisions behind Sque
   - [Exertion](Design/Systems/Exertion.md) - stamina, exertion risk, injury, passing out.
   - [Encounters](Design/Systems/Encounters.md) - random wildlife encounters, fight or flight.
   - [Combat](Design/Systems/Combat.md) - animal decks, weapon classes, turn resolution.
+  - [Injuries and Health](Design/Systems/Injuries.md) - two-layer health, injuries, escalation, treatment.
 - UI:
   - [HUD](Design/UI/HUD.md) - static status area, temperature, weather icons, event log.
   - [Controls](Design/UI/Controls.md) - mouse and modifiers, hotkeys, remapping.
@@ -70,6 +71,7 @@ Docs/
       Exertion.md
       Encounters.md
       Combat.md
+      Injuries.md
     UI/
       HUD.md
       Controls.md

@@ -16,7 +16,9 @@ Canonical terms. Code, UI text and documents use these words with these meanings
 | Exploration progress | A zone's explored percentage. Rises with each explore; milestones trigger significant discoveries. See [Exploration](Design/Systems/Exploration.md). |
 | Find pool | The weighted set of loose items an explore can draw in a zone. |
 | Ground pool | The items lying on the ground in a zone. Unlimited in size; not part of the inventory. See [Ground Pool](Design/Systems/GroundPool.md). |
+| Health | Two-layer bar: current health (lowered by blows, restored by rest) under an injury ceiling (lowered by injuries). See [Injuries and Health](Design/Systems/Injuries.md). |
 | Hazard | A danger met while exploring, such as a jellyfish or sea urchin. |
+| Injury | A specific wound or condition (sprain, laceration, broken bone) that lowers the injury ceiling, has effects and heals over time. |
 | Inventory | Items the survivor is carrying: the personal inventory plus any carriers. See [Inventory](Design/Systems/Inventory.md). |
 | Known | Encountered by the survivor. Only known things are ever shown in the UI. |
 | Light level | Bright, Dim or Dark. Derived from the day phase and light sources; gates and penalizes actions. See [Actions](Design/Systems/Actions.md#light-level). |

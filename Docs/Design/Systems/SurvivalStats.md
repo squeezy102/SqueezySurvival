@@ -14,6 +14,7 @@ Survival stats (also called **macros**) are the survivor's core conditions, each
 
 | Stat | Empty icon | Full icon | Notes |
 |---|---|---|---|
+| Health | To be designed | To be designed | Two layers: current health and an injury ceiling. See [Injuries and Health](Injuries.md). |
 | Food | Small stomach | Full stomach | One bar. Restored by eating, limited by per-food [tolerance](Food.md#food-tolerance) (resolves OQ-003). |
 | Water | To be designed | To be designed | |
 | Stamina | To be designed | To be designed | Short-term physical exertion. Drained by chaining physical actions; recovered by Wait and Rest. Below 50%, strenuous actions risk injury; at 0 the survivor passes out ([Exertion](Exertion.md)). |

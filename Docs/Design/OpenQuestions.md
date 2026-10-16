@@ -11,7 +11,7 @@ Unresolved design decisions. When one is resolved, record the answer in the owni
 | OQ-032 | Controls | What does each mouse button and modifier combination do (for example Shift + left click to move a whole stack, Ctrl + left click to move one)? Defined per screen as screens are designed. | UI/Controls |
 | OQ-033 | Controls | Alternatives to drag for moving items. Ideas to explore: click to pick up and click to place; double-click to move; click and hold to move many. Note: the Game Accessibility Guidelines' Intermediate tier asks to avoid requiring both drags and held buttons, so each method needs an alternative that does not. | UI/Controls |
 | OQ-036 | Encounters | Encounter chance per minute of action, and per zone, phase and weather. | Systems/Encounters |
-| OQ-037 | Combat | The survivor has no Health stat yet, but Flee and damage need one. Is Health a new survival stat, or derived from injuries? How much damage do weapons and animals deal, and how much health do animals have? | Systems/Combat |
+| OQ-037 | Combat | Damage values for weapons and animals, animal health, and which injuries each animal inflicts. | Systems/Combat |
 | OQ-038 | Combat | How does each pair of actions resolve (Fight vs Defend, Flee vs Fight, etc.)? Proposal in Combat. | Systems/Combat |
 | OQ-039 | Combat | Are cards drawn with or without replacement, and when is the deck reshuffled? Proposal in Combat. | Systems/Combat |
 | OQ-025 | Exploration | How does exploring work at Dawn, Dusk and Night (light level penalties, hazard and injury chances)? | Systems/Exploration |

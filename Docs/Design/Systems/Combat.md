@@ -18,7 +18,7 @@ Each turn both sides choose one of three actions:
 | Defend | Guard against an attack. |
 | Flee | Try to leave the fight. |
 
-The player chooses freely each turn. The player's Flee succeeds with a chance equal to their health percentage ([OQ-037](../OpenQuestions.md)).
+The player chooses freely each turn. The player's Flee succeeds with a chance equal to their Health percentage ([Injuries and Health](Injuries.md)).
 
 ## Animal decks
 
@@ -56,6 +56,6 @@ Weapon choice is therefore tactical: a ranged weapon against a skittish bird, a 
 
 Cards are drawn without replacement and the discard pile is reshuffled when the deck runs out. Cards removed by weapons are gone for the rest of the fight. Attentive players can therefore infer what remains in the deck, which rewards skill without ever showing it.
 
-### Health and damage ([OQ-037](../OpenQuestions.md))
+### Damage ([OQ-037](../OpenQuestions.md))
 
-Combat needs a survivor health value and damage values for weapons and animals. These are not yet designed.
+Hits lower current Health and can cause injuries ([Injuries and Health](Injuries.md)). Damage values for weapons and animals, animal health, and which injuries each animal inflicts are not yet designed.

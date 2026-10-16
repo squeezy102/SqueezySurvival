@@ -47,7 +47,7 @@ Light sources raise the light level for the survivor while active. The first is 
 | Forage | Available with penalties: injury risk from trip and collision hazards (abrasions, scrapes, sprains). |
 | Most other actions | Unavailable without a light source. Each action's specification states its light requirement. |
 
-Injuries are specified in their own system (planned).
+Injuries are specified in [Injuries and Health](Injuries.md).
 
 ## Condition gates
 

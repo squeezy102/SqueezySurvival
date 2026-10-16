@@ -17,6 +17,8 @@ Presentation is pictures, text, windows and progress bars. Depth comes from syst
 | Songs of Syx | Systemic depth, readable management UI | - |
 | Green Hell | Survival stat breadth, crafting from found materials | - |
 | Ark: Survival Evolved | Progression through discovered technology | - |
+| Haven and Hearth | Health and wound model: current health, an injury-lowered ceiling, independent healing, escalation, treatments with trade-offs | Adapted to a single-player, click-driven game |
+| Final Fantasy (classic) | Overworld random encounters opening a separate battle window | - |
 
 ## Pillars
 
