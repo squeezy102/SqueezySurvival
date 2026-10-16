@@ -32,13 +32,17 @@ Every animal has a hidden 10-card deck made of Fight, Defend and Flee cards. Eac
 
 ## Weapons reshape the deck
 
-A successful attack also removes one card from the animal's deck, depending on the weapon's range.
+A successful attack turns one of the animal's cards into a **dud**, depending on the weapon's class. A dud stays in the deck; if the animal draws it, it does nothing and the player gets a free turn. The event log explains why.
 
-| Weapon class | Examples | Card removed on a successful hit | Effect |
-|---|---|---|---|
-| Melee | Knife, sword | Defend | Breaks the animal's guard. |
-| Reach | Spear, axe | Fight | Keeps the animal at bay. |
-| Ranged | Stone, sling, bow | Flee | Stops the animal escaping. |
+| Weapon class | Examples | Card turned into a dud | Effect | Example dud text |
+|---|---|---|---|---|
+| Melee | Knife, sword | Defend | Breaks the animal's guard. | "The goat stumbled, unable to brace itself." |
+| Reach | Spear, axe | Fight | Keeps the animal at bay. | "The tiger couldn't get around your spear to attack you!" |
+| Ranged | Stone, sling, bow | Flee | Stops the animal escaping. | "The gull tried to take off, but your stone had clipped its wing." |
+
+Duds rather than removal: removing a card shrinks the deck and makes every other card more likely (removing a Fight card raises the chance to Flee). A dud keeps the deck at 10 cards, so a hit only ever makes the targeted action rarer.
+
+**Duds last for the whole fight**; they never revert. Fights are expected to be short, and losing hard-won progress would feel bad and make no sense.
 
 There are three weapon classes: **Melee, Reach and Ranged.** Every weapon shows its class as an icon, and its class is named on hover.
 
@@ -50,7 +54,7 @@ Weapon choice is therefore tactical: a ranged weapon against a skittish bird, a 
 
 | Player \ Animal | Fight | Defend | Flee |
 |---|---|---|---|
-| **Fight** | Both hit. The player's attack lands first. | Player's attack is blocked; no card removed. | Player hits; the animal escapes unless the hit removes its last Flee card or defeats it. |
+| **Fight** | Both attack. The player's attack resolves first. | Player's attack is blocked; no dud is made. | Player's attack resolves first; unless it defeats the animal, the animal escapes. |
 | **Defend** | Animal's attack is blocked. | Nothing happens. | The animal escapes. |
 | **Flee** | Flee roll; on failure the animal's attack lands. | Flee roll. | Both separate; the encounter ends. |
 
@@ -66,9 +70,9 @@ An attack's hit chance comes from the fighting skill for the weapon's class, low
 
 See [Skills](Skills.md).
 
-### Deck draws ([OQ-039](../OpenQuestions.md))
+## Deck draws
 
-Cards are drawn without replacement and the discard pile is reshuffled when the deck runs out. Cards removed by weapons are gone for the rest of the fight. Attentive players can therefore infer what remains in the deck, which rewards skill without ever showing it.
+Cards are drawn without replacement: a drawn card cannot be drawn again until every card has been drawn, then the whole deck is reshuffled and reused (resolves OQ-039). Duds remain duds through reshuffles. Attentive players can infer what remains in the deck, which rewards skill without ever showing it.
 
 ### Damage ([OQ-037](../OpenQuestions.md))
 

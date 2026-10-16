@@ -10,6 +10,7 @@ Canonical terms. Code, UI text and documents use these words with these meanings
 | Food category | A grouping of foods such as Meat, Fish, Fruit, Vegetables or Dairy. Has its own tolerance meter. |
 | Food tolerance | A per-food meter (100% to 0%) of how willing the survivor is to eat that food. Falls with each serving, recovers over time; low tolerance reduces what the food restores and causes penalties. See [Food](Design/Systems/Food.md). |
 | Decay | Deterioration of items over time, at a per-item rate, slowed by storage. Inorganic items decay very slowly. See [Decay](Design/Systems/Decay.md). |
+| Dud | An animal's combat card disabled by a successful hit; drawing it wastes the animal's turn. Lasts the whole fight. See [Combat](Design/Systems/Combat.md). |
 | Equipment slot | A place the survivor wears or holds an item: tool hand, offhand, head, neck, chest, belt, legs, shoes, gloves, two trinkets, back. See [Equipment](Design/Systems/Equipment.md). |
 | Event log | The on-screen running record of game events in plain language. See [HUD](Design/UI/HUD.md#event-log). |
 | Encounter | A random wildlife event outdoors: thief, sighting, accident or discovery. See [Encounters](Design/Systems/Encounters.md). |
@@ -35,6 +36,6 @@ Canonical terms. Code, UI text and documents use these words with these meanings
 | Day | 1,440 TU (24 hours of game time). |
 | Day phase | One of six named parts of the day (Dawn, Morning, Midday, Afternoon, Dusk, Night) that other systems use to vary behavior. See [Time](Design/Systems/Time.md). |
 | Time unit (TU) | The smallest unit of game time: 1 minute. See [Time](Design/Systems/Time.md). |
-| Weapon class | Melee, Reach or Ranged. Decides which fighting skill applies and which card a hit removes from an animal's deck. See [Combat](Design/Systems/Combat.md). |
+| Weapon class | Melee, Reach or Ranged. Decides which fighting skill applies and which of an animal's cards a hit turns into a dud. See [Combat](Design/Systems/Combat.md). |
 | Zone | A discrete location belonging to a biome, connected to other zones. |
 | Zone connection | A discovered route from one zone into another. |
