@@ -27,13 +27,10 @@ Amounts and what can be bought: [OQ-047](../OpenQuestions.md). Detailed design i
 
 ## Saving
 
-Each run has one save (resolves OQ-011).
+No save scumming, ever, outside casual mode (resolves OQ-011).
 
-| Save | When |
-|---|---|
-| Autosave | At the start of each new day (midnight). |
-| Manual save | Any time, from the Escape menu. |
+- **Save and exit** in the Escape menu is the only saving the player sees. There are no manual saves and no save slots to load.
+- **The run is recorded after every action.** Quitting any other way (closing the window, a crash, ending the process) resumes from the last completed action, so quitting can never undo an outcome. Precedent: Darkest Dungeon II saves automatically after each action and offers no manual saves ([Siliconera](https://www.siliconera.com/saves-in-darkest-dungeon-2-explained/)).
+- **On death**, the run's save is deleted, unless the player ticked **Casual mode** when starting the run.
 
-**On death**, the run's save is deleted, unless the player ticked **Casual mode** when starting the run. In casual mode the save survives death, so the player can load it and carry on.
-
-Casual mode and points, and quitting to undo a bad outcome: [OQ-048](../OpenQuestions.md).
+Casual mode's rules (what it restores after death, whether it allows manual saves, and its points): [OQ-048](../OpenQuestions.md).
