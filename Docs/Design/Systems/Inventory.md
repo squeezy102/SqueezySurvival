@@ -35,15 +35,7 @@ Intent: just over 75% is effectively free; near 100%, moving can make the surviv
 | 95% | 4.6x | Punishing |
 | 99% | 7.2x | A single move can exhaust the survivor |
 
-**Strain and sprains.** Sprains can happen instantly but mostly result from repeated negligence:
-
-- **Strain** is a visible body value (0-100). Each movement action while overburdened adds strain; heavier loads add more. Rest and Sleep reduce it over time.
-- **Sprain chance per move** = a small instant chance from the current load + a larger chance from accumulated strain.
-- One heavy trip rarely sprains anything; repeated heavy trips without rest build strain until a sprain becomes likely.
-- Strain is shown as a body status warning before it causes harm ([Pillar 4: clarity](../GameDesignDocument.md#pillars)).
-- Strain may later apply to other strenuous actions (chopping, climbing).
-
-Strain gain, recovery and sprain chance values are set during balancing.
+**Strain and injury.** Carrying a heavy load is a high-risk strenuous action: each movement action while overburdened rolls for strain or instant injury, with risk rising with load. See [Strain](Strain.md).
 
 **Passing out:** a survivor whose Stamina reaches 0 collapses. This is a general Stamina rule ([Survival Stats](SurvivalStats.md)), which heavy loads make likely.
 

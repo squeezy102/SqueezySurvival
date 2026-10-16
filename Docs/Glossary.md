@@ -21,6 +21,7 @@ Canonical terms. Code, UI text and documents use these words with these meanings
 | Resource node | A fixed zone feature harvested with actions, such as a banana tree or spring. Renewable actions let it replenish; destructive actions consume it. See [Resource Nodes](Design/Systems/ResourceNodes.md). |
 | Research | The passive, time-based process that turns a discovered recipe into a craftable one. |
 | Macro | Informal name for a survival stat. |
+| Strain | Accumulated physical stress from strenuous actions; raises injury risk and recovers with rest. See [Strain](Design/Systems/Strain.md). |
 | Survival stat | A core condition of the survivor shown as a bar where higher is always better, such as Food or Water. See [Survival Stats](Design/Systems/SurvivalStats.md). |
 | Carrier | Equipment that adds its own weight-limited inventory, such as a basket, backpack or cart. See [Inventory](Design/Systems/Inventory.md). |
 | Day | 1,440 TU (24 hours of game time). |
