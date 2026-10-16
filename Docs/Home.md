@@ -17,6 +17,8 @@ The single source of truth for the design, engineering and decisions behind Sque
   - [Ground Pool](Design/Systems/GroundPool.md) - items on the ground in a zone.
   - [Inventory](Design/Systems/Inventory.md) - personal weight limit and carriers.
   - [Exertion](Design/Systems/Exertion.md) - stamina, exertion risk, injury, passing out.
+  - [Encounters](Design/Systems/Encounters.md) - random wildlife encounters, fight or flight.
+  - [Combat](Design/Systems/Combat.md) - animal decks, weapon classes, turn resolution.
 - UI:
   - [HUD](Design/UI/HUD.md) - static status area, temperature, weather icons, event log.
   - [Controls](Design/UI/Controls.md) - mouse and modifiers, hotkeys, remapping.
@@ -66,6 +68,8 @@ Docs/
       GroundPool.md
       Inventory.md
       Exertion.md
+      Encounters.md
+      Combat.md
     UI/
       HUD.md
       Controls.md
