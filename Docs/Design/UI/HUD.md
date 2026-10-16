@@ -2,7 +2,7 @@
 
 **Status:** Concept
 
-Always-visible status shown on every gameplay screen. Follows [Pillar 4: clarity](../GameDesignDocument.md#pillars).
+Always-visible status shown on every gameplay screen. Follows [Pillar 4: clarity](../GameDesignDocument.md#pillars). Positions are defined in [Screen Layout](ScreenLayout.md).
 
 ## Static status area (top of screen)
 
@@ -58,8 +58,11 @@ You pulled a muscle!
 - Every game event that changes state is logged: discoveries, item movements, actions and their outcomes, stat warnings, injuries, weather changes.
 - **Every sound cue has a matching log entry**, so sound is never the only signal ([Pillar 4](../GameDesignDocument.md#pillars)).
 - Warnings and serious events are marked with an icon as well as color.
-- Shows the last few entries and fades when idle. Auto-hide is a player setting, on by default.
-- Clicking the log opens the full scrollable history for the run, filterable by type (actions, finds, warnings) (resolves OQ-031).
+- Positioned lower left.
+- Hides automatically when idle and reappears when a new event arrives. Auto-hide is a player setting, on by default.
+- **Important events are highlighted** for a couple of seconds, both the entry and the log window: bad (red), good (green), notification (yellow). Each also carries an icon, so color is never the only signal. Highlight animation versus the no-animation MVP: [OQ-034](../OpenQuestions.md).
+- **Header controls:** clicking the top of the log offers pin, hide, configure, and open the full history.
+- **Full history view:** the whole run, searchable and filterable by type (actions, finds, warnings) (resolves OQ-031).
 
 ### Voice
 

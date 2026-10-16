@@ -20,6 +20,7 @@ The single source of truth for the design, engineering and decisions behind Sque
 - UI:
   - [HUD](Design/UI/HUD.md) - static status area, temperature, weather icons, event log.
   - [Controls](Design/UI/Controls.md) - mouse and modifiers, hotkeys, remapping.
+  - [Screen Layout](Design/UI/ScreenLayout.md) - main screen regions and organization tools.
 - [Glossary](Glossary.md) - canonical game terms.
 
 ## Engineering
@@ -68,6 +69,7 @@ Docs/
     UI/
       HUD.md
       Controls.md
+      ScreenLayout.md
     OpenQuestions.md
   Engineering/
     CodingStandards.md
