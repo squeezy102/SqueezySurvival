@@ -60,6 +60,21 @@ You pulled a muscle!
 - Warnings and serious events are marked with an icon as well as color.
 - May auto-hide when idle. Default behavior and access to the full history: [OQ-031](../OpenQuestions.md).
 
+### Voice
+
+Entries are written in second person, past tense: **what happened, then how it felt.** The second sentence conveys the consequence in human terms, hinting at which stat was affected without numbers.
+
+| Event | Entry |
+|---|---|
+| Ate an earthworm | "You ate an earthworm. It was revolting." |
+| Broke a leg | "You broke your leg. You can feel yourself beginning to panic." |
+| Arms tiring | "Your arms ache." |
+| Picked up items | "You picked up 5 sticks." |
+
+- Routine events (picking up, putting down) need only the first sentence.
+- Events that change Sanity, Contentment or health always get the second sentence.
+- Exact values are available on hover, never in the sentence itself.
+
 ## Survival stat bars
 
 Shown as bars, separate from the static status area. Conventions: [Survival Stats](../Systems/SurvivalStats.md#conventions).
