@@ -6,7 +6,28 @@ What the survivor carries. Weights are in pounds (lb).
 
 ## Personal inventory
 
-The survivor has a static personal weight limit. It does not grow with progression; carrying more requires carriers. Value and over-limit behavior: [OQ-029](../OpenQuestions.md).
+The survivor has a static personal weight limit. It does not grow with progression; carrying more requires carriers. The limit's value: [OQ-029](../OpenQuestions.md).
+
+### Load
+
+Load is the personal inventory's weight as a percentage of the limit.
+
+| Load | State | Effect |
+|---|---|---|
+| Below 75% | Normal | None. |
+| 75-99% | Overburdened | Stamina costs of actions increase, compounding as load rises. |
+| 100% | Immobile | Local actions remain available; any action that moves the survivor (exploring, travelling to another zone) is unavailable until load drops below 100%. |
+
+### Overburdened stamina formula (proposed, not approved)
+
+`stamina cost multiplier = 1.04 ^ (load% - 75)` for load from 75% to 99%.
+
+| Load | Multiplier |
+|---|---|
+| 75% | 1.00x |
+| 80% | 1.22x |
+| 90% | 1.80x |
+| 99% | 2.56x |
 
 ## Carriers
 
