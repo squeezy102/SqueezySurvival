@@ -9,6 +9,7 @@ Research turns discovered knowledge into craftable recipes and other unlocks.
 1. **Research is passive.** It progresses while the survivor does anything else and never blocks or interrupts an action (resolves OQ-005).
 2. **Its only cost is time.** Research progresses by the duration of every action ([Time](Time.md#rules)). The player's job is to keep something researching.
 3. **Completed research grants recipes**, including blueprints for structures, which become craftable.
+4. **Knowledge is never lost** within a run. Discoveries, topics and recipes stay known even if the items behind them are used up, [decay](Decay.md) or break: a survivor whose last crucible breaks still knows how to make one.
 
 ## Queue
 
@@ -27,7 +28,7 @@ Progression chains form naturally, because crafted materials are discoveries too
 | Copper ore | Refining and smelting | Recipes for a forge, tongs and a crucible |
 | Copper bar (smelted in a crucible and cooled) | Copper tools, copper weapons, copper armor | Recipes for each |
 
-**Content rule:** chains are authored so that discovering a material means the player already has what its topics' recipes need. A copper bar can only be made with a forge, so by the time copper tool topics appear, the player has one. A recipe's own requirements (such as a forge) still exist in its data, and only become visible if the player has since lost them, for example to [decay](Decay.md).
+**Content rule:** chains are authored so that discovering a material means the player already has what its topics' recipes need. A copper bar can only be made with a forge, so by the time copper tool topics appear, the player has one.
 
 ## Idle research
 

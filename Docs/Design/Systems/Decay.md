@@ -6,7 +6,7 @@ Decay is a resource sink: items that are not used or protected deteriorate over 
 
 ## What decays
 
-Every item decays. Organic items decay over days; inorganic items (stone, shells, metal) decay far more slowly than anything else - a rock lasts on the ground a very long time, but not forever (resolves OQ-026).
+Every item decays, except permanent buildings such as a forge, which never decay or break. Organic items decay over days; inorganic items (stone, shells, metal) decay far more slowly than anything else - a rock lasts on the ground a very long time, but not forever (resolves OQ-026).
 
 | Item type | Examples | Result when fully decayed |
 |---|---|---|
@@ -15,6 +15,7 @@ Every item decays. Organic items decay over days; inorganic items (stone, shells
 | Wood | Sticks, logs | Removed |
 | Inorganic | Rocks, stones, shells | Removed, after a very long time |
 | Crafted items | Tools, torches | Breaks; leaves only part of its materials, usually not the important ones |
+| Permanent buildings | Forge | Never decays |
 
 Some results are themselves useful resources (rot, dirt, slime); others simply leave the game.
 
