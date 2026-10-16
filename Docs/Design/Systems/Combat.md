@@ -52,6 +52,10 @@ Weapon choice is therefore tactical: a ranged weapon against a skittish bird, a 
 | **Defend** | Animal's attack is blocked. | Nothing happens. | The animal escapes. |
 | **Flee** | Flee roll; on failure the animal's attack lands. | Flee roll. | Both separate; the encounter ends. |
 
+### Hit chance
+
+An attack has a hit chance that injuries lower: an injured tool-side arm lowers the chance an attack lands. Base hit chance and penalties are set during balancing.
+
 ### Deck draws ([OQ-039](../OpenQuestions.md))
 
 Cards are drawn without replacement and the discard pile is reshuffled when the deck runs out. Cards removed by weapons are gone for the rest of the fight. Attentive players can therefore infer what remains in the deck, which rewards skill without ever showing it.

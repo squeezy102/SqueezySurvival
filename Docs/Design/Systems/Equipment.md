@@ -27,8 +27,19 @@ Which hand is the tool hand: [OQ-040](../OpenQuestions.md).
 
 Injury treatments attach to the injury, not to an equipment slot ([Injuries and Health](Injuries.md#treatment)). A treatment can block equipment at its location, for example:
 
-| Treatment | Blocks |
+### Hands and arms
+
+| Condition | Tool-hand side | Offhand side |
+|---|---|---|
+| Bandaged | No gloves; slight work penalty on tool actions | No gloves; reduced carrying (a carried basket holds less, or nothing can be carried on that side) |
+| Broken bone (splinted) | Slot unusable until healed: no gloves, nothing held | Slot unusable until healed: no gloves, nothing held |
+| Any arm injury, in combat | Lowered hit chance ([Combat](Combat.md)) | - |
+
+Broken bones must be splinted to heal properly.
+
+### Other locations
+
+| Treatment | Effect |
 |---|---|
-| Bandaged hand | Gloves on that hand |
-| Head wrap | Head slot |
+| Head wrap | Blocks the head slot |
 | Splinted leg | Slows movement; may block the legs slot |
