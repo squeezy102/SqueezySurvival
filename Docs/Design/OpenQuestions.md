@@ -7,6 +7,7 @@ Unresolved design decisions. When one is resolved, record the answer in the owni
 | OQ-004 | Stats | Stat ranges, decay rates per time unit, thresholds and their effects. | Systems/SurvivalStats |
 | OQ-005 | Research | Does research progress in the background while other actions are performed, or does it occupy the survivor's time? | Systems/Research (planned) |
 | OQ-006 | Research | Can multiple research items progress at once, or is there a queue? | Systems/Research (planned) |
+| OQ-029 | Inventory | What is the personal weight limit, and what happens above it? Proposal: 30 lb; the survivor cannot pick up an item that would exceed the limit (a hard cap), and the UI shows why. | Systems/Inventory |
 | OQ-025 | Exploration | How does exploring work at Dawn, Dusk and Night (light level penalties, hazard and injury chances)? | Systems/Exploration |
 | OQ-008 | Zones | How large is the island at MVP: how many beach zones, and how are they connected? | Systems/World (planned) |
 | OQ-009 | Weather | Which weather states exist and how do they affect stats and actions? | Systems/Weather (planned) |

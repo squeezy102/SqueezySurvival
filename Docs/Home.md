@@ -15,6 +15,7 @@ The single source of truth for the design, engineering and decisions behind Sque
   - [Resource Nodes](Design/Systems/ResourceNodes.md) - renewable and destructive harvesting, replenishment.
   - [Decay](Design/Systems/Decay.md) - item deterioration as a resource sink.
   - [Ground Pool](Design/Systems/GroundPool.md) - items on the ground in a zone.
+  - [Inventory](Design/Systems/Inventory.md) - personal weight limit and carriers.
 - UI:
   - [HUD](Design/UI/HUD.md) - static status area, temperature, weather icons.
 - [Glossary](Glossary.md) - canonical game terms.
@@ -60,6 +61,7 @@ Docs/
       ResourceNodes.md
       Decay.md
       GroundPool.md
+      Inventory.md
     UI/
       HUD.md
     OpenQuestions.md
