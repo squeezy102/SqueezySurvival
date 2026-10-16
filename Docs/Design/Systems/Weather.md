@@ -21,7 +21,55 @@ Ten states, from mildest to most severe (resolves OQ-009). There are no tornadoe
 | Heavy storm | Severe |
 | Hurricane | Disaster |
 
-What each state does to stats, actions, temperature and the environment, and how weather changes over time: [OQ-052](../OpenQuestions.md).
+## Weather effects
+
+Effects below are the design intent. Magnitudes and how weather changes over time: [OQ-052](../OpenQuestions.md). Every effect that happens to the survivor or their things is reported in the [event log](../UI/HUD.md#event-log).
+
+### Clear and fair weather
+
+| State | Effects |
+|---|---|
+| Sunny | **Sunburn** on long exposure. Prevented by applying mud or aloe, or by spending time in shelter now and then. Reduced in forested zones with canopy cover. |
+| Partly cloudy | Sunburn risk as Sunny, but lower. |
+| Cloudy | Little to no sunburn risk. Good weather for long outdoor work such as fishing or building. |
+
+### Fog
+
+- **Visibility is limited**, raising the risk of tripping and scraping yourself.
+- **Ambushes are more likely** ([Encounters: ambushes](Encounters.md#ambushes)).
+- **Exploration finds fewer permanent and semi-permanent features** ([Exploration](Exploration.md)).
+- **On cold days**, fog raises the risk of hypothermia and makes the survivor wet and uncomfortable.
+
+### Wind
+
+- **Fires burn faster and hotter.**
+- **Birds are more active** ([Encounters](Encounters.md)).
+- **Loose light items can blow away** from the ground pool and from exposed storage: leaves, fibers, scraps of cloth, ash and similar. The survivor is notified when this happens.
+- **Eye irritation** in dirty or sandy zones.
+- **Temperatures are generally cooler.**
+
+### Rain and storms
+
+Each state includes everything in the state before it, more strongly.
+
+| Effect | Rainy | Heavy rain | Storm | Heavy storm | Hurricane |
+|---|---|---|---|---|---|
+| Survivor gets wet when exposed | Yes | Yes | Yes | Yes | Yes |
+| Puddles, tide pools and rain-catching containers fill ([Resource Nodes](ResourceNodes.md#replenishment)) | Slowly | Faster | Fast | Fast | Fast |
+| Exposed fires go out | Sometimes | Often | Very hard to keep lit unless sheltered | Very hard unless sheltered | Impossible unsheltered |
+| Dirt turns to mud | Slowly | Faster | Fast | Fast | Fast |
+| Exploring and travelling | Mildly hampered | Hampered | Hard | Very hard; not recommended | Impossible |
+| Tool work: abrasions and mistakes | Raised | Higher | High | Very high | Foolish |
+| Climbing risk | Raised | Higher | High | Very high | Idiocy |
+| Visibility | - | Reduced | Obscured | Badly obscured | Near zero |
+| Items blow away | - | - | Some | Definitely | Large quantities |
+| Temperature | - | - | Can become dangerously cold | Dangerously cold | Plummets |
+| Structure damage | - | - | Possible, not probable | About 50% | Certain |
+| Flying debris | - | - | - | - | Potentially life-threatening injuries |
+
+- **Rainwater is safe to drink.** Containers left out catch it.
+- **Storms:** the survivor should strongly consider sheltering in place unless they have important business.
+- **Hurricanes** can last several days. A survivor without a safe shelter will almost surely die, and one without a stockpile of clean water and food will struggle to wait it out. Attempting almost anything during a hurricane is foolish.
 
 ## Seasons
 

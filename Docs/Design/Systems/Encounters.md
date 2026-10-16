@@ -35,7 +35,7 @@ Encounters are opt-in. In almost every encounter the survivor sees the animal fi
 | Dim | 15% (about 1 in 7) |
 | Dark | 50% (a coin flip) |
 
-A light source such as a torch raises the light level, and so lowers the share. Nocturnal predators are also most active at Night ([Time: what phases affect](Time.md#what-phases-affect)), so wandering in the dark where predators are known to live is asking for trouble.
+A light source such as a torch raises the light level, and so lowers the share. [Fog](Weather.md#fog) raises it. Nocturnal predators are also most active at Night ([Time: what phases affect](Time.md#what-phases-affect)), so wandering in the dark where predators are known to live is asking for trouble.
 
 In daylight, exploring a dangerous zone should feel like "probably not, but what if?" The danger never comes out of nowhere ([Pillar 4: clarity](../GameDesignDocument.md#pillars)).
 

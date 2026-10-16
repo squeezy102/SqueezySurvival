@@ -19,7 +19,7 @@ Haven and Hearth equivalents: current health is Soft HP; the injury ceiling is H
 
 ## Injuries
 
-Examples: bruises, sprains, abrasions, lacerations, goring, broken bones, hemorrhaging, stings and bites.
+Examples: bruises, sprains, abrasions, lacerations, goring, broken bones, hemorrhaging, stings and bites, sunburn ([Weather](Weather.md#clear-and-fair-weather)).
 
 Each injury has:
 

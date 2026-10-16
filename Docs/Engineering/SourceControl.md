@@ -22,6 +22,7 @@ Binary assets (images, audio, fonts, models) are stored with Git LFS. Rules are 
 
 ## Commits
 
+- **Commit at milestones, not every exchange.** Ideas change during a design discussion, so work is committed only once a substantial change has settled. At a natural stopping point, Claude asks Pj whether to commit, and commits only on a yes.
 - One logical change per commit.
 - Subject line in the imperative mood, 72 characters or fewer: `Add survival stat decay calculator`.
 - The body explains why when it is not obvious.
