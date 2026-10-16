@@ -36,9 +36,9 @@ A successful attack turns one of the animal's cards into a **dud**, depending on
 
 | Weapon class | Examples | Card turned into a dud | Effect | Example dud text |
 |---|---|---|---|---|
-| Melee | Knife, sword | Defend | Breaks the animal's guard. | "The goat stumbled, unable to brace itself." |
-| Reach | Spear, axe | Fight | Keeps the animal at bay. | "The tiger couldn't get around your spear to attack you!" |
-| Ranged | Stone, sling, bow | Flee | Stops the animal escaping. | "The gull tried to take off, but your stone had clipped its wing." |
+| Melee | Knife, short sword, hatchet, club | Defend | Breaks the animal's guard. | "The goat stumbled, unable to brace itself." |
+| Reach | Spear, long sword, axe, maul | Fight | Keeps the animal at bay. | "The tiger couldn't get around your spear to attack you!" |
+| Ranged | Sling, bow | Flee | Stops the animal escaping. | "The gull tried to take off, but your stone had clipped its wing." |
 
 Duds rather than removal: removing a card shrinks the deck and makes every other card more likely (removing a Fight card raises the chance to Flee). A dud keeps the deck at 10 cards, so a hit only ever makes the targeted action rarer.
 
@@ -96,13 +96,13 @@ Records each species the survivor has encountered. Entries appear only after a f
 
 - Defense is a [skill](Skills.md), raised by successful defends.
 - A shield in the offhand raises defense further, but only alongside a one-handed weapon. Shields range from improvised (driftwood, a pot lid) to crafted shields.
-- Each weapon is one-handed or two-handed, independent of its class (resolves OQ-041):
+- A weapon's class determines its handedness (resolves OQ-041):
 
-| Handedness | Weapons | Offhand |
-|---|---|---|
-| One-handed | Short swords, knives, hatchets, hand axes, clubs | Free: a shield if desired |
-| Two-handed | Long swords, spears, axes, mauls | Unavailable |
-| Ranged | Bows, slings | Holds the ammunition: a quiver or ammo pouch |
+| Class | Handedness | Weapons | Offhand |
+|---|---|---|---|
+| Melee | One-handed | Short swords, knives, hatchets, hand axes, clubs | Free: a shield if desired |
+| Reach | Two-handed | Long swords, spears, axes, mauls | Unavailable |
+| Ranged | Two-handed | Bows, slings | Holds the ammunition: a quiver or ammo pouch |
 
 ## Deck draws
 
