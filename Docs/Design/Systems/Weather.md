@@ -2,7 +2,7 @@
 
 **Status:** Draft
 
-Weather affects the survivor and the environment. Each zone has a current weather state, shown as an icon in the [HUD](../UI/HUD.md).
+Weather affects the survivor and the environment. **Weather is island-wide:** every zone has the same weather state at the same time, shown as an icon in the [HUD](../UI/HUD.md). Local features change how much of it reaches the survivor (forest canopy, caves, shelters), never the state itself.
 
 ## Weather states
 
@@ -73,7 +73,34 @@ Each state includes everything in the state before it, more strongly.
 
 ## Seasons
 
-The year has seasons, including a **dry season**, which makes wildfires possible. Which seasons exist and how long they last: [OQ-053](../OpenQuestions.md).
+Seasons follow a fixed order every year (resolves OQ-053, lengths to be tuned):
+
+| Season | Character |
+|---|---|
+| Temperate | Mild and mixed. A run starts here, giving the survivor a gentle first week or two. |
+| Dry | Hot, little rain. Water runs short; wildfires are possible. |
+| Rainy | Frequent rain, building toward storms. |
+| Stormy | Cold and stormy; when severe storms and hurricanes are most likely. |
+
+Then Temperate again, and the cycle repeats. The wet and stormy part of the year arrives around day 30 (draft). A season sets which weather is likely; it never forces a state.
+
+## How weather changes
+
+Weather is dynamic but follows intuitive patterns, so the player can read it and plan ([Pillar 4: clarity](../GameDesignDocument.md#pillars)).
+
+1. **Weather never jumps.** It moves one step at a time to a neighboring state:
+
+```
+Sunny - Partly cloudy - Cloudy - Rainy - Heavy rain - Storm - Heavy storm - Hurricane
+                          |
+                     Foggy, Windy
+```
+
+   Foggy and Windy branch off Cloudy. There is never a heavy storm without a storm first, never a hurricane without a heavy storm first, and Sunny passes through Partly cloudy on the way to Cloudy.
+2. **The season weights each step.** In the Rainy season, steps toward rain are more likely; in the Dry season, steps toward Sunny are. Over days this produces trends the player can feel: "It has been raining a lot lately, and the storms are getting worse," or "It hasn't rained in days. I should conserve water."
+3. **Every state lasts a while** before it can change, so weather never flickers.
+
+This is a Markov chain over the states above, with transition weights set per season. Step weights and minimum durations: [OQ-052](../OpenQuestions.md).
 
 ## Wildfire
 
@@ -86,7 +113,7 @@ All of these must be true:
 | Condition | Detail |
 |---|---|
 | A fire is left unattended | The survivor starts a full Sleep action while a fire burns in the zone, or spends **an hour or more** in another zone while a fire burns there. A shorter trip away does not count. |
-| It is the dry season | See [Seasons](#seasons). |
+| It is the Dry season | See [Seasons](#seasons). |
 | The zone has plenty of fuel | Many semi-permanent or permanent bush and foliage features, and bush and foliage resources lying in the [ground pool](Zones.md#ground-pool). |
 
 ### Effects
