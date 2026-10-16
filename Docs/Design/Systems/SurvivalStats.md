@@ -19,7 +19,7 @@ Survival stats (also called **macros**) are the survivor's core conditions, each
 | Stamina | To be designed | To be designed | Short-term physical exertion. Drained by chaining physical actions; recovered by Wait and Rest. Below 50%, strenuous actions risk injury; at 0 the survivor passes out ([Exertion](Exertion.md)). |
 | Wakefulness | To be designed | To be designed | Long-term need for sleep. Drained by time awake; restored by Nap and Sleep. Going too long without sleep causes sanity loss and other penalties. |
 | Body temperature | - | - | Not a bar. Shown as a HUD icon. See [Body temperature](#body-temperature). |
-| Sanity | Swirl | Peace sign | Drained while any stat is dangerous ([Actions: condition gates](Actions.md#condition-gates)). |
+| Sanity | Swirl | Peace sign | Protected by Contentment from passive waning; damaged directly by unpleasant experiences. See [Contentment shields Sanity](#contentment-shields-sanity). |
 | Contentment | Frown | Smile | Always waning; raised by stimulation. See [Contentment](#contentment). |
 | Cleanliness | To be designed | To be designed | Starts low: the survivor wakes filthy. |
 
@@ -34,6 +34,17 @@ The mind needs stimulation. Contentment is always slowly waning, and stimulating
 | Absorbing calm tasks | Fishing, whittling, sewing |
 
 Some sources raise Contentment; others only offset the waning while they last. Values are set during balancing.
+
+### Contentment shields Sanity
+
+Contentment acts as an overshield for Sanity.
+
+| Cause of sanity loss | While Contentment remains | Once Contentment is empty |
+|---|---|---|
+| Passive waning of the mind | Drains Contentment only; Sanity is protected | Drains Sanity |
+| Direct sanity damage: eating bugs, eating raw meat, vomiting, being soaked, being too cold or too hot, a survival stat in Dangerous ([Actions: condition gates](Actions.md#condition-gates)) | Drains Sanity directly | Drains Sanity directly |
+
+The HUD shows Contentment and Sanity next to each other so the shield relationship is visible.
 
 ## Body temperature
 
