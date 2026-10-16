@@ -44,6 +44,7 @@ All of these must be true:
 ### Effects
 
 - **The zone burns for a while.** Being in it while it burns is dangerous ([Caught in a wildfire](#caught-in-a-wildfire)).
+- **Damage spreads over time.** From the moment the fire starts, items and structures are progressively charred, damaged or destroyed. The longer it burns, the more is lost.
 - **Organic resources** in the zone are turned to charcoal or destroyed outright.
 - **Structures** in the zone are damaged and need repairs, or are destroyed.
 
@@ -54,7 +55,9 @@ The survivor is caught in a wildfire in two ways:
 - **Waking to one:** the fire was left burning during Sleep. The survivor wakes immediately, like any other sleep interruption ([Actions: condition gates](Actions.md#condition-gates)).
 - **Entering one:** the survivor returns to, or travels into, a zone that is burning. When a wildfire starts in a zone the survivor is not in, the [event log](../UI/HUD.md#event-log) gives a warning such as "You see smoke on the horizon..." and the zone is marked as burning. The zone is shown as burning before they commit to travelling ([Pillar 4: clarity](../GameDesignDocument.md#pillars)).
 
-Either way:
+**Rush back or wait it out.** A survivor away from a burning zone chooses: go back in and salvage what they can before more burns, or wait for the fire to burn out and accept the losses. Entering a burning zone is a high-risk action, and its risk is shown before committing.
+
+Either way, once inside:
 
 1. **Escape window: 15-30 minutes** of game time to grab what they can and get out. Picking up items and other actions spend that time as usual.
 2. **Staying too long is dangerous**, and gets worse the longer the survivor stays: burns, smoke inhalation, overheating, dehydration, and finally death.
