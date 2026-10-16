@@ -38,6 +38,7 @@ Each strenuous action rolls one of three outcomes. The risk tier sets the weight
 
 - A visible body value from 0 to 100, shown as a body status warning before it causes harm ([Pillar 4: clarity](../GameDesignDocument.md#pillars)).
 - Resting, or doing non-strenuous actions, gradually reduces it.
-- How accumulated strain leads to injury: [OQ-030](../OpenQuestions.md).
+- **Strain multiplies the injury roll.** The higher the survivor's strain, the greater the instant-injury weight of every strenuous action (resolves OQ-030). The multiplier's curve is set during balancing.
+- Rising strain is reported in the [event log](../UI/HUD.md#event-log) before it causes harm, for example "You felt strain in your muscles", then "Your muscles ache".
 
 Injuries are specified in their own system (planned).

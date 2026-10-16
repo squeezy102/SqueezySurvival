@@ -39,6 +39,27 @@ Always-visible status shown on every gameplay screen. Follows [Pillar 4: clarity
 
 The weather states and their effects are specified in Weather (planned, [OQ-009](../OpenQuestions.md)).
 
+## Event log
+
+A running ticker on screen that records everything that happens, in plain language.
+
+```
+You discovered 5 sticks.
+You picked up 5 sticks.
+You put a seashell on the ground.
+You cut the stick into an arrow using your flint knife.
+You felt strain in your muscles...
+You cut the stick into an arrow using your flint knife.
+Your muscles ache...
+You cut the stick into an arrow using your flint knife.
+You pulled a muscle!
+```
+
+- Every game event that changes state is logged: discoveries, item movements, actions and their outcomes, stat warnings, injuries, weather changes.
+- **Every sound cue has a matching log entry**, so sound is never the only signal ([Pillar 4](../GameDesignDocument.md#pillars)).
+- Warnings and serious events are marked with an icon as well as color.
+- May auto-hide when idle. Default behavior and access to the full history: [OQ-031](../OpenQuestions.md).
+
 ## Survival stat bars
 
 Shown as bars, separate from the static status area. Conventions: [Survival Stats](../Systems/SurvivalStats.md#conventions).
