@@ -11,7 +11,7 @@ The ground pool has no capacity limit (resolves OQ-028). Items leave it only by:
 | Mechanism | Affects |
 |---|---|
 | The survivor picking them up or using them | Anything |
-| [Decay](Decay.md) | Organic items |
-| Extreme weather events (floods, storms, landslides and similar) | Anything, including inorganic items |
+| [Decay](Decay.md) | Everything; organic items within days, inorganic items only after a very long time |
+| Extreme weather events (floods, storms, landslides and similar) | Anything |
 
 Extreme weather events are specified in Weather (planned, [OQ-009](../OpenQuestions.md)).

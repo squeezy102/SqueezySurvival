@@ -2,20 +2,25 @@
 
 **Status:** Draft
 
-Decay is a resource sink: organic items that are not used or protected deteriorate over time.
+Decay is a resource sink: items that are not used or protected deteriorate over time.
 
 ## What decays
 
-Organic items lying in a zone's ground pool, or not well protected by storage, deteriorate over time. Inorganic materials (stone, shells, metal) do not decay (resolves OQ-026).
+Every item decays. Organic items decay over days; inorganic items (stone, shells, metal) decay far more slowly than anything else - a rock lasts on the ground a very long time, but not forever (resolves OQ-026).
 
 | Item type | Examples | Result when fully decayed |
 |---|---|---|
 | Food | Fish, fruit, meat | Converts: rot, slime |
 | Plant matter | Leaves, seaweed | Converts: dried leaves, then rot or dirt |
 | Wood | Sticks, logs | Removed |
+| Inorganic | Rocks, stones, shells | Removed, after a very long time |
 | Crafted items | Tools, torches | Breaks; leaves only part of its materials, usually not the important ones |
 
 Some results are themselves useful resources (rot, dirt, slime); others simply leave the game.
+
+## Decay rate
+
+Each item's decay rate is a data value: a multiplier set per item, or per category with per-item overrides. Organic items have multipliers that decay them over days; inorganic items have multipliers many times smaller. Values are set during balancing.
 
 ## Protection
 
@@ -36,7 +41,7 @@ Food preservation is a core mechanic and one of the player's first goals, alongs
 
 ## Removing inorganic items
 
-Inorganic items do not decay. They leave a ground pool only when used or through extreme weather events ([Ground Pool](GroundPool.md#capacity)).
+Inorganic items decay very slowly, so in practice they leave a ground pool mainly when used or through extreme weather events ([Ground Pool](GroundPool.md#capacity)).
 
 ## Open questions
 
