@@ -52,7 +52,7 @@ All of these must be true:
 The survivor is caught in a wildfire in two ways:
 
 - **Waking to one:** the fire was left burning during Sleep. The survivor wakes immediately, like any other sleep interruption ([Actions: condition gates](Actions.md#condition-gates)).
-- **Entering one:** the survivor returns to, or travels into, a zone that is burning. The zone is shown as burning before they commit to travelling ([Pillar 4: clarity](../GameDesignDocument.md#pillars)).
+- **Entering one:** the survivor returns to, or travels into, a zone that is burning. When a wildfire starts in a zone the survivor is not in, the [event log](../UI/HUD.md#event-log) gives a warning such as "You see smoke on the horizon..." and the zone is marked as burning. The zone is shown as burning before they commit to travelling ([Pillar 4: clarity](../GameDesignDocument.md#pillars)).
 
 Either way:
 
