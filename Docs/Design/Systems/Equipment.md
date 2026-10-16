@@ -21,7 +21,11 @@ What the survivor wears and holds.
 | Trinket 2 | Charms, small items |
 | Back | One of: backpack, cloak, cape or jacket |
 
-Which hand is the tool hand: [OQ-040](../OpenQuestions.md). Two-handed weapons and the offhand: [Combat: weapons](Combat.md#weapons).
+### Handedness
+
+The player chooses the survivor's dominant hand, left or right, at character select (resolves OQ-040). The dominant hand is the tool hand; the other is the offhand.
+
+Handedness has **no gameplay effect** beyond deciding which side holds the tool. It exists so left-handed players are recognized. [Arm injuries](Injuries.md#body-locations) affect whichever hand is on the injured side. Two-handed weapons and the offhand: [Combat: weapons](Combat.md#weapons).
 
 ## Loadouts
 
@@ -31,7 +35,19 @@ Gearing for utility and gearing for combat are a real trade-off.
 - **Combat gear costs utility.** A shield in the offhand displaces a hand basket or torch, so the survivor gathers and carries less.
 - **Gear is locked during combat** ([Combat](Combat.md#weapons)), so the player is rewarded for wearing a combat loadout in dangerous places and pays for being caught in gathering gear.
 
-Saved loadouts (one click to switch between gathering and fighting sets outside combat, costing a little time): [OQ-043](../OpenQuestions.md).
+### Saved loadouts
+
+Saved loadouts come from placeable **wardrobe buildings** (resolves OQ-043). Each stores whole gear sets; swapping exchanges what the survivor is wearing with a stored set in one action, in the zone where the building stands.
+
+| Building | Sets stored | Availability |
+|---|---|---|
+| Stick dummy | 1: whatever is put on the dummy | Early |
+| Wardrobe | More | Later woodworking blueprints |
+| Armoire | More still | Later woodworking blueprints |
+
+Gear can also be carried in the [inventory](Inventory.md) and equipped piece by piece; its weight counts against carrying capacity like anything else. A wardrobe building only adds the one-action swap at home.
+
+Swap duration and exact set counts are set with content.
 
 ## Treatments and equipment
 

@@ -65,6 +65,10 @@ A large island of connected zones, each with a ground pool of items lying there.
 
 ## Survivor
 
+The survivor has **no gender**, and one is never specified. The sprite is androgynous. All game text addresses the player as "you" (as the [event log](UI/HUD.md#event-log) already does) or refers to "the survivor", never with gendered words.
+
+The player chooses the survivor's [dominant hand](Systems/Equipment.md#handedness) at character select.
+
 The survivor's body and mind are specified in [Survival Stats](Systems/SurvivalStats.md), [Food](Systems/Food.md), [Exertion](Systems/Exertion.md), [Injuries and Health](Systems/Injuries.md), [Equipment](Systems/Equipment.md) and [Skills](Systems/Skills.md).
 
 ## Runs

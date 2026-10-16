@@ -17,6 +17,7 @@ Canonical terms. Code, UI text and documents use these words with these meanings
 | Day | 1,440 TU (24 hours of game time). |
 | Day phase | One of six named parts of the day (Dawn, Morning, Midday, Afternoon, Dusk, Night) that other systems use to vary behavior. See [Time](Design/Systems/Time.md). |
 | Decay | Deterioration of items over time, at a per-item rate, slowed by storage. Inorganic items decay very slowly. See [Decay](Design/Systems/Decay.md). |
+| Dominant hand | Left or right, chosen at character select. It is the tool hand; the other hand is the offhand. See [Equipment](Design/Systems/Equipment.md#handedness). |
 | Dry season | The hot season with little rain, in which an unattended fire can start a wildfire. See [Weather](Design/Systems/Weather.md#seasons). |
 | Dud | An animal's combat card disabled by a successful hit; drawing it wastes the animal's turn. Lasts the whole fight. See [Combat](Design/Systems/Combat.md). |
 | Easy mode | A run option that makes the game easier. Earns survival points at 1/5 value and no challenge points. Independent of casual mode. See [Runs](Design/Systems/Runs.md#run-options). |
@@ -51,6 +52,7 @@ Canonical terms. Code, UI text and documents use these words with these meanings
 | Tell | A truthful combat hint. Rule-out tells eliminate one of an animal's three options; at mastery, explicit tells sometimes state its action. |
 | Time unit (TU) | The smallest unit of game time: 1 minute. See [Time](Design/Systems/Time.md). |
 | Unattended fire | A fire burning while the survivor starts a full Sleep, or spends an hour or more in another zone. See [Weather](Design/Systems/Weather.md#wildfire). |
+| Wardrobe building | A placeable building that stores whole gear sets for one-action swapping: stick dummy, wardrobe, armoire. See [Equipment](Design/Systems/Equipment.md#saved-loadouts). |
 | Weapon class | Melee, Reach or Ranged. Decides which fighting skill applies and which of an animal's cards a hit turns into a dud. See [Combat](Design/Systems/Combat.md). |
 | Weather state | The current island-wide weather, from Sunny to Hurricane. See [Weather](Design/Systems/Weather.md). |
 | Wildfire | A disaster started by an unattended fire in the dry season. Gives a survivor in the zone 15-30 minutes to escape, and burns its organic resources and structures. See [Weather](Design/Systems/Weather.md#wildfire). |
