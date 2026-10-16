@@ -42,7 +42,15 @@ Contentment acts as an overshield for Sanity.
 | Cause of sanity loss | While Contentment remains | Once Contentment is empty |
 |---|---|---|
 | Passive waning of the mind | Drains Contentment only; Sanity is protected | Drains Sanity |
-| Direct sanity damage: eating bugs, eating raw meat, vomiting, being soaked, being too cold or too hot, a survival stat in Dangerous ([Actions: condition gates](Actions.md#condition-gates)) | Drains Sanity directly | Drains Sanity directly |
+| Direct sanity damage: eating bugs, eating raw meat, vomiting, being soaked, being too cold or too hot | Drains Sanity directly | Drains Sanity directly |
+
+### Survival stat bands drain the mind
+
+| Any survival stat in band | Drains |
+|---|---|
+| Low | Contentment |
+| Dangerous | Contentment, faster (proposed) |
+| Critical | Contentment and Sanity |
 
 The HUD shows Contentment and Sanity next to each other so the shield relationship is visible.
 

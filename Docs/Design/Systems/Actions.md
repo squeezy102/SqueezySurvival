@@ -53,11 +53,11 @@ Injuries are specified in their own system (planned).
 
 The survivor's condition can lock actions.
 
-1. **Dangerous survival stats block sleep.** While any survival stat is at a dangerous level, Nap and Sleep are unavailable and the survivor suffers ongoing sanity penalties.
+1. **Dangerous survival stats block sleep.** While any survival stat is Dangerous or Critical, Nap and Sleep are unavailable. Low stats also wear on the mind ([Survival Stats: bands drain the mind](SurvivalStats.md#survival-stat-bands-drain-the-mind)).
 2. **Dangerous survival stats end sleep.** If a survival stat reaches a dangerous level during Nap or Sleep, the survivor is woken immediately, whatever the time. Time slept up to that moment counts; the remainder does not. The player is then faced with the problem in whatever light and weather the moment holds.
 3. **Wait and Rest are always available**, so time can always be passed.
 
-What counts as "dangerous" for each stat, and the size of the sanity penalty, are specified in Survival Stats (planned).
+Band thresholds are specified in [Survival Stats](SurvivalStats.md#bands-draft).
 
 ## Design intent
 
