@@ -15,7 +15,7 @@ The single source of truth for the design, engineering and decisions behind Sque
 |---|---|---|
 | Foundation | [Time](Design/Systems/Time.md) | Time units, passing time, day phases. |
 | | [Actions](Design/Systems/Actions.md) | Action anatomy, availability, light level, condition gates. |
-| | [Runs](Design/Systems/Runs.md) | Death, points earned, what persists between runs. |
+| | [Runs](Design/Systems/Runs.md) | Death, points earned, saving, casual mode. |
 | Survivor | [Survival Stats](Design/Systems/SurvivalStats.md) | Stat bars, bands, contentment and sanity, body temperature. |
 | | [Food](Design/Systems/Food.md) | Eating and food tolerance. |
 | | [Exertion](Design/Systems/Exertion.md) | Stamina, exertion risk, passing out. |

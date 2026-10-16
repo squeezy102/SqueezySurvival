@@ -9,6 +9,7 @@ Canonical terms. Code, UI text and documents use these words with these meanings
 | Bestiary | Record of encountered species, filling in with creature familiarity. See [Combat](Design/Systems/Combat.md#bestiary). |
 | Biome | A category of environment (for example Beach) that defines which resources can be found. |
 | Carrier | Equipment that adds its own weight-limited inventory, such as a basket, backpack or cart. See [Inventory](Design/Systems/Inventory.md). |
+| Casual mode | A run option chosen at start: the save is kept on death instead of deleted. See [Runs](Design/Systems/Runs.md#saving). |
 | Challenge points | Earned per 30 days survived in a run; spent on unlocks that make the game harder. See [Runs](Design/Systems/Runs.md). |
 | Combat | Turn-based fight with an animal, using hidden animal decks. See [Combat](Design/Systems/Combat.md). |
 | Cost | What an action consumes: time, and optionally stats, materials or tool durability. |

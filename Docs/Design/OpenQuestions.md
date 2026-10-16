@@ -12,7 +12,6 @@ Design questions still waiting for an answer. The full history of every question
 | OQ-004 | Stats | Stat ranges, decay rates per time unit, thresholds and their effects. | Systems/SurvivalStats |
 | OQ-008 | Zones | How large is the island at MVP: how many beach zones, and how are they connected? | Systems/Zones |
 | OQ-009 | Weather | Which weather states exist and how do they affect stats and actions? | Systems/Weather (planned) |
-| OQ-011 | Saving | Save model: manual, autosave, single slot, or permadeath? | GameDesignDocument |
 | OQ-025 | Exploration | How does exploring work at Dawn, Dusk and Night (light level penalties, hazard and injury chances)? | Systems/Exploration |
 | OQ-029 | Inventory | Weight balancing: the personal weight limit, carrier capacities, item weights, and whether load can exceed 100%. Weight is a delicate balancing lever affecting carrying, exploration, exertion, food logistics and crafting. **Deferred to a dedicated weight balancing session.** | Systems/Inventory |
 | OQ-032 | Controls | What does each mouse button and modifier combination do (for example Shift + left click to move a whole stack, Ctrl + left click to move one)? Defined per screen as screens are designed. | UI/Controls |
@@ -25,3 +24,4 @@ Design questions still waiting for an answer. The full history of every question
 | OQ-044 | Combat | Thrown stones: sling ammunition only (the earliest ranged weapon is a crafted sling with a pouch), or a separate weak one-handed throw action usable with anything in hand? | Systems/Combat |
 | OQ-046 | Research | Are topics with unmet requirements hidden, or shown locked with their requirements listed? | Systems/Research |
 | OQ-047 | Runs | How many survival and challenge points does a run award, and what perks, boosts and challenge unlocks can they buy? Deferred to a dedicated session. | Systems/Runs |
+| OQ-048 | Runs | (1) Do casual runs earn survival and challenge points, fewer points, or none? (2) In a standard run, can the player quit without saving and reload to undo a bad outcome, or does quitting also save? | Systems/Runs |

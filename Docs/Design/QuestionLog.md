@@ -17,7 +17,7 @@ Every design question ever raised, in ID order, with its status and resolution. 
 | OQ-008 | **Open** | Zones | How large is the island at MVP: how many beach zones, and how are they connected? | Owner: Systems/Zones |
 | OQ-009 | **Open** | Weather | Which weather states exist and how do they affect stats and actions? | Owner: Systems/Weather (planned) |
 | OQ-010 | Resolved | Failure | What ends a run (death conditions) and what persists between runs? | Death ends the run; days survived earn survival points, months earn challenge points, both kept between runs. [Runs](Systems/Runs.md) |
-| OQ-011 | **Open** | Saving | Save model: manual, autosave, single slot, or permadeath? | Owner: GameDesignDocument |
+| OQ-011 | Resolved | Saving | Save model: manual, autosave, single slot, or permadeath? | One save per run: autosave each new day, manual save from the Escape menu; deleted on death unless Casual mode. [Runs](Systems/Runs.md#saving) |
 | OQ-012 | Resolved | Distribution | Source repo private with a public releases-only repo, or source public? | Private source repo, public releases-only repo. [ADR-0004-Distribution-And-Self-Update](../Decisions/ADR-0004-Distribution-And-Self-Update.md) |
 | OQ-013 | Resolved | Distribution | Target platforms for shared builds: Windows only, or also macOS? | Windows only for now, kept portable. [ADR-0004-Distribution-And-Self-Update](../Decisions/ADR-0004-Distribution-And-Self-Update.md) |
 | OQ-014 | Resolved | Launcher | After Play, does the launcher close, minimize, or stay open? Recommendation: close, so updates are never attempted while game files are in use. | The launcher closes when the game starts. [Launcher](Launcher.md) |
@@ -54,3 +54,4 @@ Every design question ever raised, in ID order, with its status and resolution. 
 | OQ-045 | Resolved | Encounters | Ambush share: what fraction of a known ambush predator's encounters are ambushes, and what changes it (light, survivor's state, torches or other deterrents)? | Ambush share by light: Bright 5%, Dim 15%, Dark 50%. [Encounters](Systems/Encounters.md) |
 | OQ-046 | **Open** | Research | Are topics with unmet requirements hidden, or shown locked with their requirements listed? | Owner: Systems/Research |
 | OQ-047 | **Open** | Runs | How many survival and challenge points does a run award, and what perks, boosts and challenge unlocks can they buy? Deferred to a dedicated session. | Owner: Systems/Runs |
+| OQ-048 | **Open** | Runs | (1) Do casual runs earn survival and challenge points, fewer points, or none? (2) In a standard run, can the player quit without saving and reload to undo a bad outcome, or does quitting also save? | Owner: Systems/Runs |
