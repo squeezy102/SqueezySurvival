@@ -122,6 +122,13 @@ Food sources: coconuts, bananas, conches, crabs, seagulls, bugs, seeds, bushes a
 | Eat crabs | Food source |
 | Hand fishing | Possible but unreliable |
 
+### Early goals
+
+The first things a player should work towards:
+
+1. **Sustainable water:** a reliable source of safe drinking water.
+2. **Food preservation:** keeping food from spoiling ([Decay](Systems/Decay.md)).
+
 ### Out of scope for MVP
 
 - Animation.

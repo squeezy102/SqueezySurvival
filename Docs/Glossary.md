@@ -9,7 +9,7 @@ Canonical terms. Code, UI text and documents use these words with these meanings
 | Cost | What an action consumes: time, and optionally stats, materials or tool durability. |
 | Food category | A grouping of foods such as Meat, Fish, Fruit, Vegetables or Dairy. Has its own tolerance meter. |
 | Food tolerance | A per-food meter (100% to 0%) of how willing the survivor is to eat that food. Falls with each serving, recovers over time; low tolerance reduces what the food restores and causes penalties. See [Food](Design/Systems/Food.md). |
-| Decay | Deterioration of unused, unprotected items over time. See [Decay](Design/Systems/Decay.md). |
+| Decay | Deterioration of organic items over time, slowed by storage. Inorganic items do not decay. See [Decay](Design/Systems/Decay.md). |
 | Exploration progress | A zone's explored percentage. Rises with each explore; milestones trigger significant discoveries. See [Exploration](Design/Systems/Exploration.md). |
 | Find pool | The weighted set of loose items an explore can draw in a zone. |
 | Ground pool | The set of resources unearthed in a zone and lying on the ground there. Not part of the inventory. |
