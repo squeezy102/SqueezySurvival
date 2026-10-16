@@ -36,9 +36,8 @@ Food preservation is a core mechanic and one of the player's first goals, alongs
 
 ## Removing inorganic items
 
-Inorganic items do not decay, so another mechanic must remove them from ground pools when a sink is needed. On the beach, the tide can bury or wash away items. Other zones (forests, mountains) need their own mechanic ([OQ-028](../OpenQuestions.md)).
+Inorganic items do not decay. They leave a ground pool only when used or through extreme weather events ([Ground Pool](GroundPool.md#capacity)).
 
 ## Open questions
 
 - Decay rates per item type are set during balancing.
-- [OQ-028](../OpenQuestions.md).

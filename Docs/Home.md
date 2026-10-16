@@ -14,6 +14,7 @@ The single source of truth for the design, engineering and decisions behind Sque
   - [Exploration](Design/Systems/Exploration.md) - progress, finds, milestones, scripted first explores.
   - [Resource Nodes](Design/Systems/ResourceNodes.md) - renewable and destructive harvesting, replenishment.
   - [Decay](Design/Systems/Decay.md) - item deterioration as a resource sink.
+  - [Ground Pool](Design/Systems/GroundPool.md) - items on the ground in a zone.
 - UI:
   - [HUD](Design/UI/HUD.md) - static status area, temperature, weather icons.
 - [Glossary](Glossary.md) - canonical game terms.
@@ -58,6 +59,7 @@ Docs/
       Exploration.md
       ResourceNodes.md
       Decay.md
+      GroundPool.md
     UI/
       HUD.md
     OpenQuestions.md

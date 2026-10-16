@@ -12,7 +12,7 @@ Canonical terms. Code, UI text and documents use these words with these meanings
 | Decay | Deterioration of organic items over time, slowed by storage. Inorganic items do not decay. See [Decay](Design/Systems/Decay.md). |
 | Exploration progress | A zone's explored percentage. Rises with each explore; milestones trigger significant discoveries. See [Exploration](Design/Systems/Exploration.md). |
 | Find pool | The weighted set of loose items an explore can draw in a zone. |
-| Ground pool | The set of resources unearthed in a zone and lying on the ground there. Not part of the inventory. |
+| Ground pool | The items lying on the ground in a zone. Unlimited in size; not part of the inventory. See [Ground Pool](Design/Systems/GroundPool.md). |
 | Hazard | A danger met while exploring, such as a jellyfish or sea urchin. |
 | Inventory | Items the survivor is carrying. |
 | Known | Encountered by the survivor. Only known things are ever shown in the UI. |
