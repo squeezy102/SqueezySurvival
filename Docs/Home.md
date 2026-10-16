@@ -16,7 +16,7 @@ The single source of truth for the design, engineering and decisions behind Sque
   - [Decay](Design/Systems/Decay.md) - item deterioration as a resource sink.
   - [Ground Pool](Design/Systems/GroundPool.md) - items on the ground in a zone.
   - [Inventory](Design/Systems/Inventory.md) - personal weight limit and carriers.
-  - [Strain](Design/Systems/Strain.md) - strenuous action risk, strain and injury.
+  - [Exertion](Design/Systems/Exertion.md) - stamina, exertion risk, injury, passing out.
 - UI:
   - [HUD](Design/UI/HUD.md) - static status area, temperature, weather icons, event log.
 - [Glossary](Glossary.md) - canonical game terms.
@@ -63,7 +63,7 @@ Docs/
       Decay.md
       GroundPool.md
       Inventory.md
-      Strain.md
+      Exertion.md
     UI/
       HUD.md
     OpenQuestions.md

@@ -35,7 +35,7 @@ Intent: just over 75% is effectively free; near 100%, moving can make the surviv
 | 95% | 4.6x | Punishing |
 | 99% | 7.2x | A single move can exhaust the survivor |
 
-**Strain and injury.** Carrying a heavy load is a high-risk strenuous action: each movement action while overburdened rolls for strain or instant injury, with risk rising with load. See [Strain](Strain.md).
+**Injury.** Carrying a heavy load is a high-risk strenuous action for the legs. Overburdened movement drains stamina quickly, and low stamina brings injury risk. See [Exertion](Exertion.md).
 
 **Passing out:** a survivor whose Stamina reaches 0 collapses. This is a general Stamina rule ([Survival Stats](SurvivalStats.md)), which heavy loads make likely.
 
