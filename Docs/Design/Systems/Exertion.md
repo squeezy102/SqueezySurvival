@@ -16,7 +16,7 @@ How physical effort leads to injury. Stamina is the only effort meter; there is 
 
 ## Body regions
 
-Injuries apply to one of two regions: **arms** or **legs**. No other regions are tracked.
+Exertion injuries apply to the arms or legs used by the action. Arm actions injure the arm doing the work (the tool arm, or the offhand arm for offhand work); leg actions injure a leg. Full body locations: [Injuries and Health](Injuries.md#body-locations).
 
 | Activity | Region |
 |---|---|

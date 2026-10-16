@@ -10,6 +10,7 @@ Canonical terms. Code, UI text and documents use these words with these meanings
 | Food category | A grouping of foods such as Meat, Fish, Fruit, Vegetables or Dairy. Has its own tolerance meter. |
 | Food tolerance | A per-food meter (100% to 0%) of how willing the survivor is to eat that food. Falls with each serving, recovers over time; low tolerance reduces what the food restores and causes penalties. See [Food](Design/Systems/Food.md). |
 | Decay | Deterioration of items over time, at a per-item rate, slowed by storage. Inorganic items decay very slowly. See [Decay](Design/Systems/Decay.md). |
+| Equipment slot | A place the survivor wears or holds an item: tool hand, offhand, head, neck, chest, belt, legs, shoes, gloves, two trinkets, back. See [Equipment](Design/Systems/Equipment.md). |
 | Event log | The on-screen running record of game events in plain language. See [HUD](Design/UI/HUD.md#event-log). |
 | Encounter | A random wildlife event outdoors: thief, sighting, accident or discovery. See [Encounters](Design/Systems/Encounters.md). |
 | Exertion risk | The chance that a strenuous action injures the arms or legs; zero above 50% stamina and rising as stamina falls. See [Exertion](Design/Systems/Exertion.md). |
