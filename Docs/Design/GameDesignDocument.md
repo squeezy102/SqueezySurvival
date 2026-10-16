@@ -67,6 +67,10 @@ A large island of connected zones, each with a ground pool of items lying there.
 
 The survivor's body and mind are specified in [Survival Stats](Systems/SurvivalStats.md), [Food](Systems/Food.md), [Exertion](Systems/Exertion.md), [Injuries and Health](Systems/Injuries.md), [Equipment](Systems/Equipment.md) and [Skills](Systems/Skills.md).
 
+## Runs
+
+Death ends the run. Each run earns points that persist and buy perks or challenges for later runs. See [Runs](Systems/Runs.md).
+
 ## Research
 
 Passive, time-based unlocking of recipes, queued up to 3 topics ahead. See [Research](Systems/Research.md).

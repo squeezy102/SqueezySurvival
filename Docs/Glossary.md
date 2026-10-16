@@ -9,6 +9,7 @@ Canonical terms. Code, UI text and documents use these words with these meanings
 | Bestiary | Record of encountered species, filling in with creature familiarity. See [Combat](Design/Systems/Combat.md#bestiary). |
 | Biome | A category of environment (for example Beach) that defines which resources can be found. |
 | Carrier | Equipment that adds its own weight-limited inventory, such as a basket, backpack or cart. See [Inventory](Design/Systems/Inventory.md). |
+| Challenge points | Earned per 30 days survived in a run; spent on unlocks that make the game harder. See [Runs](Design/Systems/Runs.md). |
 | Combat | Turn-based fight with an animal, using hidden animal decks. See [Combat](Design/Systems/Combat.md). |
 | Cost | What an action consumes: time, and optionally stats, materials or tool durability. |
 | Creature familiarity | Per-species knowledge from encounters; unlocks combat tells and bestiary detail. |
@@ -37,7 +38,9 @@ Canonical terms. Code, UI text and documents use these words with these meanings
 | Recipe | A definition of inputs, tools and time required to produce an item. |
 | Research | The passive, time-based process that unlocks recipes. One topic at a time, with up to 3 queued. See [Research](Design/Systems/Research.md). |
 | Resource node | A fixed zone feature harvested with actions, such as a banana tree or spring. Renewable actions let it replenish; destructive actions consume it. See [Resource Nodes](Design/Systems/ResourceNodes.md). |
+| Run | One survivor's life, from waking on the beach to death. See [Runs](Design/Systems/Runs.md). |
 | Skill | The survivor's proficiency at an activity, such as melee fighting or first aid. See [Skills](Design/Systems/Skills.md). |
+| Survival points | Earned per day survived in a run; spent on perks and boosts. See [Runs](Design/Systems/Runs.md). |
 | Survival stat | A core condition of the survivor shown as a bar where higher is always better, such as Food or Water. See [Survival Stats](Design/Systems/SurvivalStats.md). |
 | Tell | A truthful combat hint. Rule-out tells eliminate one of an animal's three options; at mastery, explicit tells sometimes state its action. |
 | Time unit (TU) | The smallest unit of game time: 1 minute. See [Time](Design/Systems/Time.md). |
