@@ -23,7 +23,7 @@ What the survivor wears and holds.
 
 ### Handedness
 
-The player chooses the survivor's dominant hand, left or right, at character select (resolves OQ-040). The dominant hand is the tool hand; the other is the offhand.
+The player chooses the survivor's dominant hand, left or right, at character select (resolves OQ-040). The choice is required and has no default. The dominant hand is the tool hand; the other is the offhand.
 
 Handedness has **no gameplay effect** beyond deciding which side holds the tool. It exists so left-handed players are recognized. [Arm injuries](Injuries.md#body-locations) affect whichever hand is on the injured side. Two-handed weapons and the offhand: [Combat: weapons](Combat.md#weapons).
 

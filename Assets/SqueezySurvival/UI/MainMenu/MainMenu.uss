@@ -1,0 +1,190 @@
+.main-menu-root {
+    flex-grow: 1;
+    padding-top: 64px;
+    padding-left: 96px;
+    background-image: url("../../Art/Placeholder/PlaceholderBeachBackground.png");
+    -unity-background-scale-mode: scale-and-crop;
+}
+
+.game-title {
+    font-size: 96px;
+    -unity-font-style: bold;
+    color: rgb(18, 42, 66);
+    margin-bottom: 40px;
+}
+
+.menu-options {
+    width: 440px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 24px;
+    padding-right: 24px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    background-color: rgba(18, 30, 42, 0.72);
+}
+
+.menu-button {
+    height: 64px;
+    margin-top: 6px;
+    margin-bottom: 6px;
+    padding-left: 20px;
+    font-size: 32px;
+    -unity-text-align: middle-left;
+}
+
+.version-label {
+    position: absolute;
+    right: 24px;
+    bottom: 16px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    font-size: 22px;
+    color: rgb(255, 255, 255);
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.notice-overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.notice-panel {
+    min-width: 480px;
+    padding-top: 32px;
+    padding-bottom: 32px;
+    padding-left: 32px;
+    padding-right: 32px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    background-color: rgb(30, 40, 52);
+}
+
+.notice-text {
+    margin-bottom: 24px;
+    font-size: 32px;
+    color: rgb(255, 255, 255);
+    -unity-text-align: middle-center;
+}
+
+.new-game-panel {
+    width: 1500px;
+}
+
+.screen-heading {
+    margin-bottom: 16px;
+    font-size: 44px;
+    -unity-font-style: bold;
+    color: rgb(255, 255, 255);
+}
+
+.setting-heading {
+    margin-top: 18px;
+    margin-bottom: 6px;
+    font-size: 26px;
+    -unity-font-style: bold;
+    color: rgb(255, 255, 255);
+}
+
+.setting-row {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    font-size: 26px;
+    color: rgb(255, 255, 255);
+}
+
+.run-points-summary {
+    font-size: 26px;
+    color: rgb(255, 214, 120);
+}
+
+.screen-buttons {
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-top: 24px;
+}
+
+.screen-button {
+    min-width: 180px;
+    padding-right: 16px;
+    margin-left: 16px;
+    -unity-text-align: middle-center;
+    padding-left: 16px;
+}
+
+.option-table-row {
+    flex-direction: row;
+    align-items: center;
+}
+
+.option-table-name {
+    width: 260px;
+}
+
+.option-table-gameplay {
+    width: 720px;
+    padding-right: 24px;
+    font-size: 24px;
+    color: rgb(255, 255, 255);
+    white-space: normal;
+}
+
+.option-table-heading {
+    font-size: 20px;
+    -unity-font-style: bold;
+    color: rgb(200, 200, 200);
+}
+
+.option-table-effect {
+    font-size: 24px;
+    color: rgb(225, 225, 225);
+}
+
+/* The default theme recolors a field's label on hover and focus; these labels keep one color so only the
+   disabled state changes how they look. */
+.setting-row > .unity-base-field__label,
+.setting-row:hover > .unity-base-field__label,
+.setting-row:focus > .unity-base-field__label,
+.setting-row:checked > .unity-base-field__label {
+    color: rgb(255, 255, 255);
+}
+
+.setting-row:disabled > .unity-base-field__label,
+.option-in-conflict > .unity-base-field__label,
+.option-in-conflict:hover > .unity-base-field__label,
+.option-in-conflict:focus > .unity-base-field__label {
+    color: rgb(150, 150, 150);
+}
+
+.confirmation-panel {
+    max-width: 900px;
+}
+
+.confirmation-text {
+    white-space: normal;
+}
+
+.setting-hint {
+    margin-bottom: 6px;
+    font-size: 22px;
+    -unity-font-style: italic;
+    color: rgb(225, 225, 225);
+    white-space: normal;
+}
+

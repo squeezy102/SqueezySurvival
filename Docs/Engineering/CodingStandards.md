@@ -18,7 +18,7 @@
 
 ## Assemblies
 
-Code is split into assembly definitions (`.asmdef`) so that dependencies are explicit and enforced by the compiler. The specific layout is defined when the first code is written and recorded in an ADR.
+Code is split into assembly definitions (`.asmdef`) so that dependencies are explicit and enforced by the compiler. The layout is defined in [ADR-0007](../Decisions/ADR-0007-Runtime-UI-And-Assembly-Layout.md).
 
 ## Naming
 

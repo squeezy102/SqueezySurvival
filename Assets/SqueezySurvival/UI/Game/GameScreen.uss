@@ -1,0 +1,194 @@
+.game-screen-root {
+    flex-grow: 1;
+    flex-direction: row;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    padding-left: 16px;
+    padding-right: 16px;
+    background-image: url("../../Art/Placeholder/PlaceholderBeachBackground.png");
+    -unity-background-scale-mode: scale-and-crop;
+}
+
+
+
+.hud-clock {
+    font-size: 30px;
+    -unity-font-style: bold;
+    color: rgb(255, 255, 255);
+}
+
+.hud-time-buttons {
+    flex-direction: row;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+
+.zone-name {
+    font-size: 36px;
+    -unity-font-style: bold;
+    color: rgb(255, 255, 255);
+}
+
+
+
+.event-log-entries {
+    flex-grow: 1;
+    flex-basis: 0;
+}
+
+.event-log-entry {
+    margin-bottom: 4px;
+    font-size: 20px;
+    color: rgb(240, 240, 240);
+    white-space: normal;
+}
+
+
+.panel-heading {
+    margin-bottom: 6px;
+    font-size: 22px;
+    -unity-font-style: bold;
+    color: rgb(255, 214, 120);
+}
+
+.placeholder-text {
+    font-size: 20px;
+    -unity-font-style: italic;
+    color: rgb(210, 210, 210);
+    white-space: normal;
+}
+
+.game-button {
+    height: 48px;
+    min-width: 200px;
+    margin-left: 0;
+    margin-right: 0;
+    font-size: 22px;
+}
+
+.hud-time-buttons > .game-button {
+    margin-right: 8px;
+}
+
+.pause-overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.pause-panel {
+    width: 560px;
+    padding-top: 28px;
+    padding-bottom: 28px;
+    padding-left: 28px;
+    padding-right: 28px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    background-color: rgb(30, 40, 52);
+}
+
+.pause-heading {
+    font-size: 40px;
+    -unity-font-style: bold;
+    color: rgb(255, 255, 255);
+    -unity-text-align: middle-center;
+}
+
+.pause-warning {
+    margin-top: 8px;
+    margin-bottom: 16px;
+    font-size: 22px;
+    color: rgb(255, 214, 120);
+    white-space: normal;
+    -unity-text-align: middle-center;
+}
+
+.pause-button {
+    margin-top: 6px;
+    margin-right: 0;
+}
+
+
+.nav-button {
+    height: 52px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 8px;
+    font-size: 20px;
+}
+
+/* Layout: every gap between panels and every screen margin is 16px. Growing regions use flex-basis 0, so
+   their size comes from the screen, never from their content: panels stay fixed as content grows. */
+.gap-right {
+    margin-right: 16px;
+}
+
+.gap-bottom {
+    margin-bottom: 16px;
+}
+
+.main-area {
+    flex-grow: 1;
+    flex-basis: 0;
+}
+
+.upper-area {
+    flex-grow: 1;
+    flex-basis: 0;
+    flex-direction: row;
+}
+
+.left-column {
+    width: 480px;
+}
+
+.center-column {
+    flex-grow: 1;
+    flex-basis: 0;
+}
+
+.panel {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 16px;
+    padding-right: 16px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    background-color: rgba(18, 30, 42, 0.78);
+}
+
+.event-log-panel {
+    flex-grow: 1;
+    flex-basis: 0;
+    overflow: hidden;
+}
+
+.zone-bar {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.ground-pool {
+    flex-grow: 1;
+    flex-basis: 0;
+    overflow: hidden;
+}
+
+.inventory-panel {
+    height: 168px;
+}
+
+.nav-bar {
+    width: 160px;
+}

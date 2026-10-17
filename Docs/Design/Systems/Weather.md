@@ -98,9 +98,24 @@ Sunny - Partly cloudy - Cloudy - Rainy - Heavy rain - Storm - Heavy storm - Hurr
 
    Foggy and Windy branch off Cloudy. There is never a heavy storm without a storm first, never a hurricane without a heavy storm first, and Sunny passes through Partly cloudy on the way to Cloudy.
 2. **The season weights each step.** In the Rainy season, steps toward rain are more likely; in the Dry season, steps toward Sunny are. Over days this produces trends the player can feel: "It has been raining a lot lately, and the storms are getting worse," or "It hasn't rained in days. I should conserve water."
-3. **Every state lasts a while** before it can change, so weather never flickers.
+3. **Every state lasts a while** before it can change, so weather never flickers:
 
-This is a Markov chain over the states above, with transition weights set per season. Step weights and minimum durations: [OQ-060](../OpenQuestions.md).
+| State | Minimum | Maximum |
+|---|---|---|
+| Most states | 1 hour | About 1 day |
+| Heavy storm | 1 hour | 2 days |
+| Hurricane | 8 hours | 3 days |
+
+This is a Markov chain over the states above, with transition weights set per season. Seasonal tendencies:
+
+| Season | Rain and storms | Wind | Fog |
+|---|---|---|---|
+| Temperate | Normal | Normal | Normal |
+| Dry | Much less likely | Normal | Unlikely |
+| Rainy | Much more likely | Slightly more common | Much more common |
+| Stormy | Much more likely | Much more common | Normal |
+
+Exact transition weights and the strength of each weather effect: [OQ-063](../OpenQuestions.md).
 
 ## Wildfire
 

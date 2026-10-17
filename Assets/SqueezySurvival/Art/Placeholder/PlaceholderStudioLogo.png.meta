@@ -1,0 +1,1014 @@
+fileFormatVersion: 2
+guid: 02475889b5dd60745a76b7edb772b8f6
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -6841004406673163460
+    second: PlaceholderStudioLogo_0
+  - first:
+      213: -7748915472139633840
+    second: PlaceholderStudioLogo_1
+  - first:
+      213: 3328949326954377356
+    second: PlaceholderStudioLogo_2
+  - first:
+      213: 7396304290528822830
+    second: PlaceholderStudioLogo_3
+  - first:
+      213: -964276310045379279
+    second: PlaceholderStudioLogo_4
+  - first:
+      213: 2968381527138215449
+    second: PlaceholderStudioLogo_5
+  - first:
+      213: 5217295792193749260
+    second: PlaceholderStudioLogo_6
+  - first:
+      213: -6719737711101177313
+    second: PlaceholderStudioLogo_7
+  - first:
+      213: -611441392226404591
+    second: PlaceholderStudioLogo_8
+  - first:
+      213: 9046118911075444341
+    second: PlaceholderStudioLogo_9
+  - first:
+      213: -8673733463467557237
+    second: PlaceholderStudioLogo_10
+  - first:
+      213: -2639662574829643526
+    second: PlaceholderStudioLogo_11
+  - first:
+      213: 2860659558204677624
+    second: PlaceholderStudioLogo_12
+  - first:
+      213: -1917197204589328558
+    second: PlaceholderStudioLogo_13
+  - first:
+      213: -4437801121147079387
+    second: PlaceholderStudioLogo_14
+  - first:
+      213: -874653520365647400
+    second: PlaceholderStudioLogo_15
+  - first:
+      213: 8435946327586465715
+    second: PlaceholderStudioLogo_16
+  - first:
+      213: 1257007640212111050
+    second: PlaceholderStudioLogo_17
+  - first:
+      213: -8983022823035317721
+    second: PlaceholderStudioLogo_18
+  - first:
+      213: -4401206962635006331
+    second: PlaceholderStudioLogo_19
+  - first:
+      213: 6845888747066082248
+    second: PlaceholderStudioLogo_20
+  - first:
+      213: -6482968564918010307
+    second: PlaceholderStudioLogo_21
+  - first:
+      213: 877818489636213598
+    second: PlaceholderStudioLogo_22
+  - first:
+      213: 4009686076472265791
+    second: PlaceholderStudioLogo_23
+  - first:
+      213: -1560569164453383529
+    second: PlaceholderStudioLogo_24
+  - first:
+      213: -7679938086789021983
+    second: PlaceholderStudioLogo_25
+  - first:
+      213: -4349214552128422327
+    second: PlaceholderStudioLogo_26
+  - first:
+      213: 8781877075229499869
+    second: PlaceholderStudioLogo_27
+  - first:
+      213: -1696150184332201291
+    second: PlaceholderStudioLogo_28
+  - first:
+      213: 8514255362715389852
+    second: PlaceholderStudioLogo_29
+  - first:
+      213: 1673358843634944781
+    second: PlaceholderStudioLogo_30
+  - first:
+      213: 8470756084889957365
+    second: PlaceholderStudioLogo_31
+  - first:
+      213: 7206973108578333882
+    second: PlaceholderStudioLogo_32
+  - first:
+      213: 8460446552290532126
+    second: PlaceholderStudioLogo_33
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: PlaceholderStudioLogo_0
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 244
+        width: 65
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c3b3d51ccbedf01a0800000000000000
+      internalID: -6841004406673163460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderStudioLogo_1
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 308
+        width: 21
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 05bb6900f62567490800000000000000
+      internalID: -7748915472139633840
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderStudioLogo_2
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 292
+        width: 15
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c80346c76cdc23e20800000000000000
+      internalID: 3328949326954377356
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderStudioLogo_3
+      rect:
+        serializedVersion: 2
+        x: 318
+        y: 243
+        width: 75
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e260baf9093f4a660800000000000000
+      internalID: 7396304290528822830
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderStudioLogo_4
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 222
+        width: 33
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 135bb621ec33e92f0800000000000000
+      internalID: -964276310045379279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderStudioLogo_5
+      rect:
+        serializedVersion: 2
+        x: 220
+        y: 243
+        width: 54
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 916a7e2954fc13920800000000000000
+      internalID: 2968381527138215449
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderStudioLogo_6
+      rect:
+        serializedVersion: 2
+        x: 403
+        y: 243
+        width: 60
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c0149dd61ee876840800000000000000
+      internalID: 5217295792193749260
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderStudioLogo_7
+      rect:
+        serializedVersion: 2
+        x: 477
+        y: 244
+        width: 95
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f12940a8722beb2a0800000000000000
+      internalID: -6719737711101177313
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderStudioLogo_8
+      rect:
+        serializedVersion: 2
+        x: 581
+        y: 243
+        width: 64
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 117ff571b49b387f0800000000000000
+      internalID: -611441392226404591
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderStudioLogo_9
+      rect:
+        serializedVersion: 2
+        x: 656
+        y: 244
+        width: 45
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5766892a8354a8d70800000000000000
+      internalID: 9046118911075444341
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderStudioLogo_10
+      rect:
+        serializedVersion: 2
+        x: 703
+        y: 243
+        width: 65
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b8ef891de55b0a780800000000000000
+      internalID: -8673733463467557237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderStudioLogo_11
+      rect:
+        serializedVersion: 2
+        x: 775
+        y: 243
+        width: 65
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af8d26cafd80e5bd0800000000000000
+      internalID: -2639662574829643526
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderStudioLogo_12
+      rect:
+        serializedVersion: 2
+        x: 850
+        y: 244
+        width: 95
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8fd9d1636ba13b720800000000000000
+      internalID: 2860659558204677624
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderStudioLogo_13
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 184
+        width: 707
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 257c418dc4fb465e0800000000000000
+      internalID: -1917197204589328558
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderStudioLogo_14
+      rect:
+        serializedVersion: 2
+        x: 264
+        y: 129
+        width: 19
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 525b23e8463c962c0800000000000000
+      internalID: -4437801121147079387
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderStudioLogo_15
+      rect:
+        serializedVersion: 2
+        x: 285
+        y: 129
+        width: 41
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d98f01e14b9cd3f0800000000000000
+      internalID: -874653520365647400
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderStudioLogo_16
+      rect:
+        serializedVersion: 2
+        x: 325
+        y: 129
+        width: 23
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b76d084d70821570800000000000000
+      internalID: 8435946327586465715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderStudioLogo_17
+      rect:
+        serializedVersion: 2
+        x: 351
+        y: 129
+        width: 19
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ace7bc2f9c9c17110800000000000000
+      internalID: 1257007640212111050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderStudioLogo_18
+      rect:
+        serializedVersion: 2
+        x: 372
+        y: 129
+        width: 22
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 722d0c72654e55380800000000000000
+      internalID: -8983022823035317721
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderStudioLogo_19
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 129
+        width: 26
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 58e1a290695cbe2c0800000000000000
+      internalID: -4401206962635006331
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderStudioLogo_20
+      rect:
+        serializedVersion: 2
+        x: 424
+        y: 129
+        width: 18
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c3c7bc5b8b710f50800000000000000
+      internalID: 6845888747066082248
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderStudioLogo_21
+      rect:
+        serializedVersion: 2
+        x: 443
+        y: 129
+        width: 24
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d3eb90e307ed706a0800000000000000
+      internalID: -6482968564918010307
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderStudioLogo_22
+      rect:
+        serializedVersion: 2
+        x: 470
+        y: 129
+        width: 19
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e535904f343ae2c00800000000000000
+      internalID: 877818489636213598
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderStudioLogo_23
+      rect:
+        serializedVersion: 2
+        x: 491
+        y: 129
+        width: 22
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f3c85f80e3445a730800000000000000
+      internalID: 4009686076472265791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderStudioLogo_24
+      rect:
+        serializedVersion: 2
+        x: 524
+        y: 129
+        width: 20
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 792f359fc9eb75ae0800000000000000
+      internalID: -1560569164453383529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderStudioLogo_25
+      rect:
+        serializedVersion: 2
+        x: 543
+        y: 129
+        width: 24
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ee72f700016b6590800000000000000
+      internalID: -7679938086789021983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderStudioLogo_26
+      rect:
+        serializedVersion: 2
+        x: 567
+        y: 129
+        width: 22
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 94efc60786c74a3c0800000000000000
+      internalID: -4349214552128422327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderStudioLogo_27
+      rect:
+        serializedVersion: 2
+        x: 593
+        y: 129
+        width: 24
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd1633aebae7fd970800000000000000
+      internalID: 8781877075229499869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderStudioLogo_28
+      rect:
+        serializedVersion: 2
+        x: 619
+        y: 129
+        width: 6
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b27a29d4601678e0800000000000000
+      internalID: -1696150184332201291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderStudioLogo_29
+      rect:
+        serializedVersion: 2
+        x: 627
+        y: 129
+        width: 26
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c9f8d955426b82670800000000000000
+      internalID: 8514255362715389852
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderStudioLogo_30
+      rect:
+        serializedVersion: 2
+        x: 667
+        y: 129
+        width: 18
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d0b8e90a007f83710800000000000000
+      internalID: 1673358843634944781
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderStudioLogo_31
+      rect:
+        serializedVersion: 2
+        x: 682
+        y: 129
+        width: 26
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f338da77cb2e8570800000000000000
+      internalID: 8470756084889957365
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderStudioLogo_32
+      rect:
+        serializedVersion: 2
+        x: 709
+        y: 129
+        width: 25
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab4ba9aabdf440460800000000000000
+      internalID: 7206973108578333882
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderStudioLogo_33
+      rect:
+        serializedVersion: 2
+        x: 735
+        y: 129
+        width: 26
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e1b947e505b896570800000000000000
+      internalID: 8460446552290532126
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      PlaceholderStudioLogo_0: -6841004406673163460
+      PlaceholderStudioLogo_1: -7748915472139633840
+      PlaceholderStudioLogo_10: -8673733463467557237
+      PlaceholderStudioLogo_11: -2639662574829643526
+      PlaceholderStudioLogo_12: 2860659558204677624
+      PlaceholderStudioLogo_13: -1917197204589328558
+      PlaceholderStudioLogo_14: -4437801121147079387
+      PlaceholderStudioLogo_15: -874653520365647400
+      PlaceholderStudioLogo_16: 8435946327586465715
+      PlaceholderStudioLogo_17: 1257007640212111050
+      PlaceholderStudioLogo_18: -8983022823035317721
+      PlaceholderStudioLogo_19: -4401206962635006331
+      PlaceholderStudioLogo_2: 3328949326954377356
+      PlaceholderStudioLogo_20: 6845888747066082248
+      PlaceholderStudioLogo_21: -6482968564918010307
+      PlaceholderStudioLogo_22: 877818489636213598
+      PlaceholderStudioLogo_23: 4009686076472265791
+      PlaceholderStudioLogo_24: -1560569164453383529
+      PlaceholderStudioLogo_25: -7679938086789021983
+      PlaceholderStudioLogo_26: -4349214552128422327
+      PlaceholderStudioLogo_27: 8781877075229499869
+      PlaceholderStudioLogo_28: -1696150184332201291
+      PlaceholderStudioLogo_29: 8514255362715389852
+      PlaceholderStudioLogo_3: 7396304290528822830
+      PlaceholderStudioLogo_30: 1673358843634944781
+      PlaceholderStudioLogo_31: 8470756084889957365
+      PlaceholderStudioLogo_32: 7206973108578333882
+      PlaceholderStudioLogo_33: 8460446552290532126
+      PlaceholderStudioLogo_4: -964276310045379279
+      PlaceholderStudioLogo_5: 2968381527138215449
+      PlaceholderStudioLogo_6: 5217295792193749260
+      PlaceholderStudioLogo_7: -6719737711101177313
+      PlaceholderStudioLogo_8: -611441392226404591
+      PlaceholderStudioLogo_9: 9046118911075444341
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

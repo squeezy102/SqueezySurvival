@@ -39,14 +39,21 @@ Planned: Crafting, Buildings, Light Sources, Illness.
 - [Screen Layout](Design/UI/ScreenLayout.md) - main screen regions and organization tools.
 - [HUD](Design/UI/HUD.md) - static status area, temperature, weather icons, event log.
 - [Controls](Design/UI/Controls.md) - mouse and modifiers, hotkeys, remapping.
+- [Startup Flow](Design/UI/StartupFlow.md) - splash logos and main menu.
+- [Day Summary](Design/UI/DaySummary.md) - the screen that marks the end of each day (concept).
 - [Launcher](Design/Launcher.md) - launcher layout, behavior and states.
 
 ## Engineering
+
+- [AGENTS.md](../AGENTS.md) - start here for AI assistants and LLM-assisted contributors.
 
 - [Coding Standards](Engineering/CodingStandards.md) - testability, naming, architecture, warnings policy.
 - [Project Setup](Engineering/ProjectSetup.md) - editor version, packages, folder layout.
 - [Source Control](Engineering/SourceControl.md) - branching, commits, Git LFS.
 - [Release Pipeline](Engineering/ReleasePipeline.md) - building, packaging and publishing player builds.
+- [Asset Credits](Engineering/AssetCredits.md) - source and license of every shipped asset.
+- [Playtest Log](Engineering/PlaytestLog.md) - playtest sessions and the issues filed from them.
+- [Work Tracking](Engineering/WorkTracking.md) - GitHub Issues for stories, bugs and tasks; labels, milestones, linking.
 - Spikes - time-boxed experiments that answer a technical question:
   - [SPIKE-001: Velopack with a Unity player](Engineering/Spikes/SPIKE-001-Velopack-With-Unity.md)
 
@@ -56,13 +63,14 @@ Planned: Crafting, Buildings, Light Sources, Illness.
 
 ## Documentation policy
 
-1. **Docs first.** A system is designed and documented before it is implemented. The project is currently in the design phase: no gameplay code until the core designs are concrete.
-2. **Docs are part of done.** A change is not complete until every affected document is updated in the same commit.
-3. **One home per fact.** Each rule, formula or value is defined in exactly one document and linked from elsewhere, never copied.
-4. **Decisions are recorded.** Any significant or hard-to-reverse choice gets an ADR.
-5. **Format.** Markdown (`.md`) only. Plain hyphens, no em dashes. Units are imperial where applicable.
-6. **Status markers.** Design documents carry a status: `Concept`, `Draft`, `Approved`, or `Implemented`.
-7. **Designs are working drafts.** System designs are introductory and expected to change as the game is built and played. Changes are made in the owning document and recorded in its history, never by working around it.
+1. **Docs first.** A system is designed and documented before it is implemented. The project has moved from pure design into a playable wireframe: code is written only for systems that are already designed.
+2. **Work is tracked in issues.** Every bug, request or playtest finding is filed as a GitHub issue before it is worked on ([Work Tracking](Engineering/WorkTracking.md)). Docs remain the single source of truth for design; issues link to them.
+3. **Docs are part of done.** A change is not complete until every affected document is updated in the same commit.
+4. **One home per fact.** Each rule, formula or value is defined in exactly one document and linked from elsewhere, never copied.
+5. **Decisions are recorded.** Any significant or hard-to-reverse choice gets an ADR.
+6. **Format.** Markdown (`.md`) only. Plain hyphens, no em dashes. Units are imperial where applicable.
+7. **Status markers.** Design documents carry a status: `Concept`, `Draft`, `Approved`, or `Implemented`.
+8. **Designs are working drafts.** System designs are introductory and expected to change as the game is built and played. Changes are made in the owning document and recorded in its history, never by working around it.
 
 ## Folder layout
 

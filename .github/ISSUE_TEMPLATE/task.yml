@@ -1,0 +1,20 @@
+name: Task
+description: Engineering, tooling or documentation work that is not a player-facing story.
+title: "<What needs doing>"
+labels: ["task"]
+body:
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Why this is needed, with links to the relevant docs.
+    validations:
+      required: true
+  - type: textarea
+    id: done
+    attributes:
+      label: Done when
+      value: |
+        - [ ] 
+    validations:
+      required: true

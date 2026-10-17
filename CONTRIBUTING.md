@@ -12,7 +12,13 @@ Thanks for helping build SqueezySurvival. The project owner, squeezy102, has the
 
 Nobody pushes directly to `main`. A ruleset on GitHub enforces this ([Source Control: protecting main](Docs/Engineering/SourceControl.md#protecting-main)).
 
+## Finding and reporting work
+
+Work is tracked in [GitHub Issues](https://github.com/squeezy102/SqueezySurvival/issues): user stories, bugs and tasks, each opened with a form. Pull requests reference the issue they finish (`Closes #3`). See [Work Tracking](Docs/Engineering/WorkTracking.md).
+
 ## Before you start
+
+- Using an AI assistant? Have it read [AGENTS.md](AGENTS.md) first; it is the baseline for LLM-assisted contributions.
 
 - Read [Docs/Home.md](Docs/Home.md), especially the documentation policy: **docs come first**, and a change is not done until every affected document is updated in the same pull request.
 - The project is in the **design phase**: no gameplay code is written until the core designs are concrete. Design ideas are proposed as pull requests to the design documents, or as new entries in [Open Questions](Docs/Design/OpenQuestions.md).

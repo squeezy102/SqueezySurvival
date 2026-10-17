@@ -1,0 +1,58 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <Style src="GameScreen.uss" />
+    <ui:VisualElement name="game-screen-root" class="game-screen-root">
+        <ui:VisualElement class="main-area gap-right">
+            <ui:VisualElement class="upper-area gap-bottom">
+                <ui:VisualElement class="left-column gap-right">
+                    <ui:VisualElement class="panel hud-panel gap-bottom">
+                        <ui:Label name="hud-clock" class="hud-clock" />
+                        <ui:VisualElement class="hud-time-buttons">
+                            <ui:Button name="wait-button" class="game-button" />
+                            <ui:Button name="rest-button" class="game-button" />
+                        </ui:VisualElement>
+                        <ui:Label text="Survival stats, temperature and weather: not built yet" class="placeholder-text" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="panel event-log-panel">
+                        <ui:Label text="Event log" class="panel-heading" />
+                        <ui:ScrollView name="event-log-entries" class="event-log-entries" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement class="center-column">
+                    <ui:VisualElement class="panel zone-bar gap-bottom">
+                        <ui:Label name="zone-name" class="zone-name" />
+                        <ui:Button name="explore-button" text="Explore (not built yet)" class="game-button" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="panel ground-pool">
+                        <ui:Label text="Nothing found yet." class="placeholder-text" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement class="panel inventory-panel">
+                <ui:Label text="Inventory" class="panel-heading" />
+                <ui:Label text="Your hands are empty." class="placeholder-text" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="nav-bar" class="panel nav-bar">
+            <ui:Button name="nav-inventory-button" text="Inventory" class="nav-button" />
+            <ui:Button name="nav-map-button" text="Map" class="nav-button" />
+            <ui:Button name="nav-crafting-button" text="Crafting" class="nav-button" />
+            <ui:Button name="nav-skills-button" text="Skills" class="nav-button" />
+            <ui:Button name="nav-research-button" text="Research" class="nav-button" />
+            <ui:Button name="nav-equipment-button" text="Equipment" class="nav-button" />
+            <ui:Button name="nav-cooking-button" text="Cooking" class="nav-button" />
+        </ui:VisualElement>
+        <ui:VisualElement name="not-built-notice" class="pause-overlay">
+            <ui:VisualElement class="pause-panel">
+                <ui:Label name="not-built-notice-text" class="pause-warning" />
+                <ui:Button name="not-built-notice-close-button" text="Close" class="game-button pause-button" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="pause-menu" class="pause-overlay">
+            <ui:VisualElement class="pause-panel">
+                <ui:Label text="Paused" class="pause-heading" />
+                <ui:Label text="Saving isn't built yet: this run won't be kept." class="pause-warning" />
+                <ui:Button name="save-and-exit-button" text="Save and exit" class="game-button pause-button" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

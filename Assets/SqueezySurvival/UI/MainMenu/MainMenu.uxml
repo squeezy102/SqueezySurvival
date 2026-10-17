@@ -1,0 +1,31 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <ui:Template name="NewGameScreen" src="NewGameScreen.uxml" />
+    <Style src="MainMenu.uss" />
+    <ui:VisualElement name="main-menu-root" class="main-menu-root">
+        <ui:Label name="game-title" text="SqueezySurvival" class="game-title" />
+        <ui:VisualElement name="menu-options" class="menu-options">
+            <ui:Button name="new-game-button" class="menu-button" />
+            <ui:Button name="continue-button" class="menu-button" />
+            <ui:Button name="load-game-button" class="menu-button" />
+            <ui:Button name="options-button" class="menu-button" />
+            <ui:Button name="quit-button" class="menu-button" />
+        </ui:VisualElement>
+        <ui:Instance template="NewGameScreen" name="new-game-screen" />
+        <ui:Label name="version-label" class="version-label" />
+        <ui:VisualElement name="start-confirmation" class="notice-overlay">
+            <ui:VisualElement class="notice-panel confirmation-panel">
+                <ui:Label name="start-confirmation-message" class="notice-text confirmation-text" />
+                <ui:VisualElement class="screen-buttons">
+                    <ui:Button name="start-confirmation-cancel-button" text="Go back" class="menu-button screen-button" />
+                    <ui:Button name="start-confirmation-confirm-button" text="Start" class="menu-button screen-button" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="not-built-notice" class="notice-overlay">
+            <ui:VisualElement class="notice-panel">
+                <ui:Label text="This isn't built yet." class="notice-text" />
+                <ui:Button name="not-built-notice-close-button" text="Close" class="menu-button" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

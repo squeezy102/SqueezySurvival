@@ -16,6 +16,8 @@ Player builds are published to a separate public repository, `squeezy102/Squeezy
 
 Binary assets (images, audio, fonts, models) are stored with Git LFS. Rules are defined in `.gitattributes`. Unity YAML files (`.unity`, `.prefab`, `.asset`, `.meta`) are text and merge with UnityYAMLMerge.
 
+The cloud session that Claude works in cannot upload Git LFS objects. A commit that adds or changes a binary file is pushed from squeezy102's PC (`git push`); commits with only text files are pushed by Claude.
+
 ## Ignored files
 
 `.gitignore` follows the [GitHub Unity template](https://github.com/github/gitignore/blob/main/Unity.gitignore). Generated folders and IDE files are never committed.
@@ -38,7 +40,16 @@ Nobody pushes directly to `main`. Every change, including the owner's, goes thro
 3. squeezy102 reviews and approves it.
 4. Squash merge; the branch is deleted automatically.
 
-Claude follows the same flow: it pushes a branch and opens the pull request, and squeezy102 merges it.
+### squeezy102's integration branch
+
+`PjDev` is squeezy102's personal integration branch, created from `main`.
+
+1. squeezy102's feature branches (and Claude's) are created from `PjDev` and merged back into it.
+2. When `PjDev` holds a set of changes ready for `main`, a pull request from `PjDev` into `main` brings them in.
+
+Contributors branch from `main` as described above.
+
+`PjDev` belongs to squeezy102 alone. A second ruleset, `Protect PjDev`, restricts updates, deletions and force pushes on it, with only the repository admin (squeezy102) able to bypass, always. Nobody else can push to it, merge into it, or delete it.
 
 ## Protecting main
 

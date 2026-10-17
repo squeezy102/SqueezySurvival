@@ -1,7 +1,10 @@
 {
     "name": "SqueezySurvival.Editor",
     "rootNamespace": "SqueezySurvival.Editor",
-    "references": [],
+    "references": [
+        "SqueezySurvival.Core",
+        "SqueezySurvival.Presentation"
+    ],
     "includePlatforms": [
         "Editor"
     ],

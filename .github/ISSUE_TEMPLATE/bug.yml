@@ -1,0 +1,34 @@
+name: Bug
+description: Something works differently than designed.
+title: "<What goes wrong>"
+labels: ["bug"]
+body:
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Start a new game.
+        2. Press Wait.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual
+      description: Include screenshots or Console messages if you have them.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Shown in the bottom right of the main menu, for example v0.0.1 or v1.0 (editor).
+    validations:
+      required: true
