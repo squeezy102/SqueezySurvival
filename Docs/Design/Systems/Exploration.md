@@ -14,8 +14,8 @@ Exploring a zone is how the survivor finds resources, features and the way to ot
 
 Exploration combines two things:
 
-1. **Progress:** each zone has an exploration percentage. Exploring raises it, uncovering the zone's fixed features. Significant discoveries happen at progress milestones.
-2. **Finds:** every explore also draws loose items from the zone's find pool. Exploring a fully explored zone still draws finds, indefinitely: loose items never run out.
+1. **Progress:** each zone has an exploration percentage. Exploring raises it. Significant discoveries happen at progress milestones.
+2. **Finds:** every explore also draws loose items from the zone's find pool, and can reveal new features. Exploring a fully explored zone still does both, indefinitely: finds and features never run out.
 
 ## First explores are scripted
 
@@ -61,7 +61,7 @@ The first playable version of exploring, built as the real system with placehold
 | Progress | The Beach takes 24 explores to map, so each explore adds about 4%. Shown rounded down, so 100% appears only when the zone is fully mapped. |
 | Scripted explores | The Beach's first 4: 2 stones and a stick; 2 sticks and a strand of seaweed; a strand of seaweed and a seashell; a stone and a coconut. No features. |
 | Random finds | 1 to 3 loose items per explore, drawn from the zone's find pool by weight. Continues forever, also after the zone is fully explored. |
-| Features | Each random explore of a zone not yet fully explored has a 25% chance to reveal one feature, drawn from the zone's feature pool by weight. A fully explored zone reveals no new features. |
+| Features | Each random explore has a 25% chance to reveal one feature, drawn from the zone's feature pool by weight, also after the zone is fully explored. |
 | Event log | "You explored the Beach and found 2 stones and a stick." A revealed feature adds "You came across a tide pool." Mapping the zone fully adds a line saying so. |
 
 Placeholder Beach content, taken from the examples above; weights are placeholders:

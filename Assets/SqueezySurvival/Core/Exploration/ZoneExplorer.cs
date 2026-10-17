@@ -27,8 +27,8 @@ namespace SqueezySurvival.Core.Exploration
 
         /// <summary>
         /// Explores the zone once. The zone's first explores give its scripted finds and never a feature; after them,
-        /// finds are drawn from its find pool, and a zone not yet fully explored may also reveal a feature. Finds
-        /// never run out, even in a fully explored zone.
+        /// finds are drawn from its find pool and may come with a new feature. Neither ever runs out, even in a fully
+        /// explored zone.
         /// </summary>
         public ExplorationOutcome Explore(Zone zone)
         {
@@ -50,7 +50,7 @@ namespace SqueezySurvival.Core.Exploration
             else
             {
                 itemsFound = DrawItems(definition);
-                if (!progressBefore.IsFullyExplored && RollFeature())
+                if (RollFeature())
                 {
                     featuresFound.Add(definition.FeaturePool.Pick(_randomNumberSource));
                 }

@@ -53,7 +53,7 @@ namespace SqueezySurvival.Core.Exploration
         /// <summary>Most loose items a random explore finds.</summary>
         public int MaximumFindsPerExplore { get; }
 
-        /// <summary>Chance, in percent, that a random explore of a zone not yet fully explored also reveals a feature.</summary>
+        /// <summary>Chance, in percent, that a random explore also reveals a feature.</summary>
         public int FeatureChancePercent { get; }
     }
 }

@@ -89,16 +89,15 @@ namespace SqueezySurvival.Core.Tests.Exploration
         }
 
         [Test]
-        public void Explore_FullyExploredZone_StillFindsItemsButNoFeatures()
+        public void Explore_FullyExploredZone_StillFindsItemsAndFeatures()
         {
             var zone = new Zone(TestZoneDefinitions.Create(1));
             ExploreOnce(zone, 1, 0, 99);
 
-            // No feature roll is queued: a fully explored zone never reveals features.
-            ExplorationOutcome outcome = ExploreOnce(zone, 2, 1, 1);
+            ExplorationOutcome outcome = ExploreOnce(zone, 2, 1, 1, 0, 0);
 
             Assert.That(outcome.ItemsFound.Count, Is.EqualTo(2));
-            Assert.That(outcome.FeaturesFound, Is.Empty);
+            Assert.That(outcome.FeaturesFound, Is.EqualTo(new[] { TestZoneDefinitions.Shrub }));
             Assert.That(zone.ExplorationProgress.WholePercent, Is.EqualTo(100));
         }
 
@@ -109,7 +108,7 @@ namespace SqueezySurvival.Core.Tests.Exploration
             Assert.That(ExploreOnce(zone, 1, 0, 99).CompletedTheZone, Is.False);
 
             Assert.That(ExploreOnce(zone, 1, 0, 99).CompletedTheZone, Is.True);
-            Assert.That(ExploreOnce(zone, 1, 0).CompletedTheZone, Is.False);
+            Assert.That(ExploreOnce(zone, 1, 0, 99).CompletedTheZone, Is.False);
         }
 
         [Test]
