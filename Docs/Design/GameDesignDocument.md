@@ -17,7 +17,7 @@ Presentation is pictures, text, windows and progress bars. Depth comes from syst
 | Green Hell | Survival stat breadth, crafting from found materials, and its negative scenarios: the sense that if you are not careful, everything is trying to kill you | - |
 | Ark: Survival Evolved | Research driven by discovery: finding a material opens research topics, and completing a topic grants lasting knowledge (recipes and blueprints) that is never lost during the run ([Research](Systems/Research.md)) | - |
 | Haven and Hearth | Much of the survivor's body and knowledge: two-layer health (soft and hard HP, our current health and injury ceiling); injuries, healing and escalation; first aid; treatments that cost equipment slots; the equipment slot layout; "you only know what you know"; and item discovery unlocking new research and crafting | Adapted to a single-player, click-driven game |
-| Final Fantasy (classic) | Combat that feels very Final Fantasy: random encounters opening a separate battle scene, the general sprite style, and attack, item and ability animations (animation arrives after the MVP; see [Presentation](#presentation)) | - |
+| Pokémon (classic) and EarthBound | Battle presentation: encounters open a separate battle scene; the opponent at the top right and the player's side at the bottom left (Pokémon); the survivor never shown in battle (EarthBound); text boxes that announce each action and wait for the player ([Combat: presentation](Systems/Combat.md#presentation)). Attack, item and ability animations arrive after the MVP ([Presentation](#presentation)) | - |
 
 ## Pillars
 

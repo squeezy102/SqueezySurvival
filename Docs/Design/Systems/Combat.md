@@ -6,7 +6,31 @@ Turn-based combat with wildlife, entered from an [encounter](Encounters.md). Exp
 
 ## Presentation
 
-Like a classic Final Fantasy overworld battle: a new window opens with the survivor on the left and the animal on the right. The player always acts first.
+Battles open in their own scene, laid out like a classic Pokémon battle and, like EarthBound, without ever showing the survivor. The survivor has no body, name or gender on screen ([GDD: survivor](../GameDesignDocument.md#survivor)).
+
+| Region | Shows |
+|---|---|
+| Top right | The animal, and its text box. |
+| Bottom left | The survivor's side: their text box and the action menu. No portrait or sprite. |
+| Center | Narration: the start and end of the battle, and what each turn's actions did. |
+
+### Battle flow
+
+Each message stays until the player clicks or presses a key to continue, so nothing scrolls past unread. The player always acts first.
+
+| Step | Where | Example |
+|---|---|---|
+| 1. The battle scene opens | - | - |
+| 2. Start | Center | "The battle begins!" |
+| 3. The animal appears | Top right | "A wild seagull appears!" |
+| 4. The player chooses an action | Bottom left (menu) | Fight, Defend or Flee ([Actions](#actions)) |
+| 5. The survivor's action | Bottom left | "The survivor uses FIGHT!" |
+| 6. The animal's action (its hidden card, revealed) | Top right | "The seagull uses FLEE!" |
+| 7. What happened | Center | "The survivor deals 1 damage to the seagull. The seagull runs away." |
+| 8. Next turn, or the end | - | Back to step 4 while both sides remain. |
+| 9. End | Center | "Battle complete!" Then the game returns to the zone. |
+
+Step 7 resolves the two actions by [turn resolution](#turn-resolution). Action names are written in capitals, as in "uses FIGHT!".
 
 ## Actions
 
