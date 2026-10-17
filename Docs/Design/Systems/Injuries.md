@@ -21,7 +21,7 @@ At 85/90 out of an uninjured 100, the bar is 85% red, 5% empty and 10% darkened.
 | Value | Lowered by | Restored by | At zero |
 |---|---|---|---|
 | Current health | Damage: blows, falls, combat hits | Regeneration and eating (see [Recovering health](#recovering-health)) | [Knocked out](#knocked-out) |
-| Maximum health | Injuries, each by its severity, for as long as it lasts | Healing the injury, over time or with treatment | Death |
+| Maximum health | Injuries, each by its severity, for as long as it lasts | Healing the injury, over time or with treatment | Death: the run is over ([Runs](Runs.md#death-ends-the-run)) |
 
 **Order:** a hit's damage lowers current health first; then any injury it caused lowers maximum health. If maximum health falls below current health, current health drops to match.
 
