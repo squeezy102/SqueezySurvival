@@ -51,6 +51,33 @@ Time spent on everything else (crafting, eating, resting) spreads this across mo
 
 Significant discoveries (resource nodes, zone connections) are tied to progress milestones, for example 25%, 50%, 75% and 100%. Exact milestones and what each reveals are set per zone as the world is designed.
 
+## Wireframe stage
+
+The first playable version of exploring, built as the real system with placeholder content so pacing can be tried and tuned ([#3](https://github.com/squeezy102/SqueezySurvival/issues/3)).
+
+| Rule | Wireframe value |
+|---|---|
+| Duration | 15 TU |
+| Progress | The Beach takes 24 explores to map, so each explore adds about 4%. Shown rounded down, so 100% appears only when the zone is fully mapped. |
+| Scripted explores | The Beach's first 4: 2 stones and a stick; 2 sticks and a strand of seaweed; a strand of seaweed and a seashell; a stone and a coconut. No features. |
+| Random finds | 1 to 3 loose items per explore, drawn from the zone's find pool by weight. Continues forever, also after the zone is fully explored. |
+| Features | Each random explore of a zone not yet fully explored has a 25% chance to reveal one feature, drawn from the zone's feature pool by weight. A fully explored zone reveals no new features. |
+| Event log | "You explored the Beach and found 2 stones and a stick." A revealed feature adds "You came across a tide pool." Mapping the zone fully adds a line saying so. |
+
+Placeholder Beach content, taken from the examples above; weights are placeholders:
+
+| Find pool (weight) | Feature pool (weight) |
+|---|---|
+| Stone (3), Stick (3), Seaweed strand (2), Seashell (2), Conch (1), Coconut (1) | Small palm tree (3), Medium palm tree (2), Large palm tree (1), Bush (2), Rock outcrop (1), Tide pool (1), Driftwood pile (2, semi-permanent), Puddle (2, semi-permanent) |
+
+Random features stand in for [milestones](#milestones) until zone content is designed. Found items and features can't be used yet: picking up, harvesting and zone connections come later.
+
+## Implementation notes
+
+- An explore is resolved by `ZoneExplorer` in `SqueezySurvival.Core.Exploration`; the numbers live in `ExplorationRules`, and placeholder content in `PlaceholderBeachZoneContent`.
+- Randomness comes from an injected `IRandomNumberSource`, so tests supply a fixed sequence ([Coding Standards: architecture](../../Engineering/CodingStandards.md#architecture)).
+- Progress is stored as explores completed; the percentage is derived from it.
+
 ## Open questions
 
 [OQ-025](../OpenQuestions.md).

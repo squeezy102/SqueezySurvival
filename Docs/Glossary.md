@@ -26,6 +26,7 @@ Canonical terms. Code, UI text and documents use these words with these meanings
 | Event log | The on-screen running record of game events in plain language. See [HUD](Design/UI/HUD.md#event-log). |
 | Exertion risk | The chance that a strenuous action injures the arms or legs; zero above 50% stamina and rising as stamina falls. See [Exertion](Design/Systems/Exertion.md). |
 | Exploration progress | A zone's explored percentage. Rises with each explore; milestones trigger significant discoveries. See [Exploration](Design/Systems/Exploration.md). |
+| Feature pool | The weighted set of features an explore can reveal in a zone. |
 | Find pool | The weighted set of loose items an explore can draw in a zone. |
 | Food category | A grouping of foods such as Meat, Fish, Fruit, Vegetables or Dairy. Has its own tolerance meter. |
 | Food tolerance | A per-food meter (100% to 0%) of how willing the survivor is to eat that food. Falls with each serving, recovers over time; low tolerance reduces what the food restores and causes penalties. See [Food](Design/Systems/Food.md). |
@@ -59,3 +60,4 @@ Canonical terms. Code, UI text and documents use these words with these meanings
 | Wildfire | A disaster started by an unattended fire in the dry season. Gives a survivor in the zone 15-30 minutes to escape, and burns its organic resources and structures. See [Weather](Design/Systems/Weather.md#wildfire). |
 | Zone | A discrete location belonging to a biome, connected to other zones. See [Zones](Design/Systems/Zones.md). |
 | Zone connection | A discovered route from one zone into another. |
+| Zone feature | A permanent or semi-permanent fixture of a zone revealed by exploring, such as a palm tree, tide pool or puddle. Resource nodes are zone features. See [Exploration](Design/Systems/Exploration.md#what-exploring-can-reveal). |

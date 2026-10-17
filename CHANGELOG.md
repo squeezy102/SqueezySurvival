@@ -22,6 +22,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 - Work tracking in GitHub Issues: issue forms for stories, bugs and tasks; labels; Wireframe and MVP milestones. See [Work Tracking](Docs/Engineering/WorkTracking.md).
 - [Playtest Log](Docs/Engineering/PlaytestLog.md) recording every finding from playing builds and its resolution.
 - Game screen wireframe: Day 1 at dawn on the Beach, game clock with day phases, Wait and Rest, event log, pause menu, and placeholders for unbuilt regions. See [Screen Layout](Docs/Design/UI/ScreenLayout.md#wireframe-stage).
+- Explore: each explore takes 15 minutes, raises the zone's exploration progress, finds 1 to 3 loose items for the ground pool and sometimes reveals a zone feature, using placeholder Beach content. The game screen shows the zone's progress, features and ground pool. See [Exploration: wireframe stage](Docs/Design/Systems/Exploration.md#wireframe-stage).
 - Runtime assemblies `SqueezySurvival.Core` and `SqueezySurvival.Presentation`. See [ADR-0007](Docs/Decisions/ADR-0007-Runtime-UI-And-Assembly-Layout.md).
 
 ### Removed

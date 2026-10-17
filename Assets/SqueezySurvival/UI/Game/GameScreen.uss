@@ -30,6 +30,28 @@
     color: rgb(255, 255, 255);
 }
 
+.zone-bar-title {
+    flex-direction: row;
+    align-items: center;
+}
+
+.zone-exploration-progress {
+    margin-left: 16px;
+    font-size: 22px;
+    color: rgb(210, 210, 210);
+}
+
+.counted-list {
+    flex-grow: 1;
+    flex-basis: 0;
+}
+
+.counted-list-entry {
+    margin-bottom: 4px;
+    font-size: 20px;
+    color: rgb(240, 240, 240);
+}
+
 
 
 .event-log-entries {
@@ -177,6 +199,12 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+}
+
+.zone-features {
+    flex-grow: 1;
+    flex-basis: 0;
+    overflow: hidden;
 }
 
 .ground-pool {

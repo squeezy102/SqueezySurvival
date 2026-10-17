@@ -19,11 +19,21 @@
                 </ui:VisualElement>
                 <ui:VisualElement class="center-column">
                     <ui:VisualElement class="panel zone-bar gap-bottom">
-                        <ui:Label name="zone-name" class="zone-name" />
-                        <ui:Button name="explore-button" text="Explore (not built yet)" class="game-button" />
+                        <ui:VisualElement class="zone-bar-title">
+                            <ui:Label name="zone-name" class="zone-name" />
+                            <ui:Label name="zone-exploration-progress" class="zone-exploration-progress" />
+                        </ui:VisualElement>
+                        <ui:Button name="explore-button" class="game-button" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="panel zone-features gap-bottom">
+                        <ui:Label text="Zone features" class="panel-heading" />
+                        <ui:Label name="zone-features-empty" text="Nothing found yet." class="placeholder-text" />
+                        <ui:ScrollView name="zone-features-entries" class="counted-list" />
                     </ui:VisualElement>
                     <ui:VisualElement class="panel ground-pool">
-                        <ui:Label text="Nothing found yet." class="placeholder-text" />
+                        <ui:Label text="On the ground" class="panel-heading" />
+                        <ui:Label name="ground-pool-empty" text="Nothing found yet." class="placeholder-text" />
+                        <ui:ScrollView name="ground-pool-entries" class="counted-list" />
                     </ui:VisualElement>
                 </ui:VisualElement>
             </ui:VisualElement>

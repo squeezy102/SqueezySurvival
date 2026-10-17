@@ -1,7 +1,10 @@
 using System;
+using System.Collections.Generic;
 using SqueezySurvival.Core.EventLog;
+using SqueezySurvival.Core.Items;
 using SqueezySurvival.Core.Runs;
 using SqueezySurvival.Core.Time;
+using SqueezySurvival.Core.Zones;
 using SqueezySurvival.Presentation.Session;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -18,6 +21,11 @@ namespace SqueezySurvival.Presentation.Game
     {
         private RunSession _session;
         private Label _clockLabel;
+        private Label _explorationProgressLabel;
+        private Label _zoneFeaturesEmptyLabel;
+        private ScrollView _zoneFeaturesEntries;
+        private Label _groundPoolEmptyLabel;
+        private ScrollView _groundPoolEntries;
         private ScrollView _eventLogEntries;
         private VisualElement _pauseMenu;
         private Button _saveAndExitButton;
@@ -39,8 +47,16 @@ namespace SqueezySurvival.Presentation.Game
             // New entries are laid out a frame after they are added, so scroll once the content's size changes
             // to keep the most recent entry visible.
             _eventLogEntries.contentContainer.RegisterCallback<GeometryChangedEvent>(_ => ScrollEventLogToNewest());
-            root.Q<Label>("zone-name").text = session.CurrentZoneName;
-            root.Q<Button>("explore-button").SetEnabled(false);
+            root.Q<Label>("zone-name").text = session.CurrentZone.Name;
+            _explorationProgressLabel = root.Q<Label>("zone-exploration-progress");
+            _zoneFeaturesEmptyLabel = root.Q<Label>("zone-features-empty");
+            _zoneFeaturesEntries = root.Q<ScrollView>("zone-features-entries");
+            _groundPoolEmptyLabel = root.Q<Label>("ground-pool-empty");
+            _groundPoolEntries = root.Q<ScrollView>("ground-pool-entries");
+
+            Button exploreButton = root.Q<Button>("explore-button");
+            exploreButton.text = $"Explore ({GameClockFormatter.FormatDuration(session.ExploreMinutes)})";
+            exploreButton.clicked += () => _session.Explore();
 
             _waitButton = BindTimePassingButton(root.Q<Button>("wait-button"), "Wait", TimePassingAction.Wait);
             BindTimePassingButton(root.Q<Button>("rest-button"), "Rest", TimePassingAction.Rest);
@@ -69,6 +85,14 @@ namespace SqueezySurvival.Presentation.Game
             session.ClockAdvanced += _ => RefreshClock();
             RefreshClock();
 
+            Zone zone = session.CurrentZone;
+            zone.ExplorationProgressChanged += RefreshExplorationProgress;
+            zone.Features.Changed += RefreshZoneFeatures;
+            zone.GroundPool.Changed += RefreshGroundPool;
+            RefreshExplorationProgress(zone.ExplorationProgress);
+            RefreshZoneFeatures();
+            RefreshGroundPool();
+
             // Focus must be requested a frame after layout for UI Toolkit to apply it.
             root.schedule.Execute(() => _waitButton.Focus());
         }
@@ -78,6 +102,9 @@ namespace SqueezySurvival.Presentation.Game
             if (_session != null)
             {
                 _session.EventLog.EntryAdded -= AppendLogEntry;
+                _session.CurrentZone.ExplorationProgressChanged -= RefreshExplorationProgress;
+                _session.CurrentZone.Features.Changed -= RefreshZoneFeatures;
+                _session.CurrentZone.GroundPool.Changed -= RefreshGroundPool;
             }
         }
 
@@ -91,6 +118,39 @@ namespace SqueezySurvival.Presentation.Game
         private void RefreshClock()
         {
             _clockLabel.text = GameClockFormatter.FormatHudClock(_session.Clock, _session.DayPhaseSchedule);
+        }
+
+        private void RefreshExplorationProgress(ExplorationProgress progress)
+        {
+            _explorationProgressLabel.text = $"Explored {progress.WholePercent}%";
+        }
+
+        private void RefreshZoneFeatures()
+        {
+            ShowCountedList(_session.CurrentZone.Features.Entries, _zoneFeaturesEntries, _zoneFeaturesEmptyLabel);
+        }
+
+        private void RefreshGroundPool()
+        {
+            ShowCountedList(_session.CurrentZone.GroundPool.Entries, _groundPoolEntries, _groundPoolEmptyLabel);
+        }
+
+        private static void ShowCountedList<TDefinition>(
+            IReadOnlyList<CountedEntry<TDefinition>> entries,
+            ScrollView list,
+            Label emptyLabel)
+            where TDefinition : class, ICountableThingDefinition
+        {
+            list.Clear();
+            foreach (CountedEntry<TDefinition> entry in entries)
+            {
+                var line = new Label(CountedThingTextFormatter.FormatListLine(entry));
+                line.AddToClassList("counted-list-entry");
+                list.Add(line);
+            }
+
+            emptyLabel.style.display = entries.Count == 0 ? DisplayStyle.Flex : DisplayStyle.None;
+            list.style.display = entries.Count == 0 ? DisplayStyle.None : DisplayStyle.Flex;
         }
 
         private void AppendLogEntry(EventLogEntry entry)
