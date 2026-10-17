@@ -30,9 +30,6 @@ namespace SqueezySurvival.Presentation.MainMenu
         /// <summary>Button that returns to the New Game screen.</summary>
         public const string StartConfirmationCancelButton = "start-confirmation-cancel-button";
 
-        /// <summary>Optional second line of the not-built notice.</summary>
-        public const string NotBuiltNoticeDetail = "not-built-notice-detail";
-
         /// <summary>Button that closes the not-built notice.</summary>
         public const string NotBuiltNoticeCloseButton = "not-built-notice-close-button";
 

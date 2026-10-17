@@ -15,6 +15,7 @@ Design questions still waiting for an answer. The full history of every question
 | OQ-032 | Controls | What does each mouse button and modifier combination do (for example Shift + left click to move a whole stack, Ctrl + left click to move one)? Defined per screen as screens are designed. | UI/Controls |
 | OQ-033 | Controls | Should every drag have a click alternative (click an item to pick it up, click a destination to place it)? The Intermediate tier of the Game Accessibility Guidelines asks that "multiple simultaneous actions (eg. click/drag or swipe) are not required". Proposal: yes. | UI/Controls |
 | OQ-058 | Runs | What perks, boosts and challenge unlocks can survival and challenge points buy, and at what prices? Deferred to a dedicated session. | Systems/Runs |
+| OQ-064 | UI | Day summary: when exactly does it appear (at midnight, or when the survivor next wakes), and what does it show? Proposal in Design/UI/DaySummary. | UI/DaySummary |
 
 ## Deferred to the balancing pass
 

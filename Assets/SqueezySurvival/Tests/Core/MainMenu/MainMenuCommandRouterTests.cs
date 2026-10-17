@@ -39,9 +39,9 @@ namespace SqueezySurvival.Core.Tests.MainMenu
         }
 
         [Test]
-        public void Route_Continue_WhenRunInProgress_ShowsNotBuiltNotice()
+        public void Route_Continue_WhenRunInProgress_ContinuesRun()
         {
-            Assert.That(CreateRouter(true, true).Route(MainMenuOption.Continue), Is.EqualTo(MainMenuCommandOutcome.ShowNotBuiltNotice));
+            Assert.That(CreateRouter(true, true).Route(MainMenuOption.Continue), Is.EqualTo(MainMenuCommandOutcome.ContinueRun));
         }
 
         [Test]

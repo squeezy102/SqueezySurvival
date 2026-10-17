@@ -92,4 +92,4 @@ Every choice on the New Game screen is data, not decoration.
 
 ## Wireframe stage
 
-The main menu and New Game screen are built. Choosing an option whose screen does not exist yet opens a short notice: "This isn't built yet." Confirming Start hands off the run configuration for real; because the game scene does not exist yet, the notice then shows what was handed off, for example "Run configured: Left-handed, Hard mode. Day 1, 6:00 AM, Beach." Saving does not exist yet, so Continue and Load Game are always unavailable for now.
+The main menu and New Game screen are built. Choosing an option whose screen does not exist yet opens a short notice: "This isn't built yet." Confirming Start opens the game screen's wireframe ([Screen Layout: wireframe stage](ScreenLayout.md#wireframe-stage)). Saving does not exist yet. In release builds Continue and Load Game are unavailable. In the Unity Editor and development builds, a **development placeholder save** makes Continue available: it starts a brand-new default run (right-handed, no run options) so the game screen can be reached quickly. It is never used in release builds and is removed when saving is built.

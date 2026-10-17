@@ -8,5 +8,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/SqueezySurvival/Scenes/MainMenu.unity
     guid: 2ada8376b313c9f40a26afbcbb967857
+  - enabled: 1
+    path: Assets/SqueezySurvival/Scenes/Game.unity
+    guid: 0fda7ba056d9d97488b5a5394cef63ed
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}

@@ -13,12 +13,28 @@ namespace SqueezySurvival.Presentation.MainMenu
         // Start runs after every OnEnable, so the UIDocument has built its visual tree by then.
         private void Start()
         {
-            var optionStateEvaluator = new MainMenuOptionStateEvaluator(new NoSavedGamesAvailability());
+            // Until saving exists, development runs offer a placeholder run in progress so Continue can be
+            // exercised; release builds have no saves (Docs/Design/UI/StartupFlow.md, Wireframe stage).
+            if (Debug.isDebugBuild)
+            {
+                var placeholderSave = new DevelopmentPlaceholderSave();
+                Compose(placeholderSave, placeholderSave);
+            }
+            else
+            {
+                var noSavedGames = new NoSavedGamesAvailability();
+                Compose(noSavedGames, noSavedGames);
+            }
+        }
+
+        private void Compose(ISavedGameAvailability savedGameAvailability, IRunInProgressLoader runInProgressLoader)
+        {
+            var optionStateEvaluator = new MainMenuOptionStateEvaluator(savedGameAvailability);
             var commandRouter = new MainMenuCommandRouter(optionStateEvaluator);
             string versionLabelText = GameVersionLabelFormatter.Format(Application.version, Application.isEditor);
 
             GetComponent<MainMenuScreenController>().Bind(
-                optionStateEvaluator, commandRouter, GameSessionHost.Current.RunLaunchHandoff, versionLabelText);
+                optionStateEvaluator, commandRouter, runInProgressLoader, GameSessionHost.Current.RunLaunchHandoff, versionLabelText);
         }
     }
 }

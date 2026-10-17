@@ -6,6 +6,9 @@ namespace SqueezySurvival.Core.MainMenu
         /// <summary>The option is unavailable; nothing happens.</summary>
         IgnoreUnavailableOption,
 
+        /// <summary>Load the run in progress and open the game.</summary>
+        ContinueRun,
+
         /// <summary>Open the New Game screen.</summary>
         ShowNewGameScreen,
 

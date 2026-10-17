@@ -2,7 +2,7 @@
 
 A graphically basic, strategically deep, single-player survival game built in Unity. You wake up stranded on a beach on a large island. Every action costs time, and everything you find opens new possibilities.
 
-> Working title. Status: pre-production, design phase. The distribution pipeline is in place; no gameplay code is written until the core designs are concrete.
+> Working title. Status: pre-production, playable wireframe. The distribution pipeline, main menu, New Game screen and a first game screen are in place; code is written only for systems that are already designed.
 
 ## Play
 

@@ -72,3 +72,4 @@ Every design question ever raised, in ID order, with its status and resolution. 
 | OQ-061 | Deferred | Weather | Wildfire tuning: the chance an unattended fire starts one, how long the zone burns, how much is turned to charcoal, destroyed or damaged and how fast, the exact escape window, and how fast harm escalates for a survivor who stays past it. | Owner: Systems/Weather |
 | OQ-062 | Deferred | Combat | Tracking: how do the animal's injury and the survivor's Tracking skill combine into the chance of finding it? | Owner: Systems/Combat |
 | OQ-063 | Deferred | Weather | Weather balancing: the strength of each weather effect (for example how fast sunburn builds), and the exact per-season transition weights that produce the seasonal tendencies. | Owner: Systems/Weather |
+| OQ-064 | **Open** | UI | Day summary: when exactly does it appear (at midnight, or when the survivor next wakes), and what does it show? Proposal in Design/UI/DaySummary. | Owner: UI/DaySummary |

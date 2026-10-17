@@ -188,11 +188,3 @@
     white-space: normal;
 }
 
-.notice-detail {
-    max-width: 820px;
-    margin-bottom: 24px;
-    font-size: 24px;
-    color: rgb(255, 214, 120);
-    white-space: normal;
-    -unity-text-align: middle-center;
-}

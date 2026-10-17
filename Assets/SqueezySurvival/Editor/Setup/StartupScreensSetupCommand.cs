@@ -2,7 +2,6 @@ using SqueezySurvival.Presentation.MainMenu;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 namespace SqueezySurvival.Editor.Setup
@@ -18,9 +17,7 @@ namespace SqueezySurvival.Editor.Setup
         public const string BackgroundTexturePath = "Assets/SqueezySurvival/Art/Placeholder/PlaceholderBeachBackground.png";
         public const string StudioLogoTexturePath = "Assets/SqueezySurvival/Art/Placeholder/PlaceholderStudioLogo.png";
         public const string ThemeStyleSheetPath = "Assets/SqueezySurvival/UI/Themes/SqueezySurvivalRuntimeTheme.tss";
-        public const string PanelSettingsPath = "Assets/SqueezySurvival/UI/SqueezySurvivalPanelSettings.asset";
         public const string MainMenuLayoutPath = "Assets/SqueezySurvival/UI/MainMenu/MainMenu.uxml";
-        public const string MainMenuScenePath = "Assets/SqueezySurvival/Scenes/MainMenu.unity";
 
         private const float StudioLogoDurationSeconds = 2.5f;
         private static readonly Vector2Int ReferenceResolution = new Vector2Int(1920, 1080);
@@ -36,12 +33,17 @@ namespace SqueezySurvival.Editor.Setup
             ImportBackgroundAsTexture();
             ImportStudioLogoAsSprite();
             ConfigureSplashScreen();
-            PanelSettings panelSettings = CreateOrUpdatePanelSettings();
-            CreateMainMenuScene(panelSettings);
-            EditorBuildSettings.scenes = new[] { new EditorBuildSettingsScene(MainMenuScenePath, true) };
+            CreateOrUpdatePanelSettings();
             AssetDatabase.SaveAssets();
+            UiSceneBuilder.BuildUiScene(
+                UiSceneBuilder.MainMenuScenePath,
+                MainMenuLayoutPath,
+                "Main Menu",
+                typeof(MainMenuScreenController),
+                typeof(MainMenuCompositionRoot));
+            UiSceneBuilder.ApplyBuildSceneList();
 
-            Debug.Log($"Startup screens configured. Main menu scene: {MainMenuScenePath}.");
+            Debug.Log($"Startup screens configured. Main menu scene: {UiSceneBuilder.MainMenuScenePath}.");
         }
 
         private static void ImportBackgroundAsTexture()
@@ -66,7 +68,7 @@ namespace SqueezySurvival.Editor.Setup
 
         private static void ConfigureSplashScreen()
         {
-            Sprite studioLogo = LoadRequiredAsset<Sprite>(StudioLogoTexturePath);
+            Sprite studioLogo = UiSceneBuilder.LoadRequiredAsset<Sprite>(StudioLogoTexturePath);
 
             PlayerSettings.SplashScreen.show = true;
             PlayerSettings.SplashScreen.showUnityLogo = true;
@@ -78,42 +80,21 @@ namespace SqueezySurvival.Editor.Setup
             };
         }
 
-        private static PanelSettings CreateOrUpdatePanelSettings()
+        private static void CreateOrUpdatePanelSettings()
         {
-            var panelSettings = AssetDatabase.LoadAssetAtPath<PanelSettings>(PanelSettingsPath);
+            var panelSettings = AssetDatabase.LoadAssetAtPath<PanelSettings>(UiSceneBuilder.PanelSettingsPath);
             if (panelSettings == null)
             {
                 panelSettings = ScriptableObject.CreateInstance<PanelSettings>();
-                AssetDatabase.CreateAsset(panelSettings, PanelSettingsPath);
+                AssetDatabase.CreateAsset(panelSettings, UiSceneBuilder.PanelSettingsPath);
             }
 
-            panelSettings.themeStyleSheet = LoadRequiredAsset<ThemeStyleSheet>(ThemeStyleSheetPath);
+            panelSettings.themeStyleSheet = UiSceneBuilder.LoadRequiredAsset<ThemeStyleSheet>(ThemeStyleSheetPath);
             panelSettings.scaleMode = PanelScaleMode.ScaleWithScreenSize;
             panelSettings.referenceResolution = ReferenceResolution;
             panelSettings.screenMatchMode = PanelScreenMatchMode.MatchWidthOrHeight;
             panelSettings.match = 0.5f;
             EditorUtility.SetDirty(panelSettings);
-            return panelSettings;
-        }
-
-        private static void CreateMainMenuScene(PanelSettings panelSettings)
-        {
-            Scene scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
-
-            var cameraObject = new GameObject("Main Camera") { tag = "MainCamera" };
-            var mainCamera = cameraObject.AddComponent<Camera>();
-            mainCamera.orthographic = true;
-            mainCamera.clearFlags = CameraClearFlags.SolidColor;
-            mainCamera.backgroundColor = Color.black;
-
-            var mainMenuObject = new GameObject("Main Menu");
-            var document = mainMenuObject.AddComponent<UIDocument>();
-            document.panelSettings = panelSettings;
-            document.visualTreeAsset = LoadRequiredAsset<VisualTreeAsset>(MainMenuLayoutPath);
-            mainMenuObject.AddComponent<MainMenuScreenController>();
-            mainMenuObject.AddComponent<MainMenuCompositionRoot>();
-
-            EditorSceneManager.SaveScene(scene, MainMenuScenePath);
         }
 
         private static TextureImporter GetTextureImporter(string path)
@@ -125,17 +106,6 @@ namespace SqueezySurvival.Editor.Setup
             }
 
             return importer;
-        }
-
-        private static T LoadRequiredAsset<T>(string path) where T : Object
-        {
-            var asset = AssetDatabase.LoadAssetAtPath<T>(path);
-            if (asset == null)
-            {
-                throw new System.InvalidOperationException($"Required {typeof(T).Name} not found at {path}.");
-            }
-
-            return asset;
         }
     }
 }

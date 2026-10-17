@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using SqueezySurvival.Core.MainMenu;
 using SqueezySurvival.Core.NewGame;
 using SqueezySurvival.Core.Runs;
+using SqueezySurvival.Core.Saving;
+using SqueezySurvival.Presentation.Session;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 namespace SqueezySurvival.Presentation.MainMenu
@@ -17,8 +20,8 @@ namespace SqueezySurvival.Presentation.MainMenu
     {
         private MainMenuCommandRouter _commandRouter;
         private RunLaunchHandoff _runLaunchHandoff;
+        private IRunInProgressLoader _runInProgressLoader;
         private NewGameSetup _setupAwaitingConfirmation;
-        private Label _notBuiltNoticeDetail;
         private VisualElement _menuOptions;
         private NewGameScreenController _newGameScreen;
         private VisualElement _startConfirmation;
@@ -33,6 +36,7 @@ namespace SqueezySurvival.Presentation.MainMenu
         public void Bind(
             MainMenuOptionStateEvaluator optionStateEvaluator,
             MainMenuCommandRouter commandRouter,
+            IRunInProgressLoader runInProgressLoader,
             RunLaunchHandoff runLaunchHandoff,
             string versionLabelText)
         {
@@ -43,6 +47,7 @@ namespace SqueezySurvival.Presentation.MainMenu
 
             _commandRouter = commandRouter ?? throw new ArgumentNullException(nameof(commandRouter));
             _runLaunchHandoff = runLaunchHandoff ?? throw new ArgumentNullException(nameof(runLaunchHandoff));
+            _runInProgressLoader = runInProgressLoader ?? throw new ArgumentNullException(nameof(runInProgressLoader));
 
             VisualElement root = GetComponent<UIDocument>().rootVisualElement;
             root.Q<Label>(MainMenuElementNames.VersionLabel).text = versionLabelText;
@@ -50,7 +55,6 @@ namespace SqueezySurvival.Presentation.MainMenu
 
             _notBuiltNotice = root.Q<VisualElement>(MainMenuElementNames.NotBuiltNotice);
             _notBuiltNoticeCloseButton = root.Q<Button>(MainMenuElementNames.NotBuiltNoticeCloseButton);
-            _notBuiltNoticeDetail = root.Q<Label>(MainMenuElementNames.NotBuiltNoticeDetail);
             _notBuiltNoticeCloseButton.clicked += HideNotBuiltNotice;
             _notBuiltNotice.style.display = DisplayStyle.None;
 
@@ -105,6 +109,14 @@ namespace SqueezySurvival.Presentation.MainMenu
         {
             switch (_commandRouter.Route(option))
             {
+                case MainMenuCommandOutcome.ContinueRun:
+                    if (_runInProgressLoader.TryLoadRunInProgress(out NewRunConfiguration configuration))
+                    {
+                        _runLaunchHandoff.Hand(configuration);
+                        SceneManager.LoadScene(SceneNames.Game);
+                    }
+
+                    break;
                 case MainMenuCommandOutcome.ShowNewGameScreen:
                     _menuOptions.style.display = DisplayStyle.None;
                     _newGameScreen.Show();
@@ -160,21 +172,17 @@ namespace SqueezySurvival.Presentation.MainMenu
             _newGameScreen.StartButton.Focus();
         }
 
-        // The run's configuration is handed off as it will be once the game scene exists. Until then the notice
-        // shows what was handed off (Docs/Design/UI/StartupFlow.md, Wireframe stage).
+        // The run's choices are recorded only here, on confirmation (Docs/Design/UI/StartupFlow.md, Starting the run).
         private void ConfirmStart()
         {
             _startConfirmation.style.display = DisplayStyle.None;
-            NewRunConfiguration configuration = _setupAwaitingConfirmation.CreateRunConfiguration();
-            _runLaunchHandoff.Hand(configuration);
-            ShowNotBuiltNotice(_newGameScreen.StartButton, "Run configured: " + NewRunConfigurationSummaryFormatter.Format(configuration));
+            _runLaunchHandoff.Hand(_setupAwaitingConfirmation.CreateRunConfiguration());
+            SceneManager.LoadScene(SceneNames.Game);
         }
 
-        private void ShowNotBuiltNotice(Focusable focusAfterClose, string detail = "")
+        private void ShowNotBuiltNotice(Focusable focusAfterClose)
         {
             _focusAfterNotice = focusAfterClose;
-            _notBuiltNoticeDetail.text = detail;
-            _notBuiltNoticeDetail.style.display = detail.Length == 0 ? DisplayStyle.None : DisplayStyle.Flex;
             _notBuiltNotice.style.display = DisplayStyle.Flex;
             _notBuiltNoticeCloseButton.Focus();
         }

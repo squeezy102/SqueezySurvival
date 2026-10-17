@@ -24,7 +24,6 @@
         <ui:VisualElement name="not-built-notice" class="notice-overlay">
             <ui:VisualElement class="notice-panel">
                 <ui:Label text="This isn't built yet." class="notice-text" />
-                <ui:Label name="not-built-notice-detail" class="notice-detail" />
                 <ui:Button name="not-built-notice-close-button" text="Close" class="menu-button" />
             </ui:VisualElement>
         </ui:VisualElement>
