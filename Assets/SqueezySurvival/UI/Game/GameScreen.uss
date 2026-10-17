@@ -41,17 +41,24 @@
     color: rgb(210, 210, 210);
 }
 
+/* The header sits one cell gap (8 px) above the grid, matching the gap between cells. */
 .panel-header {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.panel-header > .panel-heading {
+    margin-bottom: 0;
 }
 
 .panel-settings-button {
     height: 32px;
     margin-left: 0;
     margin-right: 0;
-    margin-bottom: 6px;
+    margin-top: 0;
+    margin-bottom: 0;
     font-size: 18px;
 }
 

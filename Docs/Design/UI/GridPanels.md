@@ -17,7 +17,7 @@ The inventory will use the same grid once it is built.
 
 - Contents are shown as a grid of square cells. Each kind of thing gets one cell, showing its icon, and its count in the bottom-right corner when there are 2 or more. Until icon art exists, icons are simple placeholder shapes drawn by the game.
 - **The panel never resizes.** Its size comes from the screen layout ([Screen Layout: wireframe stage](ScreenLayout.md#wireframe-stage)). The grid fits the panel, and its contents scroll inside it.
-- Cells are 8 px apart (at the 1920 x 1080 reference resolution).
+- Cells are 8 px apart (at the 1920 x 1080 reference resolution), and the panel's header sits the same 8 px above the grid.
 - **Cells never change size as things are added.** The scrollbar always has its place along the scroll direction's edge, 8 px from the cells. While everything fits, it is dimmed and disabled, and the mouse wheel does nothing; once the cells overflow, it is enabled ([#42](https://github.com/squeezy102/SqueezySurvival/issues/42)).
 
 ### Scroll direction
