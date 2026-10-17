@@ -32,7 +32,7 @@ Discussions are never a source of truth: nothing is decided until it is in the d
 
 | Category | For | Who starts threads |
 |---|---|---|
-| Announcements | News from the project: releases, milestones | squeezy102 only ([GitHub Docs: categories](https://docs.github.com/en/discussions/managing-discussions-for-your-community/managing-categories-for-discussions)) |
+| Announcements | News from the project: releases, milestones, changes to how we work | squeezy102 only ([GitHub Docs: categories](https://docs.github.com/en/discussions/managing-discussions-for-your-community/managing-categories-for-discussions)) |
 | Ideas | Suggestions for the game, using the Ideas form | Anyone |
 | Polls | Quick votes on options | Anyone |
 | Q&A | Questions with an accepted answer, such as setup help | Anyone |
