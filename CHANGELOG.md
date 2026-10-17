@@ -15,6 +15,8 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 - Release pipeline: `Tools/Publish-Release.cmd`. See [Release Pipeline](Docs/Engineering/ReleasePipeline.md).
 - Developer scripts in `Tools/`.
 - Startup flow: "Made with Unity" and placeholder "Pj's Gameroom" splash logos, and a main menu (New Game, Continue, Load Game, Options, Quit) with the version in the bottom right. See [Startup Flow](Docs/Design/UI/StartupFlow.md).
+- New Game screen: required dominant hand choice (no default), run options with their point rules, and a live summary of what the run earns.
+- `SqueezySurvival > Build > Build And Run Locally` editor command.
 - Runtime assemblies `SqueezySurvival.Core` and `SqueezySurvival.Presentation`. See [ADR-0007](Docs/Decisions/ADR-0007-Runtime-UI-And-Assembly-Layout.md).
 
 ### Removed

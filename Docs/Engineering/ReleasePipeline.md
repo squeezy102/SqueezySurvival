@@ -77,7 +77,8 @@ Every warning in a release log is either fixed or listed here with the reason it
 
 | Issue | Status |
 |---|---|
-| A batch-mode player build sets `m_Enabled: 1` in `ProjectSettings/UnityConnectSettings.asset`; opening the editor sets it back to `0`. All individual services (analytics, crash reporting, ads, purchasing, performance reporting) remain disabled. The build log shows the editor then trying to reach Unity Cloud hosts. Matches Unity issue "Unity Services are not disabled and cause longer build times when the project is not connected to Unity Cloud" ([tracker](https://issuetracker.unity.com/issues/6472)). Root cause not yet confirmed. | Under investigation. Until resolved, the change is reverted after each release so the next release passes the clean-tree check. |
+| A batch-mode player build sets `m_Enabled: 1` in `ProjectSettings/UnityConnectSettings.asset`; opening the editor sets it back to `0`. All individual services (analytics, crash reporting, ads, purchasing, performance reporting) remain disabled. The build log shows the editor then trying to reach Unity Cloud hosts. Matches Unity issue "Unity Services are not disabled and cause longer build times when the project is not connected to Unity Cloud" ([tracker](https://issuetracker.unity.com/issues/6472)). Root cause not yet confirmed. | Under investigation. Until resolved, the change is reverted after each release (and after local builds) so the next release passes the clean-tree check. |
+| A local editor build (`Build And Run Locally`) left the Input System's project-wide actions asset (`Assets/InputSystem_Actions.inputactions`) in `preloadedAssets` in `ProjectSettings/ProjectSettings.asset`. Root cause not yet confirmed. | Reverted after local builds so the tree stays clean. |
 
 ## Files written by the Unity build
 

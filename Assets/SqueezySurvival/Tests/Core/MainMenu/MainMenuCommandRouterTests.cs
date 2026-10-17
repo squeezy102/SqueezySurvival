@@ -19,11 +19,16 @@ namespace SqueezySurvival.Core.Tests.MainMenu
             Assert.That(CreateRouter(false, false).Route(MainMenuOption.Quit), Is.EqualTo(MainMenuCommandOutcome.QuitApplication));
         }
 
-        [TestCase(MainMenuOption.NewGame)]
-        [TestCase(MainMenuOption.Options)]
-        public void Route_AvailableOptionWithUnbuiltScreen_ShowsNotBuiltNotice(MainMenuOption option)
+        [Test]
+        public void Route_NewGame_ShowsNewGameScreen()
         {
-            Assert.That(CreateRouter(false, false).Route(option), Is.EqualTo(MainMenuCommandOutcome.ShowNotBuiltNotice));
+            Assert.That(CreateRouter(false, false).Route(MainMenuOption.NewGame), Is.EqualTo(MainMenuCommandOutcome.ShowNewGameScreen));
+        }
+
+        [Test]
+        public void Route_Options_ShowsNotBuiltNotice()
+        {
+            Assert.That(CreateRouter(false, false).Route(MainMenuOption.Options), Is.EqualTo(MainMenuCommandOutcome.ShowNotBuiltNotice));
         }
 
         [TestCase(MainMenuOption.Continue)]

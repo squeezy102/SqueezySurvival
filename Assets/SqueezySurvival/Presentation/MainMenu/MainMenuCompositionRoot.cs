@@ -1,6 +1,7 @@
 using SqueezySurvival.Core.MainMenu;
 using SqueezySurvival.Core.Saving;
 using SqueezySurvival.Core.Versioning;
+using SqueezySurvival.Presentation.Session;
 using UnityEngine;
 
 namespace SqueezySurvival.Presentation.MainMenu
@@ -16,7 +17,8 @@ namespace SqueezySurvival.Presentation.MainMenu
             var commandRouter = new MainMenuCommandRouter(optionStateEvaluator);
             string versionLabelText = GameVersionLabelFormatter.Format(Application.version, Application.isEditor);
 
-            GetComponent<MainMenuScreenController>().Bind(optionStateEvaluator, commandRouter, versionLabelText);
+            GetComponent<MainMenuScreenController>().Bind(
+                optionStateEvaluator, commandRouter, GameSessionHost.Current.RunLaunchHandoff, versionLabelText);
         }
     }
 }

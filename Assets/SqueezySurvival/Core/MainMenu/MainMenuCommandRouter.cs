@@ -3,8 +3,8 @@ using System;
 namespace SqueezySurvival.Core.MainMenu
 {
     /// <summary>
-    /// Maps a chosen main menu option to what the screen should do. At the wireframe stage every screen
-    /// behind the menu is unbuilt (Docs/Design/UI/StartupFlow.md, Wireframe stage).
+    /// Maps a chosen main menu option to what the screen should do. Screens not built yet show a notice
+    /// (Docs/Design/UI/StartupFlow.md, Wireframe stage).
     /// </summary>
     public sealed class MainMenuCommandRouter
     {
@@ -24,9 +24,15 @@ namespace SqueezySurvival.Core.MainMenu
                 return MainMenuCommandOutcome.IgnoreUnavailableOption;
             }
 
-            return option == MainMenuOption.Quit
-                ? MainMenuCommandOutcome.QuitApplication
-                : MainMenuCommandOutcome.ShowNotBuiltNotice;
+            switch (option)
+            {
+                case MainMenuOption.NewGame:
+                    return MainMenuCommandOutcome.ShowNewGameScreen;
+                case MainMenuOption.Quit:
+                    return MainMenuCommandOutcome.QuitApplication;
+                default:
+                    return MainMenuCommandOutcome.ShowNotBuiltNotice;
+            }
         }
     }
 }

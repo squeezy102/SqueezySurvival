@@ -52,6 +52,7 @@ Scenes and assets that must be created inside Unity are made by commands under t
 | Command | Does |
 |---|---|
 | SqueezySurvival > Setup > Configure Startup Screens | Imports the placeholder art, sets the splash logos, creates the main menu's panel settings and scene, and puts the scene in the build. Safe to run again. |
+| SqueezySurvival > Build > Build And Run Locally | Builds the Windows player into `Builds/Local` (not versioned) and runs it. Use it to see things that only exist in a built game, such as the splash logos. |
 
 ## First-time setup
 

@@ -33,19 +33,21 @@ Checkboxes chosen when starting a run. Casual and easy mode can be combined; har
 
 | Option | Effect | Points |
 |---|---|---|
-| Casual mode | Free saving and loading; death is not final ([Saving](#saving)). | **None.** The checkbox states this explicitly: "Casual runs earn no points." |
-| Easy mode | The game is easier: lower penalties, slower decay, slower stat depletion and similar. | Survival points at 1/5 value: 1 per 5 days survived. **No challenge points.** |
+| Casual mode | Free saving and loading; death is not final ([Saving](#saving)). | **None.** The New Game screen states this beside the checkbox. |
+| Easy mode | The game is easier: slower hunger and other stat depletion, lower penalties, slower decay and similar. | Survival points at 1/5 value: 1 per 5 days survived. **No challenge points.** |
 
-| Hard mode | The game is harder: higher penalties, faster decay, faster stat depletion and similar. | Double: 2 survival points per day, 2 challenge points per 30 days (resolves OQ-051). |
+| Hard mode | The game is harder: faster hunger and other stat depletion, higher penalties, faster decay, things break more often, and harsher weather. | Double: 2 survival points per day, 2 challenge points per 30 days (resolves OQ-051). |
 
 | Combination | Allowed |
 |---|---|
 | Casual + Easy | Yes. Earns no points. |
-| Hard + Casual, Hard + Easy | No: ticking hard mode clears and disables the other two, and the reverse. |
+| Hard + Casual, Hard + Easy | No: ticking Hard mode clears the other two, and ticking either of them clears Hard mode ([Startup Flow: New Game screen](../UI/StartupFlow.md#new-game-screen)). |
 
 How much easier easy mode and harder hard mode are: [OQ-059](../OpenQuestions.md). All point rates are drafts, tuned during user acceptance testing.
 
 ## Saving
+
+A run's setup (dominant hand, run options and the point rates they imply) is written once, when the run's save is created, and only read after that; later saves never rewrite it ([Startup Flow: starting the run](../UI/StartupFlow.md#starting-the-run)).
 
 ### Standard runs
 

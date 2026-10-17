@@ -82,3 +82,117 @@
     color: rgb(255, 255, 255);
     -unity-text-align: middle-center;
 }
+
+.new-game-panel {
+    width: 1500px;
+}
+
+.screen-heading {
+    margin-bottom: 16px;
+    font-size: 44px;
+    -unity-font-style: bold;
+    color: rgb(255, 255, 255);
+}
+
+.setting-heading {
+    margin-top: 18px;
+    margin-bottom: 6px;
+    font-size: 26px;
+    -unity-font-style: bold;
+    color: rgb(255, 255, 255);
+}
+
+.setting-row {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    font-size: 26px;
+    color: rgb(255, 255, 255);
+}
+
+.run-points-summary {
+    font-size: 26px;
+    color: rgb(255, 214, 120);
+}
+
+.screen-buttons {
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-top: 24px;
+}
+
+.screen-button {
+    min-width: 180px;
+    padding-right: 16px;
+    margin-left: 16px;
+    -unity-text-align: middle-center;
+    padding-left: 16px;
+}
+
+.option-table-row {
+    flex-direction: row;
+    align-items: center;
+}
+
+.option-table-name {
+    width: 260px;
+}
+
+.option-table-gameplay {
+    width: 720px;
+    padding-right: 24px;
+    font-size: 24px;
+    color: rgb(255, 255, 255);
+    white-space: normal;
+}
+
+.option-table-heading {
+    font-size: 20px;
+    -unity-font-style: bold;
+    color: rgb(200, 200, 200);
+}
+
+.option-table-effect {
+    font-size: 24px;
+    color: rgb(225, 225, 225);
+}
+
+/* The default theme recolors a field's label on hover and focus; these labels keep one color so only the
+   disabled state changes how they look. */
+.setting-row > .unity-base-field__label,
+.setting-row:hover > .unity-base-field__label,
+.setting-row:focus > .unity-base-field__label,
+.setting-row:checked > .unity-base-field__label {
+    color: rgb(255, 255, 255);
+}
+
+.setting-row:disabled > .unity-base-field__label,
+.option-in-conflict > .unity-base-field__label,
+.option-in-conflict:hover > .unity-base-field__label,
+.option-in-conflict:focus > .unity-base-field__label {
+    color: rgb(150, 150, 150);
+}
+
+.confirmation-panel {
+    max-width: 900px;
+}
+
+.confirmation-text {
+    white-space: normal;
+}
+
+.setting-hint {
+    margin-bottom: 6px;
+    font-size: 22px;
+    -unity-font-style: italic;
+    color: rgb(225, 225, 225);
+    white-space: normal;
+}
+
+.notice-detail {
+    max-width: 820px;
+    margin-bottom: 24px;
+    font-size: 24px;
+    color: rgb(255, 214, 120);
+    white-space: normal;
+    -unity-text-align: middle-center;
+}
