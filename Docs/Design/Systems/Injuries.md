@@ -8,6 +8,16 @@ Health and injuries are modeled on Haven and Hearth's wound system ([Ring of Bro
 
 Health is an ordinary health bar: a red bar with the numbers beside it, current health over maximum health, for example **85/90** (resolves OQ-067).
 
+The bar's full length is the survivor's uninjured maximum. From left to right it shows:
+
+| Part | Meaning |
+|---|---|
+| Red | Current health. |
+| Empty | Health lost to damage, which rest restores. |
+| Darkened | Maximum health taken by injuries, which returns only as they heal. |
+
+At 85/90 out of an uninjured 100, the bar is 85% red, 5% empty and 10% darkened.
+
 | Value | Lowered by | Restored by | At zero |
 |---|---|---|---|
 | Current health | Damage: blows, falls, combat hits | Rest, quickly | Knocked out: time passes, and wildlife may take advantage |
