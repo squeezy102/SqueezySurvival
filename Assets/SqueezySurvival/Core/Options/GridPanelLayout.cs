@@ -32,7 +32,7 @@ namespace SqueezySurvival.Core.Options
         /// <summary>Height of all the cells together.</summary>
         public float ContentHeight { get; }
 
-        /// <summary>Whether the cells overflow the grid area, so it shows a scrollbar and the wheel scrolls it.</summary>
+        /// <summary>Whether the cells overflow the grid area, so the scrollbar is enabled and the wheel scrolls it.</summary>
         public bool NeedsScrolling { get; }
 
         /// <summary>

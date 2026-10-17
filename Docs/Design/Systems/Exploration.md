@@ -64,11 +64,11 @@ The first playable version of exploring, built as the real system with placehold
 | Features | Each random explore has a 25% chance to reveal one feature, drawn from the zone's feature pool by weight, also after the zone is fully explored. |
 | Event log | "You explored the Beach and found 2 stones and a stick." A revealed feature adds "You came across a tide pool." Mapping the zone fully adds a line saying so. |
 
-Placeholder Beach content, taken from the examples above; weights are placeholders:
+Placeholder Beach content, partly from the examples above and partly arbitrary beach finds added so the grids fill up for testing; weights are placeholders:
 
 | Find pool (weight) | Feature pool (weight) |
 |---|---|
-| Stone (3), Stick (3), Seaweed strand (2), Seashell (2), Conch (1), Coconut (1) | Small palm tree (3), Medium palm tree (2), Large palm tree (1), Bush (2), Rock outcrop (1), Tide pool (1), Driftwood pile (2, semi-permanent), Puddle (2, semi-permanent) |
+| Stone (3), Stick (3), Seaweed strand (2), Seashell (2), Conch (1), Coconut (1), Driftwood chunk (2), Palm frond (2), and 1 each of Feather, Crab shell, Sea glass, Sand dollar, Starfish, Pumice, Coral fragment, Sea sponge, Cuttlebone, Rope scrap, Glass float, Bamboo segment | Small palm tree (3), Medium palm tree (2), Large palm tree (1), Bush (2), Rock outcrop (1), Tide pool (1), Driftwood pile (2, semi-permanent), Puddle (2, semi-permanent) |
 
 Random features stand in for [milestones](#milestones) until zone content is designed. Found items and features can't be used yet: picking up, harvesting and zone connections come later.
 

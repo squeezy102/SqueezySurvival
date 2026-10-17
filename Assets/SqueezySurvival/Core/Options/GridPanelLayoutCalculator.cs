@@ -5,7 +5,8 @@ namespace SqueezySurvival.Core.Options
     /// <summary>
     /// Works out a grid panel's geometry from its settings and the space it has: cell size, where each cell goes, how
     /// large the scrolling content is, and whether it needs to scroll at all (Docs/Design/UI/GridPanels.md, The grid).
-    /// The panel never resizes; cells are sized to fit it.
+    /// The panel never resizes, and room for the scrollbar is always kept, so cells never change size as things are
+    /// added.
     /// </summary>
     public static class GridPanelLayoutCalculator
     {
@@ -13,9 +14,9 @@ namespace SqueezySurvival.Core.Options
         public const float CellGap = 8f;
 
         /// <summary>
-        /// Calculates the grid for <paramref name="cellCount"/> cells in a grid area of the given size. When the cells
-        /// do not fit, a scrollbar of <paramref name="scrollbarThickness"/> takes space along the scroll direction's
-        /// edge, with a cell gap before it, and the cells shrink to make room.
+        /// Calculates the grid for <paramref name="cellCount"/> cells in a grid area of the given size. A scrollbar of
+        /// <paramref name="scrollbarThickness"/>, with a cell gap before it, always takes its place along the scroll
+        /// direction's edge; it is enabled only when the cells overflow.
         /// </summary>
         public static GridPanelLayout Calculate(
             GridPanelLayoutOptions options,
@@ -45,11 +46,10 @@ namespace SqueezySurvival.Core.Options
             float scrollingRoom = NonNegativeOrZero(vertical ? areaHeight : areaWidth);
             int scrollingLines = (cellCount + fixedLines - 1) / fixedLines;
 
-            // Whether to scroll is decided at full size, so the answer never flips back and forth as cells shrink.
-            bool needsScrolling = ScrollingExtent(scrollingLines, CellSize(fixedExtent, fixedLines)) > scrollingRoom;
-            float cellAreaExtent = needsScrolling ? Math.Max(0f, fixedExtent - scrollbarThickness - CellGap) : fixedExtent;
+            float cellAreaExtent = Math.Max(0f, fixedExtent - scrollbarThickness - CellGap);
             float cellSize = CellSize(cellAreaExtent, fixedLines);
             float scrollingExtent = ScrollingExtent(scrollingLines, cellSize);
+            bool needsScrolling = scrollingExtent > scrollingRoom;
 
             return vertical
                 ? new GridPanelLayout(options.ScrollDirection, fixedLines, cellSize, cellAreaExtent, scrollingExtent, needsScrolling)

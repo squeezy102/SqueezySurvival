@@ -60,6 +60,10 @@
     flex-basis: 0;
 }
 
+.grid-panel-grid .unity-scroller:disabled {
+    opacity: 0.35;
+}
+
 .grid-cell {
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;

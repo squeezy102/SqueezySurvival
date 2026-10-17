@@ -50,8 +50,7 @@ namespace SqueezySurvival.Presentation.Game
             // wheel follows the panel's scroll direction and inversion instead of the scroll view's default.
             _panelElement.RegisterCallback<WheelEvent>(OnWheel, TrickleDown.TrickleDown);
 
-            // The grid area's own size never changes with its contents; the viewport inside it shrinks when a
-            // scrollbar appears, so the layout is always calculated from the grid area.
+            // The layout is calculated from the grid area's own size, which never changes with its contents.
             _grid.RegisterCallback<GeometryChangedEvent>(_ => Relayout());
             _options.GridPanelLayoutChanged += OnGridPanelLayoutChanged;
             ApplyScrollDirection();
@@ -113,11 +112,14 @@ namespace SqueezySurvival.Presentation.Game
             Rect area = _grid.layout;
             GridPanelLayout layout = GridPanelLayoutCalculator.Calculate(options, area.width, area.height, _cells.Count, ScrollbarThickness);
 
-            // A scrollbar appears only when there is something to scroll, and only along the scroll direction.
+            // The scrollbar along the scroll direction is always there, so cells never resize; it is enabled only
+            // when there is something to scroll, and dimmed otherwise.
             _needsScrolling = layout.NeedsScrolling;
             bool vertical = options.ScrollDirection == GridPanelScrollDirection.Vertical;
-            _grid.verticalScrollerVisibility = vertical && _needsScrolling ? ScrollerVisibility.AlwaysVisible : ScrollerVisibility.Hidden;
-            _grid.horizontalScrollerVisibility = !vertical && _needsScrolling ? ScrollerVisibility.AlwaysVisible : ScrollerVisibility.Hidden;
+            _grid.verticalScrollerVisibility = vertical ? ScrollerVisibility.AlwaysVisible : ScrollerVisibility.Hidden;
+            _grid.horizontalScrollerVisibility = vertical ? ScrollerVisibility.Hidden : ScrollerVisibility.AlwaysVisible;
+            _grid.verticalScroller.SetEnabled(vertical && _needsScrolling);
+            _grid.horizontalScroller.SetEnabled(!vertical && _needsScrolling);
             if (!_needsScrolling)
             {
                 _grid.scrollOffset = Vector2.zero;

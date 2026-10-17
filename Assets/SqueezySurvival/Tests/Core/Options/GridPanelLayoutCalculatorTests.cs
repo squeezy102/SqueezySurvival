@@ -6,6 +6,7 @@ namespace SqueezySurvival.Core.Tests.Options
     [TestFixture]
     public sealed class GridPanelLayoutCalculatorTests
     {
+        // The scrollbar and the gap before it always take 20 px: 12 + 8.
         private const float Scrollbar = 12f;
 
         private static readonly GridPanelLayoutOptions FourColumns =
@@ -15,33 +16,31 @@ namespace SqueezySurvival.Core.Tests.Options
             new GridPanelLayoutOptions(GridPanelScrollDirection.Horizontal, 4, 2, false);
 
         [Test]
-        public void Vertical_EverythingFits_CellsFillWidthExactlyWithoutScrolling()
+        public void Vertical_CellsFillWidthLeftAfterScrollbar()
         {
-            // 4 cells and 3 gaps of 8 px across 424 px: (424 - 24) / 4 = 100.
-            GridPanelLayout layout = GridPanelLayoutCalculator.Calculate(FourColumns, 424f, 300f, 8, Scrollbar);
+            // (444 - 20 - 3 gaps of 8) / 4 = 100.
+            GridPanelLayout layout = GridPanelLayoutCalculator.Calculate(FourColumns, 444f, 300f, 8, Scrollbar);
 
-            Assert.That(layout.NeedsScrolling, Is.False);
             Assert.That(layout.CellSize, Is.EqualTo(100f));
             Assert.That(layout.ContentWidth, Is.EqualTo(424f));
             Assert.That(layout.ContentHeight, Is.EqualTo(208f));
         }
 
         [Test]
-        public void Vertical_Overflowing_ReservesScrollbarAndGapThenShrinksCells()
+        public void CellSize_DoesNotChangeWhenCellsStartToOverflow()
         {
-            // 3 rows of 100 px cells need 316 px, more than 300, so the scrollbar and a gap take 20 px of width:
-            // (424 - 20 - 24) / 4 = 95.
-            GridPanelLayout layout = GridPanelLayoutCalculator.Calculate(FourColumns, 424f, 300f, 9, Scrollbar);
+            GridPanelLayout fits = GridPanelLayoutCalculator.Calculate(FourColumns, 444f, 300f, 8, Scrollbar);
+            GridPanelLayout overflows = GridPanelLayoutCalculator.Calculate(FourColumns, 444f, 300f, 40, Scrollbar);
 
-            Assert.That(layout.NeedsScrolling, Is.True);
-            Assert.That(layout.CellSize, Is.EqualTo(95f));
-            Assert.That(layout.ContentWidth, Is.EqualTo(404f));
+            Assert.That(fits.NeedsScrolling, Is.False);
+            Assert.That(overflows.NeedsScrolling, Is.True);
+            Assert.That(overflows.CellSize, Is.EqualTo(fits.CellSize));
         }
 
         [Test]
         public void Vertical_FillsLeftToRightThenDown()
         {
-            GridPanelLayout layout = GridPanelLayoutCalculator.Calculate(FourColumns, 424f, 300f, 5, Scrollbar);
+            GridPanelLayout layout = GridPanelLayoutCalculator.Calculate(FourColumns, 444f, 300f, 5, Scrollbar);
 
             Assert.That(layout.PositionOf(3).Left, Is.EqualTo(324f));
             Assert.That(layout.PositionOf(3).Top, Is.EqualTo(0f));
@@ -50,10 +49,10 @@ namespace SqueezySurvival.Core.Tests.Options
         }
 
         [Test]
-        public void Horizontal_CellsFillHeightAndFillTopToBottomThenRight()
+        public void Horizontal_CellsFillHeightLeftAfterScrollbarAndFillTopToBottomThenRight()
         {
-            // 2 cells and 1 gap across 208 px: (208 - 8) / 2 = 100.
-            GridPanelLayout layout = GridPanelLayoutCalculator.Calculate(TwoRows, 500f, 208f, 3, Scrollbar);
+            // (228 - 20 - 1 gap of 8) / 2 = 100.
+            GridPanelLayout layout = GridPanelLayoutCalculator.Calculate(TwoRows, 500f, 228f, 3, Scrollbar);
 
             Assert.That(layout.NeedsScrolling, Is.False);
             Assert.That(layout.CellSize, Is.EqualTo(100f));
@@ -61,24 +60,19 @@ namespace SqueezySurvival.Core.Tests.Options
             Assert.That(layout.ContentWidth, Is.EqualTo(208f));
             Assert.That(layout.PositionOf(1).Top, Is.EqualTo(108f));
             Assert.That(layout.PositionOf(2).Left, Is.EqualTo(108f));
-            Assert.That(layout.PositionOf(2).Top, Is.EqualTo(0f));
         }
 
         [Test]
-        public void Horizontal_Overflowing_ScrollbarTakesHeight()
+        public void Horizontal_WiderThanArea_NeedsScrolling()
         {
-            // 5 columns of 100 px need 532 px, more than 500, so the scrollbar and a gap take 20 px of height.
-            GridPanelLayout layout = GridPanelLayoutCalculator.Calculate(TwoRows, 500f, 208f, 10, Scrollbar);
-
-            Assert.That(layout.NeedsScrolling, Is.True);
-            Assert.That(layout.CellSize, Is.EqualTo(90f));
-            Assert.That(layout.ContentHeight, Is.EqualTo(188f));
+            // 5 columns of 100 px need 532 px, more than 500.
+            Assert.That(GridPanelLayoutCalculator.Calculate(TwoRows, 500f, 228f, 10, Scrollbar).NeedsScrolling, Is.True);
         }
 
         [Test]
         public void NoCells_DoesNotScroll()
         {
-            GridPanelLayout layout = GridPanelLayoutCalculator.Calculate(FourColumns, 424f, 300f, 0, Scrollbar);
+            GridPanelLayout layout = GridPanelLayoutCalculator.Calculate(FourColumns, 444f, 300f, 0, Scrollbar);
 
             Assert.That(layout.ContentHeight, Is.Zero);
             Assert.That(layout.NeedsScrolling, Is.False);
