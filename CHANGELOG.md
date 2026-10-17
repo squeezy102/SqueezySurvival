@@ -28,6 +28,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 - Design principle: nothing happens until you let go. See [GDD: design principles](Docs/Design/GameDesignDocument.md#design-principles).
 - [Testing and Quality Standards](Docs/Engineering/TestingStandards.md) based on ISTQB CTFL v4.0 and CT-GaMe, binding on contributors and AI assistants. The bug form adds severity, environment and design reference.
 - Combat presentation follows Pokémon and EarthBound instead of Final Fantasy: the survivor is never shown, and text boxes announce each action and wait for the player. See [Combat: presentation](Docs/Design/Systems/Combat.md#presentation).
+- Design: settings belong to each run, can be captured as a global preference, and every settings menu can return to defaults ([Options](Docs/Design/UI/Options.md#where-settings-come-from)); built with saving in #46.
 - Runtime assemblies `SqueezySurvival.Core` and `SqueezySurvival.Presentation`. See [ADR-0007](Docs/Decisions/ADR-0007-Runtime-UI-And-Assembly-Layout.md).
 
 ### Removed

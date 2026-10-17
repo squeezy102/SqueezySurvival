@@ -60,7 +60,7 @@ The maximums keep cells large enough to read in the panel's size; they may be ad
 - **The gear in the panel's header** opens that panel's settings. Until icon art exists, the gear is a button labeled "Settings".
 - **The Options screen** lists every panel's settings ([Options](Options.md)).
 
-Both edit the same player options. A change applies at once, everywhere, and is saved automatically.
+Both edit the same settings. A change applies at once, everywhere, and is kept with the run; each panel's settings menu also has **Return to default settings** and **Capture these settings as my global preference** ([Options: where settings come from](Options.md#where-settings-come-from)).
 
 ## Implementation notes
 

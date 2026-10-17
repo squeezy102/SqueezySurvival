@@ -16,6 +16,7 @@ Design questions still waiting for an answer. The full history of every question
 | OQ-033 | Controls | Should every drag have a click alternative (click an item to pick it up, click a destination to place it)? The Intermediate tier of the Game Accessibility Guidelines asks that "multiple simultaneous actions (eg. click/drag or swipe) are not required". Proposal: yes. | UI/Controls |
 | OQ-058 | Runs | What perks, boosts and challenge unlocks can survival and challenge points buy, and at what prices? Deferred to a dedicated session. | Systems/Runs |
 | OQ-064 | UI | Day summary: when exactly does it appear (at midnight, or when the survivor next wakes), and what does it show? Proposal in Design/UI/DaySummary. | UI/DaySummary |
+| OQ-070 | Options | The main menu's Options screen has no run loaded. What do changes made there affect: the player's preferences directly, or nothing until a run is loaded? Proposal: the preferences, so the main menu is where the player sets up their template; it then needs only Return to default settings. | UI/Options |
 
 ## Deferred to the balancing pass
 

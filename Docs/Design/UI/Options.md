@@ -2,7 +2,32 @@
 
 **Status:** Draft
 
-The Options screen holds the player's settings. Settings belong to the player, not to a run, and are saved between sessions.
+The Options screen holds the player's settings.
+
+## Where settings come from
+
+Every setting has up to three values:
+
+| Value | Belongs to | Set by |
+|---|---|---|
+| **Run setting** | One save file | Changing the setting during that run |
+| **Preference** | The player, across every run | "Capture these settings as my global preference" |
+| **Default** | The game | The design documents |
+
+Settings are local to a run: changing one during a run changes it for that save file only. A preference may be the same as the default or different.
+
+**When a game loads,** each setting takes the first of these that exists: the save file's run setting, then the player's preference, then the default. A new run, which has no run settings yet, therefore starts from the preferences.
+
+## Buttons in every settings menu
+
+Every settings menu in the game, the Options screen and smaller ones such as a [grid panel's settings](GridPanels.md#where-they-are-changed), has two buttons that act on the settings that menu shows:
+
+| Button | Does |
+|---|---|
+| **Return to default settings** | Sets every setting in the menu back to its default, for this run. |
+| **Capture these settings as my global preference** | Saves the menu's current settings as the player's preferences, used by every run that has no run setting of its own. |
+
+What the main menu's Options screen changes, with no run loaded: [OQ-070](../OpenQuestions.md).
 
 ## Opening it
 
@@ -11,7 +36,11 @@ The Options screen holds the player's settings. Settings belong to the player, n
 | Main menu | **Options** |
 | During a run | **Options** in the pause menu (Escape) |
 
-**Back** or Escape closes it and returns to where it was opened. There is no Apply button: every change applies at once and is saved automatically.
+**Back** or Escape closes it and returns to where it was opened. There is no Apply button: every change applies at once and is kept automatically ([where settings come from](#where-settings-come-from)).
+
+## Wireframe stage
+
+Saving does not exist yet ([#2](https://github.com/squeezy102/SqueezySurvival/issues/2)), so there are no run settings: today every change is stored as the player's global settings in one file. Run settings, preferences and the two buttons arrive with [#46](https://github.com/squeezy102/SqueezySurvival/issues/46).
 
 ## Sections
 
