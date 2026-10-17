@@ -41,13 +41,16 @@ Current health regenerates only while Food and Water are both above Dangerous ([
 | Doing | Regeneration |
 |---|---|
 | Anything | About 1 per in-game hour |
-| Wait or Rest, in the open | Barely faster |
+| Wait, Rest, Nap or Sleep, in the open | Barely faster |
 | Wait or Rest, sheltered | A little faster |
-| Nap or Sleep, sheltered, on a bed | Much faster |
+| Nap or Sleep, sheltered, without a bed | Faster again |
+| Nap or Sleep, sheltered, on a bed | Much faster: the best way to heal |
+
+Shelter and a bed are each worth building for this (resolves OQ-068).
 
 Eating also helps: every food item eaten, whatever it is, restores 1 current health ([Food](Food.md)).
 
-Exact rates: [OQ-069](../OpenQuestions.md). Napping or sleeping in the open or without a bed: [OQ-068](../OpenQuestions.md).
+Exact rates: [OQ-069](../OpenQuestions.md).
 
 ### Knocked out
 
