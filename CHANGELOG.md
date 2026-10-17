@@ -26,6 +26,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 - Grid panels: Zone features and On the ground are scrollable grids of placeholder icons with counts. Each panel's scroll direction, columns or rows, and scroll wheel inversion are set from a Settings button on the panel or from the new Options screen (main menu and pause menu), and saved between sessions. The scrollbar always keeps its place so cells never resize, and is enabled only when there is something to scroll, and hovering a cell shows a tooltip with the name, description and weights. See [Grid Panels](Docs/Design/UI/GridPanels.md) and [Options](Docs/Design/UI/Options.md).
 - Drag and drop in grid panels: drag any cell anywhere; over a cell's edge it previews moving before or after that cell, over its center it previews combining (nothing combines until crafting exists), and only releasing changes anything. The order is kept by the game. See [Drag and Drop](Docs/Design/UI/DragAndDrop.md).
 - Design principle: nothing happens until you let go. See [GDD: design principles](Docs/Design/GameDesignDocument.md#design-principles).
+- [Testing and Quality Standards](Docs/Engineering/TestingStandards.md) based on ISTQB CTFL v4.0 and CT-GaMe, binding on contributors and AI assistants. The bug form adds severity, environment and design reference.
 - Runtime assemblies `SqueezySurvival.Core` and `SqueezySurvival.Presentation`. See [ADR-0007](Docs/Decisions/ADR-0007-Runtime-UI-And-Assembly-Layout.md).
 
 ### Removed

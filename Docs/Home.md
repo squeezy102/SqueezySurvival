@@ -59,6 +59,7 @@ Files at the repository root:
 ## Engineering
 
 - [Coding Standards](Engineering/CodingStandards.md) - testability, naming, architecture, warnings policy.
+- [Testing and Quality Standards](Engineering/TestingStandards.md) - ISTQB-based test design, game testing, defect reports, definition of done.
 - [Project Setup](Engineering/ProjectSetup.md) - editor version, packages, folder layout.
 - [Source Control](Engineering/SourceControl.md) - branching, commits, Git LFS.
 - [Release Pipeline](Engineering/ReleasePipeline.md) - building, packaging and publishing player builds.
