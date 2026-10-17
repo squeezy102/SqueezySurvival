@@ -17,7 +17,8 @@ The inventory will use the same grid once it is built.
 
 - Contents are shown as a grid of square cells. Each kind of thing gets one cell, showing its icon, and its count in the bottom-right corner when there are 2 or more. Until icon art exists, icons are simple placeholder shapes drawn by the game.
 - **The panel never resizes.** Its size comes from the screen layout ([Screen Layout: wireframe stage](ScreenLayout.md#wireframe-stage)). The grid fits the panel, and its contents scroll inside it.
-- Cells are 8 px apart (at the 1920 x 1080 reference resolution).
+- Cells are 8 px apart (at the 1920 x 1080 reference resolution), and the grid has the same margin on every side.
+- **Scrolling only when needed.** While everything fits, there is no scrollbar and the mouse wheel does nothing. When the cells overflow, a scrollbar appears along the scroll direction's edge, 8 px from the cells, and the cells shrink just enough to make room for it ([#42](https://github.com/squeezy102/SqueezySurvival/issues/42)).
 
 ### Scroll direction
 
@@ -26,7 +27,20 @@ The inventory will use the same grid once it is built.
 | Vertical | Number of columns | Panel width divided by the columns | Left to right, then the next row down | Up and down |
 | Horizontal | Number of rows | Panel height divided by the rows | Top to bottom, then the next column right | Left and right |
 
-The mouse wheel always scrolls along the panel's scroll direction: in a horizontal panel, rolling the wheel moves the grid left and right. By default, rolling the wheel up scrolls up (or left) and rolling it down scrolls down (or right). **Invert scroll wheel** reverses that. A scrollbar along the scroll direction shows the position.
+When the grid can scroll, the mouse wheel always scrolls along the panel's scroll direction: in a horizontal panel, rolling the wheel moves the grid left and right. By default, rolling the wheel up scrolls up (or left) and rolling it down scrolls down (or right). **Invert scroll wheel** reverses that. 
+
+## Tooltips
+
+Hovering over a cell shows a tooltip beside it ([#43](https://github.com/squeezy102/SqueezySurvival/issues/43)):
+
+| Line | Example |
+|---|---|
+| Name | Stone |
+| Description | A fist-sized stone, smooth from the surf. |
+| Weight of one (items only) | Weight: 1 lb each |
+| Weight of the stack (items only) | Stack of 3: 3 lb |
+
+Weights are in pounds ([Inventory](../Systems/Inventory.md)). Descriptions and weights are placeholders until content and weights are designed ([OQ-056](../OpenQuestions.md)).
 
 ## Settings
 
@@ -53,4 +67,5 @@ Both edit the same player options. A change applies at once, everywhere, and is 
 - The settings are one configuration object, `PlayerOptions`, shared by the game screen and the Options screen and held for the whole play session.
 - The grid's geometry (cell size, cell positions, content size) and the wheel direction are calculated in Core (`GridPanelLayoutCalculator`, `GridPanelScrollWheelMapper`) and unit tested; the presentation layer only places cells where Core says.
 - Placeholder icons are drawn with UI Toolkit's vector API ([Unity Manual: generate 2D visual content](https://docs.unity3d.com/Manual/UIE-generate-2d-visual-content.html)) by `PlaceholderIconPainter`, keyed by each definition's id. They need no image files.
+- UI Toolkit's own tooltip only works in the Unity Editor ([Unity Manual: tooltip event](https://docs.unity3d.com/Manual/UIE-Tooltip-Events.html)), so the game draws its own (`GridTooltipView`); its content comes from Core (`ThingTooltipContentFactory`).
 - Player options are saved as a text file in the player's data folder (Unity's [`Application.persistentDataPath`](https://docs.unity3d.com/ScriptReference/Application-persistentDataPath.html)). They belong to the player, not to a run.

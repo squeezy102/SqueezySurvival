@@ -73,6 +73,11 @@
                 <ui:Button name="save-and-exit-button" text="Save and exit" class="game-button pause-button" />
             </ui:VisualElement>
         </ui:VisualElement>
+        <ui:VisualElement name="grid-tooltip" class="grid-tooltip">
+            <ui:Label name="grid-tooltip-title" class="grid-tooltip-title" />
+            <ui:Label name="grid-tooltip-description" class="grid-tooltip-description" />
+            <ui:VisualElement name="grid-tooltip-details" />
+        </ui:VisualElement>
         <ui:Instance template="GridPanelSettingsWindow" name="grid-panel-settings-window" />
         <ui:Instance template="OptionsScreen" name="options-screen" />
     </ui:VisualElement>

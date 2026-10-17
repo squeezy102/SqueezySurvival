@@ -76,6 +76,47 @@
     bottom: 10%;
 }
 
+.grid-tooltip {
+    position: absolute;
+    max-width: 360px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 12px;
+    padding-right: 12px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-color: rgb(255, 214, 120);
+    border-right-color: rgb(255, 214, 120);
+    border-top-color: rgb(255, 214, 120);
+    border-bottom-color: rgb(255, 214, 120);
+    background-color: rgb(20, 28, 38);
+}
+
+.grid-tooltip-title {
+    font-size: 22px;
+    -unity-font-style: bold;
+    color: rgb(255, 214, 120);
+}
+
+.grid-tooltip-description {
+    margin-top: 4px;
+    margin-bottom: 6px;
+    font-size: 18px;
+    white-space: normal;
+    color: rgb(240, 240, 240);
+}
+
+.grid-tooltip-detail {
+    font-size: 18px;
+    color: rgb(210, 210, 210);
+}
+
 .grid-cell-count {
     position: absolute;
     right: 6px;

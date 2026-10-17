@@ -7,13 +7,20 @@ namespace SqueezySurvival.Core.Options
         private readonly int _fixedLineCount;
 
         /// <summary>Creates a layout.</summary>
-        public GridPanelLayout(GridPanelScrollDirection scrollDirection, int fixedLineCount, float cellSize, float contentWidth, float contentHeight)
+        public GridPanelLayout(
+            GridPanelScrollDirection scrollDirection,
+            int fixedLineCount,
+            float cellSize,
+            float contentWidth,
+            float contentHeight,
+            bool needsScrolling)
         {
             _scrollDirection = scrollDirection;
             _fixedLineCount = fixedLineCount;
             CellSize = cellSize;
             ContentWidth = contentWidth;
             ContentHeight = contentHeight;
+            NeedsScrolling = needsScrolling;
         }
 
         /// <summary>Width and height of every cell.</summary>
@@ -24,6 +31,9 @@ namespace SqueezySurvival.Core.Options
 
         /// <summary>Height of all the cells together.</summary>
         public float ContentHeight { get; }
+
+        /// <summary>Whether the cells overflow the grid area, so it shows a scrollbar and the wheel scrolls it.</summary>
+        public bool NeedsScrolling { get; }
 
         /// <summary>
         /// The top-left corner of the cell at <paramref name="cellIndex"/>. Vertical grids fill left to right, then

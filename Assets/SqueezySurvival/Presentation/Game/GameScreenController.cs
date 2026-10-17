@@ -55,18 +55,21 @@ namespace SqueezySurvival.Presentation.Game
             _eventLogEntries.contentContainer.RegisterCallback<GeometryChangedEvent>(_ => ScrollEventLogToNewest());
             root.Q<Label>("zone-name").text = session.CurrentZone.Name;
             _explorationProgressLabel = root.Q<Label>("zone-exploration-progress");
+            var gridTooltip = new GridTooltipView(root.Q<VisualElement>("grid-tooltip"));
             _zoneFeaturesView = new GridPanelView(
                 GridPanel.ZoneFeatures,
                 playerOptions,
                 root.Q<VisualElement>("zone-features-panel"),
                 root.Q<ScrollView>("zone-features-grid"),
-                root.Q<Label>("zone-features-empty"));
+                root.Q<Label>("zone-features-empty"),
+                gridTooltip);
             _groundPoolView = new GridPanelView(
                 GridPanel.GroundPool,
                 playerOptions,
                 root.Q<VisualElement>("ground-pool-panel"),
                 root.Q<ScrollView>("ground-pool-grid"),
-                root.Q<Label>("ground-pool-empty"));
+                root.Q<Label>("ground-pool-empty"),
+                gridTooltip);
 
             _gridPanelSettingsWindow = new GridPanelSettingsWindowController(root.Q<VisualElement>("grid-panel-settings-window"), playerOptions);
             _gridPanelSettingsWindow.Closed += HideGridPanelSettings;

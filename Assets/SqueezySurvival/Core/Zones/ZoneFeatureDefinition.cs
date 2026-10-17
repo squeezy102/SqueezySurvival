@@ -19,12 +19,19 @@ namespace SqueezySurvival.Core.Zones
     public sealed class ZoneFeatureDefinition : ICountableThingDefinition
     {
         /// <summary>Creates a zone feature definition.</summary>
-        public ZoneFeatureDefinition(string id, string name, string singularPhrase, string pluralName, ZoneFeaturePermanence permanence)
+        public ZoneFeatureDefinition(
+            string id,
+            string name,
+            string singularPhrase,
+            string pluralName,
+            string description,
+            ZoneFeaturePermanence permanence)
         {
             Id = CountableThingDefinitionText.Require(id, nameof(id));
             Name = CountableThingDefinitionText.Require(name, nameof(name));
             SingularPhrase = CountableThingDefinitionText.Require(singularPhrase, nameof(singularPhrase));
             PluralName = CountableThingDefinitionText.Require(pluralName, nameof(pluralName));
+            Description = CountableThingDefinitionText.Require(description, nameof(description));
             Permanence = permanence;
         }
 
@@ -39,6 +46,9 @@ namespace SqueezySurvival.Core.Zones
 
         /// <inheritdoc />
         public string PluralName { get; }
+
+        /// <inheritdoc />
+        public string Description { get; }
 
         /// <summary>How long the feature lasts.</summary>
         public ZoneFeaturePermanence Permanence { get; }

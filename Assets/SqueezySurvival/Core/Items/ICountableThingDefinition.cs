@@ -17,5 +17,8 @@ namespace SqueezySurvival.Core.Items
 
         /// <summary>More than one, as written after a number: "stones" in "2 stones".</summary>
         string PluralName { get; }
+
+        /// <summary>A sentence or two describing it, shown in its tooltip.</summary>
+        string Description { get; }
     }
 }

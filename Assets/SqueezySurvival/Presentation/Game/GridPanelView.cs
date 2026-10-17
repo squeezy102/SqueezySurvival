@@ -15,26 +15,44 @@ namespace SqueezySurvival.Presentation.Game
     /// </summary>
     public sealed class GridPanelView : IDisposable
     {
+        // One fixed thickness for the grid's scrollbar, so Core can reserve exactly its space.
+        private const float ScrollbarThickness = 12f;
+
         private readonly GridPanel _panel;
         private readonly PlayerOptions _options;
         private readonly VisualElement _panelElement;
         private readonly ScrollView _grid;
         private readonly Label _emptyLabel;
+        private readonly GridTooltipView _tooltip;
         private readonly List<GridCell> _cells = new List<GridCell>();
+        private bool _needsScrolling;
 
         /// <summary>Binds the grid in <paramref name="panelElement"/> to a panel's settings.</summary>
-        public GridPanelView(GridPanel panel, PlayerOptions options, VisualElement panelElement, ScrollView grid, Label emptyLabel)
+        public GridPanelView(
+            GridPanel panel,
+            PlayerOptions options,
+            VisualElement panelElement,
+            ScrollView grid,
+            Label emptyLabel,
+            GridTooltipView tooltip)
         {
             _panel = panel;
             _options = options ?? throw new ArgumentNullException(nameof(options));
             _panelElement = panelElement ?? throw new ArgumentNullException(nameof(panelElement));
             _grid = grid ?? throw new ArgumentNullException(nameof(grid));
             _emptyLabel = emptyLabel ?? throw new ArgumentNullException(nameof(emptyLabel));
+            _tooltip = tooltip ?? throw new ArgumentNullException(nameof(tooltip));
+
+            _grid.verticalScroller.style.width = ScrollbarThickness;
+            _grid.horizontalScroller.style.height = ScrollbarThickness;
 
             // The panel handles the wheel before the grid does (trickle-down reaches ancestors first), so the
             // wheel follows the panel's scroll direction and inversion instead of the scroll view's default.
             _panelElement.RegisterCallback<WheelEvent>(OnWheel, TrickleDown.TrickleDown);
-            _grid.contentViewport.RegisterCallback<GeometryChangedEvent>(_ => Relayout());
+
+            // The grid area's own size never changes with its contents; the viewport inside it shrinks when a
+            // scrollbar appears, so the layout is always calculated from the grid area.
+            _grid.RegisterCallback<GeometryChangedEvent>(_ => Relayout());
             _options.GridPanelLayoutChanged += OnGridPanelLayoutChanged;
             ApplyScrollDirection();
         }
@@ -43,11 +61,16 @@ namespace SqueezySurvival.Presentation.Game
         public void ShowEntries<TDefinition>(IReadOnlyList<CountedEntry<TDefinition>> entries)
             where TDefinition : class, ICountableThingDefinition
         {
+            _tooltip.Hide();
             _grid.Clear();
             _cells.Clear();
             foreach (CountedEntry<TDefinition> entry in entries)
             {
-                var cell = new GridCell(entry.Definition.Id, CountedThingTextFormatter.FormatCountBadge(entry.Count));
+                var cell = new GridCell(
+                    entry.Definition.Id,
+                    CountedThingTextFormatter.FormatCountBadge(entry.Count),
+                    ThingTooltipContentFactory.Create(entry),
+                    _tooltip);
                 _cells.Add(cell);
                 _grid.Add(cell.Element);
             }
@@ -77,20 +100,28 @@ namespace SqueezySurvival.Presentation.Game
             Relayout();
         }
 
-        // Only the scroll direction's scrollbar is shown, and always, so the viewport's size never changes as
-        // cells are added; that keeps the cell size steady.
         private void ApplyScrollDirection()
         {
-            bool vertical = LayoutOptions.ScrollDirection == GridPanelScrollDirection.Vertical;
-            _grid.mode = vertical ? ScrollViewMode.Vertical : ScrollViewMode.Horizontal;
-            _grid.verticalScrollerVisibility = vertical ? ScrollerVisibility.AlwaysVisible : ScrollerVisibility.Hidden;
-            _grid.horizontalScrollerVisibility = vertical ? ScrollerVisibility.Hidden : ScrollerVisibility.AlwaysVisible;
+            _grid.mode = LayoutOptions.ScrollDirection == GridPanelScrollDirection.Vertical
+                ? ScrollViewMode.Vertical
+                : ScrollViewMode.Horizontal;
         }
 
         private void Relayout()
         {
-            Rect viewport = _grid.contentViewport.layout;
-            GridPanelLayout layout = GridPanelLayoutCalculator.Calculate(LayoutOptions, viewport.width, viewport.height, _cells.Count);
+            GridPanelLayoutOptions options = LayoutOptions;
+            Rect area = _grid.layout;
+            GridPanelLayout layout = GridPanelLayoutCalculator.Calculate(options, area.width, area.height, _cells.Count, ScrollbarThickness);
+
+            // A scrollbar appears only when there is something to scroll, and only along the scroll direction.
+            _needsScrolling = layout.NeedsScrolling;
+            bool vertical = options.ScrollDirection == GridPanelScrollDirection.Vertical;
+            _grid.verticalScrollerVisibility = vertical && _needsScrolling ? ScrollerVisibility.AlwaysVisible : ScrollerVisibility.Hidden;
+            _grid.horizontalScrollerVisibility = !vertical && _needsScrolling ? ScrollerVisibility.AlwaysVisible : ScrollerVisibility.Hidden;
+            if (!_needsScrolling)
+            {
+                _grid.scrollOffset = Vector2.zero;
+            }
 
             _grid.contentContainer.style.width = layout.ContentWidth;
             _grid.contentContainer.style.height = layout.ContentHeight;
@@ -102,6 +133,14 @@ namespace SqueezySurvival.Presentation.Game
 
         private void OnWheel(WheelEvent wheel)
         {
+            // Nothing to scroll: the wheel does nothing here.
+            wheel.StopPropagation();
+            if (!_needsScrolling)
+            {
+                return;
+            }
+
+            _tooltip.Hide();
             GridPanelLayoutOptions layoutOptions = LayoutOptions;
             float change = GridPanelScrollWheelMapper.ScrollOffsetChange(layoutOptions, wheel.delta.x, wheel.delta.y, _grid.mouseWheelScrollSize);
             Vector2 offset = _grid.scrollOffset;
@@ -115,13 +154,12 @@ namespace SqueezySurvival.Presentation.Game
             }
 
             _grid.scrollOffset = offset;
-            wheel.StopPropagation();
         }
 
-        /// <summary>One square of the grid: an icon, and a count in the bottom-right corner.</summary>
+        /// <summary>One square of the grid: an icon, a count in the bottom-right corner, and a tooltip on hover.</summary>
         private sealed class GridCell
         {
-            public GridCell(string definitionId, string countBadge)
+            public GridCell(string definitionId, string countBadge, ThingTooltipContent tooltipContent, GridTooltipView tooltip)
             {
                 Element = new VisualElement();
                 Element.AddToClassList("grid-cell");
@@ -133,10 +171,13 @@ namespace SqueezySurvival.Presentation.Game
 
                 if (countBadge.Length > 0)
                 {
-                    var count = new Label(countBadge);
+                    var count = new Label(countBadge) { pickingMode = PickingMode.Ignore };
                     count.AddToClassList("grid-cell-count");
                     Element.Add(count);
                 }
+
+                Element.RegisterCallback<PointerEnterEvent>(_ => tooltip.Show(tooltipContent, Element.worldBound));
+                Element.RegisterCallback<PointerLeaveEvent>(_ => tooltip.Hide());
             }
 
             public VisualElement Element { get; }

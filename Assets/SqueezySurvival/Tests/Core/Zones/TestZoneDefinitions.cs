@@ -8,10 +8,10 @@ namespace SqueezySurvival.Core.Tests.Zones
     /// <summary>Small zones with known content, so tests can predict every find.</summary>
     public static class TestZoneDefinitions
     {
-        public static readonly ItemDefinition Pebble = new ItemDefinition("pebble", "Pebble", "a pebble", "pebbles");
-        public static readonly ItemDefinition Twig = new ItemDefinition("twig", "Twig", "a twig", "twigs");
-        public static readonly ZoneFeatureDefinition Shrub = new ZoneFeatureDefinition("shrub", "Shrub", "a shrub", "shrubs", ZoneFeaturePermanence.Permanent);
-        public static readonly ZoneFeatureDefinition Pond = new ZoneFeatureDefinition("pond", "Pond", "a pond", "ponds", ZoneFeaturePermanence.SemiPermanent);
+        public static readonly ItemDefinition Pebble = new ItemDefinition("pebble", "Pebble", "a pebble", "pebbles", "A small pebble.", 0.25m);
+        public static readonly ItemDefinition Twig = new ItemDefinition("twig", "Twig", "a twig", "twigs", "A thin twig.", 0.5m);
+        public static readonly ZoneFeatureDefinition Shrub = new ZoneFeatureDefinition("shrub", "Shrub", "a shrub", "shrubs", "A low shrub.", ZoneFeaturePermanence.Permanent);
+        public static readonly ZoneFeatureDefinition Pond = new ZoneFeatureDefinition("pond", "Pond", "a pond", "ponds", "A shallow pond.", ZoneFeaturePermanence.SemiPermanent);
 
         /// <summary>Pebble is weight 1 (roll 0), twig weight 1 (roll 1); shrub roll 0, pond roll 1.</summary>
         public static ZoneDefinition Create(int exploresToMap, params IReadOnlyList<ItemDefinition>[] scriptedFinds) => new ZoneDefinition(
