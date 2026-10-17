@@ -1,9 +1,11 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements">
     <ui:Template name="GridPanelLayoutOptionsEditor" src="GridPanelLayoutOptionsEditor.uxml" />
+    <ui:Template name="SettingsMenuButtons" src="SettingsMenuButtons.uxml" />
     <Style src="Options.uss" />
     <ui:VisualElement name="options-screen-overlay" class="options-overlay">
         <ui:VisualElement class="options-window">
             <ui:Label text="Options" class="options-heading" />
+            <ui:Label name="options-scope-note" class="options-scope-note" />
             <ui:ScrollView class="options-sections">
                 <ui:Label text="Panels" class="options-section-heading" />
                 <ui:Label text="Zone features" class="options-subsection-heading" />
@@ -11,6 +13,7 @@
                 <ui:Label text="On the ground" class="options-subsection-heading" />
                 <ui:Instance template="GridPanelLayoutOptionsEditor" name="ground-pool-layout-editor" />
             </ui:ScrollView>
+            <ui:Instance template="SettingsMenuButtons" name="options-settings-buttons" />
             <ui:Button name="options-back-button" text="Back" class="options-button" />
         </ui:VisualElement>
     </ui:VisualElement>

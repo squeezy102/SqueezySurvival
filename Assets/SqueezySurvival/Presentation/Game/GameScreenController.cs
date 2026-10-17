@@ -9,6 +9,7 @@ using SqueezySurvival.Core.Zones;
 using SqueezySurvival.Presentation.Options;
 using SqueezySurvival.Presentation.Session;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
@@ -30,6 +31,9 @@ namespace SqueezySurvival.Presentation.Game
         private Button _lastChosenSettingsButton;
         private OptionsScreenController _optionsScreen;
         private Button _pauseOptionsButton;
+        private Button _navOptionsButton;
+        private bool _optionsOpenedFromPauseMenu;
+        private InputAction _cancelAction;
         private ScrollView _eventLogEntries;
         private VisualElement _pauseMenu;
         private Button _saveAndExitButton;
@@ -40,12 +44,20 @@ namespace SqueezySurvival.Presentation.Game
         private Button _lastChosenNavButton;
 
         /// <summary>Shows the run and connects the controls. Called once by the scene's composition root.</summary>
-        public void Bind(RunSession session, PlayerOptions playerOptions)
+        /// <param name="session">The run.</param>
+        /// <param name="playerOptions">The run's settings.</param>
+        /// <param name="globalPreference">The player's global preference, which settings menus can capture into.</param>
+        public void Bind(RunSession session, PlayerOptions playerOptions, PlayerOptions globalPreference)
         {
             _session = session ?? throw new ArgumentNullException(nameof(session));
             if (playerOptions == null)
             {
                 throw new ArgumentNullException(nameof(playerOptions));
+            }
+
+            if (globalPreference == null)
+            {
+                throw new ArgumentNullException(nameof(globalPreference));
             }
 
             VisualElement root = GetComponent<UIDocument>().rootVisualElement;
@@ -80,15 +92,15 @@ namespace SqueezySurvival.Presentation.Game
                 gridTooltip,
                 dragLayer);
 
-            _gridPanelSettingsWindow = new GridPanelSettingsWindowController(root.Q<VisualElement>("grid-panel-settings-window"), playerOptions);
+            _gridPanelSettingsWindow = new GridPanelSettingsWindowController(root.Q<VisualElement>("grid-panel-settings-window"), playerOptions, globalPreference);
             _gridPanelSettingsWindow.Closed += HideGridPanelSettings;
             BindPanelSettingsButton(root.Q<Button>("zone-features-settings-button"), GridPanel.ZoneFeatures, "Zone features");
             BindPanelSettingsButton(root.Q<Button>("ground-pool-settings-button"), GridPanel.GroundPool, "On the ground");
 
-            _optionsScreen = new OptionsScreenController(root.Q<VisualElement>("options-screen"), playerOptions);
+            _optionsScreen = new OptionsScreenController(root.Q<VisualElement>("options-screen"), playerOptions, globalPreference);
             _optionsScreen.Closed += HideOptionsScreen;
             _pauseOptionsButton = root.Q<Button>("pause-options-button");
-            _pauseOptionsButton.clicked += ShowOptionsScreen;
+            _pauseOptionsButton.clicked += () => ShowOptionsScreen(openedFromPauseMenu: true);
 
             Button exploreButton = root.Q<Button>("explore-button");
             exploreButton.text = $"Explore ({GameClockFormatter.FormatDuration(session.ExploreMinutes)})";
@@ -102,7 +114,9 @@ namespace SqueezySurvival.Presentation.Game
             _notBuiltNoticeCloseButton = root.Q<Button>("not-built-notice-close-button");
             _notBuiltNoticeCloseButton.clicked += HideNotBuiltNotice;
             _notBuiltNotice.style.display = DisplayStyle.None;
-            root.Q<VisualElement>("nav-bar").Query<Button>().ForEach(BindNavButton);
+            _navOptionsButton = root.Q<Button>("nav-options-button");
+            _navOptionsButton.clicked += () => ShowOptionsScreen(openedFromPauseMenu: false);
+            root.Q<VisualElement>("nav-bar").Query<Button>().Where(button => button != _navOptionsButton).ForEach(BindNavButton);
 
             _pauseMenu = root.Q<VisualElement>("pause-menu");
             _saveAndExitButton = root.Q<Button>("save-and-exit-button");
@@ -110,7 +124,11 @@ namespace SqueezySurvival.Presentation.Game
             // Saving is not built yet, so Save and exit only exits (Docs/Design/UI/ScreenLayout.md, Wireframe stage).
             _saveAndExitButton.clicked += () => SceneManager.LoadScene(SceneNames.MainMenu);
             _pauseMenu.style.display = DisplayStyle.None;
-            root.RegisterCallback<NavigationCancelEvent>(_ => OnCancel());
+            // Escape is read from the keyboard directly rather than from UI navigation, which goes only to the
+            // focused element and is lost once a non-focusable grid cell is clicked (#48).
+            _cancelAction = new InputAction("Cancel", InputActionType.Button, "<Keyboard>/escape");
+            _cancelAction.performed += _ => OnCancel();
+            _cancelAction.Enable();
 
             foreach (EventLogEntry entry in session.EventLog.Entries)
             {
@@ -130,6 +148,8 @@ namespace SqueezySurvival.Presentation.Game
 
         private void OnDestroy()
         {
+            _cancelAction?.Disable();
+            _cancelAction?.Dispose();
             if (_session != null)
             {
                 _session.EventLog.EntryAdded -= AppendLogEntry;
@@ -174,18 +194,26 @@ namespace SqueezySurvival.Presentation.Game
             _lastChosenSettingsButton?.Focus();
         }
 
-        private void ShowOptionsScreen()
+        private void ShowOptionsScreen(bool openedFromPauseMenu)
         {
+            _optionsOpenedFromPauseMenu = openedFromPauseMenu;
             _pauseMenu.style.display = DisplayStyle.None;
             _optionsScreen.Show();
         }
 
-        // Options opens from the pause menu, so closing it returns there.
+        // Closing Options returns to where it was opened: the pause menu, or the game.
         private void HideOptionsScreen()
         {
             _optionsScreen.Hide();
-            _pauseMenu.style.display = DisplayStyle.Flex;
-            _pauseOptionsButton.Focus();
+            if (_optionsOpenedFromPauseMenu)
+            {
+                _pauseMenu.style.display = DisplayStyle.Flex;
+                _pauseOptionsButton.Focus();
+            }
+            else
+            {
+                _navOptionsButton.Focus();
+            }
         }
 
         private void AppendLogEntry(EventLogEntry entry)

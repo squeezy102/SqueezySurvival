@@ -4,8 +4,9 @@ using System.Collections.Generic;
 namespace SqueezySurvival.Core.Options
 {
     /// <summary>
-    /// The player's settings: one shared configuration that every screen reads and edits, held for the whole play
-    /// session and saved between sessions (Docs/Design/UI/Options.md).
+    /// A set of the player's settings. The game keeps two: the run's settings, which every screen of a run reads and
+    /// edits, and the player's global preference, which new runs start from (Docs/Design/UI/Options.md, Where settings
+    /// come from).
     /// </summary>
     public sealed class PlayerOptions
     {
@@ -28,6 +29,37 @@ namespace SqueezySurvival.Core.Options
 
         /// <summary>A grid panel's current settings.</summary>
         public GridPanelLayoutOptions GridPanelLayout(GridPanel panel) => _gridPanelLayouts[panel];
+
+        /// <summary>Copies the given panels' settings from another set, as when capturing a global preference.</summary>
+        public void CopyGridPanelLayoutsFrom(PlayerOptions source, IEnumerable<GridPanel> panels)
+        {
+            if (source == null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
+
+            foreach (GridPanel panel in panels ?? throw new ArgumentNullException(nameof(panels)))
+            {
+                SetGridPanelLayout(panel, source.GridPanelLayout(panel));
+            }
+        }
+
+        /// <summary>Sets the given panels back to their defaults.</summary>
+        public void ResetGridPanelLayouts(IEnumerable<GridPanel> panels)
+        {
+            foreach (GridPanel panel in panels ?? throw new ArgumentNullException(nameof(panels)))
+            {
+                SetGridPanelLayout(panel, GridPanelLayoutOptions.Default);
+            }
+        }
+
+        /// <summary>A separate copy of these settings.</summary>
+        public PlayerOptions Copy()
+        {
+            var copy = new PlayerOptions();
+            copy.CopyGridPanelLayoutsFrom(this, AllGridPanels);
+            return copy;
+        }
 
         /// <summary>Changes a grid panel's settings and raises <see cref="GridPanelLayoutChanged"/> if they differ.</summary>
         public void SetGridPanelLayout(GridPanel panel, GridPanelLayoutOptions layout)

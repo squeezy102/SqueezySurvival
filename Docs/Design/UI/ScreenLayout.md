@@ -66,7 +66,7 @@ Spacing is uniform: every panel is inset 16 px from the screen edge and separate
 | Zone features, ground pool | Two panels, "Zone features" above "On the ground", each a configurable scrollable grid of what exploring has found ([Grid Panels](GridPanels.md)). They read "Nothing found yet." until something is found. | Sorting, filtering and the other organization tools. |
 | Event log | Every action is logged with its time, starting with waking on the beach. | - |
 | Inventory | - | "Your hands are empty." |
-| Nav bar | Buttons for Inventory, Map, Crafting, Skills, Research, Equipment and Cooking. | Each opens a notice that its window isn't built yet. Shown expanded with text labels until icons exist. |
+| Nav bar | Buttons for Inventory, Map, Crafting, Skills, Research, Equipment, Cooking and Options. Options opens the [Options](Options.md) screen. | The others open a notice that their window isn't built yet. Shown expanded with text labels until icons exist. |
 
 Escape opens a pause menu holding **Options** ([Options](Options.md)) and **Save and exit**, the one way out of a run ([Runs: saving](../Systems/Runs.md#saving)). Escape again closes it. Saving does not exist yet, so for now Save and exit returns to the main menu without keeping the run, and the menu says so.
 

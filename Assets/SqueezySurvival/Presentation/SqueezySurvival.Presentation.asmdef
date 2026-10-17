@@ -2,7 +2,8 @@
     "name": "SqueezySurvival.Presentation",
     "rootNamespace": "SqueezySurvival.Presentation",
     "references": [
-        "SqueezySurvival.Core"
+        "SqueezySurvival.Core",
+        "Unity.InputSystem"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

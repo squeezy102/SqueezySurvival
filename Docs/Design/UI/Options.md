@@ -27,20 +27,25 @@ Every settings menu in the game, the Options screen and smaller ones such as a [
 | **Return to default settings** | Sets every setting in the menu back to its default, for this run. |
 | **Capture these settings as my global preference** | Saves the menu's current settings as the player's preferences, used by every run that has no run setting of its own. |
 
-What the main menu's Options screen changes, with no run loaded: [OQ-070](../OpenQuestions.md).
+**From the main menu**, with no run loaded, the Options screen edits the global preference itself (resolves OQ-070), and it has only **Return to default settings**. A note at the top of every Options screen says which settings it changes:
+
+| Opened from | Note |
+|---|---|
+| Main menu | "These settings are your global preference. Every game uses them unless that game has its own settings. Order of precedence: the game's own settings, then your global preference, then the defaults." |
+| During a run | "These settings apply to this game only. To use them in every new game, capture them as your global preference." |
 
 ## Opening it
 
 | From | How |
 |---|---|
 | Main menu | **Options** |
-| During a run | **Options** in the pause menu (Escape) |
+| During a run | **Options** in the pause menu (Escape), or **Options** in the nav bar |
 
 **Back** or Escape closes it and returns to where it was opened. There is no Apply button: every change applies at once and is kept automatically ([where settings come from](#where-settings-come-from)).
 
 ## Wireframe stage
 
-Saving does not exist yet ([#2](https://github.com/squeezy102/SqueezySurvival/issues/2)), so there are no run settings: today every change is stored as the player's global settings in one file. Run settings, preferences and the two buttons arrive with [#46](https://github.com/squeezy102/SqueezySurvival/issues/46).
+The global preference is saved in a file, and the two buttons work. Saving does not exist yet ([#2](https://github.com/squeezy102/SqueezySurvival/issues/2)), so a run's own settings start from the global preference and last only until the run ends; they will be kept in the save file once saving exists ([#46](https://github.com/squeezy102/SqueezySurvival/issues/46)).
 
 ## Sections
 

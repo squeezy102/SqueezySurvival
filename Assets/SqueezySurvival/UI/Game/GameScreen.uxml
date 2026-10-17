@@ -58,6 +58,7 @@
             <ui:Button name="nav-research-button" text="Research" class="nav-button" />
             <ui:Button name="nav-equipment-button" text="Equipment" class="nav-button" />
             <ui:Button name="nav-cooking-button" text="Cooking" class="nav-button" />
+            <ui:Button name="nav-options-button" text="Options" class="nav-button" />
         </ui:VisualElement>
         <ui:VisualElement name="not-built-notice" class="pause-overlay">
             <ui:VisualElement class="pause-panel">

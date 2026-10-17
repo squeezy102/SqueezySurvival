@@ -42,7 +42,7 @@ namespace SqueezySurvival.Presentation.MainMenu
             MainMenuCommandRouter commandRouter,
             IRunInProgressLoader runInProgressLoader,
             RunLaunchHandoff runLaunchHandoff,
-            PlayerOptions playerOptions,
+            PlayerOptions globalPreference,
             string versionLabelText)
         {
             if (optionStateEvaluator == null)
@@ -74,7 +74,8 @@ namespace SqueezySurvival.Presentation.MainMenu
             root.Q<Button>(MainMenuElementNames.StartConfirmationConfirmButton).clicked += ConfirmStart;
             _startConfirmation.style.display = DisplayStyle.None;
 
-            _optionsScreen = new OptionsScreenController(root.Q<VisualElement>(MainMenuElementNames.OptionsScreen), playerOptions);
+            // With no run loaded, the main menu's Options edits the global preference itself (resolves OQ-070).
+            _optionsScreen = new OptionsScreenController(root.Q<VisualElement>(MainMenuElementNames.OptionsScreen), globalPreference, null);
             _optionsScreen.Closed += HideOptionsScreen;
 
             root.RegisterCallback<NavigationCancelEvent>(_ => OnCancel());

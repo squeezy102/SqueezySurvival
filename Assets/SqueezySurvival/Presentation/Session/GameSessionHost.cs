@@ -18,8 +18,11 @@ namespace SqueezySurvival.Presentation.Session
         /// <summary>Carries a new run's configuration into the game scene.</summary>
         public RunLaunchHandoff RunLaunchHandoff { get; private set; }
 
-        /// <summary>The player's options, shared by every screen and saved after each change (Docs/Design/UI/Options.md).</summary>
-        public PlayerOptions PlayerOptions => _playerOptionsPersistence.Options;
+        /// <summary>
+        /// The player's global preference: the settings new runs start from, saved after each change
+        /// (Docs/Design/UI/Options.md, Where settings come from).
+        /// </summary>
+        public PlayerOptions GlobalPreference => _playerOptionsPersistence.Options;
 
         private PlayerOptionsPersistence _playerOptionsPersistence;
 

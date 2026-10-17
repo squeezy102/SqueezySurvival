@@ -30,6 +30,13 @@
     color: rgb(255, 255, 255);
 }
 
+.options-scope-note {
+    margin-bottom: 12px;
+    font-size: 18px;
+    white-space: normal;
+    color: rgb(210, 210, 210);
+}
+
 .options-sections {
     flex-shrink: 1;
 }
@@ -93,6 +100,19 @@
     font-size: 22px;
     -unity-text-align: middle-center;
     color: rgb(255, 255, 255);
+}
+
+.settings-menu-buttons {
+    margin-top: 8px;
+}
+
+.settings-status {
+    min-height: 28px;
+    margin-top: 6px;
+    font-size: 18px;
+    -unity-font-style: italic;
+    white-space: normal;
+    color: rgb(255, 214, 120);
 }
 
 .options-button {

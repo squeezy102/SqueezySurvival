@@ -1,10 +1,12 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements">
     <ui:Template name="GridPanelLayoutOptionsEditor" src="GridPanelLayoutOptionsEditor.uxml" />
+    <ui:Template name="SettingsMenuButtons" src="SettingsMenuButtons.uxml" />
     <Style src="Options.uss" />
     <ui:VisualElement name="grid-panel-settings-overlay" class="options-overlay">
         <ui:VisualElement class="options-window grid-panel-settings-window">
             <ui:Label name="grid-panel-settings-heading" class="options-heading" />
             <ui:Instance template="GridPanelLayoutOptionsEditor" name="grid-panel-settings-editor" />
+            <ui:Instance template="SettingsMenuButtons" name="grid-panel-settings-buttons" />
             <ui:Button name="grid-panel-settings-close-button" text="Close" class="options-button" />
         </ui:VisualElement>
     </ui:VisualElement>

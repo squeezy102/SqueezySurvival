@@ -38,7 +38,7 @@ namespace SqueezySurvival.Presentation.MainMenu
                 commandRouter,
                 runInProgressLoader,
                 GameSessionHost.Current.RunLaunchHandoff,
-                GameSessionHost.Current.PlayerOptions,
+                GameSessionHost.Current.GlobalPreference,
                 versionLabelText);
         }
     }
