@@ -4,7 +4,7 @@
 
 **Design intent: the survivor must eat a balanced diet.** Every rule and value in this document serves that goal; tuning is judged against it.
 
-Eating restores the Food survival stat ([Survival Stats](SurvivalStats.md)). Food tolerance stops any single food, or any single category, from sustaining the survivor indefinitely.
+Eating restores the Food survival stat ([Survival Stats](SurvivalStats.md)). Every food item eaten also restores 1 current health, whatever it is ([Injuries and Health](Injuries.md#health)). Food tolerance stops any single food, or any single category, from sustaining the survivor indefinitely.
 
 ## Food tolerance
 

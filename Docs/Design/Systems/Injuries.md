@@ -20,7 +20,7 @@ At 85/90 out of an uninjured 100, the bar is 85% red, 5% empty and 10% darkened.
 
 | Value | Lowered by | Restored by | At zero |
 |---|---|---|---|
-| Current health | Damage: blows, falls, combat hits | Regenerates on its own, about 1 per in-game hour, while Food and Water are both above Dangerous ([Survival Stats: bands](SurvivalStats.md#bands-draft)); rest restores it quickly | Knocked out: time passes, and wildlife may take advantage |
+| Current health | Damage: blows, falls, combat hits | Regenerates on its own, about 1 per in-game hour, while Food and Water are both above Dangerous ([Survival Stats: bands](SurvivalStats.md#bands-draft)); each food item eaten, whatever it is, restores 1 ([Food](Food.md)); rest restores it quickly | Knocked out: time passes, and wildlife may take advantage |
 | Maximum health | Injuries, each by its severity, for as long as it lasts | Healing the injury, over time or with treatment | Death |
 
 **Order:** a hit's damage lowers current health first; then any injury it caused lowers maximum health. If maximum health falls below current health, current health drops to match.
