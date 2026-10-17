@@ -1,7 +1,6 @@
 using NUnit.Framework;
 using SqueezySurvival.Core.DragAndDrop;
 using SqueezySurvival.Core.Items;
-using SqueezySurvival.Core.Options;
 using SqueezySurvival.Core.Tests.Zones;
 
 namespace SqueezySurvival.Core.Tests.DragAndDrop
@@ -9,16 +8,12 @@ namespace SqueezySurvival.Core.Tests.DragAndDrop
     [TestFixture]
     public sealed class GridDropOutcomeResolverTests
     {
-        private static readonly ItemDefinition Shell = new ItemDefinition("shell", "Shell", "a shell", "shells", "A shell.", 0.1m);
-
-        // A vertical grid of 4 columns: pebble in slot 0, twig in 1, shell in 2; slot 3 and everything after is empty.
-        private static readonly GridSlotNeighborhood FourColumns = new GridSlotNeighborhood(GridPanelScrollDirection.Vertical, 4);
-
+        // Pebble in slot 0, twig in slot 1; every other slot is empty.
         private static GridDropOutcome Resolve(int sourceSlot, GridDropTarget target, IThingCombinationRules rules = null)
         {
             var collection = new CountedCollection<ItemDefinition>();
-            collection.AddRange(new[] { TestZoneDefinitions.Pebble, TestZoneDefinitions.Twig, Shell });
-            return new GridDropOutcomeResolver(rules ?? new NoThingCombinations()).Resolve(collection, FourColumns, sourceSlot, target);
+            collection.AddRange(new[] { TestZoneDefinitions.Pebble, TestZoneDefinitions.Twig });
+            return new GridDropOutcomeResolver(rules ?? new NoThingCombinations()).Resolve(collection, sourceSlot, target);
         }
 
         [Test]
@@ -32,38 +27,22 @@ namespace SqueezySurvival.Core.Tests.DragAndDrop
         }
 
         [Test]
-        public void EdgeWithEmptyNeighbor_MovesBesideTheHoveredCell()
+        public void EdgeOfAnotherThing_SwapsWithThatThing()
         {
-            GridDropOutcome outcome = Resolve(0, GridDropTarget.OccupiedSlot(2, CellDropZone.Right));
-
-            Assert.That(outcome.Kind, Is.EqualTo(GridDropOutcomeKind.Move));
-            Assert.That(outcome.TargetSlot, Is.EqualTo(3));
-            Assert.That(outcome.Description, Is.EqualTo("Place the pebble right of the shell."));
-        }
-
-        [Test]
-        public void EdgeWithOccupiedNeighbor_SwapsWithThatNeighbor()
-        {
-            GridDropOutcome outcome = Resolve(0, GridDropTarget.OccupiedSlot(1, CellDropZone.Right));
+            GridDropOutcome outcome = Resolve(0, GridDropTarget.OccupiedSlot(1, CellDropZone.Top));
 
             Assert.That(outcome.Kind, Is.EqualTo(GridDropOutcomeKind.Swap));
-            Assert.That(outcome.TargetSlot, Is.EqualTo(2));
-            Assert.That(outcome.Description, Is.EqualTo("The pebble and the shell trade places."));
+            Assert.That(outcome.TargetSlot, Is.EqualTo(1));
+            Assert.That(outcome.Description, Is.EqualTo("The pebble and the twig trade places."));
         }
 
         [Test]
-        public void EdgePointingAtTheDraggedThingsOwnSlot_IsNoChange()
+        public void OverItself_IsNoChange()
         {
-            Assert.That(Resolve(0, GridDropTarget.OccupiedSlot(1, CellDropZone.Left)).Kind, Is.EqualTo(GridDropOutcomeKind.NoChange));
-        }
-
-        [Test]
-        public void EdgePastTheGridsSide_IsNoChange()
-        {
-            GridDropOutcome outcome = Resolve(1, GridDropTarget.OccupiedSlot(0, CellDropZone.Left));
+            GridDropOutcome outcome = Resolve(1, GridDropTarget.OccupiedSlot(1, CellDropZone.Left));
 
             Assert.That(outcome.Kind, Is.EqualTo(GridDropOutcomeKind.NoChange));
-            Assert.That(outcome.Description, Is.EqualTo("There is no space on that side."));
+            Assert.That(outcome.ChangesSomething, Is.False);
         }
 
         [Test]
@@ -73,12 +52,6 @@ namespace SqueezySurvival.Core.Tests.DragAndDrop
 
             Assert.That(outcome.Kind, Is.EqualTo(GridDropOutcomeKind.ReturnToPlace));
             Assert.That(outcome.ChangesSomething, Is.False);
-        }
-
-        [Test]
-        public void Center_OfItself_IsNoChange()
-        {
-            Assert.That(Resolve(1, GridDropTarget.OccupiedSlot(1, CellDropZone.Center)).Kind, Is.EqualTo(GridDropOutcomeKind.NoChange));
         }
 
         [Test]

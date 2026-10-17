@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using SqueezySurvival.Core.DragAndDrop;
 using SqueezySurvival.Core.Options;
 using SqueezySurvival.Presentation.Icons;
 using UnityEngine;
@@ -12,7 +11,7 @@ namespace SqueezySurvival.Presentation.Game
     /// Shows slotted Core contents as a scrollable grid inside a fixed-size panel, laid out by Core's
     /// <see cref="GridPanelLayoutCalculator"/> from the panel's settings in the shared <see cref="PlayerOptions"/>
     /// (Docs/Design/UI/GridPanels.md). Every slot is drawn, empty or not, so empty slots can be dropped on. The panel
-    /// never resizes. Dragging cells is handled by a <see cref="GridCellDragController"/>.
+    /// never resizes, and cells move only when a drop happens. Dragging is handled by a <see cref="GridCellDragController"/>.
     /// </summary>
     public sealed class GridPanelView : IDisposable
     {
@@ -28,9 +27,9 @@ namespace SqueezySurvival.Presentation.Game
         private readonly GridCellDragController _dragController;
         private readonly List<VisualElement> _slotBackgrounds = new List<VisualElement>();
         private readonly Dictionary<int, VisualElement> _itemCells = new Dictionary<int, VisualElement>();
+        private readonly VisualElement _dropTargetOutline;
         private bool _needsScrolling;
-        private int _previewSourceSlot = -1;
-        private int _previewTargetSlot = -1;
+        private int _dropTargetSlot = -1;
 
         /// <summary>Binds the grid in <paramref name="panelElement"/> to its contents and the panel's settings.</summary>
         /// <param name="panel">Which panel this is, for its settings.</param>
@@ -59,6 +58,9 @@ namespace SqueezySurvival.Presentation.Game
             _emptyLabel = emptyLabel ?? throw new ArgumentNullException(nameof(emptyLabel));
             _tooltip = tooltip ?? throw new ArgumentNullException(nameof(tooltip));
             _dragController = new GridCellDragController(this, _contents, _tooltip, dragLayer);
+            _dropTargetOutline = new VisualElement { pickingMode = PickingMode.Ignore };
+            _dropTargetOutline.AddToClassList("grid-drop-target");
+            _dropTargetOutline.style.position = Position.Absolute;
 
             Grid.verticalScroller.style.width = ScrollbarThickness;
             Grid.horizontalScroller.style.height = ScrollbarThickness;
@@ -84,35 +86,33 @@ namespace SqueezySurvival.Presentation.Game
         /// <summary>How many slots are drawn, empty ones included.</summary>
         public int DisplayedSlotCount { get; private set; }
 
-        /// <summary>Which slots lie beside which, for the current settings.</summary>
-        public GridSlotNeighborhood Neighborhood => new GridSlotNeighborhood(LayoutOptions.ScrollDirection, LayoutOptions.FixedLineCount);
-
         /// <summary>Whether a cell from this grid is being dragged.</summary>
         public bool IsDragging => _dragController.IsDragging;
 
         /// <summary>Cancels a drag in progress; the dragged thing returns to its place.</summary>
         public void CancelDrag() => _dragController.Cancel();
 
-        /// <summary>The item cell in a slot, or null when the slot is empty.</summary>
-        public VisualElement ItemCellAt(int slot) => _itemCells.TryGetValue(slot, out VisualElement cell) ? cell : null;
-
         /// <summary>
-        /// Shows the result of moving the thing in <paramref name="sourceSlot"/> to <paramref name="targetSlot"/>: it
-        /// appears there, and anything already there appears in its place. No other cell moves.
+        /// Outlines the slot a drop would go to. Only the outline appears: no cell moves until the drop happens
+        /// (Docs/Design/UI/DragAndDrop.md, While dragging).
         /// </summary>
-        public void ShowMovePreview(int sourceSlot, int targetSlot)
+        public void ShowDropTarget(int slot)
         {
-            _previewSourceSlot = sourceSlot;
-            _previewTargetSlot = targetSlot;
-            PlaceItemCells();
+            _dropTargetSlot = slot;
+            if (_dropTargetOutline.parent == null)
+            {
+                Grid.Add(_dropTargetOutline);
+            }
+
+            _dropTargetOutline.BringToFront();
+            Place(_dropTargetOutline, slot);
         }
 
-        /// <summary>Puts every cell back in its real slot.</summary>
-        public void ClearMovePreview()
+        /// <summary>Removes the drop target outline.</summary>
+        public void HideDropTarget()
         {
-            _previewSourceSlot = -1;
-            _previewTargetSlot = -1;
-            PlaceItemCells();
+            _dropTargetSlot = -1;
+            _dropTargetOutline.RemoveFromHierarchy();
         }
 
         /// <summary>A slot's rectangle in world (panel) coordinates.</summary>
@@ -142,8 +142,7 @@ namespace SqueezySurvival.Presentation.Game
             }
 
             _itemCells.Clear();
-            _previewSourceSlot = -1;
-            _previewTargetSlot = -1;
+            HideDropTarget();
             for (int slot = 0; slot < _contents.SlotCount; slot++)
             {
                 if (_contents.IsOccupied(slot))
@@ -275,24 +274,13 @@ namespace SqueezySurvival.Presentation.Game
 
             foreach (KeyValuePair<int, VisualElement> item in _itemCells)
             {
-                Place(item.Value, ShownSlotOf(item.Key));
+                Place(item.Value, item.Key);
             }
-        }
 
-        // During a move preview the dragged thing shows in the target slot and whatever was there shows in its slot.
-        private int ShownSlotOf(int slot)
-        {
-            if (_previewSourceSlot < 0)
+            if (_dropTargetSlot >= 0)
             {
-                return slot;
+                Place(_dropTargetOutline, _dropTargetSlot);
             }
-
-            if (slot == _previewSourceSlot)
-            {
-                return _previewTargetSlot;
-            }
-
-            return slot == _previewTargetSlot ? _previewSourceSlot : slot;
         }
 
         private void Place(VisualElement element, int slot)

@@ -71,10 +71,7 @@
     opacity: 0.35;
 }
 
-/* Cells slide to their new places while a drag previews a move. */
 .grid-cell {
-    transition-property: left, top;
-    transition-duration: 0.12s;
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
     border-bottom-left-radius: 6px;
@@ -98,11 +95,7 @@
     background-color: rgba(255, 255, 255, 0.03);
 }
 
-.grid-cell--drag-source {
-    opacity: 0.35;
-}
-
-.grid-cell--combine-target {
+.grid-drop-target {
     border-left-width: 2px;
     border-right-width: 2px;
     border-top-width: 2px;
@@ -111,6 +104,10 @@
     border-right-color: rgb(255, 214, 120);
     border-top-color: rgb(255, 214, 120);
     border-bottom-color: rgb(255, 214, 120);
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
 }
 
 .grid-dragged-icon {

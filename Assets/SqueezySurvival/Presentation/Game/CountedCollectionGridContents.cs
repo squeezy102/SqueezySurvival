@@ -41,8 +41,8 @@ namespace SqueezySurvival.Presentation.Game
         public ThingTooltipContent TooltipAt(int slot) => ThingTooltipContentFactory.Create(Entry(slot));
 
         /// <inheritdoc />
-        public GridDropOutcome ResolveDrop(int sourceSlot, GridDropTarget target, GridSlotNeighborhood neighborhood) =>
-            _dropOutcomeResolver.Resolve(_collection, neighborhood, sourceSlot, target);
+        public GridDropOutcome ResolveDrop(int sourceSlot, GridDropTarget target) =>
+            _dropOutcomeResolver.Resolve(_collection, sourceSlot, target);
 
         /// <inheritdoc />
         public void ApplyDrop(int sourceSlot, GridDropOutcome outcome)
