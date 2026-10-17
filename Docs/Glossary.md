@@ -33,8 +33,8 @@ Canonical terms. Code, UI text and documents use these words with these meanings
 | Ground pool | The items lying on the ground in a zone. Unlimited in size; not part of the inventory. See [Zones](Design/Systems/Zones.md#ground-pool). |
 | Hard mode | A run option that makes the game harder and earns double points. Cannot be combined with casual or easy mode. See [Runs](Design/Systems/Runs.md#run-options). |
 | Hazard | A danger met while exploring, such as a jellyfish or sea urchin. |
-| Health | Two-layer bar: current health (lowered by blows, restored by rest) under an injury ceiling (lowered by injuries). See [Injuries and Health](Design/Systems/Injuries.md). |
-| Injury | A specific wound or condition (sprain, laceration, broken bone) that lowers the injury ceiling, has effects and heals over time. |
+| Health | A red bar showing current over maximum health, such as 85/90. Damage lowers current health; injuries lower maximum health until they heal. See [Injuries and Health](Design/Systems/Injuries.md#health). |
+| Injury | A specific wound or condition (sprain, laceration, broken bone) that lowers maximum health, has effects and heals over time. |
 | Inventory | Items the survivor is carrying: the personal inventory plus any carriers. See [Inventory](Design/Systems/Inventory.md). |
 | Known | Encountered by the survivor. Only known things are ever shown in the UI. |
 | Light level | Bright, Dim or Dark. Derived from the day phase and light sources; gates and penalizes actions. See [Actions](Design/Systems/Actions.md#light-level). |
