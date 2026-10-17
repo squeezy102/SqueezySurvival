@@ -136,6 +136,23 @@ Records each species the survivor has encountered. Entries appear only after a f
 
 Hits lower current Health and can cause injuries ([Injuries and Health](Injuries.md)). Damage values for weapons and animals, animal health, and which injuries each animal inflicts: [OQ-057](../OpenQuestions.md).
 
+### Injuries in battle
+
+An injury suffered in battle is **announced the moment it happens, but takes effect only after the battle ends**. Its effects, bleeding, infection and the rest of its course begin when the battle is over; until then the survivor fights as well as before.
+
+The point is informed choice, not surprise: the player sees every injury as it lands, so they can flee or defend to avoid more, or press on knowing the cost, rather than finishing a fight that seemed to cost only Health and then meeting a wall of injuries.
+
+Example of a hit that injures, each line in its text box:
+
+| Where | Text |
+|---|---|
+| Top right | "Mountain Lion used FIGHT!" |
+| Top right | "It was very effective!" |
+| Center | "The Survivor has been injured: Laceration, left arm" |
+| Center | "Mountain Lion dealt 6 SHP damage to The Survivor." |
+
+What "takes effect after the battle" covers exactly: [OQ-066](../OpenQuestions.md).
+
 ## Turn resolution
 
 Resolves OQ-038.

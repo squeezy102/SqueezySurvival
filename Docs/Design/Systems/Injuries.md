@@ -61,3 +61,5 @@ First aid is a core skill. Treatments speed healing, stop escalation or cure spe
 ## Combat
 
 The player's Flee chance equals their Health percentage ([Combat](Combat.md)). A battered survivor struggles to escape.
+
+Injuries suffered in battle are announced as they happen but take effect only after the battle ends ([Combat: injuries in battle](Combat.md#injuries-in-battle)).
