@@ -51,6 +51,7 @@ Planned: Crafting, Buildings, Light Sources, Illness.
 Files at the repository root:
 
 - [README](../README.md) - what the game is and how to build it.
+- [Getting Started](../GETTING_STARTED.md) - a plain-language guide for newcomers: words, setup, AI assistants, finding work.
 - [CONTRIBUTING](../CONTRIBUTING.md) - how ideas, issues and changes are made.
 - [Code of Conduct](../CODE_OF_CONDUCT.md) - rules for Discussions, issues and pull requests.
 - [AGENTS.md](../AGENTS.md) - start here for AI assistants and LLM-assisted contributors.

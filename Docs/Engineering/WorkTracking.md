@@ -56,6 +56,7 @@ New issues use a form ([`.github/ISSUE_TEMPLATE/`](../../.github/ISSUE_TEMPLATE/
 - **Type:** `story`, `bug`, `task`; `question` for reports that turn out not to need work.
 - **Area:** `area: ui`, `area: time`, `area: saving`, `area: exploration`, `area: survival`, `area: tooling`. The existing `accessibility` and `documentation` labels are used as they read.
 - **Source:** `playtest` for anything found by playing a build.
+- **Newcomers:** `good first issue` for small, well-described work, and `help wanted` for work squeezy102 would welcome help with ([Getting Started](../../GETTING_STARTED.md#find-something-to-work-on)).
 - **Status:** `status: in progress` and `status: in development branch` (see the lifecycle below).
 - **Milestones:** `Wireframe` (a clickable wireframe of the core loop) and `MVP` (the game described in the [Game Design Document](../Design/GameDesignDocument.md)).
 

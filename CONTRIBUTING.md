@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for helping build SqueezySurvival. The project owner, squeezy102, has the final say on every change. Everyone taking part follows the [Code of Conduct](CODE_OF_CONDUCT.md).
+Thanks for helping build SqueezySurvival. New to git or coding? Read [Getting Started](GETTING_STARTED.md) first. The project owner, squeezy102, has the final say on every change. Everyone taking part follows the [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## How changes are made
 
