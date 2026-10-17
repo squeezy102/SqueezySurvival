@@ -4,7 +4,7 @@ namespace SqueezySurvival.Core.DragAndDrop
 {
     /// <summary>
     /// Finds which drop zone of a cell a point is in. The center is the middle 30% of the cell in each direction;
-    /// the rest belongs to the nearest edge (Docs/Design/UI/DragAndDrop.md, Drop zones).
+    /// outside it, the left half of the cell is Left and the right half is Right (Docs/Design/UI/DragAndDrop.md, Drop zones).
     /// </summary>
     public static class CellDropZoneClassifier
     {
@@ -24,23 +24,7 @@ namespace SqueezySurvival.Core.DragAndDrop
                 return CellDropZone.Center;
             }
 
-            float toLeft = x;
-            float toRight = 1f - x;
-            float toTop = y;
-            float toBottom = 1f - y;
-            float nearest = Math.Min(Math.Min(toLeft, toRight), Math.Min(toTop, toBottom));
-
-            if (nearest == toLeft)
-            {
-                return CellDropZone.Left;
-            }
-
-            if (nearest == toRight)
-            {
-                return CellDropZone.Right;
-            }
-
-            return nearest == toTop ? CellDropZone.Top : CellDropZone.Bottom;
+            return x < 0.5f ? CellDropZone.Left : CellDropZone.Right;
         }
 
         private static float Clamp01(float value) => float.IsNaN(value) ? 0.5f : Math.Max(0f, Math.Min(1f, value));

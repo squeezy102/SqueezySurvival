@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using SqueezySurvival.Core.DragAndDrop;
 using SqueezySurvival.Core.Options;
 using SqueezySurvival.Presentation.Icons;
 using UnityEngine;
@@ -27,9 +28,12 @@ namespace SqueezySurvival.Presentation.Game
         private readonly GridCellDragController _dragController;
         private readonly List<VisualElement> _slotBackgrounds = new List<VisualElement>();
         private readonly Dictionary<int, VisualElement> _itemCells = new Dictionary<int, VisualElement>();
+        private const float DropMarkerBarThickness = 4f;
+
         private readonly VisualElement _dropTargetOutline;
         private bool _needsScrolling;
         private int _dropTargetSlot = -1;
+        private DropMarkerSide _dropMarkerSide = DropMarkerSide.WholeSlot;
 
         /// <summary>Binds the grid in <paramref name="panelElement"/> to its contents and the panel's settings.</summary>
         /// <param name="panel">Which panel this is, for its settings.</param>
@@ -93,19 +97,21 @@ namespace SqueezySurvival.Presentation.Game
         public void CancelDrag() => _dragController.Cancel();
 
         /// <summary>
-        /// Outlines the slot a drop would go to. Only the outline appears: no cell moves until the drop happens
-        /// (Docs/Design/UI/DragAndDrop.md, While dragging).
+        /// Marks where a drop would go: an outline around a slot, or a bar on a cell's left or right side for "before"
+        /// and "after". Only the marker appears: no cell moves until the drop happens (Docs/Design/UI/DragAndDrop.md, Dragging).
         /// </summary>
-        public void ShowDropTarget(int slot)
+        public void ShowDropTarget(int slot, DropMarkerSide side)
         {
             _dropTargetSlot = slot;
+            _dropMarkerSide = side;
+            _dropTargetOutline.EnableInClassList("grid-drop-target--bar", side != DropMarkerSide.WholeSlot);
             if (_dropTargetOutline.parent == null)
             {
                 Grid.Add(_dropTargetOutline);
             }
 
             _dropTargetOutline.BringToFront();
-            Place(_dropTargetOutline, slot);
+            PlaceDropMarker();
         }
 
         /// <summary>Removes the drop target outline.</summary>
@@ -279,8 +285,24 @@ namespace SqueezySurvival.Presentation.Game
 
             if (_dropTargetSlot >= 0)
             {
-                Place(_dropTargetOutline, _dropTargetSlot);
+                PlaceDropMarker();
             }
+        }
+
+        // A "before" or "after" bar sits in the gap on that side of the cell; otherwise the whole slot is outlined.
+        private void PlaceDropMarker()
+        {
+            Place(_dropTargetOutline, _dropTargetSlot);
+            if (_dropMarkerSide == DropMarkerSide.WholeSlot)
+            {
+                return;
+            }
+
+            GridCellPosition cell = CurrentLayout.PositionOf(_dropTargetSlot);
+            float halfGap = GridPanelLayoutCalculator.CellGap / 2f;
+            float edge = _dropMarkerSide == DropMarkerSide.Before ? cell.Left - halfGap : cell.Left + CurrentLayout.CellSize + halfGap;
+            _dropTargetOutline.style.left = edge - (DropMarkerBarThickness / 2f);
+            _dropTargetOutline.style.width = DropMarkerBarThickness;
         }
 
         private void Place(VisualElement element, int slot)

@@ -9,7 +9,7 @@ namespace SqueezySurvival.Presentation.Game
 {
     /// <summary>
     /// Drags cells of one grid panel. While dragging, nothing in the grid moves: a copy of the icon follows the
-    /// pointer, the slot it would go to is outlined, and a tooltip says what releasing would do, as decided by Core.
+    /// pointer, a marker shows where it would go, and a tooltip says what releasing would do, as decided by Core.
     /// Releasing over the grid carries that out; releasing anywhere else changes nothing (Docs/Design/UI/DragAndDrop.md).
     /// </summary>
     public sealed class GridCellDragController
@@ -167,7 +167,7 @@ namespace SqueezySurvival.Presentation.Game
             _shownOutcome = outcome;
             if (outcome.ChangesSomething)
             {
-                _view.ShowDropTarget(outcome.AnchorSlot);
+                _view.ShowDropTarget(outcome.AnchorSlot, outcome.MarkerSide);
             }
             else
             {

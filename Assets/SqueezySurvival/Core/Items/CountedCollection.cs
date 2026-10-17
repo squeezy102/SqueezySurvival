@@ -61,7 +61,8 @@ namespace SqueezySurvival.Core.Items
 
         /// <summary>
         /// Moves the thing in <paramref name="fromSlot"/> to <paramref name="toSlot"/>. If something is already there,
-        /// the two swap slots; nothing else moves.
+        /// it and the things after it shift one slot later, up to the first empty slot, which absorbs the shift; nothing
+        /// moves earlier, and nothing past that gap moves (Docs/Design/UI/DragAndDrop.md, Slots).
         /// </summary>
         public void MoveToSlot(int fromSlot, int toSlot)
         {
@@ -82,12 +83,23 @@ namespace SqueezySurvival.Core.Items
             }
 
             CountedEntry<TDefinition> moving = _entries[fromIndex];
-            CountedEntry<TDefinition> displaced = EntryAtSlot(toSlot);
-            _entries.Remove(moving);
-            if (displaced != null)
+            _entries.RemoveAt(fromIndex);
+
+            // The occupied run starting at the target slot moves one slot later; the run ends at the first gap,
+            // which may be the slot the moving thing just left.
+            int runEnd = toSlot;
+            while (IndexOfSlot(runEnd) >= 0)
             {
-                _entries.Remove(displaced);
-                Insert(new CountedEntry<TDefinition>(displaced.Definition, displaced.Count, fromSlot));
+                runEnd++;
+            }
+
+            for (int index = 0; index < _entries.Count; index++)
+            {
+                CountedEntry<TDefinition> entry = _entries[index];
+                if (entry.Slot >= toSlot && entry.Slot < runEnd)
+                {
+                    _entries[index] = new CountedEntry<TDefinition>(entry.Definition, entry.Count, entry.Slot + 1);
+                }
             }
 
             Insert(new CountedEntry<TDefinition>(moving.Definition, moving.Count, toSlot));

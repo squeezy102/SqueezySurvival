@@ -69,17 +69,31 @@ namespace SqueezySurvival.Core.Tests.Items
         }
 
         [Test]
-        public void MoveToSlot_OccupiedSlot_SwapsTheTwoAndNothingElse()
+        public void MoveToSlot_OccupiedSlot_ShiftsLaterThingsIntoTheVacatedGap()
+        {
+            // Rock, paper, scissors, lizard, spock: lizard before paper.
+            var collection = new CountedCollection<ItemDefinition>();
+            collection.AddRange(new[] { Stone, Stick, Shell, PlaceholderBeachZoneContent.Coconut, PlaceholderBeachZoneContent.Conch });
+
+            collection.MoveToSlot(3, 1);
+
+            Assert.That(collection.Entries.Select(entry => entry.Definition.Id), Is.EqualTo(new[] { "stone", "coconut", "stick", "seashell", "conch" }));
+            Assert.That(collection.EntryAtSlot(4).Definition, Is.SameAs(PlaceholderBeachZoneContent.Conch));
+        }
+
+        [Test]
+        public void MoveToSlot_OccupiedSlot_StopsShiftingAtTheFirstGap()
         {
             CountedCollection<ItemDefinition> collection = StoneStickShell();
+            collection.MoveToSlot(2, 6);
 
-            collection.MoveToSlot(0, 2);
+            collection.MoveToSlot(6, 0);
 
             Assert.That(collection.Entries.Select(entry => (entry.Slot, entry.Definition.Id)), Is.EqualTo(new[]
             {
                 (0, "seashell"),
-                (1, "stick"),
-                (2, "stone"),
+                (1, "stone"),
+                (2, "stick"),
             }));
         }
 

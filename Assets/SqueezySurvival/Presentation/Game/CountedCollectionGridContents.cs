@@ -55,7 +55,6 @@ namespace SqueezySurvival.Presentation.Game
             switch (outcome.Kind)
             {
                 case GridDropOutcomeKind.Move:
-                case GridDropOutcomeKind.Swap:
                     _collection.MoveToSlot(sourceSlot, outcome.TargetSlot);
                     break;
                 case GridDropOutcomeKind.Combine:
