@@ -36,7 +36,7 @@ Full details: [Project Setup](Docs/Engineering/ProjectSetup.md).
 
 ## Ideas and discussion
 
-Got an idea for the game, or a question? Join the conversation in [Discussions](https://github.com/squeezy102/SqueezySurvival/discussions). Pitch ideas, vote in polls, ask questions, and share what you have made.
+Got an idea for the game, or a question? Join the conversation in [Discussions](https://github.com/squeezy102/SqueezySurvival/discussions). Pitch ideas, vote in polls, ask questions, and share what you have made. Please follow the [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## Contributing
 
