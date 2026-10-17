@@ -138,7 +138,7 @@ Hits lower current Health and can cause injuries ([Injuries and Health](Injuries
 
 ### Injuries in battle
 
-An injury suffered in battle is **announced the moment it happens, but takes effect only after the battle ends** (resolves OQ-066). Its effects, its cut to the injury ceiling, bleeding, infection and the rest of its course all begin when the battle is over; until then the survivor fights as well as before, and only current Health falls.
+An injury suffered in battle is **announced the moment it happens, but takes effect only after the battle ends** (resolves OQ-066). Its effects, its cut to the injury ceiling, bleeding, infection and the rest of its course all begin when the battle is over; until then the survivor fights as well as before, and only current Health falls. This simulates combat adrenaline: the survivor feels the wounds only once the fight is over.
 
 So a battle can be won and still be fatal: the survivor sees "Battle complete!", returns to the zone, and then the injuries take hold. If they bring the injury ceiling to zero, the survivor dies there ([Injuries and Health](Injuries.md#health)). The injuries announced during the fight are the warning.
 
