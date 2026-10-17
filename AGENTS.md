@@ -23,7 +23,7 @@ Then read the design document for the system you are touching (`Docs/Design/Syst
 
 ## Non-negotiable rules
 
-1. **Docs are the single source of truth.** Design, rules and decisions live in `Docs/`, version-controlled and approved through pull requests. No wiki, no design in issues or chat. If the docs and the code disagree, the docs win until the docs are changed.
+1. **Docs are the single source of truth.** Design, rules and decisions live in `Docs/`, version-controlled and approved through pull requests. No wiki. Ideas are discussed in GitHub Discussions and work is tracked in issues, but neither is a source of truth. If the docs and the code disagree, the docs win until the docs are changed.
 2. **Docs first.** Design and document a system before writing code for it. Code is written only for systems that are already designed. A change is not done until every affected document is updated in the same pull request.
 3. **One home per fact.** Define each rule or value in exactly one document and link to it elsewhere. Never copy.
 4. **Never guess.** Ground every technical decision in official product documentation or established precedent (Unity, Microsoft and .NET docs, GitHub docs, reputable forums), and cite it. No "try it and see", no hacks or workarounds.

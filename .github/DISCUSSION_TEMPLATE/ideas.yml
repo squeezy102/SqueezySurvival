@@ -1,0 +1,18 @@
+title: "<Your idea in a few words>"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for sharing an idea. Ideas are discussed here first; nothing is decided until squeezy102 approves a change to the design docs.
+  - type: textarea
+    id: idea
+    attributes:
+      label: The idea
+      description: What would the player experience? Why would it make the game better?
+    validations:
+      required: true
+  - type: input
+    id: related
+    attributes:
+      label: Related design
+      description: Optional. A design document or open question this touches, for example Docs/Design/Systems/Weather.md or OQ-036.

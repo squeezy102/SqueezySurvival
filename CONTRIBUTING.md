@@ -12,6 +12,10 @@ Thanks for helping build SqueezySurvival. The project owner, squeezy102, has the
 
 Nobody pushes directly to `main`. A ruleset on GitHub enforces this ([Source Control: protecting main](Docs/Engineering/SourceControl.md#protecting-main)).
 
+## Share your ideas
+
+Have an idea for the game, a question, or something you made? Start a thread in [Discussions](https://github.com/squeezy102/SqueezySurvival/discussions). Pitch it in **Ideas**, ask in **Q&A**, or put options to a vote in **Polls**. Every idea is welcome. Good ideas move from Discussions into the design docs once squeezy102 approves them, and then into issues for building ([Work Tracking: from idea to work](Docs/Engineering/WorkTracking.md#from-idea-to-work)).
+
 ## Finding and reporting work
 
 Work is tracked in [GitHub Issues](https://github.com/squeezy102/SqueezySurvival/issues): user stories, bugs and tasks, each opened with a form. Pull requests reference the issue they finish (`Closes #3`). See [Work Tracking](Docs/Engineering/WorkTracking.md).

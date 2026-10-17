@@ -51,6 +51,10 @@ Contributors branch from `main` as described above.
 
 `PjDev` belongs to squeezy102 alone. A second ruleset, `Protect PjDev`, restricts updates, deletions and force pushes on it, with only the repository admin (squeezy102) able to bypass, always. Nobody else can push to it, merge into it, or delete it.
 
+A third ruleset, `Keep PjDev`, blocks deleting and force-pushing `PjDev` with **no** bypass at all. It exists because the repository deletes head branches after a merge: without it, merging `PjDev` into `main` deleted `PjDev` through squeezy102's bypass (2026-10-16).
+
+After `PjDev` is squash-merged into `main`, the two branches' histories differ. `PjDev` is brought back in line by merging `main` into it, never by force-pushing (which the rulesets block), so the next pull request shows only new work.
+
 ## Protecting main
 
 A GitHub ruleset on `main` ([GitHub Docs: available rules for rulesets](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/available-rules-for-rulesets)):
