@@ -87,6 +87,33 @@
     bottom: 10%;
 }
 
+.grid-cell--drag-source {
+    opacity: 0.35;
+}
+
+.grid-cell--combine-target {
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+    border-left-color: rgb(255, 214, 120);
+    border-right-color: rgb(255, 214, 120);
+    border-top-color: rgb(255, 214, 120);
+    border-bottom-color: rgb(255, 214, 120);
+}
+
+.grid-insertion-marker {
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+    background-color: rgb(255, 214, 120);
+}
+
+.grid-dragged-icon {
+    opacity: 0.85;
+}
+
 .grid-tooltip {
     position: absolute;
     max-width: 360px;

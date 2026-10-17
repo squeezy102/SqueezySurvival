@@ -83,5 +83,35 @@ namespace SqueezySurvival.Core.Tests.Options
         {
             Assert.That(GridPanelLayoutCalculator.Calculate(FourColumns, float.NaN, float.NaN, 3, Scrollbar).CellSize, Is.Zero);
         }
+
+        [Test]
+        public void CellIndexAt_FindsCellAndFractionWithin()
+        {
+            // 100 px cells, 108 px pitch; the point is 3/4 across and 1/4 down the second row's second cell.
+            GridPanelLayout layout = GridPanelLayoutCalculator.Calculate(FourColumns, 444f, 300f, 6, Scrollbar);
+
+            int index = layout.CellIndexAt(108f + 75f, 108f + 25f, 6, out float x, out float y);
+
+            Assert.That(index, Is.EqualTo(5));
+            Assert.That(x, Is.EqualTo(0.75f));
+            Assert.That(y, Is.EqualTo(0.25f));
+        }
+
+        [Test]
+        public void CellIndexAt_PastLastCell_IsMinusOne()
+        {
+            GridPanelLayout layout = GridPanelLayoutCalculator.Calculate(FourColumns, 444f, 300f, 6, Scrollbar);
+
+            Assert.That(layout.CellIndexAt(330f, 120f, 6, out _, out _), Is.EqualTo(-1));
+        }
+
+        [Test]
+        public void CellIndexAt_Horizontal_CountsDownColumns()
+        {
+            GridPanelLayout layout = GridPanelLayoutCalculator.Calculate(TwoRows, 500f, 228f, 3, Scrollbar);
+
+            Assert.That(layout.CellIndexAt(150f, 50f, 3, out _, out _), Is.EqualTo(2));
+            Assert.That(layout.CellIndexAt(150f, 150f, 3, out _, out _), Is.EqualTo(-1));
+        }
     }
 }

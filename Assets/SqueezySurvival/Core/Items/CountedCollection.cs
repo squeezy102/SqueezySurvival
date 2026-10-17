@@ -45,6 +45,35 @@ namespace SqueezySurvival.Core.Items
             }
         }
 
+        /// <summary>
+        /// Moves the entry at <paramref name="fromIndex"/> so it sits just before the entry now at
+        /// <paramref name="insertionIndex"/>; an insertion index equal to the entry count moves it to the end
+        /// (Docs/Design/UI/DragAndDrop.md). Raises <see cref="Changed"/> only if the order changes.
+        /// </summary>
+        public void Move(int fromIndex, int insertionIndex)
+        {
+            if (fromIndex < 0 || fromIndex >= _entries.Count)
+            {
+                throw new ArgumentOutOfRangeException(nameof(fromIndex), fromIndex, "No entry at that index.");
+            }
+
+            if (insertionIndex < 0 || insertionIndex > _entries.Count)
+            {
+                throw new ArgumentOutOfRangeException(nameof(insertionIndex), insertionIndex, "Must be from 0 to the entry count.");
+            }
+
+            int toIndex = OrderedListMove.ResultingIndex(fromIndex, insertionIndex);
+            if (toIndex == fromIndex)
+            {
+                return;
+            }
+
+            CountedEntry<TDefinition> moving = _entries[fromIndex];
+            _entries.RemoveAt(fromIndex);
+            _entries.Insert(toIndex, moving);
+            Changed?.Invoke();
+        }
+
         private void AddOne(TDefinition definition)
         {
             if (definition == null)

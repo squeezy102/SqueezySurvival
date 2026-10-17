@@ -1,5 +1,7 @@
 using System;
+using SqueezySurvival.Core.DragAndDrop;
 using SqueezySurvival.Core.EventLog;
+using SqueezySurvival.Core.Items;
 using SqueezySurvival.Core.Options;
 using SqueezySurvival.Core.Runs;
 using SqueezySurvival.Core.Time;
@@ -56,20 +58,27 @@ namespace SqueezySurvival.Presentation.Game
             root.Q<Label>("zone-name").text = session.CurrentZone.Name;
             _explorationProgressLabel = root.Q<Label>("zone-exploration-progress");
             var gridTooltip = new GridTooltipView(root.Q<VisualElement>("grid-tooltip"));
+            var dropOutcomeResolver = new GridDropOutcomeResolver(new NoThingCombinations());
+            VisualElement dragLayer = root.Q<VisualElement>("game-screen-root");
+            Zone zone = session.CurrentZone;
             _zoneFeaturesView = new GridPanelView(
                 GridPanel.ZoneFeatures,
                 playerOptions,
+                new CountedCollectionGridContents<ZoneFeatureDefinition>(zone.Features, dropOutcomeResolver),
                 root.Q<VisualElement>("zone-features-panel"),
                 root.Q<ScrollView>("zone-features-grid"),
                 root.Q<Label>("zone-features-empty"),
-                gridTooltip);
+                gridTooltip,
+                dragLayer);
             _groundPoolView = new GridPanelView(
                 GridPanel.GroundPool,
                 playerOptions,
+                new CountedCollectionGridContents<ItemDefinition>(zone.GroundPool, dropOutcomeResolver),
                 root.Q<VisualElement>("ground-pool-panel"),
                 root.Q<ScrollView>("ground-pool-grid"),
                 root.Q<Label>("ground-pool-empty"),
-                gridTooltip);
+                gridTooltip,
+                dragLayer);
 
             _gridPanelSettingsWindow = new GridPanelSettingsWindowController(root.Q<VisualElement>("grid-panel-settings-window"), playerOptions);
             _gridPanelSettingsWindow.Closed += HideGridPanelSettings;
@@ -112,13 +121,8 @@ namespace SqueezySurvival.Presentation.Game
             session.ClockAdvanced += _ => RefreshClock();
             RefreshClock();
 
-            Zone zone = session.CurrentZone;
             zone.ExplorationProgressChanged += RefreshExplorationProgress;
-            zone.Features.Changed += RefreshZoneFeatures;
-            zone.GroundPool.Changed += RefreshGroundPool;
             RefreshExplorationProgress(zone.ExplorationProgress);
-            RefreshZoneFeatures();
-            RefreshGroundPool();
 
             // Focus must be requested a frame after layout for UI Toolkit to apply it.
             root.schedule.Execute(() => _waitButton.Focus());
@@ -130,8 +134,6 @@ namespace SqueezySurvival.Presentation.Game
             {
                 _session.EventLog.EntryAdded -= AppendLogEntry;
                 _session.CurrentZone.ExplorationProgressChanged -= RefreshExplorationProgress;
-                _session.CurrentZone.Features.Changed -= RefreshZoneFeatures;
-                _session.CurrentZone.GroundPool.Changed -= RefreshGroundPool;
             }
 
             _zoneFeaturesView?.Dispose();
@@ -155,16 +157,6 @@ namespace SqueezySurvival.Presentation.Game
         private void RefreshExplorationProgress(ExplorationProgress progress)
         {
             _explorationProgressLabel.text = $"Explored {progress.WholePercent}%";
-        }
-
-        private void RefreshZoneFeatures()
-        {
-            _zoneFeaturesView.ShowEntries(_session.CurrentZone.Features.Entries);
-        }
-
-        private void RefreshGroundPool()
-        {
-            _groundPoolView.ShowEntries(_session.CurrentZone.GroundPool.Entries);
         }
 
         private void BindPanelSettingsButton(Button button, GridPanel panel, string panelName)
@@ -229,7 +221,13 @@ namespace SqueezySurvival.Presentation.Game
 
         private void OnCancel()
         {
-            if (_notBuiltNotice.style.display != DisplayStyle.None)
+            if (_zoneFeaturesView.IsDragging || _groundPoolView.IsDragging)
+            {
+                // Escape during a drag only cancels the drag (Docs/Design/UI/DragAndDrop.md, Dragging).
+                _zoneFeaturesView.CancelDrag();
+                _groundPoolView.CancelDrag();
+            }
+            else if (_notBuiltNotice.style.display != DisplayStyle.None)
             {
                 HideNotBuiltNotice();
             }

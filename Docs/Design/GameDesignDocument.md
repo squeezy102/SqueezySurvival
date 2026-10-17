@@ -36,6 +36,8 @@ Presentation is pictures, text, windows and progress bars. Depth comes from syst
 
 - **Reward, don't punish.** Behavior we want to encourage (variety, rest, exploration) is rewarded rather than its absence penalized. Players respond far better to a bonus than to a mechanically equivalent penalty: World of Warcraft's beta XP penalty for long sessions was hated, while the same system reframed as a rested bonus was welcomed ([Psychology of Games](https://www.psychologyofgames.com/2010/03/framing-and-world-of-warcrafts-rest-system/)). Hard consequences remain where survival demands them (starvation, injury, illness).
 
+- **Nothing happens until you let go.** Any action started by dragging, holding or aiming shows its outcome before it is committed, and is committed only on release; releasing where nothing would happen changes nothing. The first use is [drag and drop](UI/DragAndDrop.md).
+
 ## Presentation
 
 - 2D sprites, text, windows and progress bars.
