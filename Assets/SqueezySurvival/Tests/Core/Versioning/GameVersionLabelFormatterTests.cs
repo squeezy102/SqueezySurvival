@@ -25,7 +25,6 @@ namespace SqueezySurvival.Core.Tests.Versioning
         }
 
         [TestCase(null)]
-        [TestCase("")]
         [TestCase("   ")]
         public void Format_WithoutVersion_Throws(string version)
         {

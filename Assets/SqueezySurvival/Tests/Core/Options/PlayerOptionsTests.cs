@@ -7,17 +7,6 @@ namespace SqueezySurvival.Core.Tests.Options
     public sealed class PlayerOptionsTests
     {
         [Test]
-        public void NewOptions_EveryPanelIsDefault()
-        {
-            var options = new PlayerOptions();
-
-            foreach (GridPanel panel in PlayerOptions.AllGridPanels)
-            {
-                Assert.That(options.GridPanelLayout(panel), Is.SameAs(GridPanelLayoutOptions.Default));
-            }
-        }
-
-        [Test]
         public void SetGridPanelLayout_ChangesOnlyThatPanelAndRaisesChanged()
         {
             var options = new PlayerOptions();

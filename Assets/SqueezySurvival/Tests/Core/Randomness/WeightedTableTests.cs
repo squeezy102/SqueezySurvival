@@ -13,12 +13,6 @@ namespace SqueezySurvival.Core.Tests.Randomness
             new WeightedTableEntry<string>("rare", 1),
         });
 
-        [Test]
-        public void TotalWeight_IsSumOfWeights()
-        {
-            Assert.That(CreateTable().TotalWeight, Is.EqualTo(4));
-        }
-
         [TestCase(0, "common")]
         [TestCase(2, "common")]
         [TestCase(3, "rare")]

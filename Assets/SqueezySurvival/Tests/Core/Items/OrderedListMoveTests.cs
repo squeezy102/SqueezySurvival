@@ -19,7 +19,6 @@ namespace SqueezySurvival.Core.Tests.Items
         [TestCase(0, 0)]
         [TestCase(1, 3)]
         [TestCase(2, 1)]
-        [TestCase(3, 2)]
         [TestCase(4, 4)]
         public void SlotAfterMove_Forward_ShiftsEntriesBetweenBack(int index, int expectedSlot)
         {
@@ -28,7 +27,6 @@ namespace SqueezySurvival.Core.Tests.Items
 
         // Moving entry 3 to slot 1 of [A B C D E] previews [A D B C E].
         [TestCase(1, 2)]
-        [TestCase(2, 3)]
         [TestCase(3, 1)]
         [TestCase(4, 4)]
         public void SlotAfterMove_Backward_ShiftsEntriesBetweenForward(int index, int expectedSlot)

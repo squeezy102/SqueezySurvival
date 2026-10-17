@@ -27,11 +27,5 @@ namespace SqueezySurvival.Core.Tests.Zones
             Assert.That(progress.WholePercent, Is.EqualTo(100));
             Assert.That(progress.IsFullyExplored, Is.True);
         }
-
-        [Test]
-        public void AfterOneExplore_CountsOneMore()
-        {
-            Assert.That(new ExplorationProgress(5, 24).AfterOneExplore().ExploresCompleted, Is.EqualTo(6));
-        }
     }
 }

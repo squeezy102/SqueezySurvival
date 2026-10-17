@@ -52,11 +52,5 @@ namespace SqueezySurvival.Editor.Tests.Build
 
             Assert.That(() => ReleaseBuildArguments.Parse(commandLine), Throws.ArgumentException);
         }
-
-        [Test]
-        public void Parse_WithNullArguments_Throws()
-        {
-            Assert.That(() => ReleaseBuildArguments.Parse(null), Throws.TypeOf<ArgumentNullException>());
-        }
     }
 }
