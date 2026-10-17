@@ -9,15 +9,15 @@ using UnityEngine.UIElements;
 namespace SqueezySurvival.Presentation.Game
 {
     /// <summary>
-    /// Drags cells of one grid panel. The dragged icon follows the pointer anywhere; over the same grid, Core says
-    /// what releasing would do and the preview shows it; releasing carries it out, and releasing anywhere else returns
-    /// the thing to its place (Docs/Design/UI/DragAndDrop.md).
+    /// Drags cells of one grid panel. The dragged icon follows the pointer anywhere. Over the same grid, Core says what
+    /// releasing would do, and the grid shows it: for a move, the cells slide aside and the dragged cell's slot appears
+    /// where it will land. Releasing carries out what is shown; releasing anywhere else returns the thing to its place
+    /// (Docs/Design/UI/DragAndDrop.md).
     /// </summary>
     public sealed class GridCellDragController
     {
         // Movement before a press becomes a drag, so a plain click stays a click (Docs/Design/UI/DragAndDrop.md).
         private const float DragStartDistance = 6f;
-        private const float MarkerThickness = 4f;
         private const float DraggedIconScale = 0.8f;
         private const string DraggedSourceClassName = "grid-cell--drag-source";
         private const string CombineTargetClassName = "grid-cell--combine-target";
@@ -26,7 +26,6 @@ namespace SqueezySurvival.Presentation.Game
         private readonly IGridPanelContents _contents;
         private readonly GridTooltipView _tooltip;
         private readonly VisualElement _dragLayer;
-        private readonly VisualElement _insertionMarker;
 
         private VisualElement _pressedCell;
         private int _pressedIndex = -1;
@@ -35,6 +34,8 @@ namespace SqueezySurvival.Presentation.Game
         private VisualElement _draggedIcon;
         private float _draggedIconSize;
         private VisualElement _highlightedCell;
+        private GridDropOutcome _shownOutcome = GridDropOutcome.ReturnToPlace;
+        private GridDropOutcome _outcomeInGrid = GridDropOutcome.ReturnToPlace;
 
         /// <summary>Creates the controller for one grid.</summary>
         public GridCellDragController(GridPanelView view, IGridPanelContents contents, GridTooltipView tooltip, VisualElement dragLayer)
@@ -43,9 +44,6 @@ namespace SqueezySurvival.Presentation.Game
             _contents = contents ?? throw new ArgumentNullException(nameof(contents));
             _tooltip = tooltip ?? throw new ArgumentNullException(nameof(tooltip));
             _dragLayer = dragLayer ?? throw new ArgumentNullException(nameof(dragLayer));
-            _insertionMarker = new VisualElement { pickingMode = PickingMode.Ignore };
-            _insertionMarker.AddToClassList("grid-insertion-marker");
-            _insertionMarker.style.position = Position.Absolute;
         }
 
         /// <summary>Whether a drag is in progress.</summary>
@@ -102,7 +100,7 @@ namespace SqueezySurvival.Presentation.Game
             }
 
             MoveDraggedIcon(position);
-            ShowOutcome(_contents.ResolveDrop(_pressedIndex, TargetAt(position)));
+            UpdateOutcome(position);
             move.StopPropagation();
         }
 
@@ -113,11 +111,10 @@ namespace SqueezySurvival.Presentation.Game
                 return;
             }
 
-            GridDropOutcome outcome = IsDragging ? _contents.ResolveDrop(_pressedIndex, TargetAt(up.position)) : GridDropOutcome.ReturnToPlace;
+            // Releasing carries out exactly what was being shown.
+            GridDropOutcome outcome = IsDragging ? _shownOutcome : GridDropOutcome.ReturnToPlace;
             int sourceIndex = _pressedIndex;
             EndDrag();
-
-            // Nothing happens until release, and then only what the preview showed.
             if (outcome.ChangesSomething)
             {
                 _contents.ApplyDrop(sourceIndex, outcome);
@@ -130,6 +127,7 @@ namespace SqueezySurvival.Presentation.Game
         {
             _tooltip.Hide();
             _pressedCell.AddToClassList(DraggedSourceClassName);
+            _outcomeInGrid = _contents.ResolveDrop(_pressedIndex, GridDropTarget.Cell(_pressedIndex, CellDropZone.Center));
 
             _draggedIconSize = Math.Max(16f, _view.CurrentLayout.CellSize * DraggedIconScale);
             _draggedIcon = new PlaceholderIconElement(_contents.DefinitionIdAt(_pressedIndex)) { pickingMode = PickingMode.Ignore };
@@ -147,94 +145,107 @@ namespace SqueezySurvival.Presentation.Game
             _draggedIcon.style.top = local.y - (_draggedIconSize / 2f);
         }
 
-        // Only the dragged cell's own grid accepts drops for now; anywhere else returns it.
-        private GridDropTarget TargetAt(Vector2 pointerWorldPosition)
+        private void UpdateOutcome(Vector2 pointerWorldPosition)
         {
+            GridDropOutcome outcome;
             if (!_view.Grid.contentViewport.worldBound.Contains(pointerWorldPosition))
             {
-                return GridDropTarget.Nowhere;
-            }
-
-            Vector2 contentPoint = _view.Grid.contentContainer.WorldToLocal(pointerWorldPosition);
-            int index = _view.CurrentLayout.CellIndexAt(contentPoint.x, contentPoint.y, _contents.Count, out float x, out float y);
-            return index < 0
-                ? GridDropTarget.EmptyGridSpace
-                : GridDropTarget.Cell(index, CellDropZoneClassifier.Classify(x, y));
-        }
-
-        private void ShowOutcome(GridDropOutcome outcome)
-        {
-            ClearPreview();
-            if (outcome.Kind == GridDropOutcomeKind.ReturnToPlace)
-            {
-                return;
-            }
-
-            if (outcome.TargetCellIndex >= 0)
-            {
-                VisualElement target = _view.CellAt(outcome.TargetCellIndex);
-                if (outcome.Kind == GridDropOutcomeKind.Combine)
-                {
-                    _highlightedCell = target;
-                    target.AddToClassList(CombineTargetClassName);
-                }
-
-                if (outcome.MarkerSide != InsertionMarkerSide.None)
-                {
-                    PlaceInsertionMarker(outcome.TargetCellIndex, outcome.MarkerSide);
-                }
-
-                _tooltip.Show(new ThingTooltipContent(outcome.Title, outcome.Description, Array.Empty<string>()), target.worldBound);
+                // Only the dragged cell's own grid accepts drops for now; anywhere else returns it.
+                outcome = GridDropOutcome.ReturnToPlace;
             }
             else
             {
-                _tooltip.Show(new ThingTooltipContent(outcome.Title, outcome.Description, Array.Empty<string>()), _draggedIcon.worldBound);
+                Vector2 contentPoint = _view.Grid.contentContainer.WorldToLocal(pointerWorldPosition);
+                int slot = _view.CurrentLayout.CellIndexAt(contentPoint.x, contentPoint.y, _contents.Count, out float x, out float y);
+                int index = slot < 0 ? -1 : _view.IndexAtSlot(slot);
+                if (index == _pressedIndex)
+                {
+                    // Over the dragged cell's own slot: what is already shown stands.
+                    outcome = _outcomeInGrid;
+                }
+                else
+                {
+                    GridDropTarget target = index < 0
+                        ? GridDropTarget.EmptyGridSpace
+                        : GridDropTarget.Cell(index, CellDropZoneClassifier.Classify(x, y));
+                    outcome = _contents.ResolveDrop(_pressedIndex, target);
+                    _outcomeInGrid = outcome;
+                }
+            }
+
+            if (!SameOutcome(outcome, _shownOutcome))
+            {
+                Show(outcome);
             }
         }
 
-        // The marker sits in the gap on the side of the target where the thing will land: left or right of it in a
-        // vertical grid, above or below it in a horizontal one.
-        private void PlaceInsertionMarker(int targetIndex, InsertionMarkerSide side)
+        private void Show(GridDropOutcome outcome)
         {
-            GridPanelLayout layout = _view.CurrentLayout;
-            GridCellPosition cell = layout.PositionOf(targetIndex);
-            float halfGap = GridPanelLayoutCalculator.CellGap / 2f;
-            bool vertical = _view.ScrollDirection == GridPanelScrollDirection.Vertical;
-            bool before = side == InsertionMarkerSide.Before;
-
-            if (vertical)
-            {
-                float edge = before ? cell.Left - halfGap : cell.Left + layout.CellSize + halfGap;
-                _insertionMarker.style.left = edge - (MarkerThickness / 2f);
-                _insertionMarker.style.top = cell.Top;
-                _insertionMarker.style.width = MarkerThickness;
-                _insertionMarker.style.height = layout.CellSize;
-            }
-            else
-            {
-                float edge = before ? cell.Top - halfGap : cell.Top + layout.CellSize + halfGap;
-                _insertionMarker.style.left = cell.Left;
-                _insertionMarker.style.top = edge - (MarkerThickness / 2f);
-                _insertionMarker.style.width = layout.CellSize;
-                _insertionMarker.style.height = MarkerThickness;
-            }
-
-            _view.Grid.contentContainer.Add(_insertionMarker);
-        }
-
-        private void ClearPreview()
-        {
-            _insertionMarker.RemoveFromHierarchy();
+            _shownOutcome = outcome;
             _highlightedCell?.RemoveFromClassList(CombineTargetClassName);
             _highlightedCell = null;
+
+            switch (outcome.Kind)
+            {
+                case GridDropOutcomeKind.ReturnToPlace:
+                    _view.ClearMovePreview();
+                    _tooltip.Hide();
+                    return;
+                case GridDropOutcomeKind.Move:
+                    _view.ShowMovePreview(_pressedIndex, OrderedListMove.ResultingIndex(_pressedIndex, outcome.InsertionIndex));
+                    break;
+                case GridDropOutcomeKind.NoChange:
+                    _view.ClearMovePreview();
+                    break;
+                case GridDropOutcomeKind.Combine:
+                    _view.ClearMovePreview();
+                    _highlightedCell = _view.CellAt(outcome.TargetCellIndex);
+                    _highlightedCell.AddToClassList(CombineTargetClassName);
+                    break;
+                default:
+                    // Can't combine: nothing moves; the tooltip says why.
+                    _view.ClearMovePreview();
+                    break;
+            }
+
+            // The tooltip sits beside the cell the outcome concerns: the dragged cell's slot for a move, the target
+            // for a combination.
+            VisualElement anchor = outcome.Kind == GridDropOutcomeKind.Combine || outcome.Kind == GridDropOutcomeKind.CannotCombine
+                ? _view.CellAt(outcome.TargetCellIndex)
+                : _pressedCell;
+            _tooltip.Show(new ThingTooltipContent(outcome.Title, outcome.Description, Array.Empty<string>()), SlotWorldBound(anchor));
         }
+
+        // Cells slide to their previewed slots with a short transition, so the tooltip is placed against the slot a
+        // cell is going to, not where it is mid-slide.
+        private Rect SlotWorldBound(VisualElement cell)
+        {
+            GridCellPosition position = _view.CurrentLayout.PositionOf(_view.SlotOf(_view.IndexOfCell(cell)));
+            float size = _view.CurrentLayout.CellSize;
+            Vector2 topLeft = _view.Grid.contentContainer.LocalToWorld(new Vector2(position.Left, position.Top));
+            return new Rect(topLeft, new Vector2(size, size));
+        }
+
+        private static bool SameOutcome(GridDropOutcome first, GridDropOutcome second) =>
+            first.Kind == second.Kind
+            && first.InsertionIndex == second.InsertionIndex
+            && first.TargetCellIndex == second.TargetCellIndex
+            && first.Description == second.Description;
 
         private void EndDrag()
         {
-            ClearPreview();
+            _highlightedCell?.RemoveFromClassList(CombineTargetClassName);
+            _highlightedCell = null;
+            if (_draggedIcon != null)
+            {
+                _view.ClearMovePreview();
+            }
+
             _tooltip.Hide();
             _draggedIcon?.RemoveFromHierarchy();
             _draggedIcon = null;
+            _shownOutcome = GridDropOutcome.ReturnToPlace;
+            _outcomeInGrid = GridDropOutcome.ReturnToPlace;
 
             if (_pressedCell != null)
             {

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using SqueezySurvival.Core.Items;
 using SqueezySurvival.Core.Options;
 using SqueezySurvival.Presentation.Icons;
 using UnityEngine;
@@ -27,6 +28,8 @@ namespace SqueezySurvival.Presentation.Game
         private readonly GridCellDragController _dragController;
         private readonly List<VisualElement> _cells = new List<VisualElement>();
         private bool _needsScrolling;
+        private int _previewFromIndex = -1;
+        private int _previewToIndex = -1;
 
         /// <summary>Binds the grid in <paramref name="panelElement"/> to its contents and the panel's settings.</summary>
         /// <param name="panel">Which panel this is, for its settings.</param>
@@ -86,8 +89,38 @@ namespace SqueezySurvival.Presentation.Game
         /// <summary>The element of the cell at <paramref name="index"/>.</summary>
         public VisualElement CellAt(int index) => _cells[index];
 
+        /// <summary>The index of a cell element, or -1.</summary>
+        public int IndexOfCell(VisualElement cell) => _cells.IndexOf(cell);
+
         /// <summary>Cancels a drag in progress; the dragged thing returns to its place.</summary>
         public void CancelDrag() => _dragController.Cancel();
+
+        /// <summary>
+        /// Shows the cells as they would be if the cell at <paramref name="fromIndex"/> moved to
+        /// <paramref name="toIndex"/>: it takes that slot and the cells between slide over (Docs/Design/UI/DragAndDrop.md, Preview).
+        /// </summary>
+        public void ShowMovePreview(int fromIndex, int toIndex)
+        {
+            _previewFromIndex = fromIndex;
+            _previewToIndex = toIndex;
+            PlaceCells();
+        }
+
+        /// <summary>Puts every cell back in its real place.</summary>
+        public void ClearMovePreview()
+        {
+            _previewFromIndex = -1;
+            _previewToIndex = -1;
+            PlaceCells();
+        }
+
+        /// <summary>The slot a cell is shown in: its own, or its previewed one during a drag.</summary>
+        public int SlotOf(int index) =>
+            _previewFromIndex < 0 ? index : OrderedListMove.SlotAfterMove(index, _previewFromIndex, _previewToIndex);
+
+        /// <summary>The cell shown in a slot.</summary>
+        public int IndexAtSlot(int slot) =>
+            _previewFromIndex < 0 ? slot : OrderedListMove.IndexAtSlotAfterMove(slot, _previewFromIndex, _previewToIndex);
 
         /// <inheritdoc />
         public void Dispose()
@@ -101,6 +134,8 @@ namespace SqueezySurvival.Presentation.Game
         private void Rebuild()
         {
             _dragController.Cancel();
+            _previewFromIndex = -1;
+            _previewToIndex = -1;
             _tooltip.Hide();
             Grid.Clear();
             _cells.Clear();
@@ -193,14 +228,24 @@ namespace SqueezySurvival.Presentation.Game
 
             Grid.contentContainer.style.width = layout.ContentWidth;
             Grid.contentContainer.style.height = layout.ContentHeight;
+            PlaceCells();
+        }
+
+        private void PlaceCells()
+        {
+            if (CurrentLayout == null)
+            {
+                return;
+            }
+
             for (int index = 0; index < _cells.Count; index++)
             {
-                GridCellPosition position = layout.PositionOf(index);
+                GridCellPosition position = CurrentLayout.PositionOf(SlotOf(index));
                 VisualElement cell = _cells[index];
                 cell.style.left = position.Left;
                 cell.style.top = position.Top;
-                cell.style.width = layout.CellSize;
-                cell.style.height = layout.CellSize;
+                cell.style.width = CurrentLayout.CellSize;
+                cell.style.height = CurrentLayout.CellSize;
             }
         }
 

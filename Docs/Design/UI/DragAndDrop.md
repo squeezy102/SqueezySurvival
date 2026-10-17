@@ -29,7 +29,7 @@ Each cell has five hidden zones. The player never sees their borders; they see w
 +-------------------+
 ```
 
-- **Center:** the middle half of the cell in each direction.
+- **Center:** the middle 30% of the cell in each direction.
 - **Edges:** the rest of the cell, each part belonging to the nearest edge.
 
 | Drop on | Outcome |
@@ -40,21 +40,20 @@ Each cell has five hidden zones. The player never sees their borders; they see w
 | Empty space in the same grid, after the last cell | Move it to the **end**. |
 | Anywhere else, including another panel | Nothing; it returns. |
 
-A grid's contents are one ordered list, filled left to right then down (vertical) or top to bottom then right (horizontal) ([Grid Panels: scroll direction](GridPanels.md#scroll-direction)). "Before" and "after" are places in that list, which is why all four edges mean one of the two. The insertion marker is drawn on the side of the cell where the thing will actually land, whichever edge is hovered. A move that would leave the thing where it already is shows "No change".
+A grid's contents are one ordered list, filled left to right then down (vertical) or top to bottom then right (horizontal) ([Grid Panels: scroll direction](GridPanels.md#scroll-direction)). "Before" and "after" are places in that list, which is why all four edges mean one of the two. A move that would leave the thing where it already is shows "No change". Hovering the dragged thing's own (previewed) slot keeps the outcome already shown.
 
 The order is part of the game's state, not just the screen: it stays as the player left it, new finds of a kind already there add to its cell, and new kinds join at the end.
 
 ## Preview
 
-While over a drop zone, the game shows:
+While over a drop zone, the game shows the result before it happens ([#44](https://github.com/squeezy102/SqueezySurvival/issues/44)):
 
-| Outcome | Marker | Tooltip beside the target cell |
+| Outcome | The grid | Tooltip |
 |---|---|---|
-| Move before or after | A bar on the side of the target cell where the thing will land | "Move: place the stick before the stone." |
-| Move to the end | - | "Move: place the stick at the end." |
-| No change | - | "No change." |
-| Combine | The target cell is highlighted | What the combination makes, and what it costs |
-| Cannot combine | - | "The stick and the stone can't be combined." |
+| Move | The other cells slide aside and the dragged thing's slot, dimmed, appears where it will land. | Beside that slot: "Move. Place the stick before the stone." or "...at the end." |
+| No change | Everything stays in place. | "No change. It stays where it is." |
+| Combine | The target cell is outlined. | Beside the target: what the combination makes, and what it costs. |
+| Cannot combine | Everything stays in place. | Beside the target: "Can't combine. The stick and the stone can't be combined." |
 
 ## Combining
 
@@ -67,5 +66,6 @@ Every drag needs an alternative that needs neither a drag nor a held button ([Co
 ## Implementation notes
 
 - Drop zones, outcomes and their wording are decided in Core (`CellDropZoneClassifier`, `GridDropOutcomeResolver`) and unit tested; the presentation layer reports where the pointer is and carries out the outcome Core returns.
+- The move preview's slot arithmetic is `OrderedListMove.SlotAfterMove`. Hit-testing uses the previewed slots, so when the cells slide aside the pointer lands on the dragged thing's own slot and the preview holds steady instead of flickering.
 - Reordering is `CountedCollection.Move`, so the order lives in the zone's state.
 - Which things combine is asked of an `IThingCombinationRules`; the wireframe's rules combine nothing.

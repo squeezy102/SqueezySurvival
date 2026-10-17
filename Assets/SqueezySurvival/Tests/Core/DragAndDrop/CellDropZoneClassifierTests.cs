@@ -7,7 +7,8 @@ namespace SqueezySurvival.Core.Tests.DragAndDrop
     public sealed class CellDropZoneClassifierTests
     {
         [TestCase(0.5f, 0.5f, CellDropZone.Center)]
-        [TestCase(0.25f, 0.75f, CellDropZone.Center)]
+        [TestCase(0.35f, 0.65f, CellDropZone.Center)]
+        [TestCase(0.3f, 0.5f, CellDropZone.Left)]
         [TestCase(0.1f, 0.5f, CellDropZone.Left)]
         [TestCase(0.9f, 0.5f, CellDropZone.Right)]
         [TestCase(0.5f, 0.1f, CellDropZone.Top)]
