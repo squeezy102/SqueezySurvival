@@ -18,6 +18,8 @@ Work is tracked in [GitHub Issues](https://github.com/squeezy102/SqueezySurvival
 
 ## Before you start
 
+- Using an AI assistant? Have it read [AGENTS.md](AGENTS.md) first; it is the baseline for LLM-assisted contributions.
+
 - Read [Docs/Home.md](Docs/Home.md), especially the documentation policy: **docs come first**, and a change is not done until every affected document is updated in the same pull request.
 - The project is in the **design phase**: no gameplay code is written until the core designs are concrete. Design ideas are proposed as pull requests to the design documents, or as new entries in [Open Questions](Docs/Design/OpenQuestions.md).
 - Code follows [Coding Standards](Docs/Engineering/CodingStandards.md): testable, warning-free, descriptive names.

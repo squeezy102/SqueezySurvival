@@ -36,7 +36,7 @@ Full details: [Project Setup](Docs/Engineering/ProjectSetup.md).
 
 ## Contributing
 
-See [CONTRIBUTING](CONTRIBUTING.md). Every change goes through a pull request approved by squeezy102.
+See [CONTRIBUTING](CONTRIBUTING.md). Working with an AI assistant? Start it on [AGENTS.md](AGENTS.md). Every change goes through a pull request approved by squeezy102.
 
 ## License
 

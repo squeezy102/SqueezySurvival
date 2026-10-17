@@ -45,6 +45,8 @@ Planned: Crafting, Buildings, Light Sources, Illness.
 
 ## Engineering
 
+- [AGENTS.md](../AGENTS.md) - start here for AI assistants and LLM-assisted contributors.
+
 - [Coding Standards](Engineering/CodingStandards.md) - testability, naming, architecture, warnings policy.
 - [Project Setup](Engineering/ProjectSetup.md) - editor version, packages, folder layout.
 - [Source Control](Engineering/SourceControl.md) - branching, commits, Git LFS.
