@@ -6,11 +6,14 @@ namespace SqueezySurvival.Core.DragAndDrop
         /// <summary>Nothing: the dragged thing returns. No preview.</summary>
         ReturnToPlace,
 
-        /// <summary>The dragged thing would end up where it already is.</summary>
+        /// <summary>Releasing changes nothing; the preview says why.</summary>
         NoChange,
 
-        /// <summary>The dragged thing moves to a new place in the order.</summary>
+        /// <summary>The dragged thing moves into an empty slot.</summary>
         Move,
+
+        /// <summary>The dragged thing and the thing in the target slot trade slots.</summary>
+        Swap,
 
         /// <summary>The two things combine.</summary>
         Combine,

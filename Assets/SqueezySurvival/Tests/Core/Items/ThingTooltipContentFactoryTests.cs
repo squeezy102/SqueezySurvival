@@ -11,7 +11,7 @@ namespace SqueezySurvival.Core.Tests.Items
         [Test]
         public void Create_ItemStack_ShowsNameDescriptionAndWeights()
         {
-            ThingTooltipContent tooltip = ThingTooltipContentFactory.Create(new CountedEntry<ItemDefinition>(TestZoneDefinitions.Twig, 3));
+            ThingTooltipContent tooltip = ThingTooltipContentFactory.Create(new CountedEntry<ItemDefinition>(TestZoneDefinitions.Twig, 3, 0));
 
             Assert.That(tooltip.Title, Is.EqualTo("Twig"));
             Assert.That(tooltip.Description, Is.EqualTo("A thin twig."));
@@ -21,7 +21,7 @@ namespace SqueezySurvival.Core.Tests.Items
         [Test]
         public void Create_Feature_HasNoWeights()
         {
-            ThingTooltipContent tooltip = ThingTooltipContentFactory.Create(new CountedEntry<ZoneFeatureDefinition>(TestZoneDefinitions.Pond, 1));
+            ThingTooltipContent tooltip = ThingTooltipContentFactory.Create(new CountedEntry<ZoneFeatureDefinition>(TestZoneDefinitions.Pond, 1, 0));
 
             Assert.That(tooltip.Title, Is.EqualTo("Pond"));
             Assert.That(tooltip.DetailLines, Is.Empty);

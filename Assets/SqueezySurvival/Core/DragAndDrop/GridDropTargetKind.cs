@@ -6,10 +6,10 @@ namespace SqueezySurvival.Core.DragAndDrop
         /// <summary>Nothing a drop can act on.</summary>
         Nowhere,
 
-        /// <summary>A cell in the same grid.</summary>
-        Cell,
+        /// <summary>A slot holding something, in the same grid.</summary>
+        OccupiedSlot,
 
-        /// <summary>Empty space in the same grid.</summary>
-        EmptyGridSpace,
+        /// <summary>An empty slot in the same grid.</summary>
+        EmptySlot,
     }
 }

@@ -113,5 +113,19 @@ namespace SqueezySurvival.Core.Tests.Options
             Assert.That(layout.CellIndexAt(150f, 50f, 3, out _, out _), Is.EqualTo(2));
             Assert.That(layout.CellIndexAt(150f, 150f, 3, out _, out _), Is.EqualTo(-1));
         }
+
+        [Test]
+        public void DisplayedSlotCount_FewItems_FillsTheVisibleArea()
+        {
+            // 100 px cells in 300 px of height: 2 whole rows of 4 are visible.
+            Assert.That(GridPanelLayoutCalculator.DisplayedSlotCount(FourColumns, 444f, 300f, Scrollbar, 3), Is.EqualTo(8));
+        }
+
+        [Test]
+        public void DisplayedSlotCount_FullLastRow_AddsARowOfEmptySlots()
+        {
+            // 8 occupied slots fill both visible rows, so a third row offers somewhere to drop.
+            Assert.That(GridPanelLayoutCalculator.DisplayedSlotCount(FourColumns, 444f, 300f, Scrollbar, 8), Is.EqualTo(12));
+        }
     }
 }

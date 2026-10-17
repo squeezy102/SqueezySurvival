@@ -10,18 +10,25 @@ namespace SqueezySurvival.Core.Tests.Items
     {
         private static readonly ItemDefinition Stone = PlaceholderBeachZoneContent.Stone;
         private static readonly ItemDefinition Stick = PlaceholderBeachZoneContent.Stick;
+        private static readonly ItemDefinition Shell = PlaceholderBeachZoneContent.Seashell;
+
+        private static CountedCollection<ItemDefinition> StoneStickShell()
+        {
+            var collection = new CountedCollection<ItemDefinition>();
+            collection.AddRange(new[] { Stone, Stick, Shell });
+            return collection;
+        }
 
         [Test]
-        public void AddRange_GroupsByKindInOrderFirstAdded()
+        public void AddRange_GroupsByKindAndGivesNewKindsTheNextSlot()
         {
             var collection = new CountedCollection<ItemDefinition>();
 
             collection.AddRange(new[] { Stone, Stick, Stone });
 
-            Assert.That(collection.Entries.Count, Is.EqualTo(2));
-            Assert.That(collection.Entries[0].Definition, Is.SameAs(Stone));
-            Assert.That(collection.Entries[0].Count, Is.EqualTo(2));
-            Assert.That(collection.CountOf(Stick), Is.EqualTo(1));
+            Assert.That(collection.EntryAtSlot(0).Definition, Is.SameAs(Stone));
+            Assert.That(collection.EntryAtSlot(0).Count, Is.EqualTo(2));
+            Assert.That(collection.EntryAtSlot(1).Definition, Is.SameAs(Stick));
         }
 
         [Test]
@@ -48,42 +55,56 @@ namespace SqueezySurvival.Core.Tests.Items
             Assert.That(changes, Is.Zero);
         }
 
-        [TestCase(2, 0, new[] { "stick", "stone", "seashell" })]
-        [TestCase(0, 3, new[] { "seashell", "stick", "stone" })]
-        [TestCase(0, 2, new[] { "seashell", "stone", "stick" })]
-        public void Move_InsertsBeforeTheEntryAtInsertionIndex(int from, int insertion, string[] expectedIds)
+        [Test]
+        public void MoveToSlot_EmptySlot_MovesOnlyThatEntryAndLeavesAGap()
         {
-            var collection = new CountedCollection<ItemDefinition>();
-            collection.AddRange(new[] { Stone, PlaceholderBeachZoneContent.Seashell, Stick });
+            CountedCollection<ItemDefinition> collection = StoneStickShell();
 
-            collection.Move(from, insertion);
+            collection.MoveToSlot(0, 5);
 
-            Assert.That(collection.Entries.Select(entry => entry.Definition.Id), Is.EqualTo(expectedIds));
+            Assert.That(collection.EntryAtSlot(0), Is.Null);
+            Assert.That(collection.EntryAtSlot(1).Definition, Is.SameAs(Stick));
+            Assert.That(collection.EntryAtSlot(5).Definition, Is.SameAs(Stone));
+            Assert.That(collection.SlotCount, Is.EqualTo(6));
         }
 
         [Test]
-        public void Move_ToSamePlace_DoesNotRaiseChanged()
+        public void MoveToSlot_OccupiedSlot_SwapsTheTwoAndNothingElse()
         {
-            var collection = new CountedCollection<ItemDefinition>();
-            collection.AddRange(new[] { Stone, Stick });
+            CountedCollection<ItemDefinition> collection = StoneStickShell();
+
+            collection.MoveToSlot(0, 2);
+
+            Assert.That(collection.Entries.Select(entry => (entry.Slot, entry.Definition.Id)), Is.EqualTo(new[]
+            {
+                (0, "seashell"),
+                (1, "stick"),
+                (2, "stone"),
+            }));
+        }
+
+        [Test]
+        public void MoveToSlot_SameSlot_DoesNotRaiseChanged()
+        {
+            CountedCollection<ItemDefinition> collection = StoneStickShell();
             int changes = 0;
             collection.Changed += () => changes++;
 
-            collection.Move(0, 1);
+            collection.MoveToSlot(1, 1);
 
             Assert.That(changes, Is.Zero);
         }
 
         [Test]
-        public void AddRange_AfterMove_KeepsOrderAndAddsNewKindsAtEnd()
+        public void AddRange_NewKind_FillsTheFirstGapWithoutMovingAnything()
         {
-            var collection = new CountedCollection<ItemDefinition>();
-            collection.AddRange(new[] { Stone, Stick });
-            collection.Move(1, 0);
+            CountedCollection<ItemDefinition> collection = StoneStickShell();
+            collection.MoveToSlot(1, 4);
 
-            collection.AddRange(new[] { Stone, PlaceholderBeachZoneContent.Seashell });
+            collection.AddRange(new[] { Stone, PlaceholderBeachZoneContent.Coconut });
 
-            Assert.That(collection.Entries.Select(entry => entry.Definition.Id), Is.EqualTo(new[] { "stick", "stone", "seashell" }));
+            Assert.That(collection.EntryAtSlot(1).Definition, Is.SameAs(PlaceholderBeachZoneContent.Coconut));
+            Assert.That(collection.EntryAtSlot(4).Definition, Is.SameAs(Stick));
             Assert.That(collection.CountOf(Stone), Is.EqualTo(2));
         }
     }

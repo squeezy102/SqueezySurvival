@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using SqueezySurvival.Core.Items;
+using SqueezySurvival.Core.DragAndDrop;
 using SqueezySurvival.Core.Options;
 using SqueezySurvival.Presentation.Icons;
 using UnityEngine;
@@ -9,10 +9,10 @@ using UnityEngine.UIElements;
 namespace SqueezySurvival.Presentation.Game
 {
     /// <summary>
-    /// Shows Core contents as a scrollable grid inside a fixed-size panel, laid out by Core's
+    /// Shows slotted Core contents as a scrollable grid inside a fixed-size panel, laid out by Core's
     /// <see cref="GridPanelLayoutCalculator"/> from the panel's settings in the shared <see cref="PlayerOptions"/>
-    /// (Docs/Design/UI/GridPanels.md). The panel never resizes; only the cells and the scroll position change.
-    /// Dragging cells is handled by a <see cref="GridCellDragController"/>.
+    /// (Docs/Design/UI/GridPanels.md). Every slot is drawn, empty or not, so empty slots can be dropped on. The panel
+    /// never resizes. Dragging cells is handled by a <see cref="GridCellDragController"/>.
     /// </summary>
     public sealed class GridPanelView : IDisposable
     {
@@ -26,10 +26,11 @@ namespace SqueezySurvival.Presentation.Game
         private readonly Label _emptyLabel;
         private readonly GridTooltipView _tooltip;
         private readonly GridCellDragController _dragController;
-        private readonly List<VisualElement> _cells = new List<VisualElement>();
+        private readonly List<VisualElement> _slotBackgrounds = new List<VisualElement>();
+        private readonly Dictionary<int, VisualElement> _itemCells = new Dictionary<int, VisualElement>();
         private bool _needsScrolling;
-        private int _previewFromIndex = -1;
-        private int _previewToIndex = -1;
+        private int _previewSourceSlot = -1;
+        private int _previewTargetSlot = -1;
 
         /// <summary>Binds the grid in <paramref name="panelElement"/> to its contents and the panel's settings.</summary>
         /// <param name="panel">Which panel this is, for its settings.</param>
@@ -80,47 +81,47 @@ namespace SqueezySurvival.Presentation.Game
         /// <summary>The geometry the cells were last placed with.</summary>
         public GridPanelLayout CurrentLayout { get; private set; }
 
-        /// <summary>The panel's scroll direction.</summary>
-        public GridPanelScrollDirection ScrollDirection => LayoutOptions.ScrollDirection;
+        /// <summary>How many slots are drawn, empty ones included.</summary>
+        public int DisplayedSlotCount { get; private set; }
+
+        /// <summary>Which slots lie beside which, for the current settings.</summary>
+        public GridSlotNeighborhood Neighborhood => new GridSlotNeighborhood(LayoutOptions.ScrollDirection, LayoutOptions.FixedLineCount);
 
         /// <summary>Whether a cell from this grid is being dragged.</summary>
         public bool IsDragging => _dragController.IsDragging;
 
-        /// <summary>The element of the cell at <paramref name="index"/>.</summary>
-        public VisualElement CellAt(int index) => _cells[index];
-
-        /// <summary>The index of a cell element, or -1.</summary>
-        public int IndexOfCell(VisualElement cell) => _cells.IndexOf(cell);
-
         /// <summary>Cancels a drag in progress; the dragged thing returns to its place.</summary>
         public void CancelDrag() => _dragController.Cancel();
 
+        /// <summary>The item cell in a slot, or null when the slot is empty.</summary>
+        public VisualElement ItemCellAt(int slot) => _itemCells.TryGetValue(slot, out VisualElement cell) ? cell : null;
+
         /// <summary>
-        /// Shows the cells as they would be if the cell at <paramref name="fromIndex"/> moved to
-        /// <paramref name="toIndex"/>: it takes that slot and the cells between slide over (Docs/Design/UI/DragAndDrop.md, Preview).
+        /// Shows the result of moving the thing in <paramref name="sourceSlot"/> to <paramref name="targetSlot"/>: it
+        /// appears there, and anything already there appears in its place. No other cell moves.
         /// </summary>
-        public void ShowMovePreview(int fromIndex, int toIndex)
+        public void ShowMovePreview(int sourceSlot, int targetSlot)
         {
-            _previewFromIndex = fromIndex;
-            _previewToIndex = toIndex;
-            PlaceCells();
+            _previewSourceSlot = sourceSlot;
+            _previewTargetSlot = targetSlot;
+            PlaceItemCells();
         }
 
-        /// <summary>Puts every cell back in its real place.</summary>
+        /// <summary>Puts every cell back in its real slot.</summary>
         public void ClearMovePreview()
         {
-            _previewFromIndex = -1;
-            _previewToIndex = -1;
-            PlaceCells();
+            _previewSourceSlot = -1;
+            _previewTargetSlot = -1;
+            PlaceItemCells();
         }
 
-        /// <summary>The slot a cell is shown in: its own, or its previewed one during a drag.</summary>
-        public int SlotOf(int index) =>
-            _previewFromIndex < 0 ? index : OrderedListMove.SlotAfterMove(index, _previewFromIndex, _previewToIndex);
-
-        /// <summary>The cell shown in a slot.</summary>
-        public int IndexAtSlot(int slot) =>
-            _previewFromIndex < 0 ? slot : OrderedListMove.IndexAtSlotAfterMove(slot, _previewFromIndex, _previewToIndex);
+        /// <summary>A slot's rectangle in world (panel) coordinates.</summary>
+        public Rect SlotWorldBound(int slot)
+        {
+            GridCellPosition position = CurrentLayout.PositionOf(slot);
+            Vector2 topLeft = Grid.contentContainer.LocalToWorld(new Vector2(position.Left, position.Top));
+            return new Rect(topLeft, new Vector2(CurrentLayout.CellSize, CurrentLayout.CellSize));
+        }
 
         /// <inheritdoc />
         public void Dispose()
@@ -134,34 +135,42 @@ namespace SqueezySurvival.Presentation.Game
         private void Rebuild()
         {
             _dragController.Cancel();
-            _previewFromIndex = -1;
-            _previewToIndex = -1;
             _tooltip.Hide();
-            Grid.Clear();
-            _cells.Clear();
-            for (int index = 0; index < _contents.Count; index++)
+            foreach (VisualElement cell in _itemCells.Values)
             {
-                VisualElement cell = CreateCell(index);
-                _cells.Add(cell);
-                Grid.Add(cell);
+                cell.RemoveFromHierarchy();
             }
 
-            _emptyLabel.style.display = _contents.Count == 0 ? DisplayStyle.Flex : DisplayStyle.None;
-            Grid.style.display = _contents.Count == 0 ? DisplayStyle.None : DisplayStyle.Flex;
+            _itemCells.Clear();
+            _previewSourceSlot = -1;
+            _previewTargetSlot = -1;
+            for (int slot = 0; slot < _contents.SlotCount; slot++)
+            {
+                if (_contents.IsOccupied(slot))
+                {
+                    VisualElement cell = CreateItemCell(slot);
+                    _itemCells.Add(slot, cell);
+                    Grid.Add(cell);
+                }
+            }
+
+            bool empty = _itemCells.Count == 0;
+            _emptyLabel.style.display = empty ? DisplayStyle.Flex : DisplayStyle.None;
+            Grid.style.display = empty ? DisplayStyle.None : DisplayStyle.Flex;
             Relayout();
         }
 
-        private VisualElement CreateCell(int index)
+        private VisualElement CreateItemCell(int slot)
         {
             var cell = new VisualElement();
             cell.AddToClassList("grid-cell");
             cell.style.position = Position.Absolute;
 
-            var icon = new PlaceholderIconElement(_contents.DefinitionIdAt(index));
+            var icon = new PlaceholderIconElement(_contents.DefinitionIdAt(slot));
             icon.AddToClassList("grid-cell-icon");
             cell.Add(icon);
 
-            string countBadge = _contents.CountBadgeAt(index);
+            string countBadge = _contents.CountBadgeAt(slot);
             if (countBadge.Length > 0)
             {
                 var count = new Label(countBadge) { pickingMode = PickingMode.Ignore };
@@ -173,7 +182,7 @@ namespace SqueezySurvival.Presentation.Game
             {
                 if (!_dragController.IsDragging)
                 {
-                    _tooltip.Show(_contents.TooltipAt(index), cell.worldBound);
+                    _tooltip.Show(_contents.TooltipAt(slot), cell.worldBound);
                 }
             });
             cell.RegisterCallback<PointerLeaveEvent>(_ =>
@@ -183,7 +192,7 @@ namespace SqueezySurvival.Presentation.Game
                     _tooltip.Hide();
                 }
             });
-            _dragController.RegisterCell(cell, index);
+            _dragController.RegisterCell(cell, slot);
             return cell;
         }
 
@@ -210,7 +219,8 @@ namespace SqueezySurvival.Presentation.Game
         {
             GridPanelLayoutOptions options = LayoutOptions;
             Rect area = Grid.layout;
-            GridPanelLayout layout = GridPanelLayoutCalculator.Calculate(options, area.width, area.height, _cells.Count, ScrollbarThickness);
+            DisplayedSlotCount = GridPanelLayoutCalculator.DisplayedSlotCount(options, area.width, area.height, ScrollbarThickness, _contents.SlotCount);
+            GridPanelLayout layout = GridPanelLayoutCalculator.Calculate(options, area.width, area.height, DisplayedSlotCount, ScrollbarThickness);
             CurrentLayout = layout;
 
             // The scrollbar along the scroll direction is always there, so cells never resize; it is enabled only
@@ -228,25 +238,70 @@ namespace SqueezySurvival.Presentation.Game
 
             Grid.contentContainer.style.width = layout.ContentWidth;
             Grid.contentContainer.style.height = layout.ContentHeight;
-            PlaceCells();
+            PlaceSlotBackgrounds();
+            PlaceItemCells();
         }
 
-        private void PlaceCells()
+        // Empty squares mark every slot, so gaps are visible and can be dropped on. They sit behind the items.
+        private void PlaceSlotBackgrounds()
+        {
+            while (_slotBackgrounds.Count < DisplayedSlotCount)
+            {
+                var background = new VisualElement { pickingMode = PickingMode.Ignore };
+                background.AddToClassList("grid-slot");
+                background.style.position = Position.Absolute;
+                _slotBackgrounds.Add(background);
+                Grid.Insert(0, background);
+            }
+
+            for (int slot = 0; slot < _slotBackgrounds.Count; slot++)
+            {
+                VisualElement background = _slotBackgrounds[slot];
+                bool shown = slot < DisplayedSlotCount;
+                background.style.display = shown ? DisplayStyle.Flex : DisplayStyle.None;
+                if (shown)
+                {
+                    Place(background, slot);
+                }
+            }
+        }
+
+        private void PlaceItemCells()
         {
             if (CurrentLayout == null)
             {
                 return;
             }
 
-            for (int index = 0; index < _cells.Count; index++)
+            foreach (KeyValuePair<int, VisualElement> item in _itemCells)
             {
-                GridCellPosition position = CurrentLayout.PositionOf(SlotOf(index));
-                VisualElement cell = _cells[index];
-                cell.style.left = position.Left;
-                cell.style.top = position.Top;
-                cell.style.width = CurrentLayout.CellSize;
-                cell.style.height = CurrentLayout.CellSize;
+                Place(item.Value, ShownSlotOf(item.Key));
             }
+        }
+
+        // During a move preview the dragged thing shows in the target slot and whatever was there shows in its slot.
+        private int ShownSlotOf(int slot)
+        {
+            if (_previewSourceSlot < 0)
+            {
+                return slot;
+            }
+
+            if (slot == _previewSourceSlot)
+            {
+                return _previewTargetSlot;
+            }
+
+            return slot == _previewTargetSlot ? _previewSourceSlot : slot;
+        }
+
+        private void Place(VisualElement element, int slot)
+        {
+            GridCellPosition position = CurrentLayout.PositionOf(slot);
+            element.style.left = position.Left;
+            element.style.top = position.Top;
+            element.style.width = CurrentLayout.CellSize;
+            element.style.height = CurrentLayout.CellSize;
         }
 
         private void OnWheel(WheelEvent wheel)

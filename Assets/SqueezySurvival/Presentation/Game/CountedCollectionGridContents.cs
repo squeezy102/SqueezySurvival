@@ -26,23 +26,26 @@ namespace SqueezySurvival.Presentation.Game
         }
 
         /// <inheritdoc />
-        public int Count => _collection.Entries.Count;
+        public int SlotCount => _collection.SlotCount;
 
         /// <inheritdoc />
-        public string DefinitionIdAt(int index) => _collection.Entries[index].Definition.Id;
+        public bool IsOccupied(int slot) => _collection.EntryAtSlot(slot) != null;
 
         /// <inheritdoc />
-        public string CountBadgeAt(int index) => CountedThingTextFormatter.FormatCountBadge(_collection.Entries[index].Count);
+        public string DefinitionIdAt(int slot) => Entry(slot).Definition.Id;
 
         /// <inheritdoc />
-        public ThingTooltipContent TooltipAt(int index) => ThingTooltipContentFactory.Create(_collection.Entries[index]);
+        public string CountBadgeAt(int slot) => CountedThingTextFormatter.FormatCountBadge(Entry(slot).Count);
 
         /// <inheritdoc />
-        public GridDropOutcome ResolveDrop(int sourceIndex, GridDropTarget target) =>
-            _dropOutcomeResolver.Resolve(_collection.Entries, sourceIndex, target);
+        public ThingTooltipContent TooltipAt(int slot) => ThingTooltipContentFactory.Create(Entry(slot));
 
         /// <inheritdoc />
-        public void ApplyDrop(int sourceIndex, GridDropOutcome outcome)
+        public GridDropOutcome ResolveDrop(int sourceSlot, GridDropTarget target, GridSlotNeighborhood neighborhood) =>
+            _dropOutcomeResolver.Resolve(_collection, neighborhood, sourceSlot, target);
+
+        /// <inheritdoc />
+        public void ApplyDrop(int sourceSlot, GridDropOutcome outcome)
         {
             if (outcome == null)
             {
@@ -52,7 +55,8 @@ namespace SqueezySurvival.Presentation.Game
             switch (outcome.Kind)
             {
                 case GridDropOutcomeKind.Move:
-                    _collection.Move(sourceIndex, outcome.InsertionIndex);
+                case GridDropOutcomeKind.Swap:
+                    _collection.MoveToSlot(sourceSlot, outcome.TargetSlot);
                     break;
                 case GridDropOutcomeKind.Combine:
                     // No combination rules return a match until crafting exists (Docs/Design/UI/DragAndDrop.md, Combining).
@@ -61,5 +65,8 @@ namespace SqueezySurvival.Presentation.Game
                     break;
             }
         }
+
+        private CountedEntry<TDefinition> Entry(int slot) =>
+            _collection.EntryAtSlot(slot) ?? throw new ArgumentOutOfRangeException(nameof(slot), slot, "Nothing is in that slot.");
     }
 }

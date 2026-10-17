@@ -56,6 +56,38 @@ namespace SqueezySurvival.Core.Options
                 : new GridPanelLayout(options.ScrollDirection, fixedLines, cellSize, scrollingExtent, cellAreaExtent, needsScrolling);
         }
 
+        /// <summary>
+        /// How many slots a grid shows: enough to fill the visible area, and always at least one empty slot after the
+        /// last occupied one, rounded up to a whole line, so there is always somewhere to drop things.
+        /// </summary>
+        public static int DisplayedSlotCount(
+            GridPanelLayoutOptions options,
+            float areaWidth,
+            float areaHeight,
+            float scrollbarThickness,
+            int occupiedSlotCount)
+        {
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
+
+            if (occupiedSlotCount < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(occupiedSlotCount), occupiedSlotCount, "Cannot be negative.");
+            }
+
+            bool vertical = options.ScrollDirection == GridPanelScrollDirection.Vertical;
+            int fixedLines = options.FixedLineCount;
+            float fixedExtent = NonNegativeOrZero(vertical ? areaWidth : areaHeight);
+            float scrollingRoom = NonNegativeOrZero(vertical ? areaHeight : areaWidth);
+            float cellSize = CellSize(Math.Max(0f, fixedExtent - scrollbarThickness - CellGap), fixedLines);
+
+            int visibleLines = cellSize <= 0f ? 1 : Math.Max(1, (int)Math.Floor((scrollingRoom + CellGap) / (cellSize + CellGap)));
+            int linesForContents = (occupiedSlotCount + 1 + fixedLines - 1) / fixedLines;
+            return Math.Max(visibleLines, linesForContents) * fixedLines;
+        }
+
         private static float CellSize(float extent, int lines) => Math.Max(0f, (extent - (CellGap * (lines - 1))) / lines);
 
         private static float ScrollingExtent(int lines, float cellSize) => lines == 0 ? 0f : (lines * cellSize) + ((lines - 1) * CellGap);

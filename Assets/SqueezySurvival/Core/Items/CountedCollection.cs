@@ -4,27 +4,41 @@ using System.Collections.Generic;
 namespace SqueezySurvival.Core.Items
 {
     /// <summary>
-    /// A collection of things grouped by kind, with how many of each there are, in the order each kind first arrived.
-    /// Used for a zone's ground pool and its features.
+    /// Things grouped by kind, each kind with its count and a fixed grid slot. Used for a zone's ground pool and its
+    /// features. A kind keeps its slot until the player moves it; slots may be left empty on purpose, and a new kind
+    /// takes the first empty slot (Docs/Design/UI/DragAndDrop.md, Slots).
     /// </summary>
     public sealed class CountedCollection<TDefinition> where TDefinition : class, ICountableThingDefinition
     {
         private readonly List<CountedEntry<TDefinition>> _entries = new List<CountedEntry<TDefinition>>();
 
-        /// <summary>Raised after the contents change.</summary>
+        /// <summary>Raised after the contents or their slots change.</summary>
         public event Action Changed;
 
-        /// <summary>One entry per kind, in the order each kind first arrived.</summary>
+        /// <summary>One entry per kind, in slot order.</summary>
         public IReadOnlyList<CountedEntry<TDefinition>> Entries => _entries;
+
+        /// <summary>One more than the highest occupied slot: the slots that hold or lie between things. 0 when empty.</summary>
+        public int SlotCount => _entries.Count == 0 ? 0 : _entries[_entries.Count - 1].Slot + 1;
 
         /// <summary>How many of the given kind there are.</summary>
         public int CountOf(TDefinition definition)
         {
-            int index = IndexOf(definition);
+            int index = IndexOfKind(definition);
             return index < 0 ? 0 : _entries[index].Count;
         }
 
-        /// <summary>Adds things, one at a time or several of the same kind, and raises <see cref="Changed"/> once.</summary>
+        /// <summary>The entry in a slot, or null when the slot is empty.</summary>
+        public CountedEntry<TDefinition> EntryAtSlot(int slot)
+        {
+            int index = IndexOfSlot(slot);
+            return index < 0 ? null : _entries[index];
+        }
+
+        /// <summary>
+        /// Adds things one at a time: a kind already present adds to its count in place; a new kind takes the first
+        /// empty slot. Raises <see cref="Changed"/> once.
+        /// </summary>
         public void AddRange(IEnumerable<TDefinition> definitions)
         {
             if (definitions == null)
@@ -46,31 +60,37 @@ namespace SqueezySurvival.Core.Items
         }
 
         /// <summary>
-        /// Moves the entry at <paramref name="fromIndex"/> so it sits just before the entry now at
-        /// <paramref name="insertionIndex"/>; an insertion index equal to the entry count moves it to the end
-        /// (Docs/Design/UI/DragAndDrop.md). Raises <see cref="Changed"/> only if the order changes.
+        /// Moves the thing in <paramref name="fromSlot"/> to <paramref name="toSlot"/>. If something is already there,
+        /// the two swap slots; nothing else moves.
         /// </summary>
-        public void Move(int fromIndex, int insertionIndex)
+        public void MoveToSlot(int fromSlot, int toSlot)
         {
-            if (fromIndex < 0 || fromIndex >= _entries.Count)
+            int fromIndex = IndexOfSlot(fromSlot);
+            if (fromIndex < 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(fromIndex), fromIndex, "No entry at that index.");
+                throw new ArgumentOutOfRangeException(nameof(fromSlot), fromSlot, "Nothing is in that slot.");
             }
 
-            if (insertionIndex < 0 || insertionIndex > _entries.Count)
+            if (toSlot < 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(insertionIndex), insertionIndex, "Must be from 0 to the entry count.");
+                throw new ArgumentOutOfRangeException(nameof(toSlot), toSlot, "Cannot be negative.");
             }
 
-            int toIndex = OrderedListMove.ResultingIndex(fromIndex, insertionIndex);
-            if (toIndex == fromIndex)
+            if (toSlot == fromSlot)
             {
                 return;
             }
 
             CountedEntry<TDefinition> moving = _entries[fromIndex];
-            _entries.RemoveAt(fromIndex);
-            _entries.Insert(toIndex, moving);
+            CountedEntry<TDefinition> displaced = EntryAtSlot(toSlot);
+            _entries.Remove(moving);
+            if (displaced != null)
+            {
+                _entries.Remove(displaced);
+                Insert(new CountedEntry<TDefinition>(displaced.Definition, displaced.Count, fromSlot));
+            }
+
+            Insert(new CountedEntry<TDefinition>(moving.Definition, moving.Count, toSlot));
             Changed?.Invoke();
         }
 
@@ -81,22 +101,61 @@ namespace SqueezySurvival.Core.Items
                 throw new ArgumentException("Cannot add a missing definition.", nameof(definition));
             }
 
-            int index = IndexOf(definition);
+            int index = IndexOfKind(definition);
             if (index < 0)
             {
-                _entries.Add(new CountedEntry<TDefinition>(definition, 1));
+                Insert(new CountedEntry<TDefinition>(definition, 1, FirstEmptySlot()));
             }
             else
             {
-                _entries[index] = new CountedEntry<TDefinition>(definition, _entries[index].Count + 1);
+                CountedEntry<TDefinition> entry = _entries[index];
+                _entries[index] = new CountedEntry<TDefinition>(definition, entry.Count + 1, entry.Slot);
             }
         }
 
-        private int IndexOf(TDefinition definition)
+        // Entries are kept sorted by slot, so the first slot that doesn't match its position is the first gap.
+        private int FirstEmptySlot()
+        {
+            for (int index = 0; index < _entries.Count; index++)
+            {
+                if (_entries[index].Slot != index)
+                {
+                    return index;
+                }
+            }
+
+            return _entries.Count;
+        }
+
+        private void Insert(CountedEntry<TDefinition> entry)
+        {
+            int index = 0;
+            while (index < _entries.Count && _entries[index].Slot < entry.Slot)
+            {
+                index++;
+            }
+
+            _entries.Insert(index, entry);
+        }
+
+        private int IndexOfKind(TDefinition definition)
         {
             for (int index = 0; index < _entries.Count; index++)
             {
                 if (_entries[index].Definition.Id == definition.Id)
+                {
+                    return index;
+                }
+            }
+
+            return -1;
+        }
+
+        private int IndexOfSlot(int slot)
+        {
+            for (int index = 0; index < _entries.Count; index++)
+            {
+                if (_entries[index].Slot == slot)
                 {
                     return index;
                 }

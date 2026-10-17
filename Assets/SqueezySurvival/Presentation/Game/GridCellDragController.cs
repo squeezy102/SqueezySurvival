@@ -1,7 +1,6 @@
 using System;
 using SqueezySurvival.Core.DragAndDrop;
 using SqueezySurvival.Core.Items;
-using SqueezySurvival.Core.Options;
 using SqueezySurvival.Presentation.Icons;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -10,9 +9,9 @@ namespace SqueezySurvival.Presentation.Game
 {
     /// <summary>
     /// Drags cells of one grid panel. The dragged icon follows the pointer anywhere. Over the same grid, Core says what
-    /// releasing would do, and the grid shows it: for a move, the cells slide aside and the dragged cell's slot appears
-    /// where it will land. Releasing carries out what is shown; releasing anywhere else returns the thing to its place
-    /// (Docs/Design/UI/DragAndDrop.md).
+    /// releasing would do and the grid shows it: for a move or swap, only the dragged thing and the one it trades
+    /// places with change slots. Releasing carries out what is shown; releasing anywhere else returns the thing to its
+    /// place (Docs/Design/UI/DragAndDrop.md).
     /// </summary>
     public sealed class GridCellDragController
     {
@@ -28,14 +27,13 @@ namespace SqueezySurvival.Presentation.Game
         private readonly VisualElement _dragLayer;
 
         private VisualElement _pressedCell;
-        private int _pressedIndex = -1;
+        private int _pressedSlot = -1;
         private int _pointerId = -1;
         private Vector2 _pressPosition;
         private VisualElement _draggedIcon;
         private float _draggedIconSize;
         private VisualElement _highlightedCell;
         private GridDropOutcome _shownOutcome = GridDropOutcome.ReturnToPlace;
-        private GridDropOutcome _outcomeInGrid = GridDropOutcome.ReturnToPlace;
 
         /// <summary>Creates the controller for one grid.</summary>
         public GridCellDragController(GridPanelView view, IGridPanelContents contents, GridTooltipView tooltip, VisualElement dragLayer)
@@ -49,10 +47,10 @@ namespace SqueezySurvival.Presentation.Game
         /// <summary>Whether a drag is in progress.</summary>
         public bool IsDragging => _draggedIcon != null;
 
-        /// <summary>Makes a cell draggable.</summary>
-        public void RegisterCell(VisualElement cell, int index)
+        /// <summary>Makes the item cell in a slot draggable.</summary>
+        public void RegisterCell(VisualElement cell, int slot)
         {
-            cell.RegisterCallback<PointerDownEvent>(down => OnPointerDown(cell, index, down));
+            cell.RegisterCallback<PointerDownEvent>(down => OnPointerDown(cell, slot, down));
             cell.RegisterCallback<PointerMoveEvent>(OnPointerMove);
             cell.RegisterCallback<PointerUpEvent>(OnPointerUp);
             cell.RegisterCallback<PointerCaptureOutEvent>(_ => Cancel());
@@ -64,7 +62,7 @@ namespace SqueezySurvival.Presentation.Game
             EndDrag();
         }
 
-        private void OnPointerDown(VisualElement cell, int index, PointerDownEvent down)
+        private void OnPointerDown(VisualElement cell, int slot, PointerDownEvent down)
         {
             if (down.button != 0 || _pressedCell != null)
             {
@@ -72,7 +70,7 @@ namespace SqueezySurvival.Presentation.Game
             }
 
             _pressedCell = cell;
-            _pressedIndex = index;
+            _pressedSlot = slot;
             _pointerId = down.pointerId;
             _pressPosition = down.position;
 
@@ -100,7 +98,12 @@ namespace SqueezySurvival.Presentation.Game
             }
 
             MoveDraggedIcon(position);
-            UpdateOutcome(position);
+            GridDropOutcome outcome = _contents.ResolveDrop(_pressedSlot, TargetAt(position), _view.Neighborhood);
+            if (!SameOutcome(outcome, _shownOutcome))
+            {
+                Show(outcome);
+            }
+
             move.StopPropagation();
         }
 
@@ -113,11 +116,11 @@ namespace SqueezySurvival.Presentation.Game
 
             // Releasing carries out exactly what was being shown.
             GridDropOutcome outcome = IsDragging ? _shownOutcome : GridDropOutcome.ReturnToPlace;
-            int sourceIndex = _pressedIndex;
+            int sourceSlot = _pressedSlot;
             EndDrag();
             if (outcome.ChangesSomething)
             {
-                _contents.ApplyDrop(sourceIndex, outcome);
+                _contents.ApplyDrop(sourceSlot, outcome);
             }
 
             up.StopPropagation();
@@ -127,10 +130,9 @@ namespace SqueezySurvival.Presentation.Game
         {
             _tooltip.Hide();
             _pressedCell.AddToClassList(DraggedSourceClassName);
-            _outcomeInGrid = _contents.ResolveDrop(_pressedIndex, GridDropTarget.Cell(_pressedIndex, CellDropZone.Center));
 
             _draggedIconSize = Math.Max(16f, _view.CurrentLayout.CellSize * DraggedIconScale);
-            _draggedIcon = new PlaceholderIconElement(_contents.DefinitionIdAt(_pressedIndex)) { pickingMode = PickingMode.Ignore };
+            _draggedIcon = new PlaceholderIconElement(_contents.DefinitionIdAt(_pressedSlot)) { pickingMode = PickingMode.Ignore };
             _draggedIcon.AddToClassList("grid-dragged-icon");
             _draggedIcon.style.position = Position.Absolute;
             _draggedIcon.style.width = _draggedIconSize;
@@ -145,38 +147,25 @@ namespace SqueezySurvival.Presentation.Game
             _draggedIcon.style.top = local.y - (_draggedIconSize / 2f);
         }
 
-        private void UpdateOutcome(Vector2 pointerWorldPosition)
+        // Hit-testing uses the real slots, not the previewed ones, so the preview never moves the target out from
+        // under the pointer. Only the dragged cell's own grid accepts drops for now.
+        private GridDropTarget TargetAt(Vector2 pointerWorldPosition)
         {
-            GridDropOutcome outcome;
             if (!_view.Grid.contentViewport.worldBound.Contains(pointerWorldPosition))
             {
-                // Only the dragged cell's own grid accepts drops for now; anywhere else returns it.
-                outcome = GridDropOutcome.ReturnToPlace;
-            }
-            else
-            {
-                Vector2 contentPoint = _view.Grid.contentContainer.WorldToLocal(pointerWorldPosition);
-                int slot = _view.CurrentLayout.CellIndexAt(contentPoint.x, contentPoint.y, _contents.Count, out float x, out float y);
-                int index = slot < 0 ? -1 : _view.IndexAtSlot(slot);
-                if (index == _pressedIndex)
-                {
-                    // Over the dragged cell's own slot: what is already shown stands.
-                    outcome = _outcomeInGrid;
-                }
-                else
-                {
-                    GridDropTarget target = index < 0
-                        ? GridDropTarget.EmptyGridSpace
-                        : GridDropTarget.Cell(index, CellDropZoneClassifier.Classify(x, y));
-                    outcome = _contents.ResolveDrop(_pressedIndex, target);
-                    _outcomeInGrid = outcome;
-                }
+                return GridDropTarget.Nowhere;
             }
 
-            if (!SameOutcome(outcome, _shownOutcome))
+            Vector2 contentPoint = _view.Grid.contentContainer.WorldToLocal(pointerWorldPosition);
+            int slot = _view.CurrentLayout.CellIndexAt(contentPoint.x, contentPoint.y, _view.DisplayedSlotCount, out float x, out float y);
+            if (slot < 0)
             {
-                Show(outcome);
+                return GridDropTarget.Nowhere;
             }
+
+            return _contents.IsOccupied(slot)
+                ? GridDropTarget.OccupiedSlot(slot, CellDropZoneClassifier.Classify(x, y))
+                : GridDropTarget.EmptySlot(slot);
         }
 
         private void Show(GridDropOutcome outcome)
@@ -185,51 +174,35 @@ namespace SqueezySurvival.Presentation.Game
             _highlightedCell?.RemoveFromClassList(CombineTargetClassName);
             _highlightedCell = null;
 
-            switch (outcome.Kind)
+            if (outcome.Kind == GridDropOutcomeKind.Move || outcome.Kind == GridDropOutcomeKind.Swap)
             {
-                case GridDropOutcomeKind.ReturnToPlace:
-                    _view.ClearMovePreview();
-                    _tooltip.Hide();
-                    return;
-                case GridDropOutcomeKind.Move:
-                    _view.ShowMovePreview(_pressedIndex, OrderedListMove.ResultingIndex(_pressedIndex, outcome.InsertionIndex));
-                    break;
-                case GridDropOutcomeKind.NoChange:
-                    _view.ClearMovePreview();
-                    break;
-                case GridDropOutcomeKind.Combine:
-                    _view.ClearMovePreview();
-                    _highlightedCell = _view.CellAt(outcome.TargetCellIndex);
-                    _highlightedCell.AddToClassList(CombineTargetClassName);
-                    break;
-                default:
-                    // Can't combine: nothing moves; the tooltip says why.
-                    _view.ClearMovePreview();
-                    break;
+                _view.ShowMovePreview(_pressedSlot, outcome.TargetSlot);
+            }
+            else
+            {
+                _view.ClearMovePreview();
             }
 
-            // The tooltip sits beside the cell the outcome concerns: the dragged cell's slot for a move, the target
-            // for a combination.
-            VisualElement anchor = outcome.Kind == GridDropOutcomeKind.Combine || outcome.Kind == GridDropOutcomeKind.CannotCombine
-                ? _view.CellAt(outcome.TargetCellIndex)
-                : _pressedCell;
-            _tooltip.Show(new ThingTooltipContent(outcome.Title, outcome.Description, Array.Empty<string>()), SlotWorldBound(anchor));
-        }
+            if (outcome.Kind == GridDropOutcomeKind.ReturnToPlace)
+            {
+                _tooltip.Hide();
+                return;
+            }
 
-        // Cells slide to their previewed slots with a short transition, so the tooltip is placed against the slot a
-        // cell is going to, not where it is mid-slide.
-        private Rect SlotWorldBound(VisualElement cell)
-        {
-            GridCellPosition position = _view.CurrentLayout.PositionOf(_view.SlotOf(_view.IndexOfCell(cell)));
-            float size = _view.CurrentLayout.CellSize;
-            Vector2 topLeft = _view.Grid.contentContainer.LocalToWorld(new Vector2(position.Left, position.Top));
-            return new Rect(topLeft, new Vector2(size, size));
+            if (outcome.Kind == GridDropOutcomeKind.Combine)
+            {
+                _highlightedCell = _view.ItemCellAt(outcome.AnchorSlot);
+                _highlightedCell?.AddToClassList(CombineTargetClassName);
+            }
+
+            Rect anchor = outcome.AnchorSlot >= 0 ? _view.SlotWorldBound(outcome.AnchorSlot) : _draggedIcon.worldBound;
+            _tooltip.Show(new ThingTooltipContent(outcome.Title, outcome.Description, Array.Empty<string>()), anchor);
         }
 
         private static bool SameOutcome(GridDropOutcome first, GridDropOutcome second) =>
             first.Kind == second.Kind
-            && first.InsertionIndex == second.InsertionIndex
-            && first.TargetCellIndex == second.TargetCellIndex
+            && first.TargetSlot == second.TargetSlot
+            && first.AnchorSlot == second.AnchorSlot
             && first.Description == second.Description;
 
         private void EndDrag()
@@ -245,7 +218,6 @@ namespace SqueezySurvival.Presentation.Game
             _draggedIcon?.RemoveFromHierarchy();
             _draggedIcon = null;
             _shownOutcome = GridDropOutcome.ReturnToPlace;
-            _outcomeInGrid = GridDropOutcome.ReturnToPlace;
 
             if (_pressedCell != null)
             {
@@ -257,7 +229,7 @@ namespace SqueezySurvival.Presentation.Game
             }
 
             _pressedCell = null;
-            _pressedIndex = -1;
+            _pressedSlot = -1;
             _pointerId = -1;
         }
     }

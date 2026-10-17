@@ -15,9 +15,18 @@ How the player moves things around in grid panels: to rearrange them, and to com
 - Escape cancels the drag. Letting go where nothing would happen also cancels it: the thing returns to where it came from.
 - The mouse wheel still scrolls a grid during a drag.
 
+## Slots
+
+A grid is a set of fixed slots, like a classic inventory ([#47](https://github.com/squeezy102/SqueezySurvival/issues/47)). Slots are numbered in the grid's fill order (left to right then down, or top to bottom then right; [Grid Panels: scroll direction](GridPanels.md#scroll-direction)).
+
+- Each kind of thing stays in its slot until the player moves it. **A move only ever involves the dragged thing and at most one other**, which trades places with it; nothing else shifts.
+- Slots can be left empty on purpose, to lay things out. Every slot is drawn, empty ones as faint squares, and there is always at least one empty slot after the last thing.
+- A newly found kind takes the **first empty slot**, so gaps fill from the start without moving anything the player placed.
+- Changing a grid's columns or rows keeps every thing in its numbered slot; the grid simply wraps differently.
+
 ## Drop zones
 
-Each cell has five hidden zones. The player never sees their borders; they see what dropping there would do.
+Each occupied cell has five hidden zones. The player never sees their borders; they see what dropping there would do.
 
 ```
 +-------------------+
@@ -34,26 +43,24 @@ Each cell has five hidden zones. The player never sees their borders; they see w
 
 | Drop on | Outcome |
 |---|---|
-| Left or top edge of a cell | Move the dragged thing to just **before** that cell. |
-| Right or bottom edge of a cell | Move it to just **after** that cell. |
-| Center of a cell | **Combine** the two, if they can be combined (see below). |
-| Empty space in the same grid, after the last cell | Move it to the **end**. |
+| An empty slot | Move the dragged thing into it. |
+| An edge of a cell | The slot on that side of the cell (left, right, above or below): move into it if it is empty, or **swap** with the thing in it. |
+| An edge whose slot is the dragged thing's own | Nothing changes. |
+| An edge at the grid's side, with no slot beyond it | Nothing changes: "There is no space on that side." |
+| The center of a cell | **Combine** the two, if they can be combined (see below). |
 | Anywhere else, including another panel | Nothing; it returns. |
-
-A grid's contents are one ordered list, filled left to right then down (vertical) or top to bottom then right (horizontal) ([Grid Panels: scroll direction](GridPanels.md#scroll-direction)). "Before" and "after" are places in that list, which is why all four edges mean one of the two. A move that would leave the thing where it already is shows "No change". Hovering the dragged thing's own (previewed) slot keeps the outcome already shown.
-
-The order is part of the game's state, not just the screen: it stays as the player left it, new finds of a kind already there add to its cell, and new kinds join at the end.
 
 ## Preview
 
-While over a drop zone, the game shows the result before it happens ([#44](https://github.com/squeezy102/SqueezySurvival/issues/44)):
+While over a drop zone, the game shows the result before it happens:
 
 | Outcome | The grid | Tooltip |
 |---|---|---|
-| Move | The other cells slide aside and the dragged thing's slot, dimmed, appears where it will land. | Beside that slot: "Move. Place the stick before the stone." or "...at the end." |
-| No change | Everything stays in place. | "No change. It stays where it is." |
+| Move | The dragged thing appears, dimmed, in the slot it will move to; its old slot shows empty. | "Move. Place the stick right of the stone." or "Place the stick here." |
+| Swap | The two things appear in each other's slots. | "Swap. The stick and the shell trade places." |
+| No change | Everything stays in place. | "No change." and why |
 | Combine | The target cell is outlined. | Beside the target: what the combination makes, and what it costs. |
-| Cannot combine | Everything stays in place. | Beside the target: "Can't combine. The stick and the stone can't be combined." |
+| Cannot combine | Everything stays in place. | "Can't combine. The stick and the stone can't be combined." |
 
 ## Combining
 
@@ -66,6 +73,6 @@ Every drag needs an alternative that needs neither a drag nor a held button ([Co
 ## Implementation notes
 
 - Drop zones, outcomes and their wording are decided in Core (`CellDropZoneClassifier`, `GridDropOutcomeResolver`) and unit tested; the presentation layer reports where the pointer is and carries out the outcome Core returns.
-- The move preview's slot arithmetic is `OrderedListMove.SlotAfterMove`. Hit-testing uses the previewed slots, so when the cells slide aside the pointer lands on the dragged thing's own slot and the preview holds steady instead of flickering.
-- Reordering is `CountedCollection.Move`, so the order lives in the zone's state.
+- Hit-testing uses the real slots, not the previewed ones, so a preview never moves the target out from under the pointer.
+- Slots live in Core: `CountedCollection.MoveToSlot` moves or swaps, and `GridSlotNeighborhood` finds the slot beside another.
 - Which things combine is asked of an `IThingCombinationRules`; the wireframe's rules combine nothing.

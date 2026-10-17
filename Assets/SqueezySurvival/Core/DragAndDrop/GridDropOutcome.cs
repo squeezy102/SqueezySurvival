@@ -5,34 +5,38 @@ namespace SqueezySurvival.Core.DragAndDrop
     {
         /// <summary>Releasing does nothing; there is nothing to preview.</summary>
         public static readonly GridDropOutcome ReturnToPlace =
-            new GridDropOutcome(GridDropOutcomeKind.ReturnToPlace, -1, -1, InsertionMarkerSide.None, string.Empty);
+            new GridDropOutcome(GridDropOutcomeKind.ReturnToPlace, -1, -1, string.Empty);
 
         /// <summary>Creates an outcome.</summary>
-        public GridDropOutcome(GridDropOutcomeKind kind, int insertionIndex, int targetCellIndex, InsertionMarkerSide markerSide, string description)
+        /// <param name="kind">What happens on release.</param>
+        /// <param name="targetSlot">For a move or swap, the slot the dragged thing lands in; otherwise -1.</param>
+        /// <param name="anchorSlot">The slot the preview tooltip is shown beside, or -1 to show it at the pointer.</param>
+        /// <param name="description">The preview text.</param>
+        public GridDropOutcome(GridDropOutcomeKind kind, int targetSlot, int anchorSlot, string description)
         {
             Kind = kind;
-            InsertionIndex = insertionIndex;
-            TargetCellIndex = targetCellIndex;
-            MarkerSide = markerSide;
+            TargetSlot = targetSlot;
+            AnchorSlot = anchorSlot;
             Description = description ?? string.Empty;
         }
 
         /// <summary>What happens on release.</summary>
         public GridDropOutcomeKind Kind { get; }
 
-        /// <summary>For a move, the insertion index to pass to <c>CountedCollection.Move</c>.</summary>
-        public int InsertionIndex { get; }
+        /// <summary>For a move or swap, the slot the dragged thing lands in. For a swap, the thing there takes the dragged thing's slot.</summary>
+        public int TargetSlot { get; }
 
-        /// <summary>The cell the preview is shown against, or -1.</summary>
-        public int TargetCellIndex { get; }
-
-        /// <summary>For a move onto a cell, which side of it the thing lands on.</summary>
-        public InsertionMarkerSide MarkerSide { get; }
+        /// <summary>The slot the preview tooltip is shown beside, or -1.</summary>
+        public int AnchorSlot { get; }
 
         /// <summary>The preview text: what will happen on release.</summary>
         public string Description { get; }
 
-        /// <summary>The preview's heading: "Move", "Combine", "No change" or "Can't combine".</summary>
+        /// <summary>Whether releasing changes anything.</summary>
+        public bool ChangesSomething =>
+            Kind == GridDropOutcomeKind.Move || Kind == GridDropOutcomeKind.Swap || Kind == GridDropOutcomeKind.Combine;
+
+        /// <summary>The preview's heading.</summary>
         public string Title
         {
             get
@@ -41,6 +45,8 @@ namespace SqueezySurvival.Core.DragAndDrop
                 {
                     case GridDropOutcomeKind.Move:
                         return "Move";
+                    case GridDropOutcomeKind.Swap:
+                        return "Swap";
                     case GridDropOutcomeKind.Combine:
                         return "Combine";
                     case GridDropOutcomeKind.CannotCombine:
@@ -52,8 +58,5 @@ namespace SqueezySurvival.Core.DragAndDrop
                 }
             }
         }
-
-        /// <summary>Whether releasing changes anything.</summary>
-        public bool ChangesSomething => Kind == GridDropOutcomeKind.Move || Kind == GridDropOutcomeKind.Combine;
     }
 }
