@@ -73,3 +73,4 @@ Every design question ever raised, in ID order, with its status and resolution. 
 | OQ-062 | Deferred | Combat | Tracking: how do the animal's injury and the survivor's Tracking skill combine into the chance of finding it? | Owner: Systems/Combat |
 | OQ-063 | Deferred | Weather | Weather balancing: the strength of each weather effect (for example how fast sunburn builds), and the exact per-season transition weights that produce the seasonal tendencies. | Owner: Systems/Weather |
 | OQ-064 | **Open** | UI | Day summary: when exactly does it appear (at midnight, or when the survivor next wakes), and what does it show? Proposal in Design/UI/DaySummary. | Owner: UI/DaySummary |
+| OQ-065 | Deferred | Combat | Getting away for good: the chance an escaping animal that survives is gone for good, and how much it grows with each escape. | Owner: Systems/Combat |

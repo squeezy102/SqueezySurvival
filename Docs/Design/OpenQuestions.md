@@ -31,3 +31,4 @@ Answered together in a dedicated mathematical balancing pass.
 | OQ-061 | Weather | Wildfire tuning: the chance an unattended fire starts one, how long the zone burns, how much is turned to charcoal, destroyed or damaged and how fast, the exact escape window, and how fast harm escalates for a survivor who stays past it. | Systems/Weather |
 | OQ-062 | Combat | Tracking: how do the animal's injury and the survivor's Tracking skill combine into the chance of finding it? | Systems/Combat |
 | OQ-063 | Weather | Weather balancing: the strength of each weather effect (for example how fast sunburn builds), and the exact per-season transition weights that produce the seasonal tendencies. | Systems/Weather |
+| OQ-065 | Combat | Getting away for good: the chance an escaping animal that survives is gone for good, and how much it grows with each escape. | Systems/Combat |

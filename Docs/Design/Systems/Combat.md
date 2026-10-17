@@ -140,4 +140,6 @@ When an animal escapes, the player can try to **track** it.
 | Below 50% | 50% |
 | Below 25% | 75% |
 
-How injury and Tracking skill combine into the chance of finding the animal: [OQ-062](../OpenQuestions.md).
+- **An animal can't be chased forever.** Each time an animal escapes and survives, it has a chance to get away for good, and that chance grows with every escape. An animal that gets away is gone from the game, and the player is told: "You see no sign of the animal. It seems to have gotten away."
+
+How injury and Tracking skill combine into the chance of finding the animal: [OQ-062](../OpenQuestions.md). How likely an escaping animal is to get away for good, and how fast that grows: [OQ-065](../OpenQuestions.md).
