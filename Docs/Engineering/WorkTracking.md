@@ -39,6 +39,8 @@ Discussions are never a source of truth: nothing is decided until it is in the d
 | General | Anything else about the project | Anyone |
 | Show and tell | Experiments, mods, art and builds | Anyone |
 
+The [Code of Conduct](../../CODE_OF_CONDUCT.md) applies in every category. A pinned welcome post in Announcements explains the categories and links here.
+
 ## Issue types
 
 New issues use a form ([`.github/ISSUE_TEMPLATE/`](../../.github/ISSUE_TEMPLATE/)); blank issues are disabled.
