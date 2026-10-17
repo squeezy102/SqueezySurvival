@@ -138,7 +138,9 @@ Hits lower current Health and can cause injuries ([Injuries and Health](Injuries
 
 ### Injuries in battle
 
-An injury suffered in battle is **announced the moment it happens, but takes effect only after the battle ends**. Its effects, bleeding, infection and the rest of its course begin when the battle is over; until then the survivor fights as well as before.
+An injury suffered in battle is **announced the moment it happens, but takes effect only after the battle ends** (resolves OQ-066). Its effects, its cut to the injury ceiling, bleeding, infection and the rest of its course all begin when the battle is over; until then the survivor fights as well as before, and only current Health falls.
+
+So a battle can be won and still be fatal: the survivor sees "Battle complete!", returns to the zone, and then the injuries take hold. If they bring the injury ceiling to zero, the survivor dies there ([Injuries and Health](Injuries.md#health)). The injuries announced during the fight are the warning.
 
 The point is informed choice, not surprise: the player sees every injury as it lands, so they can flee or defend to avoid more, or press on knowing the cost, rather than finishing a fight that seemed to cost only Health and then meeting a wall of injuries.
 
@@ -151,7 +153,7 @@ Example of a hit that injures, each line in its text box:
 | Center | "The Survivor has been injured: Laceration, left arm" |
 | Center | "Mountain Lion dealt 6 SHP damage to The Survivor." |
 
-What "takes effect after the battle" covers exactly: [OQ-066](../OpenQuestions.md).
+Whether injuries from before the battle still affect it, and what game text calls the two layers of health: [OQ-067](../OpenQuestions.md).
 
 ## Turn resolution
 

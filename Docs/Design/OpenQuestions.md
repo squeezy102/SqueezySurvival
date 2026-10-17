@@ -16,7 +16,7 @@ Design questions still waiting for an answer. The full history of every question
 | OQ-033 | Controls | Should every drag have a click alternative (click an item to pick it up, click a destination to place it)? The Intermediate tier of the Game Accessibility Guidelines asks that "multiple simultaneous actions (eg. click/drag or swipe) are not required". Proposal: yes. | UI/Controls |
 | OQ-058 | Runs | What perks, boosts and challenge unlocks can survival and challenge points buy, and at what prices? Deferred to a dedicated session. | Systems/Runs |
 | OQ-064 | UI | Day summary: when exactly does it appear (at midnight, or when the survivor next wakes), and what does it show? Proposal in Design/UI/DaySummary. | UI/DaySummary |
-| OQ-066 | Combat | Injuries in battle: (1) does an injury suffered in battle lower the injury ceiling at once, or only after the battle; (2) do injuries the survivor already had before the battle still affect it (for example, a tool-side arm injury lowering damage dealt); (3) does game text call current health "SHP", or "Health" as the HUD does? | Systems/Combat |
+| OQ-067 | Combat | Injuries in battle, continued: (1) do injuries the survivor already had before the battle still affect it (for example, a tool-side arm injury lowering damage dealt); (2) does game text call current health "SHP" (and the injury ceiling "HHP"), or "Health" as the HUD does? | Systems/Combat |
 
 ## Deferred to the balancing pass
 
