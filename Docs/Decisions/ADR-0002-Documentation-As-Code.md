@@ -9,7 +9,7 @@ Documentation (README, design documents, wiki) is a primary deliverable. Systems
 
 ## Decision
 
-All documentation is Markdown in the source repository: `README.md` and `CHANGELOG.md` at the root, everything else under `Docs/`. `Docs/Home.md` is the wiki home page. Documentation changes are committed in the same commit as the code they describe.
+All documentation is Markdown in the source repository: `README.md` and `CHANGELOG.md` at the root, everything else under `Docs/`. `Docs/Home.md` is the documentation home page. Documentation changes are committed in the same commit as the code they describe.
 
 ## Alternatives considered
 

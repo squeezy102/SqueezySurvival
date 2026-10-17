@@ -1,4 +1,4 @@
-# SqueezySurvival Wiki
+# SqueezySurvival Documentation
 
 The single source of truth for the design, engineering and decisions behind SqueezySurvival.
 
@@ -39,13 +39,21 @@ Planned: Crafting, Buildings, Light Sources, Illness.
 - [Screen Layout](Design/UI/ScreenLayout.md) - main screen regions and organization tools.
 - [HUD](Design/UI/HUD.md) - static status area, temperature, weather icons, event log.
 - [Controls](Design/UI/Controls.md) - mouse and modifiers, hotkeys, remapping.
-- [Startup Flow](Design/UI/StartupFlow.md) - splash logos and main menu.
+- [Startup Flow](Design/UI/StartupFlow.md) - splash logos, main menu, New Game screen and starting a run.
 - [Day Summary](Design/UI/DaySummary.md) - the screen that marks the end of each day (concept).
 - [Launcher](Design/Launcher.md) - launcher layout, behavior and states.
 
-## Engineering
+## Project
 
+Files at the repository root:
+
+- [README](../README.md) - what the game is and how to build it.
+- [CONTRIBUTING](../CONTRIBUTING.md) - how ideas, issues and changes are made.
+- [Code of Conduct](../CODE_OF_CONDUCT.md) - rules for Discussions, issues and pull requests.
 - [AGENTS.md](../AGENTS.md) - start here for AI assistants and LLM-assisted contributors.
+- [CHANGELOG](../CHANGELOG.md) - notable changes, release by release.
+
+## Engineering
 
 - [Coding Standards](Engineering/CodingStandards.md) - testability, naming, architecture, warnings policy.
 - [Project Setup](Engineering/ProjectSetup.md) - editor version, packages, folder layout.
