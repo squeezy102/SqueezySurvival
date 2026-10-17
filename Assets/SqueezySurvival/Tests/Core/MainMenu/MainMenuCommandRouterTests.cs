@@ -26,9 +26,9 @@ namespace SqueezySurvival.Core.Tests.MainMenu
         }
 
         [Test]
-        public void Route_Options_ShowsNotBuiltNotice()
+        public void Route_Options_ShowsOptionsScreen()
         {
-            Assert.That(CreateRouter(false, false).Route(MainMenuOption.Options), Is.EqualTo(MainMenuCommandOutcome.ShowNotBuiltNotice));
+            Assert.That(CreateRouter(false, false).Route(MainMenuOption.Options), Is.EqualTo(MainMenuCommandOutcome.ShowOptionsScreen));
         }
 
         [TestCase(MainMenuOption.Continue)]

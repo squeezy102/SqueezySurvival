@@ -1,5 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements">
     <ui:Template name="NewGameScreen" src="NewGameScreen.uxml" />
+    <ui:Template name="OptionsScreen" src="../Options/OptionsScreen.uxml" />
     <Style src="MainMenu.uss" />
     <ui:VisualElement name="main-menu-root" class="main-menu-root">
         <ui:Label name="game-title" text="SqueezySurvival" class="game-title" />
@@ -11,6 +12,7 @@
             <ui:Button name="quit-button" class="menu-button" />
         </ui:VisualElement>
         <ui:Instance template="NewGameScreen" name="new-game-screen" />
+        <ui:Instance template="OptionsScreen" name="options-screen" />
         <ui:Label name="version-label" class="version-label" />
         <ui:VisualElement name="start-confirmation" class="notice-overlay">
             <ui:VisualElement class="notice-panel confirmation-panel">

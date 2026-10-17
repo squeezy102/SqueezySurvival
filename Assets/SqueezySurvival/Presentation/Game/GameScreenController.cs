@@ -1,10 +1,10 @@
 using System;
-using System.Collections.Generic;
 using SqueezySurvival.Core.EventLog;
-using SqueezySurvival.Core.Items;
+using SqueezySurvival.Core.Options;
 using SqueezySurvival.Core.Runs;
 using SqueezySurvival.Core.Time;
 using SqueezySurvival.Core.Zones;
+using SqueezySurvival.Presentation.Options;
 using SqueezySurvival.Presentation.Session;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -22,10 +22,12 @@ namespace SqueezySurvival.Presentation.Game
         private RunSession _session;
         private Label _clockLabel;
         private Label _explorationProgressLabel;
-        private Label _zoneFeaturesEmptyLabel;
-        private ScrollView _zoneFeaturesEntries;
-        private Label _groundPoolEmptyLabel;
-        private ScrollView _groundPoolEntries;
+        private GridPanelView _zoneFeaturesView;
+        private GridPanelView _groundPoolView;
+        private GridPanelSettingsWindowController _gridPanelSettingsWindow;
+        private Button _lastChosenSettingsButton;
+        private OptionsScreenController _optionsScreen;
+        private Button _pauseOptionsButton;
         private ScrollView _eventLogEntries;
         private VisualElement _pauseMenu;
         private Button _saveAndExitButton;
@@ -36,9 +38,13 @@ namespace SqueezySurvival.Presentation.Game
         private Button _lastChosenNavButton;
 
         /// <summary>Shows the run and connects the controls. Called once by the scene's composition root.</summary>
-        public void Bind(RunSession session)
+        public void Bind(RunSession session, PlayerOptions playerOptions)
         {
             _session = session ?? throw new ArgumentNullException(nameof(session));
+            if (playerOptions == null)
+            {
+                throw new ArgumentNullException(nameof(playerOptions));
+            }
 
             VisualElement root = GetComponent<UIDocument>().rootVisualElement;
             _clockLabel = root.Q<Label>("hud-clock");
@@ -49,10 +55,28 @@ namespace SqueezySurvival.Presentation.Game
             _eventLogEntries.contentContainer.RegisterCallback<GeometryChangedEvent>(_ => ScrollEventLogToNewest());
             root.Q<Label>("zone-name").text = session.CurrentZone.Name;
             _explorationProgressLabel = root.Q<Label>("zone-exploration-progress");
-            _zoneFeaturesEmptyLabel = root.Q<Label>("zone-features-empty");
-            _zoneFeaturesEntries = root.Q<ScrollView>("zone-features-entries");
-            _groundPoolEmptyLabel = root.Q<Label>("ground-pool-empty");
-            _groundPoolEntries = root.Q<ScrollView>("ground-pool-entries");
+            _zoneFeaturesView = new GridPanelView(
+                GridPanel.ZoneFeatures,
+                playerOptions,
+                root.Q<VisualElement>("zone-features-panel"),
+                root.Q<ScrollView>("zone-features-grid"),
+                root.Q<Label>("zone-features-empty"));
+            _groundPoolView = new GridPanelView(
+                GridPanel.GroundPool,
+                playerOptions,
+                root.Q<VisualElement>("ground-pool-panel"),
+                root.Q<ScrollView>("ground-pool-grid"),
+                root.Q<Label>("ground-pool-empty"));
+
+            _gridPanelSettingsWindow = new GridPanelSettingsWindowController(root.Q<VisualElement>("grid-panel-settings-window"), playerOptions);
+            _gridPanelSettingsWindow.Closed += HideGridPanelSettings;
+            BindPanelSettingsButton(root.Q<Button>("zone-features-settings-button"), GridPanel.ZoneFeatures, "Zone features");
+            BindPanelSettingsButton(root.Q<Button>("ground-pool-settings-button"), GridPanel.GroundPool, "On the ground");
+
+            _optionsScreen = new OptionsScreenController(root.Q<VisualElement>("options-screen"), playerOptions);
+            _optionsScreen.Closed += HideOptionsScreen;
+            _pauseOptionsButton = root.Q<Button>("pause-options-button");
+            _pauseOptionsButton.clicked += ShowOptionsScreen;
 
             Button exploreButton = root.Q<Button>("explore-button");
             exploreButton.text = $"Explore ({GameClockFormatter.FormatDuration(session.ExploreMinutes)})";
@@ -106,6 +130,11 @@ namespace SqueezySurvival.Presentation.Game
                 _session.CurrentZone.Features.Changed -= RefreshZoneFeatures;
                 _session.CurrentZone.GroundPool.Changed -= RefreshGroundPool;
             }
+
+            _zoneFeaturesView?.Dispose();
+            _groundPoolView?.Dispose();
+            _gridPanelSettingsWindow?.Dispose();
+            _optionsScreen?.Dispose();
         }
 
         private Button BindTimePassingButton(Button button, string actionName, TimePassingAction action)
@@ -127,30 +156,41 @@ namespace SqueezySurvival.Presentation.Game
 
         private void RefreshZoneFeatures()
         {
-            ShowCountedList(_session.CurrentZone.Features.Entries, _zoneFeaturesEntries, _zoneFeaturesEmptyLabel);
+            _zoneFeaturesView.ShowEntries(_session.CurrentZone.Features.Entries);
         }
 
         private void RefreshGroundPool()
         {
-            ShowCountedList(_session.CurrentZone.GroundPool.Entries, _groundPoolEntries, _groundPoolEmptyLabel);
+            _groundPoolView.ShowEntries(_session.CurrentZone.GroundPool.Entries);
         }
 
-        private static void ShowCountedList<TDefinition>(
-            IReadOnlyList<CountedEntry<TDefinition>> entries,
-            ScrollView list,
-            Label emptyLabel)
-            where TDefinition : class, ICountableThingDefinition
+        private void BindPanelSettingsButton(Button button, GridPanel panel, string panelName)
         {
-            list.Clear();
-            foreach (CountedEntry<TDefinition> entry in entries)
+            button.clicked += () =>
             {
-                var line = new Label(CountedThingTextFormatter.FormatListLine(entry));
-                line.AddToClassList("counted-list-entry");
-                list.Add(line);
-            }
+                _lastChosenSettingsButton = button;
+                _gridPanelSettingsWindow.Show(panel, panelName);
+            };
+        }
 
-            emptyLabel.style.display = entries.Count == 0 ? DisplayStyle.Flex : DisplayStyle.None;
-            list.style.display = entries.Count == 0 ? DisplayStyle.None : DisplayStyle.Flex;
+        private void HideGridPanelSettings()
+        {
+            _gridPanelSettingsWindow.Hide();
+            _lastChosenSettingsButton?.Focus();
+        }
+
+        private void ShowOptionsScreen()
+        {
+            _pauseMenu.style.display = DisplayStyle.None;
+            _optionsScreen.Show();
+        }
+
+        // Options opens from the pause menu, so closing it returns there.
+        private void HideOptionsScreen()
+        {
+            _optionsScreen.Hide();
+            _pauseMenu.style.display = DisplayStyle.Flex;
+            _pauseOptionsButton.Focus();
         }
 
         private void AppendLogEntry(EventLogEntry entry)
@@ -190,6 +230,14 @@ namespace SqueezySurvival.Presentation.Game
             {
                 HideNotBuiltNotice();
             }
+            else if (_gridPanelSettingsWindow.IsVisible)
+            {
+                HideGridPanelSettings();
+            }
+            else if (_optionsScreen.IsVisible)
+            {
+                HideOptionsScreen();
+            }
             else
             {
                 TogglePauseMenu();
@@ -201,7 +249,7 @@ namespace SqueezySurvival.Presentation.Game
             if (_pauseMenu.style.display == DisplayStyle.None)
             {
                 _pauseMenu.style.display = DisplayStyle.Flex;
-                _saveAndExitButton.Focus();
+                _pauseOptionsButton.Focus();
             }
             else
             {

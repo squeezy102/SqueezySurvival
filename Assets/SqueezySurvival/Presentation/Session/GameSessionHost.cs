@@ -1,4 +1,6 @@
+using SqueezySurvival.Core.Options;
 using SqueezySurvival.Core.Runs;
+using SqueezySurvival.Presentation.Options;
 using UnityEngine;
 
 namespace SqueezySurvival.Presentation.Session
@@ -16,6 +18,11 @@ namespace SqueezySurvival.Presentation.Session
         /// <summary>Carries a new run's configuration into the game scene.</summary>
         public RunLaunchHandoff RunLaunchHandoff { get; private set; }
 
+        /// <summary>The player's options, shared by every screen and saved after each change (Docs/Design/UI/Options.md).</summary>
+        public PlayerOptions PlayerOptions => _playerOptionsPersistence.Options;
+
+        private PlayerOptionsPersistence _playerOptionsPersistence;
+
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void CreateBeforeFirstScene()
         {
@@ -23,6 +30,7 @@ namespace SqueezySurvival.Presentation.Session
             DontDestroyOnLoad(hostObject);
             Current = hostObject.AddComponent<GameSessionHost>();
             Current.RunLaunchHandoff = new RunLaunchHandoff();
+            Current._playerOptionsPersistence = PlayerOptionsPersistence.Load(new FilePlayerOptionsStore(Application.persistentDataPath));
         }
     }
 }

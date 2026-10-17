@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using SqueezySurvival.Core.MainMenu;
 using SqueezySurvival.Core.NewGame;
+using SqueezySurvival.Core.Options;
 using SqueezySurvival.Core.Runs;
 using SqueezySurvival.Core.Saving;
+using SqueezySurvival.Presentation.Options;
 using SqueezySurvival.Presentation.Session;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -13,7 +15,7 @@ namespace SqueezySurvival.Presentation.MainMenu
 {
     /// <summary>
     /// Binds the main menu's UI Toolkit document to the menu logic in Core and switches between the menu,
-    /// the New Game screen and the not-built notice. Holds no menu rules itself.
+    /// the New Game screen, the Options screen and the not-built notice. Holds no menu rules itself.
     /// </summary>
     [RequireComponent(typeof(UIDocument))]
     public sealed class MainMenuScreenController : MonoBehaviour
@@ -31,6 +33,8 @@ namespace SqueezySurvival.Presentation.MainMenu
         private Button _notBuiltNoticeCloseButton;
         private Button _newGameButton;
         private Focusable _focusAfterNotice;
+        private OptionsScreenController _optionsScreen;
+        private Button _optionsButton;
 
         /// <summary>Fills in the menu and connects its controls. Called once by the scene's composition root.</summary>
         public void Bind(
@@ -38,6 +42,7 @@ namespace SqueezySurvival.Presentation.MainMenu
             MainMenuCommandRouter commandRouter,
             IRunInProgressLoader runInProgressLoader,
             RunLaunchHandoff runLaunchHandoff,
+            PlayerOptions playerOptions,
             string versionLabelText)
         {
             if (optionStateEvaluator == null)
@@ -68,6 +73,9 @@ namespace SqueezySurvival.Presentation.MainMenu
             _startConfirmationCancelButton.clicked += HideStartConfirmation;
             root.Q<Button>(MainMenuElementNames.StartConfirmationConfirmButton).clicked += ConfirmStart;
             _startConfirmation.style.display = DisplayStyle.None;
+
+            _optionsScreen = new OptionsScreenController(root.Q<VisualElement>(MainMenuElementNames.OptionsScreen), playerOptions);
+            _optionsScreen.Closed += HideOptionsScreen;
 
             root.RegisterCallback<NavigationCancelEvent>(_ => OnCancel());
 
@@ -121,6 +129,11 @@ namespace SqueezySurvival.Presentation.MainMenu
                     _menuOptions.style.display = DisplayStyle.None;
                     _newGameScreen.Show();
                     break;
+                case MainMenuCommandOutcome.ShowOptionsScreen:
+                    _optionsButton = button;
+                    _menuOptions.style.display = DisplayStyle.None;
+                    _optionsScreen.Show();
+                    break;
                 case MainMenuCommandOutcome.ShowNotBuiltNotice:
                     ShowNotBuiltNotice(button);
                     break;
@@ -149,6 +162,22 @@ namespace SqueezySurvival.Presentation.MainMenu
             {
                 ReturnToMenu();
             }
+            else if (_optionsScreen.IsVisible)
+            {
+                HideOptionsScreen();
+            }
+        }
+
+        private void HideOptionsScreen()
+        {
+            _optionsScreen.Hide();
+            _menuOptions.style.display = DisplayStyle.Flex;
+            _optionsButton?.Focus();
+        }
+
+        private void OnDestroy()
+        {
+            _optionsScreen?.Dispose();
         }
 
         private void ReturnToMenu()

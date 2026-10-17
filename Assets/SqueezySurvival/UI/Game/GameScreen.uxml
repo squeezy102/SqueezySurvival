@@ -1,4 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <ui:Template name="OptionsScreen" src="../Options/OptionsScreen.uxml" />
+    <ui:Template name="GridPanelSettingsWindow" src="../Options/GridPanelSettingsWindow.uxml" />
     <Style src="GameScreen.uss" />
     <ui:VisualElement name="game-screen-root" class="game-screen-root">
         <ui:VisualElement class="main-area gap-right">
@@ -25,15 +27,21 @@
                         </ui:VisualElement>
                         <ui:Button name="explore-button" class="game-button" />
                     </ui:VisualElement>
-                    <ui:VisualElement class="panel zone-features gap-bottom">
-                        <ui:Label text="Zone features" class="panel-heading" />
+                    <ui:VisualElement name="zone-features-panel" class="panel zone-features gap-bottom">
+                        <ui:VisualElement class="panel-header">
+                            <ui:Label text="Zone features" class="panel-heading" />
+                            <ui:Button name="zone-features-settings-button" text="Settings" class="panel-settings-button" />
+                        </ui:VisualElement>
                         <ui:Label name="zone-features-empty" text="Nothing found yet." class="placeholder-text" />
-                        <ui:ScrollView name="zone-features-entries" class="counted-list" />
+                        <ui:ScrollView name="zone-features-grid" class="grid-panel-grid" />
                     </ui:VisualElement>
-                    <ui:VisualElement class="panel ground-pool">
-                        <ui:Label text="On the ground" class="panel-heading" />
+                    <ui:VisualElement name="ground-pool-panel" class="panel ground-pool">
+                        <ui:VisualElement class="panel-header">
+                            <ui:Label text="On the ground" class="panel-heading" />
+                            <ui:Button name="ground-pool-settings-button" text="Settings" class="panel-settings-button" />
+                        </ui:VisualElement>
                         <ui:Label name="ground-pool-empty" text="Nothing found yet." class="placeholder-text" />
-                        <ui:ScrollView name="ground-pool-entries" class="counted-list" />
+                        <ui:ScrollView name="ground-pool-grid" class="grid-panel-grid" />
                     </ui:VisualElement>
                 </ui:VisualElement>
             </ui:VisualElement>
@@ -61,8 +69,11 @@
             <ui:VisualElement class="pause-panel">
                 <ui:Label text="Paused" class="pause-heading" />
                 <ui:Label text="Saving isn't built yet: this run won't be kept." class="pause-warning" />
+                <ui:Button name="pause-options-button" text="Options" class="game-button pause-button" />
                 <ui:Button name="save-and-exit-button" text="Save and exit" class="game-button pause-button" />
             </ui:VisualElement>
         </ui:VisualElement>
+        <ui:Instance template="GridPanelSettingsWindow" name="grid-panel-settings-window" />
+        <ui:Instance template="OptionsScreen" name="options-screen" />
     </ui:VisualElement>
 </ui:UXML>

@@ -34,7 +34,7 @@ namespace SqueezySurvival.Presentation.Game
                 DayPhaseSchedule.Default,
                 PlaceholderBeachZoneContent.Beach,
                 new ZoneExplorer(ExplorationRules.Wireframe, randomNumberSource));
-            GetComponent<GameScreenController>().Bind(session);
+            GetComponent<GameScreenController>().Bind(session, GameSessionHost.Current.PlayerOptions);
         }
     }
 }

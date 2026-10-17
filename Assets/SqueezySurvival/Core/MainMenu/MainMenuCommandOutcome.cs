@@ -12,6 +12,9 @@ namespace SqueezySurvival.Core.MainMenu
         /// <summary>Open the New Game screen.</summary>
         ShowNewGameScreen,
 
+        /// <summary>Open the Options screen.</summary>
+        ShowOptionsScreen,
+
         /// <summary>The option's screen does not exist yet; show the "This isn't built yet." notice.</summary>
         ShowNotBuiltNotice,
 

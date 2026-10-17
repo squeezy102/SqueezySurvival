@@ -12,15 +12,15 @@ namespace SqueezySurvival.Core.Tests.Items
         private static readonly ItemDefinition Seashell = PlaceholderBeachZoneContent.Seashell;
 
         [Test]
-        public void FormatListLine_One_ShowsNameOnly()
+        public void FormatCountBadge_One_IsEmpty()
         {
-            Assert.That(CountedThingTextFormatter.FormatListLine(new CountedEntry<ItemDefinition>(Stick, 1)), Is.EqualTo("Stick"));
+            Assert.That(CountedThingTextFormatter.FormatCountBadge(1), Is.Empty);
         }
 
         [Test]
-        public void FormatListLine_Several_ShowsCount()
+        public void FormatCountBadge_Several_ShowsNumber()
         {
-            Assert.That(CountedThingTextFormatter.FormatListLine(new CountedEntry<ItemDefinition>(Stone, 2)), Is.EqualTo("Stone (2)"));
+            Assert.That(CountedThingTextFormatter.FormatCountBadge(12), Is.EqualTo("12"));
         }
 
         [Test]

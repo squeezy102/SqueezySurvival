@@ -40,6 +40,8 @@ Planned: Crafting, Buildings, Light Sources, Illness.
 - [HUD](Design/UI/HUD.md) - static status area, temperature, weather icons, event log.
 - [Controls](Design/UI/Controls.md) - mouse and modifiers, hotkeys, remapping.
 - [Startup Flow](Design/UI/StartupFlow.md) - splash logos, main menu, New Game screen and starting a run.
+- [Grid Panels](Design/UI/GridPanels.md) - configurable scrollable grids for zone features and the ground pool.
+- [Options](Design/UI/Options.md) - the Options screen and where it opens from.
 - [Day Summary](Design/UI/DaySummary.md) - the screen that marks the end of each day (concept).
 - [Launcher](Design/Launcher.md) - launcher layout, behavior and states.
 

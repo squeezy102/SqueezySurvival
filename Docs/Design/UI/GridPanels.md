@@ -1,0 +1,56 @@
+# Grid Panels
+
+**Status:** Draft
+
+How the game screen's item and feature panels show their contents: as scrollable grids the player configures to suit how they like to play ([#41](https://github.com/squeezy102/SqueezySurvival/issues/41)).
+
+## Panels
+
+| Panel | Shows |
+|---|---|
+| Zone features | The zone's features ([Screen Layout: regions](ScreenLayout.md#regions)). |
+| On the ground | The zone's ground pool ([Zones: ground pool](../Systems/Zones.md#ground-pool)). |
+
+The inventory will use the same grid once it is built.
+
+## The grid
+
+- Contents are shown as a grid of square cells. Each kind of thing gets one cell, showing its icon, and its count in the bottom-right corner when there are 2 or more. Until icon art exists, icons are simple placeholder shapes drawn by the game.
+- **The panel never resizes.** Its size comes from the screen layout ([Screen Layout: wireframe stage](ScreenLayout.md#wireframe-stage)). The grid fits the panel, and its contents scroll inside it.
+- Cells are 8 px apart (at the 1920 x 1080 reference resolution).
+
+### Scroll direction
+
+| Setting | Fixed | Cell size | Fill order | Scrolls |
+|---|---|---|---|---|
+| Vertical | Number of columns | Panel width divided by the columns | Left to right, then the next row down | Up and down |
+| Horizontal | Number of rows | Panel height divided by the rows | Top to bottom, then the next column right | Left and right |
+
+The mouse wheel always scrolls along the panel's scroll direction: in a horizontal panel, rolling the wheel moves the grid left and right. By default, rolling the wheel up scrolls up (or left) and rolling it down scrolls down (or right). **Invert scroll wheel** reverses that. A scrollbar along the scroll direction shows the position.
+
+## Settings
+
+Each panel has its own settings.
+
+| Setting | Values | Default |
+|---|---|---|
+| Scroll direction | Vertical, Horizontal | Vertical |
+| Columns (vertical) | 4 to 8 | 6 |
+| Rows (horizontal) | 2 to 4 | 3 |
+| Invert scroll wheel | On, Off | Off |
+
+The maximums keep cells large enough to read in the panel's size; they may be adjusted after playtesting. Columns and rows are both kept, so switching the scroll direction back restores the earlier layout.
+
+### Where they are changed
+
+- **The gear in the panel's header** opens that panel's settings. Until icon art exists, the gear is a button labeled "Settings".
+- **The Options screen** lists every panel's settings ([Options](Options.md)).
+
+Both edit the same player options. A change applies at once, everywhere, and is saved automatically.
+
+## Implementation notes
+
+- The settings are one configuration object, `PlayerOptions`, shared by the game screen and the Options screen and held for the whole play session.
+- The grid's geometry (cell size, cell positions, content size) and the wheel direction are calculated in Core (`GridPanelLayoutCalculator`, `GridPanelScrollWheelMapper`) and unit tested; the presentation layer only places cells where Core says.
+- Placeholder icons are drawn with UI Toolkit's vector API ([Unity Manual: generate 2D visual content](https://docs.unity3d.com/Manual/UIE-generate-2d-visual-content.html)) by `PlaceholderIconPainter`, keyed by each definition's id. They need no image files.
+- Player options are saved as a text file in the player's data folder (Unity's [`Application.persistentDataPath`](https://docs.unity3d.com/ScriptReference/Application-persistentDataPath.html)). They belong to the player, not to a run.

@@ -1,22 +1,25 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 
 namespace SqueezySurvival.Core.Items
 {
-    /// <summary>Writes counted things for lists ("Stone (2)") and sentences ("2 stones and a stick").</summary>
+    /// <summary>Writes counted things for grid cells (a count badge) and sentences ("2 stones and a stick").</summary>
     public static class CountedThingTextFormatter
     {
-        /// <summary>A list line: the name, followed by the count when there is more than one. "Stick", "Stone (2)".</summary>
-        public static string FormatListLine<TDefinition>(CountedEntry<TDefinition> entry)
-            where TDefinition : class, ICountableThingDefinition
+        /// <summary>
+        /// The count shown in the corner of a grid cell: the number when there are 2 or more, empty for a single
+        /// thing (Docs/Design/UI/GridPanels.md, The grid).
+        /// </summary>
+        public static string FormatCountBadge(int count)
         {
-            if (entry == null)
+            if (count < 1)
             {
-                throw new ArgumentNullException(nameof(entry));
+                throw new ArgumentOutOfRangeException(nameof(count), count, "Must be at least 1.");
             }
 
-            return entry.Count == 1 ? entry.Definition.Name : $"{entry.Definition.Name} ({entry.Count})";
+            return count == 1 ? string.Empty : count.ToString(CultureInfo.InvariantCulture);
         }
 
         /// <summary>
