@@ -1,6 +1,8 @@
 using System;
 using SqueezySurvival.Core.EventLog;
+using SqueezySurvival.Core.Exploration;
 using SqueezySurvival.Core.Time;
+using SqueezySurvival.Core.Zones;
 
 namespace SqueezySurvival.Core.Runs
 {
@@ -13,13 +15,20 @@ namespace SqueezySurvival.Core.Runs
         /// <summary>The first event log entry of every run.</summary>
         public const string WakeUpText = "You wake up on a beach. You have no idea how you got here.";
 
-        /// <summary>Starts a run from its configuration: Day 1, 6:00 AM, on the Beach.</summary>
-        public RunSession(NewRunConfiguration configuration, DayPhaseSchedule dayPhaseSchedule)
+        private readonly ZoneExplorer _zoneExplorer;
+
+        /// <summary>Starts a run from its configuration: Day 1, 6:00 AM, in the starting zone.</summary>
+        public RunSession(
+            NewRunConfiguration configuration,
+            DayPhaseSchedule dayPhaseSchedule,
+            ZoneDefinition startingZone,
+            ZoneExplorer zoneExplorer)
         {
             Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             DayPhaseSchedule = dayPhaseSchedule ?? throw new ArgumentNullException(nameof(dayPhaseSchedule));
+            _zoneExplorer = zoneExplorer ?? throw new ArgumentNullException(nameof(zoneExplorer));
             Clock = GameClock.RunStart;
-            CurrentZoneName = NewRunConfiguration.StartingZoneName;
+            CurrentZone = new Zone(startingZone ?? throw new ArgumentNullException(nameof(startingZone)));
             EventLog = new RunEventLog();
             EventLog.Add(Clock, WakeUpText);
         }
@@ -37,7 +46,10 @@ namespace SqueezySurvival.Core.Runs
         public GameClock Clock { get; private set; }
 
         /// <summary>The zone the survivor is in.</summary>
-        public string CurrentZoneName { get; }
+        public Zone CurrentZone { get; }
+
+        /// <summary>How long one explore takes, in minutes.</summary>
+        public int ExploreMinutes => _zoneExplorer.Rules.ExploreMinutes;
 
         /// <summary>Everything that has happened this run.</summary>
         public RunEventLog EventLog { get; }
@@ -51,6 +63,23 @@ namespace SqueezySurvival.Core.Runs
             Clock = Clock.Advance(TimePassingActions.DurationMinutes(action));
             EventLog.Add(Clock, TimePassingActions.LogText(action));
             ClockAdvanced?.Invoke(Clock);
+        }
+
+        /// <summary>
+        /// Explores the current zone: takes the explore's time, adds what was found to the zone and logs it
+        /// (Docs/Design/Systems/Exploration.md). Always available.
+        /// </summary>
+        public ExplorationOutcome Explore()
+        {
+            Clock = Clock.Advance(ExploreMinutes);
+            ExplorationOutcome outcome = _zoneExplorer.Explore(CurrentZone);
+            foreach (string entry in ExplorationLogTextFormatter.Format(CurrentZone.Name, outcome))
+            {
+                EventLog.Add(Clock, entry);
+            }
+
+            ClockAdvanced?.Invoke(Clock);
+            return outcome;
         }
     }
 }

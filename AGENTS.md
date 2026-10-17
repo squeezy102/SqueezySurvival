@@ -15,6 +15,7 @@ The owner, **squeezy102** (Pj), has the final say on every change.
 | [Docs/Home.md](Docs/Home.md) | Index of all documentation and the documentation policy |
 | [Docs/Design/GameDesignDocument.md](Docs/Design/GameDesignDocument.md) | Vision, pillars, design principles |
 | [Docs/Engineering/CodingStandards.md](Docs/Engineering/CodingStandards.md) | Code rules |
+| [Docs/Engineering/TestingStandards.md](Docs/Engineering/TestingStandards.md) | Test design (ISTQB), game testing, definition of done |
 | [Docs/Engineering/WorkTracking.md](Docs/Engineering/WorkTracking.md) | Issues, labels, lifecycle |
 | [Docs/Engineering/SourceControl.md](Docs/Engineering/SourceControl.md) | Branches, commits, protected branches |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | How changes are proposed and approved |
@@ -26,10 +27,10 @@ Then read the design document for the system you are touching (`Docs/Design/Syst
 1. **Docs are the single source of truth.** Design, rules and decisions live in `Docs/`, version-controlled and approved through pull requests. No wiki. Ideas are discussed in GitHub Discussions and work is tracked in issues, but neither is a source of truth. If the docs and the code disagree, the docs win until the docs are changed.
 2. **Docs first.** Design and document a system before writing code for it. Code is written only for systems that are already designed. A change is not done until every affected document is updated in the same pull request.
 3. **One home per fact.** Define each rule or value in exactly one document and link to it elsewhere. Never copy.
-4. **Never guess.** Ground every technical decision in official product documentation or established precedent (Unity, Microsoft and .NET docs, GitHub docs, reputable forums), and cite it. No "try it and see", no hacks or workarounds.
+4. **Never guess.** Ground every technical decision in official product documentation or established precedent (Unity, Microsoft and .NET docs, GitHub docs, ISTQB syllabi for testing, reputable forums), and cite it. No "try it and see", no hacks or workarounds.
 5. **Report first.** Every bug, request or playtest finding is filed as a GitHub issue before it is worked on, even if the fix takes minutes.
 6. **Nothing reaches a protected branch without approval.** `main` requires a pull request approved by squeezy102; `PjDev` belongs to squeezy102 alone. Never push to either.
-7. **Unit tests are mandatory.** All game logic is unit tested. Zero compiler and Console warnings: fix them, or suppress at the narrowest scope with a comment and a changelog entry.
+7. **Unit tests are mandatory.** All game logic is unit tested, with tests designed to the [Testing and Quality Standards](Docs/Engineering/TestingStandards.md) (ISTQB): every test can fail for a real defect. Zero compiler and Console warnings: fix them, or suppress at the narrowest scope with a comment and a changelog entry.
 
 ## Architecture
 
@@ -49,7 +50,7 @@ Then read the design document for the system you are touching (`Docs/Design/Syst
 
 - Names say what a thing is and what it is for: `MainMenuOptionStateEvaluator`, not `MenuHelper`. No abbreviations.
 - XML doc comments on public members. Inline comments explain why, never what. No commented-out code; no TODO, FIXME or HACK.
-- Test names describe behavior: `PassTime_Wait_AdvancesFifteenMinutesAndLogs`. Arrange, act, assert.
+- Test names describe behavior: `PassTime_Wait_AdvancesFifteenMinutesAndLogs`. Arrange, act, assert. Design cases with equivalence partitions and boundary values ([Testing and Quality Standards](Docs/Engineering/TestingStandards.md)).
 
 ## Writing conventions
 

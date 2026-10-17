@@ -35,7 +35,4 @@ Code is split into assembly definitions (`.asmdef`) so that dependencies are exp
 
 ## Testing
 
-- Unity Test Framework, Edit Mode tests for simulation logic.
-- Arrange-Act-Assert structure; one behavior per test.
-- Test names describe the behavior: `DrinkCoconutWater_WhenWaterIsLow_RaisesWater`.
-- Play Mode tests only where Unity runtime behavior is the subject under test.
+Unity Test Framework, Edit Mode tests for simulation logic. How tests are designed, what each must prove, and what "done" means: [Testing and Quality Standards](TestingStandards.md).

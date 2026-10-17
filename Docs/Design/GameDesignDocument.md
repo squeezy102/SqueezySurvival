@@ -16,8 +16,8 @@ Presentation is pictures, text, windows and progress bars. Depth comes from syst
 | Songs of Syx | Systemic depth and a readable management UI, including some of its UI elements. Later in development: different survivors (races, starting characters) with their own food, housing and routine-activity preferences | - |
 | Green Hell | Survival stat breadth, crafting from found materials, and its negative scenarios: the sense that if you are not careful, everything is trying to kill you | - |
 | Ark: Survival Evolved | Research driven by discovery: finding a material opens research topics, and completing a topic grants lasting knowledge (recipes and blueprints) that is never lost during the run ([Research](Systems/Research.md)) | - |
-| Haven and Hearth | Much of the survivor's body and knowledge: two-layer health (soft and hard HP, our current health and injury ceiling); injuries, healing and escalation; first aid; treatments that cost equipment slots; the equipment slot layout; "you only know what you know"; and item discovery unlocking new research and crafting | Adapted to a single-player, click-driven game |
-| Final Fantasy (classic) | Combat that feels very Final Fantasy: random encounters opening a separate battle scene, the general sprite style, and attack, item and ability animations (animation arrives after the MVP; see [Presentation](#presentation)) | - |
+| Haven and Hearth | Much of the survivor's body and knowledge: two-layer health (soft and hard HP, our current and maximum health); injuries, healing and escalation; first aid; treatments that cost equipment slots; the equipment slot layout; "you only know what you know"; and item discovery unlocking new research and crafting | Adapted to a single-player, click-driven game |
+| Pokémon (classic) and EarthBound | Battle presentation: encounters open a separate battle scene; the opponent at the top right and the player's side at the bottom left (Pokémon); the survivor never shown in battle (EarthBound); text boxes that announce each action and wait for the player ([Combat: presentation](Systems/Combat.md#presentation)). Attack, item and ability animations arrive after the MVP ([Presentation](#presentation)) | - |
 
 ## Pillars
 
@@ -35,6 +35,8 @@ Presentation is pictures, text, windows and progress bars. Depth comes from syst
 ## Design principles
 
 - **Reward, don't punish.** Behavior we want to encourage (variety, rest, exploration) is rewarded rather than its absence penalized. Players respond far better to a bonus than to a mechanically equivalent penalty: World of Warcraft's beta XP penalty for long sessions was hated, while the same system reframed as a rested bonus was welcomed ([Psychology of Games](https://www.psychologyofgames.com/2010/03/framing-and-world-of-warcrafts-rest-system/)). Hard consequences remain where survival demands them (starvation, injury, illness).
+
+- **Nothing happens until you let go.** Any action started by dragging, holding or aiming shows its outcome before it is committed, and is committed only on release; releasing where nothing would happen changes nothing. The first use is [drag and drop](UI/DragAndDrop.md).
 
 ## Presentation
 

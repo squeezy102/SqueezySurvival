@@ -48,7 +48,7 @@ New issues use a form ([`.github/ISSUE_TEMPLATE/`](../../.github/ISSUE_TEMPLATE/
 | Type | Label | Use for |
 |---|---|---|
 | User story | `story` | A player-facing capability: "As a player, I want ..., so that ...", with acceptance criteria. |
-| Bug | `bug` | Something works differently than designed: steps, expected, actual, version. |
+| Bug | `bug` | Something works differently than designed: steps, expected, actual, version, severity, environment and design reference ([Testing and Quality Standards: defect reports](TestingStandards.md#defect-reports)). |
 | Task | `task` | Engineering, tooling or documentation work. |
 
 ## Labels and milestones

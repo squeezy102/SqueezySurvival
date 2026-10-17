@@ -40,6 +40,9 @@ Planned: Crafting, Buildings, Light Sources, Illness.
 - [HUD](Design/UI/HUD.md) - static status area, temperature, weather icons, event log.
 - [Controls](Design/UI/Controls.md) - mouse and modifiers, hotkeys, remapping.
 - [Startup Flow](Design/UI/StartupFlow.md) - splash logos, main menu, New Game screen and starting a run.
+- [Grid Panels](Design/UI/GridPanels.md) - configurable scrollable grids for zone features and the ground pool.
+- [Drag and Drop](Design/UI/DragAndDrop.md) - moving, reordering and combining things by dragging.
+- [Options](Design/UI/Options.md) - the Options screen and where it opens from.
 - [Day Summary](Design/UI/DaySummary.md) - the screen that marks the end of each day (concept).
 - [Launcher](Design/Launcher.md) - launcher layout, behavior and states.
 
@@ -56,6 +59,7 @@ Files at the repository root:
 ## Engineering
 
 - [Coding Standards](Engineering/CodingStandards.md) - testability, naming, architecture, warnings policy.
+- [Testing and Quality Standards](Engineering/TestingStandards.md) - ISTQB-based test design, game testing, defect reports, definition of done.
 - [Project Setup](Engineering/ProjectSetup.md) - editor version, packages, folder layout.
 - [Source Control](Engineering/SourceControl.md) - branching, commits, Git LFS.
 - [Release Pipeline](Engineering/ReleasePipeline.md) - building, packaging and publishing player builds.

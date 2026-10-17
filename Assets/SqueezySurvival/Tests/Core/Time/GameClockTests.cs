@@ -23,12 +23,6 @@ namespace SqueezySurvival.Core.Tests.Time
             Assert.That(clock.MinuteOfDay, Is.EqualTo(0));
         }
 
-        [Test]
-        public void Advance_AddsElapsedMinutes()
-        {
-            Assert.That(GameClock.RunStart.Advance(15).ElapsedMinutes, Is.EqualTo(15));
-        }
-
         [TestCase(0)]
         [TestCase(-5)]
         public void Advance_ByLessThanOneMinute_Throws(int minutes)

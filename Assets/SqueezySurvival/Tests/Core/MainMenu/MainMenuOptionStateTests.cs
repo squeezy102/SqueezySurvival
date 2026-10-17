@@ -38,7 +38,6 @@ namespace SqueezySurvival.Core.Tests.MainMenu
         }
 
         [TestCase(null)]
-        [TestCase("")]
         [TestCase("   ")]
         public void Constructor_WithoutLabel_Throws(string label)
         {

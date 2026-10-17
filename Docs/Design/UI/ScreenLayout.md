@@ -62,12 +62,12 @@ Spacing is uniform: every panel is inset 16 px from the screen edge and separate
 |---|---|---|
 | Scene | Placeholder beach art. | - |
 | HUD | Game clock: day, time and day phase, for example `Day 1 - 6:00 AM - Dawn` ([Time: display](../Systems/Time.md#display)). Wait (15 min) and Rest (1 hr) buttons, with their durations shown ([Time: passing time deliberately](../Systems/Time.md#passing-time-deliberately)). | Survival stats, temperature and weather. |
-| Zone bar | Current zone name (Beach). | Explore reads "Explore (not built yet)" and is unavailable. No connected zones are known at the start. |
-| Zone features, ground pool | - | "Nothing found yet." |
+| Zone bar | Current zone name (Beach), its exploration progress ("Explored 4%"), and Explore with its duration ([Exploration: wireframe stage](../Systems/Exploration.md#wireframe-stage)). | No connected zones are known at the start. |
+| Zone features, ground pool | Two panels, "Zone features" above "On the ground", each a configurable scrollable grid of what exploring has found ([Grid Panels](GridPanels.md)). They read "Nothing found yet." until something is found. | Sorting, filtering and the other organization tools. |
 | Event log | Every action is logged with its time, starting with waking on the beach. | - |
 | Inventory | - | "Your hands are empty." |
 | Nav bar | Buttons for Inventory, Map, Crafting, Skills, Research, Equipment and Cooking. | Each opens a notice that its window isn't built yet. Shown expanded with text labels until icons exist. |
 
-Escape opens a pause menu holding only **Save and exit**, the one way out of a run ([Runs: saving](../Systems/Runs.md#saving)). Escape again closes it. Saving does not exist yet, so for now Save and exit returns to the main menu without keeping the run, and the menu says so.
+Escape opens a pause menu holding **Options** ([Options](Options.md)) and **Save and exit**, the one way out of a run ([Runs: saving](../Systems/Runs.md#saving)). Escape again closes it. Saving does not exist yet, so for now Save and exit returns to the main menu without keeping the run, and the menu says so.
 
 The game screen only opens from a confirmed New Game ([Startup Flow: starting the run](StartupFlow.md#starting-the-run)). Opened any other way (for example, pressing Play with the game scene open in the editor), it returns to the main menu.

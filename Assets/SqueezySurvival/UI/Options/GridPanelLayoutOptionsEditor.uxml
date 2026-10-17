@@ -1,0 +1,12 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <ui:VisualElement class="grid-layout-editor">
+        <ui:RadioButtonGroup name="scroll-direction-choice" label="Scroll direction" choices="Vertical,Horizontal" value="0" class="options-setting-row" />
+        <ui:VisualElement class="options-setting-row options-stepper-row">
+            <ui:Label name="line-count-label" class="options-setting-label" />
+            <ui:Button name="line-count-decrease-button" text="-" class="options-stepper-button" />
+            <ui:Label name="line-count-value" class="options-stepper-value" />
+            <ui:Button name="line-count-increase-button" text="+" class="options-stepper-button" />
+        </ui:VisualElement>
+        <ui:Toggle name="invert-scroll-wheel-toggle" label="Invert scroll wheel" class="options-setting-row" />
+    </ui:VisualElement>
+</ui:UXML>
