@@ -12,13 +12,12 @@ Presentation is pictures, text, windows and progress bars. Depth comes from syst
 
 | Game | What we take | What we improve |
 |---|---|---|
-| Card Survival: Tropical Island | Time-unit economy, every action has a cost, stat-driven survival, discovery-driven recipes | Replace the card UI with a clear sprite and inventory interface |
-| Card Survival: Fantasy Forest | Same as above | Same as above |
-| Songs of Syx | Systemic depth, readable management UI | - |
-| Green Hell | Survival stat breadth, crafting from found materials | - |
-| Ark: Survival Evolved | Progression through discovered technology | - |
-| Haven and Hearth | Health and wound model: current health, an injury-lowered ceiling, independent healing, escalation, treatments with trade-offs | Adapted to a single-player, click-driven game |
-| Final Fantasy (classic) | Overworld random encounters opening a separate battle window | - |
+| Card Survival: Tropical Island and Card Survival: Fantasy Forest | Time-unit economy, every action has a cost, stat-driven survival, discovery-driven recipes | Replace the card UI with a clear sprite and inventory interface |
+| Songs of Syx | Systemic depth and a readable management UI, including some of its UI elements. Later in development: different survivors (races, starting characters) with their own food, housing and routine-activity preferences | - |
+| Green Hell | Survival stat breadth, crafting from found materials, and its negative scenarios: the sense that if you are not careful, everything is trying to kill you | - |
+| Ark: Survival Evolved | Research driven by discovery: finding a material opens research topics, and completing a topic grants lasting knowledge (recipes and blueprints) that is never lost during the run ([Research](Systems/Research.md)) | - |
+| Haven and Hearth | Much of the survivor's body and knowledge: two-layer health (soft and hard HP, our current health and injury ceiling); injuries, healing and escalation; first aid; treatments that cost equipment slots; the equipment slot layout; "you only know what you know"; and item discovery unlocking new research and crafting | Adapted to a single-player, click-driven game |
+| Final Fantasy (classic) | Combat that feels very Final Fantasy: random encounters opening a separate battle scene, the general sprite style, and attack, item and ability animations (animation arrives after the MVP; see [Presentation](#presentation)) | - |
 
 ## Pillars
 

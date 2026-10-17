@@ -34,6 +34,10 @@ All project documentation lives in [`Docs/`](Docs/Home.md). Start at **[Docs/Hom
 
 Full details: [Project Setup](Docs/Engineering/ProjectSetup.md).
 
+## Ideas and discussion
+
+Got an idea for the game, or a question? Join the conversation in [Discussions](https://github.com/squeezy102/SqueezySurvival/discussions). Pitch ideas, vote in polls, ask questions, and share what you have made.
+
 ## Contributing
 
 See [CONTRIBUTING](CONTRIBUTING.md). Working with an AI assistant? Start it on [AGENTS.md](AGENTS.md). Every change goes through a pull request approved by squeezy102.

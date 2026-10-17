@@ -8,12 +8,36 @@ Work is tracked in [GitHub Issues](https://github.com/squeezy102/SqueezySurvival
 
 | Kind | Home |
 |---|---|
+| Ideas, questions, polls and announcements | [GitHub Discussions](https://github.com/squeezy102/SqueezySurvival/discussions) |
 | Rules, values, decisions, design | Docs: the owning design document, [ADRs](../Decisions/README.md) |
 | Unanswered design questions | [Open Questions](../Design/OpenQuestions.md) |
 | Findings from playing a build | GitHub Issues labeled `playtest`; sessions indexed in the [Playtest Log](PlaytestLog.md) |
 | Work to be done: stories, bugs, tasks | GitHub Issues |
 
 An issue links to the design it implements; it never restates the design. One home per fact ([documentation policy](../Home.md#documentation-policy)).
+
+The repository has no wiki: it cannot require approval for edits, so it cannot be a source of truth.
+
+## From idea to work
+
+| Stage | Where |
+|---|---|
+| An idea is pitched, debated or voted on | Discussions: **Ideas** or **Polls** |
+| squeezy102 decides to pursue it | A pull request changing the design docs, or a new [Open Question](../Design/OpenQuestions.md) |
+| Someone builds it | An issue |
+
+Discussions are never a source of truth: nothing is decided until it is in the docs. An issue that turns out to be an open-ended idea is converted into a discussion ([GitHub Docs: about discussions](https://docs.github.com/en/discussions/collaborating-with-your-community-using-discussions/about-discussions)).
+
+## Discussion categories
+
+| Category | For | Who starts threads |
+|---|---|---|
+| Announcements | News from the project: releases, milestones | squeezy102 only ([GitHub Docs: categories](https://docs.github.com/en/discussions/managing-discussions-for-your-community/managing-categories-for-discussions)) |
+| Ideas | Suggestions for the game, using the Ideas form | Anyone |
+| Polls | Quick votes on options | Anyone |
+| Q&A | Questions with an accepted answer, such as setup help | Anyone |
+| General | Anything else about the project | Anyone |
+| Show and tell | Experiments, mods, art and builds | Anyone |
 
 ## Issue types
 
