@@ -16,6 +16,7 @@ Design questions still waiting for an answer. The full history of every question
 | OQ-033 | Controls | Should every drag have a click alternative (click an item to pick it up, click a destination to place it)? The Intermediate tier of the Game Accessibility Guidelines asks that "multiple simultaneous actions (eg. click/drag or swipe) are not required". Proposal: yes. | UI/Controls |
 | OQ-058 | Runs | What perks, boosts and challenge unlocks can survival and challenge points buy, and at what prices? Deferred to a dedicated session. | Systems/Runs |
 | OQ-064 | UI | Day summary: when exactly does it appear (at midnight, or when the survivor next wakes), and what does it show? Proposal in Design/UI/DaySummary. | UI/DaySummary |
+| OQ-068 | Injuries | Does napping or sleeping restore health faster when the survivor is in the open, or sheltered but without a bed? | Systems/Injuries |
 
 ## Deferred to the balancing pass
 
@@ -32,3 +33,4 @@ Answered together in a dedicated mathematical balancing pass.
 | OQ-062 | Combat | Tracking: how do the animal's injury and the survivor's Tracking skill combine into the chance of finding it? | Systems/Combat |
 | OQ-063 | Weather | Weather balancing: the strength of each weather effect (for example how fast sunburn builds), and the exact per-season transition weights that produce the seasonal tendencies. | Systems/Weather |
 | OQ-065 | Combat | Getting away for good: the chance an escaping animal that survives is gone for good, and how much it grows with each escape. | Systems/Combat |
+| OQ-069 | Injuries | Health recovery and knock-out tuning: regeneration per hour for each activity (Wait, Rest, Nap, Sleep; open or sheltered; bed), and how overkill sets the knock-out length. Proposal: the survivor wakes once health regenerates from minus the overkill back up to 1. | Systems/Injuries |

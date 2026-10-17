@@ -20,7 +20,7 @@ At 85/90 out of an uninjured 100, the bar is 85% red, 5% empty and 10% darkened.
 
 | Value | Lowered by | Restored by | At zero |
 |---|---|---|---|
-| Current health | Damage: blows, falls, combat hits | Regenerates on its own, about 1 per in-game hour, while Food and Water are both above Dangerous ([Survival Stats: bands](SurvivalStats.md#bands-draft)); each food item eaten, whatever it is, restores 1 ([Food](Food.md)); rest restores it quickly | Knocked out: time passes, and wildlife may take advantage |
+| Current health | Damage: blows, falls, combat hits | Regeneration and eating (see [Recovering health](#recovering-health)) | [Knocked out](#knocked-out) |
 | Maximum health | Injuries, each by its severity, for as long as it lasts | Healing the injury, over time or with treatment | Death |
 
 **Order:** a hit's damage lowers current health first; then any injury it caused lowers maximum health. If maximum health falls below current health, current health drops to match.
@@ -34,9 +34,35 @@ Example, starting from 100/100:
 
 Game text always says "health". Haven and Hearth equivalents: current health is Soft HP (SHP); maximum health is Hard HP (HHP), lowered by injuries.
 
+### Recovering health
+
+Current health regenerates only while Food and Water are both above Dangerous ([Survival Stats: bands](SurvivalStats.md#bands-draft)). How fast depends on what the survivor is doing ([Time: passing time deliberately](Time.md#passing-time-deliberately), [sheltered variants](Time.md#sheltered-variants)):
+
+| Doing | Regeneration |
+|---|---|
+| Anything | About 1 per in-game hour |
+| Wait or Rest, in the open | Barely faster |
+| Wait or Rest, sheltered | A little faster |
+| Nap or Sleep, sheltered, on a bed | Much faster |
+
+Eating also helps: every food item eaten, whatever it is, restores 1 current health ([Food](Food.md)).
+
+Exact rates: [OQ-069](../OpenQuestions.md). Napping or sleeping in the open or without a bed: [OQ-068](../OpenQuestions.md).
+
+### Knocked out
+
+As in Haven and Hearth, when current health reaches zero the survivor is **knocked out**, and falls wherever they are.
+
+- **For at least 1 hour,** long enough to regenerate 1 current health. The bigger the overkill (damage beyond zero), the longer it lasts.
+- **The survivor suffers a concussion**, an injury like any other.
+- **If it happened in battle,** the battle ends there, and the injuries suffered in it take effect as well ([Combat: injuries in battle](Combat.md#injuries-in-battle)).
+- Time passes while the survivor is out, and wildlife may take advantage.
+
+How overkill sets the length: [OQ-069](../OpenQuestions.md).
+
 ## Injuries
 
-Examples: bruises, sprains, abrasions, lacerations, goring, broken bones, hemorrhaging, stings and bites, sunburn ([Weather](Weather.md#clear-and-fair-weather)).
+Examples: bruises, sprains, abrasions, lacerations, concussions, goring, broken bones, hemorrhaging, stings and bites, sunburn ([Weather](Weather.md#clear-and-fair-weather)).
 
 Each injury has:
 

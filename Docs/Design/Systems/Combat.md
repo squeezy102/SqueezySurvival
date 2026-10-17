@@ -140,7 +140,7 @@ Hits lower current Health and can cause injuries ([Injuries and Health](Injuries
 
 An injury suffered in battle is **announced the moment it happens, but takes effect only after the battle ends** (resolves OQ-066). Its effects, its cut to maximum health, bleeding, infection and the rest of its course all begin when the battle is over; until then the survivor fights as well as before, and only current Health falls. This simulates combat adrenaline: the survivor feels the wounds only once the fight is over.
 
-So a battle can be won and still be fatal: the survivor sees "Battle complete!", returns to the zone, and then the injuries take hold. If they bring maximum health to zero, the survivor dies there ([Injuries and Health](Injuries.md#health)). The injuries announced during the fight are the warning.
+So a battle can be won and still be fatal: the survivor sees "Battle complete!", returns to the zone, and then the injuries take hold. If they bring maximum health to zero, the survivor dies there ([Injuries and Health](Injuries.md#health)). The injuries announced during the fight are the warning. If current health reaches zero during the battle, the survivor is knocked out, the battle ends there, and its injuries take effect at once ([Injuries and Health: knocked out](Injuries.md#knocked-out)).
 
 The point is informed choice, not surprise: the player sees every injury as it lands, so they can flee or defend to avoid more, or press on knowing the cost, rather than finishing a fight that seemed to cost only Health and then meeting a wall of injuries.
 
