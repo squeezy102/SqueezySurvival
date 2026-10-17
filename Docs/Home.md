@@ -50,7 +50,8 @@ Planned: Crafting, Buildings, Light Sources, Illness.
 - [Source Control](Engineering/SourceControl.md) - branching, commits, Git LFS.
 - [Release Pipeline](Engineering/ReleasePipeline.md) - building, packaging and publishing player builds.
 - [Asset Credits](Engineering/AssetCredits.md) - source and license of every shipped asset.
-- [Playtest Log](Engineering/PlaytestLog.md) - findings from playing builds: bugs, decisions and fixes.
+- [Playtest Log](Engineering/PlaytestLog.md) - playtest sessions and the issues filed from them.
+- [Work Tracking](Engineering/WorkTracking.md) - GitHub Issues for stories, bugs and tasks; labels, milestones, linking.
 - Spikes - time-boxed experiments that answer a technical question:
   - [SPIKE-001: Velopack with a Unity player](Engineering/Spikes/SPIKE-001-Velopack-With-Unity.md)
 
@@ -61,7 +62,7 @@ Planned: Crafting, Buildings, Light Sources, Illness.
 ## Documentation policy
 
 1. **Docs first.** A system is designed and documented before it is implemented. The project has moved from pure design into a playable wireframe: code is written only for systems that are already designed.
-2. **Playtest findings are logged.** Every bug, confusion or design change found by playing a build goes in the [Playtest Log](Engineering/PlaytestLog.md) with its resolution.
+2. **Work is tracked in issues.** Every bug, request or playtest finding is filed as a GitHub issue before it is worked on ([Work Tracking](Engineering/WorkTracking.md)). Docs remain the single source of truth for design; issues link to them.
 3. **Docs are part of done.** A change is not complete until every affected document is updated in the same commit.
 4. **One home per fact.** Each rule, formula or value is defined in exactly one document and linked from elsewhere, never copied.
 5. **Decisions are recorded.** Any significant or hard-to-reverse choice gets an ADR.

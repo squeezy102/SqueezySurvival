@@ -1,0 +1,31 @@
+name: User story
+description: A player-facing capability, written from the player's point of view.
+title: "<Short name of the capability>"
+labels: ["story"]
+body:
+  - type: textarea
+    id: story
+    attributes:
+      label: Story
+      description: As a player, I want ..., so that ...
+      placeholder: As a player, I want to explore the Beach, so that I find my first materials.
+    validations:
+      required: true
+  - type: input
+    id: design
+    attributes:
+      label: Design
+      description: Link to the design document or open question this implements. Design lives in Docs, not in the issue.
+      placeholder: Docs/Design/Systems/Exploration.md
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: A checklist that decides when this is done.
+      value: |
+        - [ ] 
+        - [ ] Core logic unit tested; docs updated.
+    validations:
+      required: true

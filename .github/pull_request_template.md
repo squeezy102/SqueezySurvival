@@ -2,6 +2,8 @@
 
 <!-- What does this change, and why? Link the design document or open question it relates to (for example OQ-036). -->
 
+Closes #
+
 ## Checklist
 
 - [ ] Every affected document is updated in this pull request ([documentation policy](../Docs/Home.md#documentation-policy)).
