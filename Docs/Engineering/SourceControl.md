@@ -16,7 +16,7 @@ Player builds are published to a separate public repository, `squeezy102/Squeezy
 
 Binary assets (images, audio, fonts, models) are stored with Git LFS. Rules are defined in `.gitattributes`. Unity YAML files (`.unity`, `.prefab`, `.asset`, `.meta`) are text and merge with UnityYAMLMerge.
 
-The cloud session that Claude works in cannot upload Git LFS objects. A commit that adds or changes a binary file is pushed from squeezy102's PC (`git push`); commits with only text files are pushed by Claude.
+The cloud session that Claude works in cannot upload Git LFS objects. A commit that adds or changes a binary file is pushed from squeezy102's PC (`git push`); commits with only text files are pushed by Claude, to a feature branch.
 
 ## Ignored files
 
@@ -45,7 +45,9 @@ Nobody pushes directly to `main`. Every change, including the owner's, goes thro
 `PjDev` is squeezy102's personal integration branch, created from `main`.
 
 1. squeezy102's feature branches (and Claude's) are created from `PjDev` and merged back into it.
+   Claude never pushes to `PjDev` itself: it pushes a branch such as `docs/...` and opens a pull request into `PjDev`, which squeezy102 merges. The `Protect PjDev` ruleset refuses Claude's pushes anyway.
 2. When `PjDev` holds a set of changes ready for `main`, a pull request from `PjDev` into `main` brings them in.
+3. Claude handles git for squeezy102: it commits, pushes its branches, and keeps squeezy102's local repository in sync (checking out and pulling the branch to test) through the desktop app's link to their PC. squeezy102 runs git commands only for pushes that need their credentials, such as Git LFS files or `PjDev` after a merge from `main`. On that PC, Windows Git converts line endings (`core.autocrlf`), so git commands Claude runs there pass `-c core.autocrlf=true` to see the same state Windows does.
 
 Contributors branch from `main` as described above.
 

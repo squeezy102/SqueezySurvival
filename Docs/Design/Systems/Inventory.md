@@ -4,7 +4,31 @@
 
 What the survivor carries. Weights are in pounds (lb).
 
-## Personal inventory
+## Slots
+
+The survivor's inventory has **8 slots**, plus the tool hand and offhand ([Equipment](Equipment.md)). Each slot holds one kind of item, any number of it. Slots limit how many kinds the survivor carries at once; weight limits how much ([#49](https://github.com/squeezy102/SqueezySurvival/issues/49)). Shown as the inventory's [grid](../UI/InventoryGrids.md#the-grids).
+
+## Item categories
+
+Every item belongs to one category. Categories group items in tooltips and sorting ("by type" sorts in this order):
+
+| Category | For example |
+|---|---|
+| Wood | Sticks, branches, logs, shavings, driftwood, bamboo |
+| Plant matter | Algae, seaweed, fronds, leaves, dry leaves, grass, bark |
+| Stone and minerals | Stones, flint, pumice, coral, clay, sand |
+| Shells | Seashells, conches, sand dollars |
+| Fruit | Coconuts, bananas, berries |
+| Vegetables | Roots, tubers, edible leaves |
+| Meat and fish | Raw and cooked meat, fish, crab meat |
+| Animal parts | Feathers, bones, hide, crab shells, starfish, sponges |
+| Animals | Live animals, such as a caught crab |
+| Carcasses | Whole dead animals, to be butchered |
+| Salvage | Washed-up man-made things: glass, rope, floats |
+| Crafting materials | Made intermediates: cordage, sharpened stones, planks |
+| Tools and weapons | Knives, axes, spears, slings |
+
+## Weight
 
 The survivor has a static personal weight limit. It does not grow with progression; carrying more requires carriers. All weight values (the personal limit, carrier capacities, item weights) are a delicate balancing lever and are set in a dedicated weight balancing session ([OQ-056](../OpenQuestions.md)).
 

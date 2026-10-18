@@ -5,16 +5,42 @@
     padding-bottom: 16px;
     padding-left: 16px;
     padding-right: 16px;
-    background-image: url("../../Art/Placeholder/PlaceholderBeachBackground.png");
     -unity-background-scale-mode: scale-and-crop;
+    /* Pixelify Sans, a pixel font (Docs/Design/ArtDirection.md, Font). Text properties are inherited by every child. */
+    -unity-font-definition: url("../../Art/Fonts/PixelifySans.ttf");
 }
 
 
 
+.hud-clock-row {
+    flex-direction: row;
+    align-items: center;
+}
+
+/* Sized in code to the painted dial at the interface's pixel scale. */
+.hud-day-night-dial {
+    flex-shrink: 0;
+    margin-right: 12px;
+}
+
 .hud-clock {
-    font-size: 30px;
+    flex-shrink: 1;
+}
+
+.hud-clock-day {
+    font-size: 22px;
+    color: rgb(250, 222, 130);
+}
+
+.hud-clock-time {
+    font-size: 34px;
     -unity-font-style: bold;
-    color: rgb(255, 255, 255);
+    color: rgb(240, 242, 250);
+}
+
+.hud-clock-phase {
+    font-size: 22px;
+    color: rgb(190, 200, 225);
 }
 
 .hud-time-buttons {
@@ -27,7 +53,215 @@
 .zone-name {
     font-size: 36px;
     -unity-font-style: bold;
-    color: rgb(255, 255, 255);
+    color: rgb(240, 242, 250);
+}
+
+.zone-bar-title {
+    flex-direction: row;
+    align-items: center;
+}
+
+.zone-exploration-progress {
+    margin-left: 16px;
+    font-size: 22px;
+    color: rgb(190, 200, 225);
+}
+
+/* The header sits one cell gap (8 px) above the grid, matching the gap between cells. */
+.panel-header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.panel-header > .panel-heading {
+    margin-bottom: 0;
+}
+
+.inventory-grid {
+    flex-grow: 1;
+    flex-basis: 0;
+}
+
+/* While choosing something to discard, every item cell is a target. */
+.inventory-grid--choosing .grid-cell:hover {
+    background-color: rgba(220, 80, 60, 0.45);
+}
+
+.inventory-row {
+    flex-grow: 1;
+    flex-basis: 0;
+    flex-direction: row;
+}
+
+/* Its width is set from the row's height in code, so its cells match the inventory's. */
+.hands-grid {
+    flex-grow: 0;
+    flex-basis: auto;
+}
+
+/* The hands are set well apart from the inventory: a wide gap on each side of a bold gold rule. */
+.hands-divider {
+    width: 6px;
+    margin-left: 24px;
+    margin-right: 24px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-left-color: rgb(14, 18, 40);
+    border-right-color: rgb(14, 18, 40);
+    background-color: rgb(222, 190, 110);
+}
+
+/* An empty hand slot shows a faint hand, so the slot reads as a hand at a glance. */
+.grid-slot-ghost {
+    opacity: 0.35;
+}
+
+.sort-controls {
+    flex-direction: row;
+}
+
+.sort-button {
+    height: 32px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    font-size: 18px;
+}
+
+.sort-menu-button {
+    width: 32px;
+    height: 32px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.sort-menu-arrow {
+    flex-grow: 1;
+}
+
+.ground-discard-hint {
+    display: none;
+    flex-grow: 1;
+    margin-left: 12px;
+    font-size: 18px;
+    -unity-font-style: italic;
+    color: rgb(255, 160, 140);
+}
+
+.ground-overflow-question {
+    font-size: 24px;
+    color: rgb(240, 242, 250);
+}
+
+/* A selected thing's slot is outlined in gold (Docs/Design/UI/InventoryGrids.md, Selecting). */
+.grid-cell--selected {
+    border-left-width: 3px;
+    border-right-width: 3px;
+    border-top-width: 3px;
+    border-bottom-width: 3px;
+    border-left-color: rgb(250, 222, 130);
+    border-right-color: rgb(250, 222, 130);
+    border-top-color: rgb(250, 222, 130);
+    border-bottom-color: rgb(250, 222, 130);
+}
+
+.grid-tooltip-header {
+    flex-direction: row;
+    align-items: center;
+}
+
+.grid-tooltip-icon {
+    margin-right: 10px;
+}
+
+.grid-tooltip-subtitle {
+    font-size: 16px;
+    -unity-font-style: italic;
+    color: rgb(80, 90, 130);
+}
+
+
+.grid-cell {
+}
+
+.grid-cell-icon {
+    position: absolute;
+    left: 10%;
+    top: 10%;
+    right: 10%;
+    bottom: 10%;
+}
+
+.grid-slot {
+}
+
+.grid-drop-target {
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+    border-left-color: rgb(250, 222, 130);
+    border-right-color: rgb(250, 222, 130);
+    border-top-color: rgb(250, 222, 130);
+    border-bottom-color: rgb(250, 222, 130);
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+.grid-dragged-icon {
+    opacity: 0.85;
+}
+
+.grid-tooltip {
+    position: absolute;
+    max-width: 360px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+.grid-tooltip-title {
+    font-size: 22px;
+    -unity-font-style: bold;
+    color: rgb(30, 40, 90);
+}
+
+.grid-tooltip-description {
+    margin-top: 4px;
+    margin-bottom: 6px;
+    font-size: 18px;
+    white-space: normal;
+    color: rgb(30, 34, 60);
+}
+
+.grid-tooltip-detail {
+    font-size: 18px;
+    color: rgb(50, 58, 90);
+}
+
+.grid-cell-count {
+    position: absolute;
+    right: 6px;
+    bottom: 2px;
+    padding: 0;
+    font-size: 20px;
+    -unity-font-style: bold;
+    -unity-text-align: lower-right;
+    color: rgb(240, 242, 250);
+    -unity-text-outline-width: 1px;
+    -unity-text-outline-color: rgb(0, 0, 0);
 }
 
 
@@ -40,7 +274,7 @@
 .event-log-entry {
     margin-bottom: 4px;
     font-size: 20px;
-    color: rgb(240, 240, 240);
+    color: rgb(240, 242, 250);
     white-space: normal;
 }
 
@@ -49,13 +283,13 @@
     margin-bottom: 6px;
     font-size: 22px;
     -unity-font-style: bold;
-    color: rgb(255, 214, 120);
+    color: rgb(250, 222, 130);
 }
 
 .placeholder-text {
     font-size: 20px;
     -unity-font-style: italic;
-    color: rgb(210, 210, 210);
+    color: rgb(190, 200, 225);
     white-space: normal;
 }
 
@@ -88,17 +322,12 @@
     padding-bottom: 28px;
     padding-left: 28px;
     padding-right: 28px;
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
-    border-bottom-left-radius: 12px;
-    border-bottom-right-radius: 12px;
-    background-color: rgb(30, 40, 52);
 }
 
 .pause-heading {
     font-size: 40px;
     -unity-font-style: bold;
-    color: rgb(255, 255, 255);
+    color: rgb(240, 242, 250);
     -unity-text-align: middle-center;
 }
 
@@ -106,7 +335,7 @@
     margin-top: 8px;
     margin-bottom: 16px;
     font-size: 22px;
-    color: rgb(255, 214, 120);
+    color: rgb(250, 222, 130);
     white-space: normal;
     -unity-text-align: middle-center;
 }
@@ -117,12 +346,23 @@
 }
 
 
+/* Square icon buttons: a 16 x 16 icon at 4x fits inside with room for the frame. */
 .nav-button {
-    height: 52px;
+    width: 72px;
+    height: 72px;
     margin-left: 0;
     margin-right: 0;
+    margin-top: 0;
     margin-bottom: 8px;
-    font-size: 20px;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+/* Pushes Options to the bottom of the bar, apart from the gameplay windows. */
+.nav-spacer {
+    flex-grow: 1;
 }
 
 /* Layout: every gap between panels and every screen margin is 16px. Growing regions use flex-basis 0, so
@@ -160,11 +400,6 @@
     padding-bottom: 12px;
     padding-left: 16px;
     padding-right: 16px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    background-color: rgba(18, 30, 42, 0.78);
 }
 
 .event-log-panel {
@@ -179,6 +414,12 @@
     justify-content: space-between;
 }
 
+.zone-features {
+    flex-grow: 1;
+    flex-basis: 0;
+    overflow: hidden;
+}
+
 .ground-pool {
     flex-grow: 1;
     flex-basis: 0;
@@ -190,5 +431,15 @@
 }
 
 .nav-bar {
-    width: 160px;
+    width: 104px;
+    align-items: center;
+}
+
+/* Buttons are drawn as pixel-art frames in code (Docs/Design/ArtDirection.md, Interface); their text is white. */
+.unity-button {
+    color: rgb(245, 245, 255);
+}
+
+.unity-button:disabled {
+    opacity: 0.45;
 }

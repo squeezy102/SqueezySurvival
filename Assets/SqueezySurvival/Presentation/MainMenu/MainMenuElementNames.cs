@@ -12,6 +12,9 @@ namespace SqueezySurvival.Presentation.MainMenu
         /// <summary>Instance of NewGameScreen.uxml.</summary>
         public const string NewGameScreen = "new-game-screen";
 
+        /// <summary>The Options screen template instance.</summary>
+        public const string OptionsScreen = "options-screen";
+
         /// <summary>Label in the bottom right that shows the game version.</summary>
         public const string VersionLabel = "version-label";
 

@@ -10,7 +10,7 @@ Death ends the run (resolves OQ-010). In a standard run the save is deleted; in 
 
 | Cause | Owner |
 |---|---|
-| The injury ceiling reaching zero | [Injuries and Health](Injuries.md#health) |
+| Maximum health reaching zero | [Injuries and Health](Injuries.md#health) |
 | Illness | Illness (planned) |
 | Freezing | [Survival Stats: body temperature](SurvivalStats.md#body-temperature) |
 

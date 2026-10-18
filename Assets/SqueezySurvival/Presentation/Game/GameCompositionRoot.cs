@@ -1,5 +1,9 @@
+using System;
+using SqueezySurvival.Core.Exploration;
+using SqueezySurvival.Core.Randomness;
 using SqueezySurvival.Core.Runs;
 using SqueezySurvival.Core.Time;
+using SqueezySurvival.Core.Zones;
 using SqueezySurvival.Presentation.Session;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -23,7 +27,13 @@ namespace SqueezySurvival.Presentation.Game
                 return;
             }
 
-            var session = new RunSession(configuration, DayPhaseSchedule.Default);
+            // A new seed each run. Saving the generator's state with the run belongs to saving (#2).
+            var randomNumberSource = new SystemRandomNumberSource(Environment.TickCount);
+            var session = new RunSession(
+                configuration,
+                DayPhaseSchedule.Default,
+                PlaceholderBeachZoneContent.Beach,
+                new ZoneExplorer(ExplorationRules.Wireframe, randomNumberSource));
             GetComponent<GameScreenController>().Bind(session);
         }
     }

@@ -30,6 +30,8 @@ namespace SqueezySurvival.Core.MainMenu
                     return MainMenuCommandOutcome.ShowNewGameScreen;
                 case MainMenuOption.Continue:
                     return MainMenuCommandOutcome.ContinueRun;
+                case MainMenuOption.Options:
+                    return MainMenuCommandOutcome.ShowOptionsScreen;
                 case MainMenuOption.Quit:
                     return MainMenuCommandOutcome.QuitApplication;
                 default:

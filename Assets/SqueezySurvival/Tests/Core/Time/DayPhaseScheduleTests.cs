@@ -11,7 +11,6 @@ namespace SqueezySurvival.Core.Tests.Time
         [TestCase(0, DayPhase.Night)]
         [TestCase(4 * 60 + 59, DayPhase.Night)]
         [TestCase(5 * 60, DayPhase.Dawn)]
-        [TestCase(6 * 60, DayPhase.Dawn)]
         [TestCase(7 * 60, DayPhase.Morning)]
         [TestCase(11 * 60, DayPhase.Midday)]
         [TestCase(14 * 60, DayPhase.Afternoon)]

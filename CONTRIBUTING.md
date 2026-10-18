@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for helping build SqueezySurvival. The project owner, squeezy102, has the final say on every change. Everyone taking part follows the [Code of Conduct](CODE_OF_CONDUCT.md).
+Thanks for helping build SqueezySurvival. New to git or coding? Read [Getting Started](GETTING_STARTED.md) first. The project owner, squeezy102, has the final say on every change. Everyone taking part follows the [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## How changes are made
 
@@ -18,14 +18,15 @@ Have an idea for the game, a question, or something you made? Start a thread in 
 
 ## Finding and reporting work
 
-Work is tracked in [GitHub Issues](https://github.com/squeezy102/SqueezySurvival/issues): user stories, bugs and tasks, each opened with a form. Pull requests reference the issue they finish (`Closes #3`). See [Work Tracking](Docs/Engineering/WorkTracking.md).
+Work is tracked in [GitHub Issues](https://github.com/squeezy102/SqueezySurvival/issues): user stories, bugs and tasks, each opened with a form. See [Work Tracking](Docs/Engineering/WorkTracking.md).
+
+**Issue numbers.** Every issue, pull request and discussion has a number, such as **#3**. In the issue list it appears in small gray text under the title (`squeezy102/SqueezySurvival#3`); on the issue's own page it follows the title. Refer to work by its number: typing `#3` in any comment, commit or pull request links to that issue, and pull requests list the issues they finish (`Closes #3`).
 
 ## Before you start
 
 - Using an AI assistant? Have it read [AGENTS.md](AGENTS.md) first; it is the baseline for LLM-assisted contributions.
-
 - Read [Docs/Home.md](Docs/Home.md), especially the documentation policy: **docs come first**, and a change is not done until every affected document is updated in the same pull request.
-- The project is in the **design phase**: no gameplay code is written until the core designs are concrete. Design ideas are proposed as pull requests to the design documents, or as new entries in [Open Questions](Docs/Design/OpenQuestions.md).
+- The project is a **playable wireframe**: code is written only for systems that are already designed. Design ideas are proposed as pull requests to the design documents, or as new entries in [Open Questions](Docs/Design/OpenQuestions.md).
 - Code follows [Coding Standards](Docs/Engineering/CodingStandards.md): testable, warning-free, descriptive names.
 
 ## Rights to contributions

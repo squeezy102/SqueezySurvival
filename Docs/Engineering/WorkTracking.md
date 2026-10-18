@@ -32,7 +32,7 @@ Discussions are never a source of truth: nothing is decided until it is in the d
 
 | Category | For | Who starts threads |
 |---|---|---|
-| Announcements | News from the project: releases, milestones | squeezy102 only ([GitHub Docs: categories](https://docs.github.com/en/discussions/managing-discussions-for-your-community/managing-categories-for-discussions)) |
+| Announcements | News from the project: releases, milestones, changes to how we work | squeezy102 only ([GitHub Docs: categories](https://docs.github.com/en/discussions/managing-discussions-for-your-community/managing-categories-for-discussions)) |
 | Ideas | Suggestions for the game, using the Ideas form | Anyone |
 | Polls | Quick votes on options | Anyone |
 | Q&A | Questions with an accepted answer, such as setup help | Anyone |
@@ -48,7 +48,7 @@ New issues use a form ([`.github/ISSUE_TEMPLATE/`](../../.github/ISSUE_TEMPLATE/
 | Type | Label | Use for |
 |---|---|---|
 | User story | `story` | A player-facing capability: "As a player, I want ..., so that ...", with acceptance criteria. |
-| Bug | `bug` | Something works differently than designed: steps, expected, actual, version. |
+| Bug | `bug` | Something works differently than designed: steps, expected, actual, version, severity, environment and design reference ([Testing and Quality Standards: defect reports](TestingStandards.md#defect-reports)). |
 | Task | `task` | Engineering, tooling or documentation work. |
 
 ## Labels and milestones
@@ -56,6 +56,7 @@ New issues use a form ([`.github/ISSUE_TEMPLATE/`](../../.github/ISSUE_TEMPLATE/
 - **Type:** `story`, `bug`, `task`; `question` for reports that turn out not to need work.
 - **Area:** `area: ui`, `area: time`, `area: saving`, `area: exploration`, `area: survival`, `area: tooling`. The existing `accessibility` and `documentation` labels are used as they read.
 - **Source:** `playtest` for anything found by playing a build.
+- **Newcomers:** `good first issue` for small, well-described work, and `help wanted` for work squeezy102 would welcome help with ([Getting Started](../../GETTING_STARTED.md#find-something-to-work-on)).
 - **Status:** `status: in progress` and `status: in development branch` (see the lifecycle below).
 - **Milestones:** `Wireframe` (a clickable wireframe of the core loop) and `MVP` (the game described in the [Game Design Document](../Design/GameDesignDocument.md)).
 

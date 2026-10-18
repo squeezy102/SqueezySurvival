@@ -34,7 +34,11 @@ namespace SqueezySurvival.Presentation.MainMenu
             string versionLabelText = GameVersionLabelFormatter.Format(Application.version, Application.isEditor);
 
             GetComponent<MainMenuScreenController>().Bind(
-                optionStateEvaluator, commandRouter, runInProgressLoader, GameSessionHost.Current.RunLaunchHandoff, versionLabelText);
+                optionStateEvaluator,
+                commandRouter,
+                runInProgressLoader,
+                GameSessionHost.Current.RunLaunchHandoff,
+                versionLabelText);
         }
     }
 }

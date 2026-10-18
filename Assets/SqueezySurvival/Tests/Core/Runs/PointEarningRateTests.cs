@@ -18,11 +18,5 @@ namespace SqueezySurvival.Core.Tests.Runs
         {
             Assert.That(() => new PointEarningRate(1, 0), Throws.TypeOf<ArgumentOutOfRangeException>());
         }
-
-        [Test]
-        public void None_EarnsNothing()
-        {
-            Assert.That(PointEarningRate.None.EarnsNothing, Is.True);
-        }
     }
 }

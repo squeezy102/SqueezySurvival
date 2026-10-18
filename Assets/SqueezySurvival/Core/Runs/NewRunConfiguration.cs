@@ -12,9 +12,6 @@ namespace SqueezySurvival.Core.Runs
         /// <summary>A run starts on Day 1 (Docs/Design/Systems/Time.md, Start of a run).</summary>
         public const int StartingDay = 1;
 
-        /// <summary>A run starts on the Beach (Docs/Design/Systems/Zones.md, MVP zones).</summary>
-        public const string StartingZoneName = "Beach";
-
         /// <summary>Creates a run configuration.</summary>
         public NewRunConfiguration(DominantHand dominantHand, RunOptions runOptions)
         {
