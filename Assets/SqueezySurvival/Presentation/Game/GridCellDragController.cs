@@ -18,6 +18,12 @@ namespace SqueezySurvival.Presentation.Game
         private const float DragStartDistance = 6f;
         private const float DraggedIconScale = 0.8f;
 
+        // How often a held drag is re-checked, so the combine hold completes even while the pointer is still.
+        private const long HoldCheckIntervalMilliseconds = 50;
+
+        // How long the message for a combine that can't happen stays up (Docs/Design/UI/DragAndDrop.md).
+        private const long CannotCombineMessageMilliseconds = 2000;
+
         private readonly InventoryGridView _view;
         private readonly IInventoryGridContents _contents;
         private readonly GridTooltipView _tooltip;
@@ -30,6 +36,9 @@ namespace SqueezySurvival.Presentation.Game
         private VisualElement _draggedIcon;
         private float _draggedIconSize;
         private GridDropOutcome _shownOutcome = GridDropOutcome.ReturnToPlace;
+        private readonly CombineHoldTimer _combineHoldTimer = new CombineHoldTimer();
+        private Vector2 _pointerPosition;
+        private IVisualElementScheduledItem _holdCheck;
 
         /// <summary>Creates the controller for one grid.</summary>
         public GridCellDragController(InventoryGridView view, IInventoryGridContents contents, GridTooltipView tooltip, VisualElement dragLayer)
@@ -104,14 +113,19 @@ namespace SqueezySurvival.Presentation.Game
                 StartDrag();
             }
 
+            _pointerPosition = position;
             MoveDraggedIcon(position);
-            GridDropOutcome outcome = _contents.ResolveDrop(_pressedSlot, TargetAt(position));
+            RefreshOutcome();
+            move.StopPropagation();
+        }
+
+        private void RefreshOutcome()
+        {
+            GridDropOutcome outcome = _contents.ResolveDrop(_pressedSlot, TargetAt(_pointerPosition));
             if (!SameOutcome(outcome, _shownOutcome))
             {
                 Show(outcome);
             }
-
-            move.StopPropagation();
         }
 
         private void OnPointerUp(PointerUpEvent up)
@@ -129,6 +143,14 @@ namespace SqueezySurvival.Presentation.Game
             {
                 _contents.ApplyDrop(sourceSlot, outcome);
             }
+            else if (outcome.Kind == GridDropOutcomeKind.CannotCombine)
+            {
+                // The thing goes back, and the player is told why by the slot it was held over.
+                _tooltip.ShowBriefly(
+                    new ThingTooltipContent(outcome.Title, string.Empty, outcome.Description, Array.Empty<string>()),
+                    _view.SlotWorldBound(outcome.AnchorSlot),
+                    CannotCombineMessageMilliseconds);
+            }
 
             up.StopPropagation();
         }
@@ -144,6 +166,7 @@ namespace SqueezySurvival.Presentation.Game
             _draggedIcon.style.width = _draggedIconSize;
             _draggedIcon.style.height = _draggedIconSize;
             _dragLayer.Add(_draggedIcon);
+            _holdCheck = _dragLayer.schedule.Execute(RefreshOutcome).Every(HoldCheckIntervalMilliseconds);
         }
 
         private void MoveDraggedIcon(Vector2 pointerWorldPosition)
@@ -156,14 +179,16 @@ namespace SqueezySurvival.Presentation.Game
         // Only the dragged cell's own grid accepts drops for now.
         private GridDropTarget TargetAt(Vector2 pointerWorldPosition)
         {
-            int slot = _view.SlotAtWorldPosition(pointerWorldPosition, out float x, out float y);
+            int slot = _view.SlotAtWorldPosition(pointerWorldPosition, out _, out _);
+            bool overAnotherThing = slot >= 0 && slot != _pressedSlot && _contents.IsOccupied(slot);
+            bool attemptsCombine = _combineHoldTimer.Update(overAnotherThing ? slot : -1, Time.unscaledTimeAsDouble);
             if (slot < 0)
             {
                 return GridDropTarget.Nowhere;
             }
 
             return _contents.IsOccupied(slot)
-                ? GridDropTarget.OccupiedSlot(slot, CellDropZoneClassifier.Classify(x, y))
+                ? GridDropTarget.OccupiedSlot(slot, attemptsCombine)
                 : GridDropTarget.EmptySlot(slot);
         }
 
@@ -197,6 +222,9 @@ namespace SqueezySurvival.Presentation.Game
 
         private void EndDrag()
         {
+            _holdCheck?.Pause();
+            _holdCheck = null;
+            _combineHoldTimer.Reset();
             _view.HideDropTarget();
 
             _tooltip.Hide();

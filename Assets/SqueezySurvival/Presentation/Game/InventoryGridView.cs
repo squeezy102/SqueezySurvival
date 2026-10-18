@@ -184,6 +184,11 @@ namespace SqueezySurvival.Presentation.Game
 
             cell.RegisterCallback<PointerEnterEvent>(_ =>
             {
+                if (_tooltip.IsShowingBriefMessage)
+                {
+                    return;
+                }
+
                 if (_slotChoice != null)
                 {
                     _tooltip.Show(_slotChoice.Preview(slot), cell.worldBound);
@@ -195,7 +200,7 @@ namespace SqueezySurvival.Presentation.Game
             });
             cell.RegisterCallback<PointerLeaveEvent>(_ =>
             {
-                if (!_dragController.IsDragging)
+                if (!_dragController.IsDragging && !_tooltip.IsShowingBriefMessage)
                 {
                     _tooltip.Hide();
                 }

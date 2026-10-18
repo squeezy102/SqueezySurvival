@@ -26,9 +26,9 @@ namespace SqueezySurvival.Core.Tests.DragAndDrop
             new GridDropOutcomeResolver(rules ?? new NoThingCombinations()).Resolve(ThreeThings(), 2, target);
 
         [Test]
-        public void EdgeOfAnotherThing_Swaps()
+        public void QuickDropOnAnotherThing_Swaps()
         {
-            GridDropOutcome outcome = Resolve(GridDropTarget.OccupiedSlot(0, CellDropZone.Edge));
+            GridDropOutcome outcome = Resolve(GridDropTarget.OccupiedSlot(0, attemptsCombine: false));
 
             Assert.That(outcome.Kind, Is.EqualTo(GridDropOutcomeKind.Swap));
             Assert.That(outcome.TargetSlot, Is.EqualTo(0));
@@ -36,11 +36,11 @@ namespace SqueezySurvival.Core.Tests.DragAndDrop
             Assert.That(outcome.Description, Is.EqualTo("The scissors and the rock trade places."));
         }
 
-        [TestCase(CellDropZone.Edge)]
-        [TestCase(CellDropZone.Center)]
-        public void OverItself_IsNoChange(CellDropZone zone)
+        [TestCase(false)]
+        [TestCase(true)]
+        public void OverItself_IsNoChange(bool attemptsCombine)
         {
-            Assert.That(Resolve(GridDropTarget.OccupiedSlot(2, zone)).Kind, Is.EqualTo(GridDropOutcomeKind.NoChange));
+            Assert.That(Resolve(GridDropTarget.OccupiedSlot(2, attemptsCombine)).Kind, Is.EqualTo(GridDropOutcomeKind.NoChange));
         }
 
         [Test]
@@ -60,9 +60,9 @@ namespace SqueezySurvival.Core.Tests.DragAndDrop
         }
 
         [Test]
-        public void Center_WithoutRecipe_CannotCombine()
+        public void HeldOverAnotherThing_WithoutRecipe_CannotCombine()
         {
-            GridDropOutcome outcome = Resolve(GridDropTarget.OccupiedSlot(1, CellDropZone.Center));
+            GridDropOutcome outcome = Resolve(GridDropTarget.OccupiedSlot(1, attemptsCombine: true));
 
             Assert.That(outcome.Kind, Is.EqualTo(GridDropOutcomeKind.CannotCombine));
             Assert.That(outcome.Description, Is.EqualTo("The scissors and the paper can't be combined."));
@@ -70,9 +70,9 @@ namespace SqueezySurvival.Core.Tests.DragAndDrop
         }
 
         [Test]
-        public void Center_WithRecipe_Combines()
+        public void HeldOverAnotherThing_WithRecipe_Combines()
         {
-            GridDropOutcome outcome = Resolve(GridDropTarget.OccupiedSlot(1, CellDropZone.Center), new EverythingCombines());
+            GridDropOutcome outcome = Resolve(GridDropTarget.OccupiedSlot(1, attemptsCombine: true), new EverythingCombines());
 
             Assert.That(outcome.Kind, Is.EqualTo(GridDropOutcomeKind.Combine));
             Assert.That(outcome.Description, Is.EqualTo("Combine: scissors + paper."));

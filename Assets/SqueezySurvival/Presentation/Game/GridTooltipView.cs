@@ -19,6 +19,7 @@ namespace SqueezySurvival.Presentation.Game
         private readonly Label _description;
         private readonly VisualElement _details;
         private Rect _anchorCellWorldBound;
+        private IVisualElementScheduledItem _scheduledHide;
 
         /// <summary>Binds the tooltip element. It starts hidden.</summary>
         public GridTooltipView(VisualElement tooltip)
@@ -39,6 +40,7 @@ namespace SqueezySurvival.Presentation.Game
         /// <summary>Shows the content next to a cell, given in world (panel) coordinates.</summary>
         public void Show(ThingTooltipContent content, Rect cellWorldBound)
         {
+            CancelScheduledHide();
             _title.text = content.Title;
             _subtitle.text = content.Subtitle;
             _subtitle.style.display = content.Subtitle.Length > 0 ? DisplayStyle.Flex : DisplayStyle.None;
@@ -56,10 +58,27 @@ namespace SqueezySurvival.Presentation.Game
             PlaceBesideAnchor();
         }
 
+        /// <summary>Whether a brief message is up; hovering does not replace it until it goes.</summary>
+        public bool IsShowingBriefMessage => _scheduledHide != null;
+
+        /// <summary>Shows the content next to a cell, then hides it after the given time unless replaced first.</summary>
+        public void ShowBriefly(ThingTooltipContent content, Rect cellWorldBound, long milliseconds)
+        {
+            Show(content, cellWorldBound);
+            _scheduledHide = _tooltip.schedule.Execute(Hide).StartingIn(milliseconds);
+        }
+
         /// <summary>Hides the tooltip.</summary>
         public void Hide()
         {
+            CancelScheduledHide();
             _tooltip.style.display = DisplayStyle.None;
+        }
+
+        private void CancelScheduledHide()
+        {
+            _scheduledHide?.Pause();
+            _scheduledHide = null;
         }
 
         // Right of the cell when it fits, otherwise left of it; always kept inside the screen.

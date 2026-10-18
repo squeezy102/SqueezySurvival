@@ -16,22 +16,21 @@ How the player moves things around in [inventory grids](InventoryGrids.md): to r
 - A drag starts once the pointer has moved 6 px with the button held, so a plain click stays a click.
 - Escape cancels the drag.
 
-## Drop zones
+## Moving, swapping and combining
 
-Grids work like Diablo's inventory ([#49](https://github.com/squeezy102/SqueezySurvival/issues/49)). Over an occupied cell, a drag distinguishes the center from the rest of the cell. The player never sees the border; they see what dropping there would do.
-
-- **Center:** the middle 30% of the cell in each direction.
-- **The rest of the cell:** everything outside the center.
+Grids work like Diablo's inventory ([#49](https://github.com/squeezy102/SqueezySurvival/issues/49)). A quick drag and drop rearranges; holding the thing over another for a moment turns the drop into an attempt to combine.
 
 | Let go over | What happens | Tooltip |
 |---|---|---|
 | An empty slot | The thing moves into it; its old slot is left empty. | "Move. Put the lizard here." |
-| Another thing, outside its center | The two **swap** slots. Nothing else moves. | "Swap. The lizard and the paper trade places." |
-| The center of another thing | They **combine**, if they can (see below). | What the combination makes, or "Can't combine. The lizard and the paper can't be combined." |
+| Another thing | The two **swap** slots. Nothing else moves. | "Swap. The lizard and the paper trade places." |
+| Another thing, after holding over it for **1 second** | They **combine**, if they can (see below). | What the combination makes, or "Can't combine. The lizard and the paper can't be combined." |
 | Itself | Nothing. | "No change. It stays where it is." |
 | Anywhere else, including another panel | Nothing. | - |
 
-While dragging, an outline marks the slot the thing will go to or combine with. Nothing in the grid moves until release.
+- The hold starts when the pointer enters another thing's cell and resets when it leaves; moving within the cell does not reset it. The tooltip changes from Swap to the combine preview when the second is up. The time is a placeholder, to be tuned in play.
+- **A combine that can't happen changes nothing:** on release the thing goes back to its slot, and a message by that slot says so ("The lizard and the paper can't be combined.") for 2 seconds. Nothing is logged.
+- While dragging, an outline marks the slot the thing will go to or combine with. Nothing in the grid moves until release.
 
 ### Top and bottom edges: bulk moves (planned)
 
@@ -44,7 +43,7 @@ Built with the inventory ([#6](https://github.com/squeezy102/SqueezySurvival/iss
 
 ## Combining
 
-Dropping one thing on the center of another combines them when a recipe allows it: for example a stone on a stone to make a sharpened stone, or a sharpened stone on a crab to get crab meat. Recipes, their results and their time costs belong to crafting, which is not designed yet; until then nothing combines, and the preview says so.
+Holding one thing over another and letting go combines them when a recipe allows it: for example a stone on a stone to make a sharpened stone, or a sharpened stone on a crab to get crab meat. Recipes, their results and their time costs belong to crafting, which is not designed yet; until then nothing combines, and the preview says so.
 
 ## Accessibility
 
@@ -52,6 +51,6 @@ Every drag needs an alternative that needs neither a drag nor a held button ([Co
 
 ## Implementation notes
 
-- Drop zones, outcomes and their wording are decided in Core (`CellDropZoneClassifier`, `GridDropOutcomeResolver`) and unit tested; the presentation layer reports where the pointer is and carries out the outcome Core returns.
+- The hold, outcomes and their wording are decided in Core (`CombineHoldTimer`, `GridDropOutcomeResolver`) and unit tested; the presentation layer reports where the pointer is and how much time has passed, and carries out the outcome Core returns.
 - Slots live in Core: `CountedCollection.MoveToSlot` moves a thing into an empty slot or swaps it with the thing there.
 - Which things combine is asked of an `IThingCombinationRules`; the wireframe's rules combine nothing.

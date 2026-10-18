@@ -19,7 +19,7 @@ namespace SqueezySurvival.Core.DragAndDrop
 
         /// <summary>
         /// The outcome of releasing the thing in <paramref name="sourceSlot"/> over <paramref name="target"/>: into an
-        /// empty slot; swapped with another thing; or combined with it, over its center.
+        /// empty slot; swapped with another thing; or combined with it, once held over it long enough.
         /// </summary>
         public GridDropOutcome Resolve<TDefinition>(CountedCollection<TDefinition> collection, int sourceSlot, GridDropTarget target)
             where TDefinition : class, ICountableThingDefinition
@@ -43,7 +43,7 @@ namespace SqueezySurvival.Core.DragAndDrop
                     return new GridDropOutcome(
                         GridDropOutcomeKind.Move, target.Slot, target.Slot, $"Put the {Lower(dragged.Definition)} here.");
                 case GridDropTargetKind.OccupiedSlot:
-                    return ResolveOverOccupiedSlot(collection.EntryAtSlot(target.Slot), dragged, target.Zone);
+                    return ResolveOverOccupiedSlot(collection.EntryAtSlot(target.Slot), dragged, target.AttemptsCombine);
                 default:
                     return GridDropOutcome.ReturnToPlace;
             }
@@ -52,7 +52,7 @@ namespace SqueezySurvival.Core.DragAndDrop
         private GridDropOutcome ResolveOverOccupiedSlot<TDefinition>(
             CountedEntry<TDefinition> hovered,
             CountedEntry<TDefinition> dragged,
-            CellDropZone zone)
+            bool attemptsCombine)
             where TDefinition : class, ICountableThingDefinition
         {
             if (hovered.Slot == dragged.Slot)
@@ -60,7 +60,7 @@ namespace SqueezySurvival.Core.DragAndDrop
                 return NoChange(hovered.Slot);
             }
 
-            if (zone == CellDropZone.Center)
+            if (attemptsCombine)
             {
                 return _combinationRules.TryCombine(dragged.Definition, hovered.Definition, out string combination)
                     ? new GridDropOutcome(GridDropOutcomeKind.Combine, -1, hovered.Slot, combination)
