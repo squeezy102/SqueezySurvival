@@ -12,6 +12,7 @@ namespace SqueezySurvival.Presentation.PixelArt
     public sealed class PixelArtTextureCache : IDisposable
     {
         private readonly Dictionary<string, Texture2D> _iconTextures = new Dictionary<string, Texture2D>();
+        private readonly Dictionary<string, Texture2D> _navigationIconTextures = new Dictionary<string, Texture2D>();
         private readonly Dictionary<PixelFrameStyle, Texture2D> _frameTextures = new Dictionary<PixelFrameStyle, Texture2D>();
         private Texture2D _beachBackdrop;
 
@@ -25,6 +26,18 @@ namespace SqueezySurvival.Presentation.PixelArt
             {
                 texture = ToTexture(PlaceholderIconCatalog.CreateIcon(definitionId), definitionId);
                 _iconTextures.Add(definitionId, texture);
+            }
+
+            return texture;
+        }
+
+        /// <summary>The icon of a nav bar button, by its id in <see cref="NavigationIconCatalog"/>.</summary>
+        public Texture2D NavigationIcon(string iconId)
+        {
+            if (!_navigationIconTextures.TryGetValue(iconId, out Texture2D texture))
+            {
+                texture = ToTexture(NavigationIconCatalog.CreateIcon(iconId), iconId);
+                _navigationIconTextures.Add(iconId, texture);
             }
 
             return texture;
@@ -55,6 +68,11 @@ namespace SqueezySurvival.Presentation.PixelArt
                 UnityEngine.Object.Destroy(texture);
             }
 
+            foreach (Texture2D texture in _navigationIconTextures.Values)
+            {
+                UnityEngine.Object.Destroy(texture);
+            }
+
             foreach (Texture2D texture in _frameTextures.Values)
             {
                 UnityEngine.Object.Destroy(texture);
@@ -67,6 +85,7 @@ namespace SqueezySurvival.Presentation.PixelArt
             }
 
             _iconTextures.Clear();
+            _navigationIconTextures.Clear();
             _frameTextures.Clear();
         }
 

@@ -3,9 +3,11 @@ using SqueezySurvival.Core.DragAndDrop;
 using SqueezySurvival.Core.EventLog;
 using SqueezySurvival.Core.InventoryGrids;
 using SqueezySurvival.Core.Items;
+using SqueezySurvival.Core.Navigation;
 using SqueezySurvival.Core.Runs;
 using SqueezySurvival.Core.Time;
 using SqueezySurvival.Core.Zones;
+using SqueezySurvival.Presentation.Icons;
 using SqueezySurvival.Presentation.Options;
 using SqueezySurvival.Presentation.PixelArt;
 using SqueezySurvival.Presentation.Session;
@@ -63,8 +65,8 @@ namespace SqueezySurvival.Presentation.Game
             _eventLogEntries.contentContainer.RegisterCallback<GeometryChangedEvent>(_ => ScrollEventLogToNewest());
             root.Q<Label>("zone-name").text = session.CurrentZone.Name;
             _explorationProgressLabel = root.Q<Label>("zone-exploration-progress");
-            var gridTooltip = new GridTooltipView(root.Q<VisualElement>("grid-tooltip"));
             _pixelArtTextures = new PixelArtTextureCache();
+            var gridTooltip = new GridTooltipView(root.Q<VisualElement>("grid-tooltip"), _pixelArtTextures);
             var skin = new PixelArtInterfaceSkin(_pixelArtTextures);
             var dropOutcomeResolver = new GridDropOutcomeResolver(new NoThingCombinations());
             VisualElement dragLayer = root.Q<VisualElement>("game-screen-root");
@@ -137,8 +139,14 @@ namespace SqueezySurvival.Presentation.Game
             _notBuiltNoticeCloseButton.clicked += HideNotBuiltNotice;
             _notBuiltNotice.style.display = DisplayStyle.None;
             _navOptionsButton = root.Q<Button>("nav-options-button");
+            BindNavIconAndTooltip(_navOptionsButton, NavigationBarEntries.Options, gridTooltip);
             _navOptionsButton.clicked += () => ShowOptionsScreen(openedFromPauseMenu: false);
-            root.Q<VisualElement>("nav-bar").Query<Button>().Where(button => button != _navOptionsButton).ForEach(BindNavButton);
+            foreach (NavigationBarEntry entry in NavigationBarEntries.GameplayWindows)
+            {
+                Button button = root.Q<Button>($"nav-{entry.Key}-button");
+                BindNavIconAndTooltip(button, entry, gridTooltip);
+                BindNotBuiltNavButton(button, entry);
+            }
 
             _pauseMenu = root.Q<VisualElement>("pause-menu");
             _saveAndExitButton = root.Q<Button>("save-and-exit-button");
@@ -261,12 +269,22 @@ namespace SqueezySurvival.Presentation.Game
         }
 
         // Every window behind the nav bar is unbuilt at the wireframe stage (Docs/Design/UI/ScreenLayout.md).
-        private void BindNavButton(Button button)
+        private void BindNavIconAndTooltip(Button button, NavigationBarEntry entry, GridTooltipView tooltip)
+        {
+            button.Add(new PixelIconElement(_pixelArtTextures.NavigationIcon(entry.IconId)));
+            string[] details = entry.AvailabilityNote.Length > 0 ? new[] { entry.AvailabilityNote } : Array.Empty<string>();
+            var content = new ThingTooltipContent(entry.Name, string.Empty, entry.Description, details);
+            button.RegisterCallback<PointerEnterEvent>(_ => tooltip.Show(content, button.worldBound));
+            button.RegisterCallback<PointerLeaveEvent>(_ => tooltip.Hide());
+            button.clicked += tooltip.Hide;
+        }
+
+        private void BindNotBuiltNavButton(Button button, NavigationBarEntry entry)
         {
             button.clicked += () =>
             {
                 _lastChosenNavButton = button;
-                _notBuiltNoticeText.text = $"{button.text} isn't built yet.";
+                _notBuiltNoticeText.text = $"{entry.Name} isn't built yet.";
                 _notBuiltNotice.style.display = DisplayStyle.Flex;
                 _notBuiltNoticeCloseButton.Focus();
             };
@@ -285,6 +303,10 @@ namespace SqueezySurvival.Presentation.Game
             {
                 // Escape during a drag only cancels the drag (Docs/Design/UI/DragAndDrop.md, Dragging).
                 Array.ForEach(grids, grid => grid.CancelDrag());
+            }
+            else if (Array.Exists(grids, grid => grid.HasSelection))
+            {
+                Array.ForEach(grids, grid => grid.ClearSelection());
             }
             else if (_groundOverflowPrompt.IsChoosingDiscard)
             {

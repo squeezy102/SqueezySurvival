@@ -164,11 +164,13 @@ namespace SqueezySurvival.Presentation.Game
 
         private void StartDrag()
         {
+            // Moving a thing ends any selection in this grid (Docs/Design/UI/InventoryGrids.md, Selecting).
+            _view.ClearSelection();
             _tooltip.Hide();
 
             // The same whole-pixel size as the icon in its cell, so the art pixels don't change size when picked up.
             _draggedIconSize = PixelIconElement.WholePixelSize(_view.CurrentLayout.CellSize);
-            _draggedIcon = new PixelIconElement(_contents.DefinitionIdAt(_pressedSlot), _textures, fitsParent: false);
+            _draggedIcon = new PixelIconElement(_textures.Icon(_contents.DefinitionIdAt(_pressedSlot)), fitsParent: false);
             _draggedIcon.AddToClassList("grid-dragged-icon");
             _draggedIcon.style.position = Position.Absolute;
             _draggedIcon.style.width = _draggedIconSize;

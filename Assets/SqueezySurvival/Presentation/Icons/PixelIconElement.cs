@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 namespace SqueezySurvival.Presentation.Icons
 {
     /// <summary>
-    /// Shows the 16 x 16 pixel icon of one item or zone feature, centered in its parent at the largest whole-number
+    /// Shows a 16 x 16 pixel icon, such as an item's or a nav button's, centered in its parent at the largest whole-number
     /// scale that fits, so every art pixel is the same size (Docs/Design/ArtDirection.md, Icons).
     /// </summary>
     public sealed class PixelIconElement : VisualElement
@@ -17,20 +17,19 @@ namespace SqueezySurvival.Presentation.Icons
 
         private VisualElement _observedParent;
 
-        /// <summary>Creates the icon for the thing with the given definition id.</summary>
-        /// <param name="definitionId">Which thing's icon to show.</param>
-        /// <param name="textures">Where icon textures come from.</param>
+        /// <summary>Creates an element showing the given icon texture.</summary>
+        /// <param name="icon">The icon, from a <see cref="PixelArtTextureCache"/>.</param>
         /// <param name="fitsParent">Whether the icon sizes and centers itself in its parent; false when its owner places it.</param>
-        public PixelIconElement(string definitionId, PixelArtTextureCache textures, bool fitsParent = true)
+        public PixelIconElement(Texture2D icon, bool fitsParent = true)
         {
-            if (textures == null)
+            if (icon == null)
             {
-                throw new ArgumentNullException(nameof(textures));
+                throw new ArgumentNullException(nameof(icon));
             }
 
             pickingMode = PickingMode.Ignore;
             style.position = Position.Absolute;
-            style.backgroundImage = Background.FromTexture2D(textures.Icon(definitionId));
+            style.backgroundImage = Background.FromTexture2D(icon);
             if (fitsParent)
             {
                 RegisterCallback<AttachToPanelEvent>(_ => ObserveParent());

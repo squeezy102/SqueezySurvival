@@ -126,6 +126,27 @@
     color: rgb(240, 242, 250);
 }
 
+/* A selected thing's slot is outlined in gold (Docs/Design/UI/InventoryGrids.md, Selecting). */
+.grid-cell--selected {
+    border-left-width: 3px;
+    border-right-width: 3px;
+    border-top-width: 3px;
+    border-bottom-width: 3px;
+    border-left-color: rgb(250, 222, 130);
+    border-right-color: rgb(250, 222, 130);
+    border-top-color: rgb(250, 222, 130);
+    border-bottom-color: rgb(250, 222, 130);
+}
+
+.grid-tooltip-header {
+    flex-direction: row;
+    align-items: center;
+}
+
+.grid-tooltip-icon {
+    margin-right: 10px;
+}
+
 .grid-tooltip-subtitle {
     font-size: 16px;
     -unity-font-style: italic;
@@ -289,12 +310,23 @@
 }
 
 
+/* Square icon buttons: a 16 x 16 icon at 4x fits inside with room for the frame. */
 .nav-button {
-    height: 52px;
+    width: 72px;
+    height: 72px;
     margin-left: 0;
     margin-right: 0;
+    margin-top: 0;
     margin-bottom: 8px;
-    font-size: 20px;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+/* Pushes Options to the bottom of the bar, apart from the gameplay windows. */
+.nav-spacer {
+    flex-grow: 1;
 }
 
 /* Layout: every gap between panels and every screen margin is 16px. Growing regions use flex-basis 0, so
@@ -363,7 +395,8 @@
 }
 
 .nav-bar {
-    width: 160px;
+    width: 104px;
+    align-items: center;
 }
 
 /* Buttons are drawn as pixel-art frames in code (Docs/Design/ArtDirection.md, Interface); their text is white. */

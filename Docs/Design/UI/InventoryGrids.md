@@ -41,12 +41,24 @@ The ground and inventory panels have a **Sort** button in their header, labeled 
 - The default order is **by type**: grouped by [item category](../Systems/Inventory.md#item-categories) in the order listed there, then by name.
 - The arrow beside Sort opens the other orders: **alphabetical**, **by quantity** (most first) and **by weight** (heaviest stack first). Choosing one sorts at once and becomes that panel's order for the Sort button.
 
+## Selecting
+
+Clicking a thing **selects** it: a gold outline marks its slot, and its tooltip stays open ([#56](https://github.com/squeezy102/SqueezySurvival/issues/56)). The selection ends, and the tooltip closes, when the player:
+
+- clicks anywhere else, including another thing (which selects that one instead) or any button;
+- starts dragging any thing;
+- presses Escape; or
+- does something that changes the grid, such as exploring or sorting.
+
+While a thing is selected, hovering over others does not replace its tooltip.
+
 ## Tooltips
 
 Hovering over a cell shows a tooltip beside it ([#43](https://github.com/squeezy102/SqueezySurvival/issues/43)):
 
 | Line | Example |
 |---|---|
+| Icon | The thing's icon beside its name, one whole-pixel step larger than in its slot ([#55](https://github.com/squeezy102/SqueezySurvival/issues/55)) |
 | Name | Stone |
 | Category (items) | Stone and minerals |
 | Description | A fist-sized stone, smooth from the surf. |

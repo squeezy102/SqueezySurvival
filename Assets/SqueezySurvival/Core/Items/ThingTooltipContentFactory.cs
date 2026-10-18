@@ -28,7 +28,7 @@ namespace SqueezySurvival.Core.Items
                 details.Add($"Stack of {entry.Count.ToString(CultureInfo.InvariantCulture)}: {WeightTextFormatter.FormatPounds(item.WeightPounds * entry.Count)}");
             }
 
-            return new ThingTooltipContent(entry.Definition.Name, subtitle, entry.Definition.Description, details);
+            return new ThingTooltipContent(entry.Definition.Name, subtitle, entry.Definition.Description, details, entry.Definition.Id);
         }
     }
 }

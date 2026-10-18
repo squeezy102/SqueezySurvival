@@ -35,7 +35,7 @@ The main gameplay screen. Every region follows [Pillar 4: clarity](../GameDesign
 | Ground pool | Center, lower | Items on the ground in the zone ([Zones: ground pool](../Systems/Zones.md#ground-pool)). |
 | Event log | Lower left | See [HUD: event log](HUD.md#event-log). |
 | Inventory | Bottom | The survivor's inventory. Collapsible. |
-| Nav bar | Right edge | Slim icon bar that expands on hover or click. Each icon opens a gameplay window: crafting, cooking, equipment, research, quests and others. If the player wants to do something, it is probably here. |
+| Nav bar | Right edge | Slim bar of icon buttons. Each opens a gameplay window: crafting, cooking, equipment, research, quests and others. If the player wants to do something, it is probably here. Hovering a button shows a tooltip with its name and what it is for. Options sits apart at the bottom ([#54](https://github.com/squeezy102/SqueezySurvival/issues/54)). |
 
 ## HUD detail window
 
@@ -66,7 +66,7 @@ Spacing is uniform: every panel is inset 16 px from the screen edge and separate
 | Zone features, ground pool | Two panels, "Zone features" above "On the ground", each a fixed 16 x 4 grid of what exploring has found ([Inventory Grids](InventoryGrids.md)). The ground has Sort with its order menu, and asks what to discard when it is full. | Filtering. |
 | Event log | Every action is logged with its time, starting with waking on the beach. | - |
 | Inventory | The 2 hand slots, set apart on the far left, and 8 inventory slots, with Sort ([Inventory Grids](InventoryGrids.md#the-grids)). | Empty: nothing can be picked up yet. |
-| Nav bar | Buttons for Inventory, Map, Crafting, Skills, Research, Equipment, Cooking and Options. Options opens the [Options](Options.md) screen. | The others open a notice that their window isn't built yet. Shown expanded with text labels until icons exist. |
+| Nav bar | Icon buttons, top to bottom: Inventory (a bag), Map (a map), Crafting (a hammer and anvil), Skills (a book), Research (a vial and an atom), Equipment (a crossed sword and pickaxe) and Cooking (a steaming pot); then, apart at the bottom, Options (a gear), which opens the [Options](Options.md) screen. Each shows a tooltip on hover. The bar is 104 px wide; the panels to its left take the space. | The gameplay windows open a notice that they aren't built yet, and their tooltips say so. |
 
 Escape opens a pause menu holding **Options** ([Options](Options.md)) and **Save and exit**, the one way out of a run ([Runs: saving](../Systems/Runs.md#saving)). Escape again closes it. Saving does not exist yet, so for now Save and exit returns to the main menu without keeping the run, and the menu says so.
 

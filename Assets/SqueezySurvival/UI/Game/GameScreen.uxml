@@ -61,14 +61,15 @@
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="nav-bar" class="panel nav-bar">
-            <ui:Button name="nav-inventory-button" text="Inventory" class="nav-button" />
-            <ui:Button name="nav-map-button" text="Map" class="nav-button" />
-            <ui:Button name="nav-crafting-button" text="Crafting" class="nav-button" />
-            <ui:Button name="nav-skills-button" text="Skills" class="nav-button" />
-            <ui:Button name="nav-research-button" text="Research" class="nav-button" />
-            <ui:Button name="nav-equipment-button" text="Equipment" class="nav-button" />
-            <ui:Button name="nav-cooking-button" text="Cooking" class="nav-button" />
-            <ui:Button name="nav-options-button" text="Options" class="nav-button" />
+            <ui:Button name="nav-inventory-button" class="nav-button" />
+            <ui:Button name="nav-map-button" class="nav-button" />
+            <ui:Button name="nav-crafting-button" class="nav-button" />
+            <ui:Button name="nav-skills-button" class="nav-button" />
+            <ui:Button name="nav-research-button" class="nav-button" />
+            <ui:Button name="nav-equipment-button" class="nav-button" />
+            <ui:Button name="nav-cooking-button" class="nav-button" />
+            <ui:VisualElement class="nav-spacer" />
+            <ui:Button name="nav-options-button" class="nav-button" />
         </ui:VisualElement>
         <ui:VisualElement name="not-built-notice" class="pause-overlay">
             <ui:VisualElement class="pause-panel pixel-window">
@@ -94,8 +95,13 @@
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="grid-tooltip" class="grid-tooltip">
-            <ui:Label name="grid-tooltip-title" class="grid-tooltip-title" />
-            <ui:Label name="grid-tooltip-subtitle" class="grid-tooltip-subtitle" />
+            <ui:VisualElement class="grid-tooltip-header">
+                <ui:VisualElement name="grid-tooltip-icon" class="grid-tooltip-icon" />
+                <ui:VisualElement class="grid-tooltip-heading">
+                    <ui:Label name="grid-tooltip-title" class="grid-tooltip-title" />
+                    <ui:Label name="grid-tooltip-subtitle" class="grid-tooltip-subtitle" />
+                </ui:VisualElement>
+            </ui:VisualElement>
             <ui:Label name="grid-tooltip-description" class="grid-tooltip-description" />
             <ui:VisualElement name="grid-tooltip-details" />
         </ui:VisualElement>
