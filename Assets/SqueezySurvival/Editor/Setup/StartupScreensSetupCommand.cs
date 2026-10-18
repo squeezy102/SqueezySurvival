@@ -14,7 +14,6 @@ namespace SqueezySurvival.Editor.Setup
     public static class StartupScreensSetupCommand
     {
         public const string MenuPath = "SqueezySurvival/Setup/Configure Startup Screens";
-        public const string BackgroundTexturePath = "Assets/SqueezySurvival/Art/Placeholder/PlaceholderBeachBackground.png";
         public const string StudioLogoTexturePath = "Assets/SqueezySurvival/Art/Placeholder/PlaceholderStudioLogo.png";
         public const string ThemeStyleSheetPath = "Assets/SqueezySurvival/UI/Themes/SqueezySurvivalRuntimeTheme.tss";
         public const string MainMenuLayoutPath = "Assets/SqueezySurvival/UI/MainMenu/MainMenu.uxml";
@@ -30,7 +29,6 @@ namespace SqueezySurvival.Editor.Setup
                 return;
             }
 
-            ImportBackgroundAsTexture();
             ImportStudioLogoAsSprite();
             ConfigureSplashScreen();
             CreateOrUpdatePanelSettings();
@@ -44,16 +42,6 @@ namespace SqueezySurvival.Editor.Setup
             UiSceneBuilder.ApplyBuildSceneList();
 
             Debug.Log($"Startup screens configured. Main menu scene: {UiSceneBuilder.MainMenuScenePath}.");
-        }
-
-        private static void ImportBackgroundAsTexture()
-        {
-            TextureImporter importer = GetTextureImporter(BackgroundTexturePath);
-            importer.textureType = TextureImporterType.Default;
-            importer.npotScale = TextureImporterNPOTScale.None;
-            importer.mipmapEnabled = false;
-            importer.wrapMode = TextureWrapMode.Clamp;
-            importer.SaveAndReimport();
         }
 
         private static void ImportStudioLogoAsSprite()

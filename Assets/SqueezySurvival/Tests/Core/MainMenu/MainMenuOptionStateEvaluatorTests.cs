@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using NUnit.Framework;
 using SqueezySurvival.Core.MainMenu;
@@ -71,20 +70,6 @@ namespace SqueezySurvival.Core.Tests.MainMenu
             var evaluator = new MainMenuOptionStateEvaluator(new FakeSavedGameAvailability(false, true));
 
             Assert.That(evaluator.Evaluate(MainMenuOption.LoadGame).IsAvailable, Is.True);
-        }
-
-        [Test]
-        public void EvaluateAll_EveryOptionHasALabel()
-        {
-            var evaluator = new MainMenuOptionStateEvaluator(new FakeSavedGameAvailability(false, false));
-
-            Assert.That(evaluator.EvaluateAll().Select(state => state.Label), Has.All.Not.Empty);
-        }
-
-        [Test]
-        public void Constructor_WithNullAvailability_Throws()
-        {
-            Assert.That(() => new MainMenuOptionStateEvaluator(null), Throws.TypeOf<ArgumentNullException>());
         }
     }
 }

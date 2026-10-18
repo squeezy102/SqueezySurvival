@@ -5,6 +5,7 @@ The single source of truth for the design, engineering and decisions behind Sque
 ## Design
 
 - [Game Design Document](Design/GameDesignDocument.md) - vision, pillars, core loop, MVP scope.
+- [Art Direction](Design/ArtDirection.md) - 16-bit pixel art icons and a wood-and-parchment interface.
 - [Open Questions](Design/OpenQuestions.md) - design questions still waiting for an answer.
 - [Question Log](Design/QuestionLog.md) - every design question in ID order, with its status and resolution.
 - [Glossary](Glossary.md) - canonical game terms.
@@ -40,6 +41,9 @@ Planned: Crafting, Buildings, Light Sources, Illness.
 - [HUD](Design/UI/HUD.md) - static status area, temperature, weather icons, event log.
 - [Controls](Design/UI/Controls.md) - mouse and modifiers, hotkeys, remapping.
 - [Startup Flow](Design/UI/StartupFlow.md) - splash logos, main menu, New Game screen and starting a run.
+- [Inventory Grids](Design/UI/InventoryGrids.md) - fixed grids of slots for the ground, zone features, inventory and hands; sorting; the ground-full prompt.
+- [Drag and Drop](Design/UI/DragAndDrop.md) - moving, reordering and combining things by dragging.
+- [Options](Design/UI/Options.md) - the Options screen and where it opens from.
 - [Day Summary](Design/UI/DaySummary.md) - the screen that marks the end of each day (concept).
 - [Launcher](Design/Launcher.md) - launcher layout, behavior and states.
 
@@ -48,6 +52,7 @@ Planned: Crafting, Buildings, Light Sources, Illness.
 Files at the repository root:
 
 - [README](../README.md) - what the game is and how to build it.
+- [Getting Started](../GETTING_STARTED.md) - a plain-language guide for newcomers: words, setup, AI assistants, finding work.
 - [CONTRIBUTING](../CONTRIBUTING.md) - how ideas, issues and changes are made.
 - [Code of Conduct](../CODE_OF_CONDUCT.md) - rules for Discussions, issues and pull requests.
 - [AGENTS.md](../AGENTS.md) - start here for AI assistants and LLM-assisted contributors.
@@ -56,6 +61,7 @@ Files at the repository root:
 ## Engineering
 
 - [Coding Standards](Engineering/CodingStandards.md) - testability, naming, architecture, warnings policy.
+- [Testing and Quality Standards](Engineering/TestingStandards.md) - ISTQB-based test design, game testing, defect reports, definition of done.
 - [Project Setup](Engineering/ProjectSetup.md) - editor version, packages, folder layout.
 - [Source Control](Engineering/SourceControl.md) - branching, commits, Git LFS.
 - [Release Pipeline](Engineering/ReleasePipeline.md) - building, packaging and publishing player builds.

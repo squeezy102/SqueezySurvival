@@ -27,7 +27,7 @@ What the player sees from launching the game to starting play.
 | New Game | Starts a new run, after choosing [run options](../Systems/Runs.md#run-options) and [handedness](../Systems/Equipment.md#handedness). | Never. |
 | Continue | Resumes the most recent run in progress. | No run is in progress. |
 | Load Game | Lists runs in progress and [casual saves](../Systems/Runs.md#casual-runs) to choose from. | Nothing can be loaded. |
-| Options | Opens settings (controls, audio, display, accessibility, units). | Never. |
+| Options | Opens the [Options](Options.md) screen (controls, audio, display, accessibility, units). | Never. |
 | Quit | Closes the game. | Never. |
 
 An unavailable option stays visible but disabled, and shows its reason in place of its label (for example "No game in progress" in place of Continue), so state is never shown by color alone ([Pillar 4](../GameDesignDocument.md#pillars)).
@@ -92,4 +92,4 @@ Every choice on the New Game screen is data, not decoration.
 
 ## Wireframe stage
 
-The main menu and New Game screen are built. Choosing an option whose screen does not exist yet opens a short notice: "This isn't built yet." Confirming Start opens the game screen's wireframe ([Screen Layout: wireframe stage](ScreenLayout.md#wireframe-stage)). Saving does not exist yet. In release builds Continue and Load Game are unavailable. In the Unity Editor and development builds, a **development placeholder save** makes Continue available: it starts a brand-new default run (right-handed, no run options) so the game screen can be reached quickly. It is never used in release builds and is removed when saving is built.
+The main menu, the New Game screen and the Options screen are built. Choosing an option whose screen does not exist yet opens a short notice: "This isn't built yet." Confirming Start opens the game screen's wireframe ([Screen Layout: wireframe stage](ScreenLayout.md#wireframe-stage)). Saving does not exist yet. In release builds Continue and Load Game are unavailable. In the Unity Editor and development builds, a **development placeholder save** makes Continue available: it starts a brand-new default run (right-handed, no run options) so the game screen can be reached quickly. It is never used in release builds and is removed when saving is built.

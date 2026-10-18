@@ -6,7 +6,31 @@ Turn-based combat with wildlife, entered from an [encounter](Encounters.md). Exp
 
 ## Presentation
 
-Like a classic Final Fantasy overworld battle: a new window opens with the survivor on the left and the animal on the right. The player always acts first.
+Battles open in their own scene, laid out like a classic Pokémon battle and, like EarthBound, without ever showing the survivor. The survivor has no body, name or gender on screen ([GDD: survivor](../GameDesignDocument.md#survivor)).
+
+| Region | Shows |
+|---|---|
+| Top right | The animal, and its text box. |
+| Bottom left | The survivor's side: their text box and the action menu. No portrait or sprite. |
+| Center | Narration: the start and end of the battle, and what each turn's actions did. |
+
+### Battle flow
+
+Each message stays until the player clicks or presses a key to continue, so nothing scrolls past unread. The player always acts first.
+
+| Step | Where | Example |
+|---|---|---|
+| 1. The battle scene opens | - | - |
+| 2. Start | Center | "The battle begins!" |
+| 3. The animal appears | Top right | "A wild seagull appears!" |
+| 4. The player chooses an action | Bottom left (menu) | Fight, Defend or Flee ([Actions](#actions)) |
+| 5. The survivor's action | Bottom left | "The survivor uses FIGHT!" |
+| 6. The animal's action (its hidden card, revealed) | Top right | "The seagull uses FLEE!" |
+| 7. What happened | Center | "The survivor deals 1 damage to the seagull. The seagull runs away." |
+| 8. Next turn, or the end | - | Back to step 4 while both sides remain. |
+| 9. End | Center | "Battle complete!" Then the game returns to the zone. |
+
+Step 7 resolves the two actions by [turn resolution](#turn-resolution). Action names are written in capitals, as in "uses FIGHT!".
 
 ## Actions
 
@@ -112,6 +136,25 @@ Records each species the survivor has encountered. Entries appear only after a f
 
 Hits lower current Health and can cause injuries ([Injuries and Health](Injuries.md)). Damage values for weapons and animals, animal health, and which injuries each animal inflicts: [OQ-057](../OpenQuestions.md).
 
+### Injuries in battle
+
+An injury suffered in battle is **announced the moment it happens, but takes effect only after the battle ends** (resolves OQ-066). Its effects, its cut to maximum health, bleeding, infection and the rest of its course all begin when the battle is over; until then the survivor fights as well as before, and only current Health falls. This simulates combat adrenaline: the survivor feels the wounds only once the fight is over.
+
+So a battle can be won and still be fatal: the survivor sees "Battle complete!", returns to the zone, and then the injuries take hold. If they bring maximum health to zero, the survivor dies there ([Injuries and Health](Injuries.md#health)). The injuries announced during the fight are the warning. If current health reaches zero during the battle, the survivor is knocked out, the battle ends there, and its injuries take effect at once ([Injuries and Health: knocked out](Injuries.md#knocked-out)).
+
+The point is informed choice, not surprise: the player sees every injury as it lands, so they can flee or defend to avoid more, or press on knowing the cost, rather than finishing a fight that seemed to cost only Health and then meeting a wall of injuries.
+
+Example of a hit that injures, each line in its text box:
+
+| Where | Text |
+|---|---|
+| Top right | "Mountain Lion used FIGHT!" |
+| Top right | "It was very effective!" |
+| Center | "The Survivor has been injured: Laceration, left arm" |
+| Center | "Mountain Lion dealt 6 damage to The Survivor." |
+
+**Injuries the survivor already had when the battle began do count** (resolves OQ-067): they hinder the survivor as they always do, for example a tool-side arm injury lowering damage dealt ([Skill and information](#skill-and-information)). Only injuries suffered during this battle wait until it ends.
+
 ## Turn resolution
 
 Resolves OQ-038.
@@ -140,4 +183,6 @@ When an animal escapes, the player can try to **track** it.
 | Below 50% | 50% |
 | Below 25% | 75% |
 
-How injury and Tracking skill combine into the chance of finding the animal: [OQ-062](../OpenQuestions.md).
+- **An animal can't be chased forever.** Each time an animal escapes and survives, it has a chance to get away for good, and that chance grows with every escape. An animal that gets away is gone from the game, and the player is told: "You see no sign of the animal. It seems to have gotten away."
+
+How injury and Tracking skill combine into the chance of finding the animal: [OQ-062](../OpenQuestions.md). How likely an escaping animal is to get away for good, and how fast that grows: [OQ-065](../OpenQuestions.md).

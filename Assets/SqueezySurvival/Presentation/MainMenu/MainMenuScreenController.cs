@@ -4,6 +4,8 @@ using SqueezySurvival.Core.MainMenu;
 using SqueezySurvival.Core.NewGame;
 using SqueezySurvival.Core.Runs;
 using SqueezySurvival.Core.Saving;
+using SqueezySurvival.Presentation.Options;
+using SqueezySurvival.Presentation.PixelArt;
 using SqueezySurvival.Presentation.Session;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -13,7 +15,7 @@ namespace SqueezySurvival.Presentation.MainMenu
 {
     /// <summary>
     /// Binds the main menu's UI Toolkit document to the menu logic in Core and switches between the menu,
-    /// the New Game screen and the not-built notice. Holds no menu rules itself.
+    /// the New Game screen, the Options screen and the not-built notice. Holds no menu rules itself.
     /// </summary>
     [RequireComponent(typeof(UIDocument))]
     public sealed class MainMenuScreenController : MonoBehaviour
@@ -31,6 +33,9 @@ namespace SqueezySurvival.Presentation.MainMenu
         private Button _notBuiltNoticeCloseButton;
         private Button _newGameButton;
         private Focusable _focusAfterNotice;
+        private OptionsScreenController _optionsScreen;
+        private PixelArtTextureCache _pixelArtTextures;
+        private Button _optionsButton;
 
         /// <summary>Fills in the menu and connects its controls. Called once by the scene's composition root.</summary>
         public void Bind(
@@ -69,6 +74,9 @@ namespace SqueezySurvival.Presentation.MainMenu
             root.Q<Button>(MainMenuElementNames.StartConfirmationConfirmButton).clicked += ConfirmStart;
             _startConfirmation.style.display = DisplayStyle.None;
 
+            _optionsScreen = new OptionsScreenController(root.Q<VisualElement>(MainMenuElementNames.OptionsScreen));
+            _optionsScreen.Closed += HideOptionsScreen;
+
             root.RegisterCallback<NavigationCancelEvent>(_ => OnCancel());
 
             var availableButtons = new List<Button>();
@@ -80,6 +88,11 @@ namespace SqueezySurvival.Presentation.MainMenu
                     availableButtons.Add(button);
                 }
             }
+
+            _pixelArtTextures = new PixelArtTextureCache();
+            var skin = new PixelArtInterfaceSkin(_pixelArtTextures);
+            skin.ApplyTo(root);
+            skin.ApplyBackdrop(root.Q<VisualElement>("main-menu-root"));
 
             // Focus must be requested a frame after layout for UI Toolkit to apply it
             // (Unity Manual: runtime UI event system FAQ).
@@ -121,6 +134,11 @@ namespace SqueezySurvival.Presentation.MainMenu
                     _menuOptions.style.display = DisplayStyle.None;
                     _newGameScreen.Show();
                     break;
+                case MainMenuCommandOutcome.ShowOptionsScreen:
+                    _optionsButton = button;
+                    _menuOptions.style.display = DisplayStyle.None;
+                    _optionsScreen.Show();
+                    break;
                 case MainMenuCommandOutcome.ShowNotBuiltNotice:
                     ShowNotBuiltNotice(button);
                     break;
@@ -149,6 +167,22 @@ namespace SqueezySurvival.Presentation.MainMenu
             {
                 ReturnToMenu();
             }
+            else if (_optionsScreen.IsVisible)
+            {
+                HideOptionsScreen();
+            }
+        }
+
+        private void OnDestroy()
+        {
+            _pixelArtTextures?.Dispose();
+        }
+
+        private void HideOptionsScreen()
+        {
+            _optionsScreen.Hide();
+            _menuOptions.style.display = DisplayStyle.Flex;
+            _optionsButton?.Focus();
         }
 
         private void ReturnToMenu()

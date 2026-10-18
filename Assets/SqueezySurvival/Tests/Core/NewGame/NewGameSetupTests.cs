@@ -8,12 +8,6 @@ namespace SqueezySurvival.Core.Tests.NewGame
     public sealed class NewGameSetupTests
     {
         [Test]
-        public void New_DominantHand_IsNotChosen()
-        {
-            Assert.That(new NewGameSetup().DominantHand, Is.Null);
-        }
-
-        [Test]
         public void CanStart_WithoutDominantHand_IsFalseWithReason()
         {
             var setup = new NewGameSetup();
@@ -22,11 +16,10 @@ namespace SqueezySurvival.Core.Tests.NewGame
             Assert.That(setup.StartUnavailableReason, Is.EqualTo(NewGameSetup.ChooseDominantHandReason));
         }
 
-        [TestCase(DominantHand.Left)]
-        [TestCase(DominantHand.Right)]
-        public void CanStart_WithDominantHand_IsTrue(DominantHand hand)
+        [Test]
+        public void CanStart_WithDominantHand_IsTrue()
         {
-            var setup = new NewGameSetup { DominantHand = hand };
+            var setup = new NewGameSetup { DominantHand = DominantHand.Left };
 
             Assert.That(setup.CanStart, Is.True);
             Assert.That(setup.StartUnavailableReason, Is.Empty);

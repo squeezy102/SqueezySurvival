@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <Style src="Options.uss" />
+    <ui:VisualElement name="options-screen-overlay" class="options-overlay">
+        <ui:VisualElement class="options-window pixel-window">
+            <ui:Label text="Options" class="options-heading" />
+            <ui:Label text="There are no settings yet. They will appear here as the game grows." class="options-scope-note" />
+            <ui:Button name="options-back-button" text="Back" class="options-button" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

@@ -6,27 +6,73 @@ Health and injuries are modeled on Haven and Hearth's wound system ([Ring of Bro
 
 ## Health
 
-One Health bar with two layers. Like every bar, higher is better.
+Health is an ordinary health bar: a red bar with the numbers beside it, current health over maximum health, for example **85/90** (resolves OQ-067).
 
-| Layer | Lowered by | Restored by | At zero |
+The bar's full length is the survivor's uninjured maximum. From left to right it shows:
+
+| Part | Meaning |
+|---|---|
+| Red | Current health. |
+| Empty | Health lost to damage, which regenerates over time. |
+| Darkened | Maximum health taken by injuries, which returns only as they heal. |
+
+At 85/90 out of an uninjured 100, the bar is 85% red, 5% empty and 10% darkened.
+
+| Value | Lowered by | Restored by | At zero |
 |---|---|---|---|
-| Health (current) | Blows, falls, combat hits | Rest, quickly | Knocked out: time passes, and wildlife may take advantage |
-| Injury ceiling (shown as the darker portion of the bar) | Each injury, by its severity | Healing the injury, over time or with treatment | Death |
+| Current health | Damage: blows, falls, combat hits | Regeneration and eating (see [Recovering health](#recovering-health)) | [Knocked out](#knocked-out) |
+| Maximum health | Injuries, each by its severity, for as long as it lasts | Healing the injury, over time or with treatment | Death: the run is over ([Runs](Runs.md#death-ends-the-run)) |
 
-Current health can never exceed the ceiling.
+**Order:** a hit's damage lowers current health first; then any injury it caused lowers maximum health. If maximum health falls below current health, current health drops to match.
 
-Haven and Hearth equivalents: current health is Soft HP; the injury ceiling is Hard HP.
+Example, starting from 100/100:
+
+| Event | Bar |
+|---|---|
+| Hit for 5 damage | 95/100 |
+| Hit for 10 damage, causing a laceration that lowers maximum health by 10 | 85/90 |
+
+Game text always says "health". Haven and Hearth equivalents: current health is Soft HP (SHP); maximum health is Hard HP (HHP), lowered by injuries.
+
+### Recovering health
+
+Current health regenerates only while Food and Water are both above Dangerous ([Survival Stats: bands](SurvivalStats.md#bands-draft)). How fast depends on what the survivor is doing ([Time: passing time deliberately](Time.md#passing-time-deliberately), [sheltered variants](Time.md#sheltered-variants)):
+
+| Doing | Regeneration |
+|---|---|
+| Anything | About 1 per in-game hour |
+| Wait, Rest, Nap or Sleep, in the open | Barely faster |
+| Wait or Rest, sheltered | A little faster |
+| Nap or Sleep, sheltered, without a bed | Faster again |
+| Nap or Sleep, sheltered, on a bed | Much faster: the best way to heal |
+
+Shelter and a bed are each worth building for this (resolves OQ-068).
+
+Eating also helps: every food item eaten, whatever it is, restores 1 current health ([Food](Food.md)).
+
+Exact rates: [OQ-069](../OpenQuestions.md).
+
+### Knocked out
+
+As in Haven and Hearth, when current health reaches zero the survivor is **knocked out**, and falls wherever they are.
+
+- **For at least 1 hour,** long enough to regenerate 1 current health. The bigger the overkill (damage beyond zero), the longer it lasts.
+- **The survivor suffers a concussion**, an injury like any other.
+- **If it happened in battle,** the battle ends there, and the injuries suffered in it take effect as well ([Combat: injuries in battle](Combat.md#injuries-in-battle)).
+- Time passes while the survivor is out, and wildlife may take advantage.
+
+How overkill sets the length: [OQ-069](../OpenQuestions.md).
 
 ## Injuries
 
-Examples: bruises, sprains, abrasions, lacerations, goring, broken bones, hemorrhaging, stings and bites, sunburn ([Weather](Weather.md#clear-and-fair-weather)).
+Examples: bruises, sprains, abrasions, lacerations, concussions, goring, broken bones, hemorrhaging, stings and bites, sunburn ([Weather](Weather.md#clear-and-fair-weather)).
 
 Each injury has:
 
 | Property | Description |
 |---|---|
 | Type | What it is (sprain, laceration, ...). |
-| Severity | How much it lowers the injury ceiling. |
+| Severity | How much it lowers maximum health. |
 | Location | One of six body locations, or the whole body (hemorrhaging, venom). See [Body locations](#body-locations). |
 | Effects | Consequences beyond health, for example a broken leg slows or blocks movement; a lacerated arm makes crafting harder. |
 | Course | How it heals over time. Most improve steadily; some worsen before improving (venom); some only heal with treatment. |
@@ -47,7 +93,7 @@ The body silhouette shows each injury and its treatment at its location.
 ### Healing
 
 - Each injury heals independently, at its own pace.
-- Healing restores the injury ceiling.
+- Healing an injury gives back the maximum health it took.
 - Some healing requires conditions (for example being well fed and rested).
 
 ### Escalation
@@ -61,3 +107,5 @@ First aid is a core skill. Treatments speed healing, stop escalation or cure spe
 ## Combat
 
 The player's Flee chance equals their Health percentage ([Combat](Combat.md)). A battered survivor struggles to escape.
+
+Injuries suffered in battle are announced as they happen but take effect only after the battle ends ([Combat: injuries in battle](Combat.md#injuries-in-battle)).

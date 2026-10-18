@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace SqueezySurvival.Core.Time
 {
@@ -19,8 +20,11 @@ namespace SqueezySurvival.Core.Time
             return $"{hour12}:{minute:00} {(hour24 < 12 ? "AM" : "PM")}";
         }
 
-        /// <summary>The HUD clock, for example <c>Day 3 - 7:45 AM - Morning</c>.</summary>
-        public static string FormatHudClock(GameClock clock, DayPhaseSchedule schedule)
+        /// <summary>
+        /// The HUD clock as three rows, for example <c>Day 3</c>, <c>7:45 AM</c> and <c>Morning</c>
+        /// (Docs/Design/Systems/Time.md, Display).
+        /// </summary>
+        public static IReadOnlyList<string> FormatHudClockRows(GameClock clock, DayPhaseSchedule schedule)
         {
             if (clock == null)
             {
@@ -32,7 +36,7 @@ namespace SqueezySurvival.Core.Time
                 throw new ArgumentNullException(nameof(schedule));
             }
 
-            return $"Day {clock.Day} - {FormatTimeOfDay(clock.MinuteOfDay)} - {schedule.PhaseAt(clock.MinuteOfDay)}";
+            return new[] { $"Day {clock.Day}", FormatTimeOfDay(clock.MinuteOfDay), schedule.PhaseAt(clock.MinuteOfDay).ToString() };
         }
 
         /// <summary>An action's duration as hours and minutes, for example <c>1 hr 30 min</c>.</summary>

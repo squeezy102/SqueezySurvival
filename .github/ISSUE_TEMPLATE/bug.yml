@@ -32,3 +32,26 @@ body:
       description: Shown in the bottom right of the main menu, for example v0.0.1 or v1.0 (editor).
     validations:
       required: true
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      description: How badly it affects play. squeezy102 sets priority separately.
+      options:
+        - Critical - crash, data loss, or the game can't continue
+        - Major - a feature doesn't work, with no workaround
+        - Minor - a feature misbehaves, or there is a workaround
+        - Trivial - cosmetic, such as text or alignment
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Windows version, and editor or build.
+      placeholder: Windows 11, Unity editor
+  - type: input
+    id: design
+    attributes:
+      label: Design reference
+      description: The design document section this differs from, if you know it.

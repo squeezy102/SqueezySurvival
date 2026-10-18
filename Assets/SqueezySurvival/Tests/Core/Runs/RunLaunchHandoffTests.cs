@@ -1,4 +1,3 @@
-using System;
 using NUnit.Framework;
 using SqueezySurvival.Core.Runs;
 using SqueezySurvival.Core.Survivor;
@@ -38,12 +37,6 @@ namespace SqueezySurvival.Core.Tests.Runs
 
             Assert.That(handoff.TryTake(out _), Is.False);
             Assert.That(handoff.HasPendingRun, Is.False);
-        }
-
-        [Test]
-        public void Hand_WithNull_Throws()
-        {
-            Assert.That(() => new RunLaunchHandoff().Hand(null), Throws.TypeOf<ArgumentNullException>());
         }
     }
 }

@@ -26,14 +26,15 @@ Canonical terms. Code, UI text and documents use these words with these meanings
 | Event log | The on-screen running record of game events in plain language. See [HUD](Design/UI/HUD.md#event-log). |
 | Exertion risk | The chance that a strenuous action injures the arms or legs; zero above 50% stamina and rising as stamina falls. See [Exertion](Design/Systems/Exertion.md). |
 | Exploration progress | A zone's explored percentage. Rises with each explore; milestones trigger significant discoveries. See [Exploration](Design/Systems/Exploration.md). |
+| Feature pool | The weighted set of features an explore can reveal in a zone. |
 | Find pool | The weighted set of loose items an explore can draw in a zone. |
 | Food category | A grouping of foods such as Meat, Fish, Fruit, Vegetables or Dairy. Has its own tolerance meter. |
 | Food tolerance | A per-food meter (100% to 0%) of how willing the survivor is to eat that food. Falls with each serving, recovers over time; low tolerance reduces what the food restores and causes penalties. See [Food](Design/Systems/Food.md). |
 | Ground pool | The items lying on the ground in a zone. Unlimited in size; not part of the inventory. See [Zones](Design/Systems/Zones.md#ground-pool). |
 | Hard mode | A run option that makes the game harder and earns double points. Cannot be combined with casual or easy mode. See [Runs](Design/Systems/Runs.md#run-options). |
 | Hazard | A danger met while exploring, such as a jellyfish or sea urchin. |
-| Health | Two-layer bar: current health (lowered by blows, restored by rest) under an injury ceiling (lowered by injuries). See [Injuries and Health](Design/Systems/Injuries.md). |
-| Injury | A specific wound or condition (sprain, laceration, broken bone) that lowers the injury ceiling, has effects and heals over time. |
+| Health | A red bar showing current over maximum health, such as 85/90. Damage lowers current health; injuries lower maximum health until they heal. See [Injuries and Health](Design/Systems/Injuries.md#health). |
+| Injury | A specific wound or condition (sprain, laceration, broken bone) that lowers maximum health, has effects and heals over time. |
 | Inventory | Items the survivor is carrying: the personal inventory plus any carriers. See [Inventory](Design/Systems/Inventory.md). |
 | Known | Encountered by the survivor. Only known things are ever shown in the UI. |
 | Light level | Bright, Dim or Dark. Derived from the day phase and light sources; gates and penalizes actions. See [Actions](Design/Systems/Actions.md#light-level). |
@@ -59,3 +60,4 @@ Canonical terms. Code, UI text and documents use these words with these meanings
 | Wildfire | A disaster started by an unattended fire in the dry season. Gives a survivor in the zone 15-30 minutes to escape, and burns its organic resources and structures. See [Weather](Design/Systems/Weather.md#wildfire). |
 | Zone | A discrete location belonging to a biome, connected to other zones. See [Zones](Design/Systems/Zones.md). |
 | Zone connection | A discovered route from one zone into another. |
+| Zone feature | A permanent or semi-permanent fixture of a zone revealed by exploring, such as a palm tree, tide pool or puddle. Resource nodes are zone features. See [Exploration](Design/Systems/Exploration.md#what-exploring-can-reveal). |

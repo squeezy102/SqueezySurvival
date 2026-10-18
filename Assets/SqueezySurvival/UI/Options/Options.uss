@@ -1,0 +1,45 @@
+.options-overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.options-window {
+    width: 720px;
+    max-height: 90%;
+    padding-top: 24px;
+    padding-bottom: 24px;
+    padding-left: 32px;
+    padding-right: 32px;
+}
+
+.options-heading {
+    margin-bottom: 16px;
+    font-size: 36px;
+    -unity-font-style: bold;
+    color: rgb(240, 242, 250);
+}
+
+.options-scope-note {
+    margin-bottom: 12px;
+    font-size: 18px;
+    white-space: normal;
+    color: rgb(190, 200, 225);
+}
+
+.options-button {
+    height: 48px;
+    margin-top: 16px;
+    margin-left: 0;
+    margin-right: 0;
+    font-size: 22px;
+}
+
+.unity-button {
+    color: rgb(245, 245, 255);
+}

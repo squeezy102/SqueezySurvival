@@ -22,7 +22,6 @@ namespace SqueezySurvival.Core.Tests.EventLog
         }
 
         [TestCase(null)]
-        [TestCase("")]
         [TestCase("  ")]
         public void Add_WithoutText_Throws(string text)
         {

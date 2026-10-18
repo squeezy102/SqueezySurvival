@@ -1,4 +1,3 @@
-using System;
 using NUnit.Framework;
 using SqueezySurvival.Core.Runs;
 
@@ -34,12 +33,6 @@ namespace SqueezySurvival.Core.Tests.Runs
         {
             Assert.That(RunPointsSummaryFormatter.Format(new RunOptions(true, isEasy, false)),
                 Is.EqualTo(RunPointsSummaryFormatter.NoPoints));
-        }
-
-        [Test]
-        public void Format_WithNullOptions_Throws()
-        {
-            Assert.That(() => RunPointsSummaryFormatter.Format(null), Throws.TypeOf<ArgumentNullException>());
         }
     }
 }

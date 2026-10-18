@@ -1,5 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements">
-    <ui:VisualElement name="new-game-panel" class="menu-options new-game-panel">
+    <ui:VisualElement name="new-game-panel" class="menu-options pixel-window new-game-panel">
         <ui:Label text="New Game" class="screen-heading" />
         <ui:RadioButtonGroup name="dominant-hand-choice" label="Dominant hand" choices="Left,Right" value="-1" class="setting-row" />
         <ui:Label text="Run options (optional)" class="setting-heading" />

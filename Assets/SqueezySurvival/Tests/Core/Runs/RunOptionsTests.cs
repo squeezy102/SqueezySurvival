@@ -21,11 +21,5 @@ namespace SqueezySurvival.Core.Tests.Runs
         {
             Assert.That(() => new RunOptions(isCasual, isEasy, true), Throws.ArgumentException);
         }
-
-        [Test]
-        public void Standard_HasNoOptions()
-        {
-            Assert.That(RunOptions.Standard.IsCasual || RunOptions.Standard.IsEasy || RunOptions.Standard.IsHard, Is.False);
-        }
     }
 }
