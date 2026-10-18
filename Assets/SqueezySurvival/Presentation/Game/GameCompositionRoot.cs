@@ -1,6 +1,5 @@
 using System;
 using SqueezySurvival.Core.Exploration;
-using SqueezySurvival.Core.Options;
 using SqueezySurvival.Core.Randomness;
 using SqueezySurvival.Core.Runs;
 using SqueezySurvival.Core.Time;
@@ -35,10 +34,7 @@ namespace SqueezySurvival.Presentation.Game
                 DayPhaseSchedule.Default,
                 PlaceholderBeachZoneContent.Beach,
                 new ZoneExplorer(ExplorationRules.Wireframe, randomNumberSource));
-            // A run starts from the player's global preference. Saving does not exist yet (#2), so the run's own
-            // settings last until the run ends (Docs/Design/UI/Options.md, Wireframe stage).
-            PlayerOptions globalPreference = GameSessionHost.Current.GlobalPreference;
-            GetComponent<GameScreenController>().Bind(session, globalPreference.Copy(), globalPreference);
+            GetComponent<GameScreenController>().Bind(session);
         }
     }
 }

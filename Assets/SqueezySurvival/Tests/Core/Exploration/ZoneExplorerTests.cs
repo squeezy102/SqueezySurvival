@@ -124,5 +124,30 @@ namespace SqueezySurvival.Core.Tests.Exploration
 
             Assert.That(new[] { progressChanges, groundPoolChanges, featureChanges }, Is.EqualTo(new[] { 1, 1, 1 }));
         }
+
+        [Test]
+        public void Explore_GroundFull_NewKindIsReturnedAsOverflowNotAdded()
+        {
+            var zone = new Zone(TestZoneDefinitions.Create(4));
+            zone.GroundPool.AddRange(TestZoneDefinitions.DistinctItems(zone.GroundPool.SlotCapacity));
+
+            ExplorationOutcome outcome = ExploreOnce(zone, 2, 0, 0, 99);
+
+            Assert.That(outcome.GroundOverflow.Count, Is.EqualTo(1));
+            Assert.That((outcome.GroundOverflow[0].Definition, outcome.GroundOverflow[0].Count), Is.EqualTo((TestZoneDefinitions.Pebble, 2)));
+            Assert.That(zone.GroundPool.CountOf(TestZoneDefinitions.Pebble), Is.Zero);
+        }
+
+        [Test]
+        public void Explore_FeaturesFull_NewKindIsNotRevealed()
+        {
+            var zone = new Zone(TestZoneDefinitions.Create(4));
+            zone.Features.AddRange(TestZoneDefinitions.DistinctFeatures(zone.Features.SlotCapacity));
+
+            ExplorationOutcome outcome = ExploreOnce(zone, 1, 0, 0, 0);
+
+            Assert.That(outcome.FeaturesFound, Is.Empty);
+            Assert.That(zone.Features.CountOf(TestZoneDefinitions.Shrub), Is.Zero);
+        }
     }
 }

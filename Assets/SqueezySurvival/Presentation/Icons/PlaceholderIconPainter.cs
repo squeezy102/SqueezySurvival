@@ -5,7 +5,7 @@ namespace SqueezySurvival.Presentation.Icons
 {
     /// <summary>
     /// Draws throwaway placeholder icons for items and zone features with simple vector shapes, until real icon art
-    /// exists (Docs/Design/UI/GridPanels.md, The grid). Shapes are described on a 1 x 1 square and scaled to fit.
+    /// exists (Docs/Design/UI/InventoryGrids.md, The grids). Shapes are described on a 1 x 1 square and scaled to fit.
     /// </summary>
     public static class PlaceholderIconPainter
     {

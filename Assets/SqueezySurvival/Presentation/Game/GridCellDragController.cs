@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 namespace SqueezySurvival.Presentation.Game
 {
     /// <summary>
-    /// Drags cells of one grid panel. While dragging, nothing in the grid moves: a copy of the icon follows the
+    /// Drags cells of one inventory grid. While dragging, nothing in the grid moves: a copy of the icon follows the
     /// pointer, a marker shows where it would go, and a tooltip says what releasing would do, as decided by Core.
     /// Releasing over the grid carries that out; releasing anywhere else changes nothing (Docs/Design/UI/DragAndDrop.md).
     /// </summary>
@@ -18,8 +18,8 @@ namespace SqueezySurvival.Presentation.Game
         private const float DragStartDistance = 6f;
         private const float DraggedIconScale = 0.8f;
 
-        private readonly GridPanelView _view;
-        private readonly IGridPanelContents _contents;
+        private readonly InventoryGridView _view;
+        private readonly IInventoryGridContents _contents;
         private readonly GridTooltipView _tooltip;
         private readonly VisualElement _dragLayer;
 
@@ -32,7 +32,7 @@ namespace SqueezySurvival.Presentation.Game
         private GridDropOutcome _shownOutcome = GridDropOutcome.ReturnToPlace;
 
         /// <summary>Creates the controller for one grid.</summary>
-        public GridCellDragController(GridPanelView view, IGridPanelContents contents, GridTooltipView tooltip, VisualElement dragLayer)
+        public GridCellDragController(InventoryGridView view, IInventoryGridContents contents, GridTooltipView tooltip, VisualElement dragLayer)
         {
             _view = view ?? throw new ArgumentNullException(nameof(view));
             _contents = contents ?? throw new ArgumentNullException(nameof(contents));
@@ -43,10 +43,21 @@ namespace SqueezySurvival.Presentation.Game
         /// <summary>Whether a drag is in progress.</summary>
         public bool IsDragging => _draggedIcon != null;
 
-        /// <summary>Makes the item cell in a slot draggable.</summary>
-        public void RegisterCell(VisualElement cell, int slot)
+        /// <summary>Makes the item cell in a slot draggable whenever <paramref name="canDrag"/> says so.</summary>
+        public void RegisterCell(VisualElement cell, int slot, Func<bool> canDrag)
         {
-            cell.RegisterCallback<PointerDownEvent>(down => OnPointerDown(cell, slot, down));
+            if (canDrag == null)
+            {
+                throw new ArgumentNullException(nameof(canDrag));
+            }
+
+            cell.RegisterCallback<PointerDownEvent>(down =>
+            {
+                if (canDrag())
+                {
+                    OnPointerDown(cell, slot, down);
+                }
+            });
             cell.RegisterCallback<PointerMoveEvent>(OnPointerMove);
             cell.RegisterCallback<PointerUpEvent>(OnPointerUp);
             cell.RegisterCallback<PointerCaptureOutEvent>(_ => Cancel());
@@ -145,13 +156,7 @@ namespace SqueezySurvival.Presentation.Game
         // Only the dragged cell's own grid accepts drops for now.
         private GridDropTarget TargetAt(Vector2 pointerWorldPosition)
         {
-            if (!_view.Grid.contentViewport.worldBound.Contains(pointerWorldPosition))
-            {
-                return GridDropTarget.Nowhere;
-            }
-
-            Vector2 contentPoint = _view.Grid.contentContainer.WorldToLocal(pointerWorldPosition);
-            int slot = _view.CurrentLayout.CellIndexAt(contentPoint.x, contentPoint.y, _view.DisplayedSlotCount, out float x, out float y);
+            int slot = _view.SlotAtWorldPosition(pointerWorldPosition, out float x, out float y);
             if (slot < 0)
             {
                 return GridDropTarget.Nowhere;
@@ -167,7 +172,7 @@ namespace SqueezySurvival.Presentation.Game
             _shownOutcome = outcome;
             if (outcome.ChangesSomething)
             {
-                _view.ShowDropTarget(outcome.AnchorSlot, outcome.MarkerSide);
+                _view.ShowDropTarget(outcome.AnchorSlot);
             }
             else
             {
@@ -181,7 +186,7 @@ namespace SqueezySurvival.Presentation.Game
             }
 
             Rect anchor = outcome.AnchorSlot >= 0 ? _view.SlotWorldBound(outcome.AnchorSlot) : _draggedIcon.worldBound;
-            _tooltip.Show(new ThingTooltipContent(outcome.Title, outcome.Description, Array.Empty<string>()), anchor);
+            _tooltip.Show(new ThingTooltipContent(outcome.Title, string.Empty, outcome.Description, Array.Empty<string>()), anchor);
         }
 
         private static bool SameOutcome(GridDropOutcome first, GridDropOutcome second) =>

@@ -1,7 +1,0 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements">
-    <ui:VisualElement class="settings-menu-buttons">
-        <ui:Button name="settings-reset-button" text="Return to default settings" class="options-button" />
-        <ui:Button name="settings-capture-button" text="Capture these settings as my global preference" class="options-button" />
-        <ui:Label name="settings-status" class="settings-status" />
-    </ui:VisualElement>
-</ui:UXML>

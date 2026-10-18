@@ -10,91 +10,72 @@ namespace SqueezySurvival.Core.Tests.DragAndDrop
         private static readonly ItemDefinition Rock = Item("rock");
         private static readonly ItemDefinition Paper = Item("paper");
         private static readonly ItemDefinition Scissors = Item("scissors");
-        private static readonly ItemDefinition Lizard = Item("lizard");
-        private static readonly ItemDefinition Spock = Item("spock");
 
-        private static ItemDefinition Item(string id) => new ItemDefinition(id, char.ToUpperInvariant(id[0]) + id.Substring(1), "a " + id, id + "s", "A " + id + ".", 1m);
+        private static ItemDefinition Item(string id) =>
+            new ItemDefinition(id, char.ToUpperInvariant(id[0]) + id.Substring(1), "a " + id, id + "s", "A " + id + ".", ItemCategory.Salvage, 1m);
 
-        // Rock, paper, scissors, lizard, spock in slots 0-4.
-        private static CountedCollection<ItemDefinition> FiveThings()
+        // Rock, paper, scissors in slots 0-2 of 8.
+        private static CountedCollection<ItemDefinition> ThreeThings()
         {
-            var collection = new CountedCollection<ItemDefinition>();
-            collection.AddRange(new[] { Rock, Paper, Scissors, Lizard, Spock });
+            var collection = new CountedCollection<ItemDefinition>(8);
+            collection.AddRange(new[] { Rock, Paper, Scissors });
             return collection;
         }
 
-        private static GridDropOutcome Resolve(CountedCollection<ItemDefinition> collection, int sourceSlot, GridDropTarget target, IThingCombinationRules rules = null) =>
-            new GridDropOutcomeResolver(rules ?? new NoThingCombinations()).Resolve(collection, sourceSlot, target);
+        private static GridDropOutcome Resolve(GridDropTarget target, IThingCombinationRules rules = null) =>
+            new GridDropOutcomeResolver(rules ?? new NoThingCombinations()).Resolve(ThreeThings(), 2, target);
 
         [Test]
-        public void LeftSide_PutsBeforeTheHoveredThing()
+        public void EdgeOfAnotherThing_Swaps()
         {
-            GridDropOutcome outcome = Resolve(FiveThings(), 3, GridDropTarget.OccupiedSlot(1, CellDropZone.Left));
+            GridDropOutcome outcome = Resolve(GridDropTarget.OccupiedSlot(0, CellDropZone.Edge));
 
-            Assert.That(outcome.Kind, Is.EqualTo(GridDropOutcomeKind.Move));
-            Assert.That(outcome.TargetSlot, Is.EqualTo(1));
-            Assert.That(outcome.MarkerSide, Is.EqualTo(DropMarkerSide.Before));
-            Assert.That(outcome.Description, Is.EqualTo("Put the lizard before the paper."));
+            Assert.That(outcome.Kind, Is.EqualTo(GridDropOutcomeKind.Swap));
+            Assert.That(outcome.TargetSlot, Is.EqualTo(0));
+            Assert.That(outcome.ChangesSomething, Is.True);
+            Assert.That(outcome.Description, Is.EqualTo("The scissors and the rock trade places."));
         }
 
-        [Test]
-        public void LeftSide_WithGapBefore_UsesTheGap()
+        [TestCase(CellDropZone.Edge)]
+        [TestCase(CellDropZone.Center)]
+        public void OverItself_IsNoChange(CellDropZone zone)
         {
-            CountedCollection<ItemDefinition> collection = FiveThings();
-            collection.MoveToSlot(1, 7);
-
-            Assert.That(Resolve(collection, 4, GridDropTarget.OccupiedSlot(2, CellDropZone.Left)).TargetSlot, Is.EqualTo(1));
-        }
-
-        [Test]
-        public void RightSide_PutsAfterTheHoveredThing()
-        {
-            GridDropOutcome outcome = Resolve(FiveThings(), 0, GridDropTarget.OccupiedSlot(2, CellDropZone.Right));
-
-            Assert.That(outcome.TargetSlot, Is.EqualTo(3));
-            Assert.That(outcome.MarkerSide, Is.EqualTo(DropMarkerSide.After));
-        }
-
-        [Test]
-        public void BesideItsOwnSlot_IsNoChange()
-        {
-            Assert.That(Resolve(FiveThings(), 3, GridDropTarget.OccupiedSlot(4, CellDropZone.Left)).Kind, Is.EqualTo(GridDropOutcomeKind.NoChange));
-            Assert.That(Resolve(FiveThings(), 3, GridDropTarget.OccupiedSlot(2, CellDropZone.Right)).Kind, Is.EqualTo(GridDropOutcomeKind.NoChange));
-            Assert.That(Resolve(FiveThings(), 3, GridDropTarget.OccupiedSlot(3, CellDropZone.Left)).Kind, Is.EqualTo(GridDropOutcomeKind.NoChange));
+            Assert.That(Resolve(GridDropTarget.OccupiedSlot(2, zone)).Kind, Is.EqualTo(GridDropOutcomeKind.NoChange));
         }
 
         [Test]
         public void EmptySlot_MovesThere()
         {
-            GridDropOutcome outcome = Resolve(FiveThings(), 0, GridDropTarget.EmptySlot(6));
+            GridDropOutcome outcome = Resolve(GridDropTarget.EmptySlot(6));
 
+            Assert.That(outcome.Kind, Is.EqualTo(GridDropOutcomeKind.Move));
             Assert.That(outcome.TargetSlot, Is.EqualTo(6));
-            Assert.That(outcome.Description, Is.EqualTo("Put the rock here."));
+            Assert.That(outcome.Description, Is.EqualTo("Put the scissors here."));
         }
 
         [Test]
         public void Nowhere_ReturnsToPlace()
         {
-            Assert.That(Resolve(FiveThings(), 0, GridDropTarget.Nowhere).ChangesSomething, Is.False);
+            Assert.That(Resolve(GridDropTarget.Nowhere).ChangesSomething, Is.False);
         }
 
         [Test]
         public void Center_WithoutRecipe_CannotCombine()
         {
-            GridDropOutcome outcome = Resolve(FiveThings(), 0, GridDropTarget.OccupiedSlot(1, CellDropZone.Center));
+            GridDropOutcome outcome = Resolve(GridDropTarget.OccupiedSlot(1, CellDropZone.Center));
 
             Assert.That(outcome.Kind, Is.EqualTo(GridDropOutcomeKind.CannotCombine));
-            Assert.That(outcome.Description, Is.EqualTo("The rock and the paper can't be combined."));
+            Assert.That(outcome.Description, Is.EqualTo("The scissors and the paper can't be combined."));
             Assert.That(outcome.ChangesSomething, Is.False);
         }
 
         [Test]
         public void Center_WithRecipe_Combines()
         {
-            GridDropOutcome outcome = Resolve(FiveThings(), 0, GridDropTarget.OccupiedSlot(1, CellDropZone.Center), new EverythingCombines());
+            GridDropOutcome outcome = Resolve(GridDropTarget.OccupiedSlot(1, CellDropZone.Center), new EverythingCombines());
 
             Assert.That(outcome.Kind, Is.EqualTo(GridDropOutcomeKind.Combine));
-            Assert.That(outcome.Description, Is.EqualTo("Combine: rock + paper."));
+            Assert.That(outcome.Description, Is.EqualTo("Combine: scissors + paper."));
         }
 
         private sealed class EverythingCombines : IThingCombinationRules

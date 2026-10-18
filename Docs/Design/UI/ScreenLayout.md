@@ -63,9 +63,9 @@ Spacing is uniform: every panel is inset 16 px from the screen edge and separate
 | Scene | Placeholder beach art. | - |
 | HUD | Game clock: day, time and day phase, for example `Day 1 - 6:00 AM - Dawn` ([Time: display](../Systems/Time.md#display)). Wait (15 min) and Rest (1 hr) buttons, with their durations shown ([Time: passing time deliberately](../Systems/Time.md#passing-time-deliberately)). | Survival stats, temperature and weather. |
 | Zone bar | Current zone name (Beach), its exploration progress ("Explored 4%"), and Explore with its duration ([Exploration: wireframe stage](../Systems/Exploration.md#wireframe-stage)). | No connected zones are known at the start. |
-| Zone features, ground pool | Two panels, "Zone features" above "On the ground", each a configurable scrollable grid of what exploring has found ([Grid Panels](GridPanels.md)). They read "Nothing found yet." until something is found. | Sorting, filtering and the other organization tools. |
+| Zone features, ground pool | Two panels, "Zone features" above "On the ground", each a fixed 16 x 4 grid of what exploring has found ([Inventory Grids](InventoryGrids.md)). The ground has Sort with its order menu, and asks what to discard when it is full. | Filtering. |
 | Event log | Every action is logged with its time, starting with waking on the beach. | - |
-| Inventory | - | "Your hands are empty." |
+| Inventory | The 2 hand slots, set apart on the far left, and 8 inventory slots, with Sort ([Inventory Grids](InventoryGrids.md#the-grids)). | Empty: nothing can be picked up yet. |
 | Nav bar | Buttons for Inventory, Map, Crafting, Skills, Research, Equipment, Cooking and Options. Options opens the [Options](Options.md) screen. | The others open a notice that their window isn't built yet. Shown expanded with text labels until icons exist. |
 
 Escape opens a pause menu holding **Options** ([Options](Options.md)) and **Save and exit**, the one way out of a run ([Runs: saving](../Systems/Runs.md#saving)). Escape again closes it. Saving does not exist yet, so for now Save and exit returns to the main menu without keeping the run, and the menu says so.

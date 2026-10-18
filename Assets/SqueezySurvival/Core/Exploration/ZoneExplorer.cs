@@ -52,14 +52,19 @@ namespace SqueezySurvival.Core.Exploration
                 itemsFound = DrawItems(definition);
                 if (RollFeature())
                 {
-                    featuresFound.Add(definition.FeaturePool.Pick(_randomNumberSource));
+                    // A feature with no room in its grid is not revealed (Docs/Design/UI/InventoryGrids.md).
+                    ZoneFeatureDefinition feature = definition.FeaturePool.Pick(_randomNumberSource);
+                    if (zone.Features.HasRoomFor(feature))
+                    {
+                        featuresFound.Add(feature);
+                    }
                 }
             }
 
             zone.RecordExplore();
-            zone.GroundPool.AddRange(itemsFound);
+            IReadOnlyList<CountedThing<ItemDefinition>> groundOverflow = zone.GroundPool.AddRange(itemsFound);
             zone.Features.AddRange(featuresFound);
-            return new ExplorationOutcome(itemsFound, featuresFound, progressBefore, zone.ExplorationProgress);
+            return new ExplorationOutcome(itemsFound, featuresFound, groundOverflow, progressBefore, zone.ExplorationProgress);
         }
 
         private List<ItemDefinition> DrawItems(ZoneDefinition definition)

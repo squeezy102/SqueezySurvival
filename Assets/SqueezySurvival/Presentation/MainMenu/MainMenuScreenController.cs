@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using SqueezySurvival.Core.MainMenu;
 using SqueezySurvival.Core.NewGame;
-using SqueezySurvival.Core.Options;
 using SqueezySurvival.Core.Runs;
 using SqueezySurvival.Core.Saving;
 using SqueezySurvival.Presentation.Options;
@@ -42,7 +41,6 @@ namespace SqueezySurvival.Presentation.MainMenu
             MainMenuCommandRouter commandRouter,
             IRunInProgressLoader runInProgressLoader,
             RunLaunchHandoff runLaunchHandoff,
-            PlayerOptions globalPreference,
             string versionLabelText)
         {
             if (optionStateEvaluator == null)
@@ -74,8 +72,7 @@ namespace SqueezySurvival.Presentation.MainMenu
             root.Q<Button>(MainMenuElementNames.StartConfirmationConfirmButton).clicked += ConfirmStart;
             _startConfirmation.style.display = DisplayStyle.None;
 
-            // With no run loaded, the main menu's Options edits the global preference itself (resolves OQ-070).
-            _optionsScreen = new OptionsScreenController(root.Q<VisualElement>(MainMenuElementNames.OptionsScreen), globalPreference, null);
+            _optionsScreen = new OptionsScreenController(root.Q<VisualElement>(MainMenuElementNames.OptionsScreen));
             _optionsScreen.Closed += HideOptionsScreen;
 
             root.RegisterCallback<NavigationCancelEvent>(_ => OnCancel());
@@ -174,11 +171,6 @@ namespace SqueezySurvival.Presentation.MainMenu
             _optionsScreen.Hide();
             _menuOptions.style.display = DisplayStyle.Flex;
             _optionsButton?.Focus();
-        }
-
-        private void OnDestroy()
-        {
-            _optionsScreen?.Dispose();
         }
 
         private void ReturnToMenu()

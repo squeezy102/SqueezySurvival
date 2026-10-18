@@ -20,7 +20,7 @@ Settings are local to a run: changing one during a run changes it for that save 
 
 ## Buttons in every settings menu
 
-Every settings menu in the game, the Options screen and smaller ones such as a [grid panel's settings](GridPanels.md#where-they-are-changed), has two buttons that act on the settings that menu shows:
+Every settings menu in the game has two buttons that act on the settings that menu shows:
 
 | Button | Does |
 |---|---|
@@ -45,13 +45,12 @@ Every settings menu in the game, the Options screen and smaller ones such as a [
 
 ## Wireframe stage
 
-The global preference is saved in a file, and the two buttons work. Saving does not exist yet ([#2](https://github.com/squeezy102/SqueezySurvival/issues/2)), so a run's own settings start from the global preference and last only until the run ends; they will be kept in the save file once saving exists ([#46](https://github.com/squeezy102/SqueezySurvival/issues/46)).
+The Options screen opens from the main menu, the pause menu and the nav bar, with its note. It has no settings yet: the grid layout settings it first held were removed when the grids became fixed ([#49](https://github.com/squeezy102/SqueezySurvival/issues/49)). Run settings, the global preference and the two buttons are built with the first settings, alongside saving ([#46](https://github.com/squeezy102/SqueezySurvival/issues/46)).
 
 ## Sections
 
 | Section | Settings | Status |
 |---|---|---|
-| Panels | Each grid panel's scroll direction, columns or rows, and inverted scroll wheel ([Grid Panels: settings](GridPanels.md#settings)). | Built |
 | Display | Temperature unit, real-world clock, event log auto-hide ([HUD](HUD.md)). | Planned ([#7](https://github.com/squeezy102/SqueezySurvival/issues/7)) |
 | Gameplay | End of day summary ([Day Summary](DaySummary.md)). | Planned (#7) |
 | Controls | Key remapping ([Controls](Controls.md)). | Planned (#7) |

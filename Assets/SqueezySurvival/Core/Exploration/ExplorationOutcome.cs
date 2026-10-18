@@ -12,11 +12,13 @@ namespace SqueezySurvival.Core.Exploration
         public ExplorationOutcome(
             IReadOnlyList<ItemDefinition> itemsFound,
             IReadOnlyList<ZoneFeatureDefinition> featuresFound,
+            IReadOnlyList<CountedThing<ItemDefinition>> groundOverflow,
             ExplorationProgress progressBefore,
             ExplorationProgress progressAfter)
         {
             ItemsFound = itemsFound ?? throw new ArgumentNullException(nameof(itemsFound));
             FeaturesFound = featuresFound ?? throw new ArgumentNullException(nameof(featuresFound));
+            GroundOverflow = groundOverflow ?? throw new ArgumentNullException(nameof(groundOverflow));
             ProgressBefore = progressBefore ?? throw new ArgumentNullException(nameof(progressBefore));
             ProgressAfter = progressAfter ?? throw new ArgumentNullException(nameof(progressAfter));
         }
@@ -26,6 +28,9 @@ namespace SqueezySurvival.Core.Exploration
 
         /// <summary>Features revealed, in the order found.</summary>
         public IReadOnlyList<ZoneFeatureDefinition> FeaturesFound { get; }
+
+        /// <summary>Found items of new kinds with no room on the ground, so not added to it, grouped by kind.</summary>
+        public IReadOnlyList<CountedThing<ItemDefinition>> GroundOverflow { get; }
 
         /// <summary>The zone's progress before the explore.</summary>
         public ExplorationProgress ProgressBefore { get; }

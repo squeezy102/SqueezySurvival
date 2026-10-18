@@ -1,3 +1,4 @@
+using System.Linq;
 using NUnit.Framework;
 using SqueezySurvival.Core.Exploration;
 using SqueezySurvival.Core.Runs;
@@ -118,6 +119,73 @@ namespace SqueezySurvival.Core.Tests.Runs
             Assert.That(beach.GroundPool.CountOf(PlaceholderBeachZoneContent.Stone), Is.GreaterThan(0));
             Assert.That(beach.GroundPool.CountOf(PlaceholderBeachZoneContent.Stick), Is.GreaterThan(0));
             Assert.That(beach.GroundPool.CountOf(PlaceholderBeachZoneContent.SeaweedStrand), Is.GreaterThan(0));
+        }
+
+        // One find, a pebble, and no feature.
+        private static RunSession SessionWithPebbleWaitingForRoom()
+        {
+            RunSession session = CreateSession(1, 0, 99);
+            session.CurrentZone.GroundPool.AddRange(TestZoneDefinitions.DistinctItems(session.CurrentZone.GroundPool.SlotCapacity));
+            session.Explore();
+            return session;
+        }
+
+        [Test]
+        public void Explore_GroundFull_FindWaitsForRoom()
+        {
+            int changes = 0;
+            RunSession session = CreateSession(1, 0, 99);
+            session.PendingGroundOverflowChanged += () => changes++;
+            session.CurrentZone.GroundPool.AddRange(TestZoneDefinitions.DistinctItems(session.CurrentZone.GroundPool.SlotCapacity));
+
+            session.Explore();
+
+            Assert.That(session.PendingGroundOverflow.Select(thing => thing.Definition), Is.EqualTo(new[] { TestZoneDefinitions.Pebble }));
+            Assert.That(changes, Is.EqualTo(1));
+        }
+
+        [Test]
+        public void WhileAFindWaitsForRoom_TimeTakingActionsAreRefused()
+        {
+            RunSession session = SessionWithPebbleWaitingForRoom();
+            long minutesBefore = session.Clock.ElapsedMinutes;
+
+            Assert.That(() => session.Explore(), Throws.InvalidOperationException);
+            Assert.That(() => session.PassTime(TimePassingAction.Wait), Throws.InvalidOperationException);
+            Assert.That(session.Clock.ElapsedMinutes, Is.EqualTo(minutesBefore));
+        }
+
+        [Test]
+        public void LeavePendingGroundOverflowBehind_DropsTheFindAndLogsItIsGone()
+        {
+            RunSession session = SessionWithPebbleWaitingForRoom();
+
+            session.LeavePendingGroundOverflowBehind();
+
+            Assert.That(session.HasPendingGroundOverflow, Is.False);
+            Assert.That(session.CurrentZone.GroundPool.CountOf(TestZoneDefinitions.Pebble), Is.Zero);
+            Assert.That(session.EventLog.Entries.Last().Text, Is.EqualTo("You left the pebble behind. It's gone for good."));
+        }
+
+        [Test]
+        public void DiscardToMakeRoomForPendingGroundOverflow_ReplacesTheChosenSlotAndLogsIt()
+        {
+            RunSession session = SessionWithPebbleWaitingForRoom();
+
+            session.DiscardToMakeRoomForPendingGroundOverflow(5);
+
+            Assert.That(session.HasPendingGroundOverflow, Is.False);
+            Assert.That(session.CurrentZone.GroundPool.EntryAtSlot(5).Definition, Is.SameAs(TestZoneDefinitions.Pebble));
+            Assert.That(session.EventLog.Entries.Last().Text, Is.EqualTo("You threw away the filler 5 to make room for the pebble. It's gone for good."));
+        }
+
+        [Test]
+        public void ResolvingWithNothingWaiting_IsRefused()
+        {
+            RunSession session = CreateSession();
+
+            Assert.That(() => session.LeavePendingGroundOverflowBehind(), Throws.InvalidOperationException);
+            Assert.That(() => session.DiscardToMakeRoomForPendingGroundOverflow(0), Throws.InvalidOperationException);
         }
     }
 }

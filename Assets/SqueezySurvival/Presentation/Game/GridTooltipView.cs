@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 namespace SqueezySurvival.Presentation.Game
 {
     /// <summary>
-    /// The tooltip shown while the pointer is over a grid cell (Docs/Design/UI/GridPanels.md, Tooltips). UI Toolkit's
+    /// The tooltip shown while the pointer is over a grid cell (Docs/Design/UI/InventoryGrids.md, Tooltips). UI Toolkit's
     /// built-in tooltip property only works in the Unity Editor, so the game draws its own.
     /// </summary>
     public sealed class GridTooltipView
@@ -15,6 +15,7 @@ namespace SqueezySurvival.Presentation.Game
 
         private readonly VisualElement _tooltip;
         private readonly Label _title;
+        private readonly Label _subtitle;
         private readonly Label _description;
         private readonly VisualElement _details;
         private Rect _anchorCellWorldBound;
@@ -24,6 +25,7 @@ namespace SqueezySurvival.Presentation.Game
         {
             _tooltip = tooltip ?? throw new ArgumentNullException(nameof(tooltip));
             _title = tooltip.Q<Label>("grid-tooltip-title");
+            _subtitle = tooltip.Q<Label>("grid-tooltip-subtitle");
             _description = tooltip.Q<Label>("grid-tooltip-description");
             _details = tooltip.Q<VisualElement>("grid-tooltip-details");
             _tooltip.pickingMode = PickingMode.Ignore;
@@ -38,6 +40,8 @@ namespace SqueezySurvival.Presentation.Game
         public void Show(ThingTooltipContent content, Rect cellWorldBound)
         {
             _title.text = content.Title;
+            _subtitle.text = content.Subtitle;
+            _subtitle.style.display = content.Subtitle.Length > 0 ? DisplayStyle.Flex : DisplayStyle.None;
             _description.text = content.Description;
             _details.Clear();
             foreach (string line in content.DetailLines)

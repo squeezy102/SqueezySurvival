@@ -16,7 +16,7 @@ There is no walking or character movement. Travelling between zones, exploring a
 | Click and drag | Yes |
 | Shift, Ctrl, Alt, and their combinations, with either button | Yes |
 
-What each modifier combination does is defined per context as screens are designed ([OQ-032](../OpenQuestions.md)). Dragging in grid panels is defined in [Drag and Drop](DragAndDrop.md).
+What each modifier combination does is defined per context as screens are designed ([OQ-032](../OpenQuestions.md)). Dragging in inventory grids is defined in [Drag and Drop](DragAndDrop.md).
 
 ## Keyboard hotkeys (defaults)
 

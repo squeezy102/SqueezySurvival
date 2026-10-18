@@ -13,6 +13,7 @@ namespace SqueezySurvival.Core.Tests.Exploration
             new ExplorationOutcome(
                 items,
                 features,
+                new CountedThing<ItemDefinition>[0],
                 new ExplorationProgress(exploresBefore, exploresToMap),
                 new ExplorationProgress(exploresBefore + 1, exploresToMap));
 

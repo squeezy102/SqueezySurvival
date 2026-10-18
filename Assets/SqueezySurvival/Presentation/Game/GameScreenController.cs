@@ -1,8 +1,8 @@
 using System;
 using SqueezySurvival.Core.DragAndDrop;
 using SqueezySurvival.Core.EventLog;
+using SqueezySurvival.Core.InventoryGrids;
 using SqueezySurvival.Core.Items;
-using SqueezySurvival.Core.Options;
 using SqueezySurvival.Core.Runs;
 using SqueezySurvival.Core.Time;
 using SqueezySurvival.Core.Zones;
@@ -25,10 +25,13 @@ namespace SqueezySurvival.Presentation.Game
         private RunSession _session;
         private Label _clockLabel;
         private Label _explorationProgressLabel;
-        private GridPanelView _zoneFeaturesView;
-        private GridPanelView _groundPoolView;
-        private GridPanelSettingsWindowController _gridPanelSettingsWindow;
-        private Button _lastChosenSettingsButton;
+        private InventoryGridView _zoneFeaturesView;
+        private InventoryGridView _groundPoolView;
+        private InventoryGridView _inventoryView;
+        private InventoryGridView _handsView;
+        private GroundOverflowPromptController _groundOverflowPrompt;
+        private Button _exploreButton;
+        private Button _restButton;
         private OptionsScreenController _optionsScreen;
         private Button _pauseOptionsButton;
         private Button _navOptionsButton;
@@ -45,20 +48,9 @@ namespace SqueezySurvival.Presentation.Game
 
         /// <summary>Shows the run and connects the controls. Called once by the scene's composition root.</summary>
         /// <param name="session">The run.</param>
-        /// <param name="playerOptions">The run's settings.</param>
-        /// <param name="globalPreference">The player's global preference, which settings menus can capture into.</param>
-        public void Bind(RunSession session, PlayerOptions playerOptions, PlayerOptions globalPreference)
+        public void Bind(RunSession session)
         {
             _session = session ?? throw new ArgumentNullException(nameof(session));
-            if (playerOptions == null)
-            {
-                throw new ArgumentNullException(nameof(playerOptions));
-            }
-
-            if (globalPreference == null)
-            {
-                throw new ArgumentNullException(nameof(globalPreference));
-            }
 
             VisualElement root = GetComponent<UIDocument>().rootVisualElement;
             _clockLabel = root.Q<Label>("hud-clock");
@@ -73,41 +65,60 @@ namespace SqueezySurvival.Presentation.Game
             var dropOutcomeResolver = new GridDropOutcomeResolver(new NoThingCombinations());
             VisualElement dragLayer = root.Q<VisualElement>("game-screen-root");
             Zone zone = session.CurrentZone;
-            _zoneFeaturesView = new GridPanelView(
-                GridPanel.ZoneFeatures,
-                playerOptions,
-                new CountedCollectionGridContents<ZoneFeatureDefinition>(zone.Features, dropOutcomeResolver),
-                root.Q<VisualElement>("zone-features-panel"),
-                root.Q<ScrollView>("zone-features-grid"),
-                root.Q<Label>("zone-features-empty"),
+            _zoneFeaturesView = new InventoryGridView(
+                InventoryGridShapes.ZoneFeatures,
+                FixedGridHorizontalAlignment.Center,
+                new CountedCollectionInventoryGridContents<ZoneFeatureDefinition>(zone.Features, dropOutcomeResolver),
+                root.Q<VisualElement>("zone-features-grid"),
                 gridTooltip,
                 dragLayer);
-            _groundPoolView = new GridPanelView(
-                GridPanel.GroundPool,
-                playerOptions,
-                new CountedCollectionGridContents<ItemDefinition>(zone.GroundPool, dropOutcomeResolver),
-                root.Q<VisualElement>("ground-pool-panel"),
-                root.Q<ScrollView>("ground-pool-grid"),
-                root.Q<Label>("ground-pool-empty"),
+            var groundContents = new CountedCollectionInventoryGridContents<ItemDefinition>(zone.GroundPool, dropOutcomeResolver);
+            _groundPoolView = new InventoryGridView(
+                InventoryGridShapes.Ground,
+                FixedGridHorizontalAlignment.Center,
+                groundContents,
+                root.Q<VisualElement>("ground-pool-grid"),
+                gridTooltip,
+                dragLayer);
+            new InventoryGridSortController(groundContents, root.Q<Button>("ground-pool-sort-button"), root.Q<Button>("ground-pool-sort-menu-button"));
+
+            var inventoryContents = new CountedCollectionInventoryGridContents<ItemDefinition>(session.Inventory, dropOutcomeResolver);
+            _inventoryView = new InventoryGridView(
+                InventoryGridShapes.Inventory,
+                FixedGridHorizontalAlignment.Left,
+                inventoryContents,
+                root.Q<VisualElement>("inventory-grid"),
+                gridTooltip,
+                dragLayer);
+            new InventoryGridSortController(inventoryContents, root.Q<Button>("inventory-sort-button"), root.Q<Button>("inventory-sort-menu-button"));
+            VisualElement handsGrid = root.Q<VisualElement>("hands-grid");
+            _handsView = new InventoryGridView(
+                InventoryGridShapes.Hands,
+                FixedGridHorizontalAlignment.Left,
+                new CountedCollectionInventoryGridContents<ItemDefinition>(session.Hands, dropOutcomeResolver),
+                handsGrid,
                 gridTooltip,
                 dragLayer);
 
-            _gridPanelSettingsWindow = new GridPanelSettingsWindowController(root.Q<VisualElement>("grid-panel-settings-window"), playerOptions, globalPreference);
-            _gridPanelSettingsWindow.Closed += HideGridPanelSettings;
-            BindPanelSettingsButton(root.Q<Button>("zone-features-settings-button"), GridPanel.ZoneFeatures, "Zone features");
-            BindPanelSettingsButton(root.Q<Button>("ground-pool-settings-button"), GridPanel.GroundPool, "On the ground");
+            // The hands are as wide as their cells need at the row's height, so their cells match the inventory's.
+            handsGrid.parent.RegisterCallback<GeometryChangedEvent>(changed =>
+                handsGrid.style.width = FixedGridLayoutCalculator.WidthForHeight(InventoryGridShapes.Hands, changed.newRect.height));
 
-            _optionsScreen = new OptionsScreenController(root.Q<VisualElement>("options-screen"), playerOptions, globalPreference);
+            _groundOverflowPrompt = new GroundOverflowPromptController(
+                session, _groundPoolView, root.Q<VisualElement>("ground-overflow-prompt"), root.Q<Label>("ground-discard-hint"));
+            session.PendingGroundOverflowChanged += RefreshTimeTakingActions;
+
+            _optionsScreen = new OptionsScreenController(root.Q<VisualElement>("options-screen"));
             _optionsScreen.Closed += HideOptionsScreen;
             _pauseOptionsButton = root.Q<Button>("pause-options-button");
             _pauseOptionsButton.clicked += () => ShowOptionsScreen(openedFromPauseMenu: true);
 
-            Button exploreButton = root.Q<Button>("explore-button");
-            exploreButton.text = $"Explore ({GameClockFormatter.FormatDuration(session.ExploreMinutes)})";
-            exploreButton.clicked += () => _session.Explore();
+            _exploreButton = root.Q<Button>("explore-button");
+            _exploreButton.text = $"Explore ({GameClockFormatter.FormatDuration(session.ExploreMinutes)})";
+            _exploreButton.clicked += () => _session.Explore();
 
             _waitButton = BindTimePassingButton(root.Q<Button>("wait-button"), "Wait", TimePassingAction.Wait);
-            BindTimePassingButton(root.Q<Button>("rest-button"), "Rest", TimePassingAction.Rest);
+            _restButton = BindTimePassingButton(root.Q<Button>("rest-button"), "Rest", TimePassingAction.Rest);
 
             _notBuiltNotice = root.Q<VisualElement>("not-built-notice");
             _notBuiltNoticeText = root.Q<Label>("not-built-notice-text");
@@ -154,12 +165,14 @@ namespace SqueezySurvival.Presentation.Game
             {
                 _session.EventLog.EntryAdded -= AppendLogEntry;
                 _session.CurrentZone.ExplorationProgressChanged -= RefreshExplorationProgress;
+                _session.PendingGroundOverflowChanged -= RefreshTimeTakingActions;
             }
 
             _zoneFeaturesView?.Dispose();
             _groundPoolView?.Dispose();
-            _gridPanelSettingsWindow?.Dispose();
-            _optionsScreen?.Dispose();
+            _inventoryView?.Dispose();
+            _handsView?.Dispose();
+            _groundOverflowPrompt?.Dispose();
         }
 
         private Button BindTimePassingButton(Button button, string actionName, TimePassingAction action)
@@ -179,19 +192,13 @@ namespace SqueezySurvival.Presentation.Game
             _explorationProgressLabel.text = $"Explored {progress.WholePercent}%";
         }
 
-        private void BindPanelSettingsButton(Button button, GridPanel panel, string panelName)
+        // Nothing that takes time can happen while a find waits for room on the ground.
+        private void RefreshTimeTakingActions()
         {
-            button.clicked += () =>
-            {
-                _lastChosenSettingsButton = button;
-                _gridPanelSettingsWindow.Show(panel, panelName);
-            };
-        }
-
-        private void HideGridPanelSettings()
-        {
-            _gridPanelSettingsWindow.Hide();
-            _lastChosenSettingsButton?.Focus();
+            bool available = !_session.HasPendingGroundOverflow;
+            _exploreButton.SetEnabled(available);
+            _waitButton.SetEnabled(available);
+            _restButton.SetEnabled(available);
         }
 
         private void ShowOptionsScreen(bool openedFromPauseMenu)
@@ -249,19 +256,23 @@ namespace SqueezySurvival.Presentation.Game
 
         private void OnCancel()
         {
-            if (_zoneFeaturesView.IsDragging || _groundPoolView.IsDragging)
+            InventoryGridView[] grids = { _zoneFeaturesView, _groundPoolView, _inventoryView, _handsView };
+            if (Array.Exists(grids, grid => grid.IsDragging))
             {
                 // Escape during a drag only cancels the drag (Docs/Design/UI/DragAndDrop.md, Dragging).
-                _zoneFeaturesView.CancelDrag();
-                _groundPoolView.CancelDrag();
+                Array.ForEach(grids, grid => grid.CancelDrag());
+            }
+            else if (_groundOverflowPrompt.IsChoosingDiscard)
+            {
+                _groundOverflowPrompt.ReturnToQuestion();
+            }
+            else if (_groundOverflowPrompt.IsAsking)
+            {
+                // The question must be answered; Escape does not dismiss it (Docs/Design/UI/InventoryGrids.md).
             }
             else if (_notBuiltNotice.style.display != DisplayStyle.None)
             {
                 HideNotBuiltNotice();
-            }
-            else if (_gridPanelSettingsWindow.IsVisible)
-            {
-                HideGridPanelSettings();
             }
             else if (_optionsScreen.IsVisible)
             {

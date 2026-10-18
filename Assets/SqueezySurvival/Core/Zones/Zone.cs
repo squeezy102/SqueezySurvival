@@ -1,4 +1,5 @@
 using System;
+using SqueezySurvival.Core.InventoryGrids;
 using SqueezySurvival.Core.Items;
 
 namespace SqueezySurvival.Core.Zones
@@ -29,10 +30,10 @@ namespace SqueezySurvival.Core.Zones
         public ExplorationProgress ExplorationProgress { get; private set; }
 
         /// <summary>Items lying on the ground here (Docs/Design/Systems/Zones.md, Ground pool).</summary>
-        public CountedCollection<ItemDefinition> GroundPool { get; } = new CountedCollection<ItemDefinition>();
+        public CountedCollection<ItemDefinition> GroundPool { get; } = new CountedCollection<ItemDefinition>(InventoryGridShapes.Ground.SlotCount);
 
         /// <summary>Features found here: resource nodes and other permanent or semi-permanent fixtures.</summary>
-        public CountedCollection<ZoneFeatureDefinition> Features { get; } = new CountedCollection<ZoneFeatureDefinition>();
+        public CountedCollection<ZoneFeatureDefinition> Features { get; } = new CountedCollection<ZoneFeatureDefinition>(InventoryGridShapes.ZoneFeatures.SlotCount);
 
         /// <summary>Counts one more explore of the zone.</summary>
         public void RecordExplore()

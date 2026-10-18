@@ -53,23 +53,86 @@
     margin-bottom: 0;
 }
 
-.panel-settings-button {
+.inventory-grid {
+    flex-grow: 1;
+    flex-basis: 0;
+}
+
+/* While choosing something to discard, every item cell is a target. */
+.inventory-grid--choosing .grid-cell:hover {
+    background-color: rgba(220, 80, 60, 0.45);
+}
+
+.inventory-row {
+    flex-grow: 1;
+    flex-basis: 0;
+    flex-direction: row;
+}
+
+/* Its width is set from the row's height in code, so its cells match the inventory's. */
+.hands-grid {
+    flex-grow: 0;
+    flex-basis: auto;
+}
+
+/* The hands are set apart from the inventory by a vertical rule with a cell gap on each side. */
+.hands-divider {
+    width: 2px;
+    margin-left: 8px;
+    margin-right: 8px;
+    background-color: rgba(255, 214, 120, 0.6);
+}
+
+.sort-controls {
+    flex-direction: row;
+}
+
+.sort-button {
     height: 32px;
     margin-left: 0;
     margin-right: 0;
     margin-top: 0;
     margin-bottom: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
     font-size: 18px;
 }
 
-.grid-panel-grid {
-    flex-grow: 1;
-    flex-basis: 0;
+.sort-menu-button {
+    width: 32px;
+    height: 32px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
 }
 
-.grid-panel-grid .unity-scroller:disabled {
-    opacity: 0.35;
+.sort-menu-arrow {
+    flex-grow: 1;
 }
+
+.ground-discard-hint {
+    display: none;
+    flex-grow: 1;
+    margin-left: 12px;
+    font-size: 18px;
+    -unity-font-style: italic;
+    color: rgb(255, 160, 140);
+}
+
+.ground-overflow-question {
+    font-size: 24px;
+    color: rgb(255, 255, 255);
+}
+
+.grid-tooltip-subtitle {
+    font-size: 16px;
+    -unity-font-style: italic;
+    color: rgb(190, 200, 210);
+}
+
 
 .grid-cell {
     border-top-left-radius: 6px;
@@ -93,14 +156,6 @@
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
     background-color: rgba(255, 255, 255, 0.03);
-}
-
-.grid-drop-target--bar {
-    border-left-width: 0;
-    border-right-width: 0;
-    border-top-width: 0;
-    border-bottom-width: 0;
-    background-color: rgb(255, 214, 120);
 }
 
 .grid-drop-target {

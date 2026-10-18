@@ -59,7 +59,9 @@ Each zone has a ground pool: the items lying on the ground there. Items enter it
 
 ### Capacity
 
-The ground pool has no capacity limit (resolves OQ-028). Items leave it only by:
+The ground pool has no weight limit (resolves OQ-028): weight on the ground is shown for information only. It does have a fixed number of slots, one kind of item per slot, shown as the ground's [inventory grid](../UI/InventoryGrids.md#the-grids). When every slot is taken and a new kind arrives, the player chooses what to throw away ([Inventory Grids: when the ground is full](../UI/InventoryGrids.md#when-the-ground-is-full)).
+
+Items leave it only by:
 
 | Mechanism | Affects |
 |---|---|

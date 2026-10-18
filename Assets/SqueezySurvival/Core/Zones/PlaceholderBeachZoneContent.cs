@@ -12,64 +12,64 @@ namespace SqueezySurvival.Core.Zones
     public static class PlaceholderBeachZoneContent
     {
         /// <summary>A loose stone.</summary>
-        public static readonly ItemDefinition Stone = new ItemDefinition("stone", "Stone", "a stone", "stones", "A fist-sized stone, smooth from the surf. Good for throwing, or for knapping into a tool.", 1.0m);
+        public static readonly ItemDefinition Stone = new ItemDefinition("stone", "Stone", "a stone", "stones", "A fist-sized stone, smooth from the surf. Good for throwing, or for knapping into a tool.", ItemCategory.StoneAndMinerals, 1.0m);
 
         /// <summary>A stick.</summary>
-        public static readonly ItemDefinition Stick = new ItemDefinition("stick", "Stick", "a stick", "sticks", "A dry stick, about as long as your arm.", 0.5m);
+        public static readonly ItemDefinition Stick = new ItemDefinition("stick", "Stick", "a stick", "sticks", "A dry stick, about as long as your arm.", ItemCategory.Wood, 0.5m);
 
         /// <summary>A strand of seaweed: the Beach's fibrous plant.</summary>
-        public static readonly ItemDefinition SeaweedStrand = new ItemDefinition("seaweed-strand", "Seaweed strand", "a strand of seaweed", "strands of seaweed", "A long, rubbery strand of kelp. Its fibers could be twisted into cord.", 0.2m);
+        public static readonly ItemDefinition SeaweedStrand = new ItemDefinition("seaweed-strand", "Seaweed strand", "a strand of seaweed", "strands of seaweed", "A long, rubbery strand of kelp. Its fibers could be twisted into cord.", ItemCategory.PlantMatter, 0.2m);
 
         /// <summary>A seashell.</summary>
-        public static readonly ItemDefinition Seashell = new ItemDefinition("seashell", "Seashell", "a seashell", "seashells", "A small, ridged shell. Pretty, and sharp along its broken edge.", 0.1m);
+        public static readonly ItemDefinition Seashell = new ItemDefinition("seashell", "Seashell", "a seashell", "seashells", "A small, ridged shell. Pretty, and sharp along its broken edge.", ItemCategory.Shells, 0.1m);
 
         /// <summary>A conch shell.</summary>
-        public static readonly ItemDefinition Conch = new ItemDefinition("conch", "Conch", "a conch", "conches", "A heavy spiral shell. The inside is smooth and pink.", 0.75m);
+        public static readonly ItemDefinition Conch = new ItemDefinition("conch", "Conch", "a conch", "conches", "A heavy spiral shell. The inside is smooth and pink.", ItemCategory.Shells, 0.75m);
 
         /// <summary>A coconut.</summary>
-        public static readonly ItemDefinition Coconut = new ItemDefinition("coconut", "Coconut", "a coconut", "coconuts", "A coconut in its husk. There is water inside, if you can get at it.", 3.0m);
+        public static readonly ItemDefinition Coconut = new ItemDefinition("coconut", "Coconut", "a coconut", "coconuts", "A coconut in its husk. There is water inside, if you can get at it.", ItemCategory.Fruit, 3.0m);
 
         /// <summary>Driftwood chunk: placeholder beach find.</summary>
-        public static readonly ItemDefinition DriftwoodChunk = new ItemDefinition("driftwood-chunk", "Driftwood chunk", "a chunk of driftwood", "chunks of driftwood", "A sun-bleached chunk of wood, light and dry.", 1.5m);
+        public static readonly ItemDefinition DriftwoodChunk = new ItemDefinition("driftwood-chunk", "Driftwood chunk", "a chunk of driftwood", "chunks of driftwood", "A sun-bleached chunk of wood, light and dry.", ItemCategory.Wood, 1.5m);
 
         /// <summary>Palm frond: placeholder beach find.</summary>
-        public static readonly ItemDefinition PalmFrond = new ItemDefinition("palm-frond", "Palm frond", "a palm frond", "palm fronds", "A long, fallen palm leaf. Good for weaving or thatch.", 0.75m);
+        public static readonly ItemDefinition PalmFrond = new ItemDefinition("palm-frond", "Palm frond", "a palm frond", "palm fronds", "A long, fallen palm leaf. Good for weaving or thatch.", ItemCategory.PlantMatter, 0.75m);
 
         /// <summary>Feather: placeholder beach find.</summary>
-        public static readonly ItemDefinition Feather = new ItemDefinition("feather", "Feather", "a feather", "feathers", "A gull feather, gray and white.", 0.01m);
+        public static readonly ItemDefinition Feather = new ItemDefinition("feather", "Feather", "a feather", "feathers", "A gull feather, gray and white.", ItemCategory.AnimalParts, 0.01m);
 
         /// <summary>Crab shell: placeholder beach find.</summary>
-        public static readonly ItemDefinition CrabShell = new ItemDefinition("crab-shell", "Crab shell", "a crab shell", "crab shells", "The empty shell of a crab. Something got to it first.", 0.1m);
+        public static readonly ItemDefinition CrabShell = new ItemDefinition("crab-shell", "Crab shell", "a crab shell", "crab shells", "The empty shell of a crab. Something got to it first.", ItemCategory.AnimalParts, 0.1m);
 
         /// <summary>Sea glass: placeholder beach find.</summary>
-        public static readonly ItemDefinition SeaGlass = new ItemDefinition("sea-glass", "Sea glass", "a piece of sea glass", "pieces of sea glass", "A frosted green shard, worn smooth by the waves.", 0.05m);
+        public static readonly ItemDefinition SeaGlass = new ItemDefinition("sea-glass", "Sea glass", "a piece of sea glass", "pieces of sea glass", "A frosted green shard, worn smooth by the waves.", ItemCategory.Salvage, 0.05m);
 
         /// <summary>Sand dollar: placeholder beach find.</summary>
-        public static readonly ItemDefinition SandDollar = new ItemDefinition("sand-dollar", "Sand dollar", "a sand dollar", "sand dollars", "A flat, round shell with a five-petaled pattern.", 0.05m);
+        public static readonly ItemDefinition SandDollar = new ItemDefinition("sand-dollar", "Sand dollar", "a sand dollar", "sand dollars", "A flat, round shell with a five-petaled pattern.", ItemCategory.Shells, 0.05m);
 
         /// <summary>Starfish: placeholder beach find.</summary>
-        public static readonly ItemDefinition Starfish = new ItemDefinition("starfish", "Starfish", "a starfish", "starfish", "A dried starfish, stiff and rough.", 0.1m);
+        public static readonly ItemDefinition Starfish = new ItemDefinition("starfish", "Starfish", "a starfish", "starfish", "A dried starfish, stiff and rough.", ItemCategory.AnimalParts, 0.1m);
 
         /// <summary>Pumice: placeholder beach find.</summary>
-        public static readonly ItemDefinition Pumice = new ItemDefinition("pumice", "Pumice", "a lump of pumice", "lumps of pumice", "A light, porous stone that floats.", 0.25m);
+        public static readonly ItemDefinition Pumice = new ItemDefinition("pumice", "Pumice", "a lump of pumice", "lumps of pumice", "A light, porous stone that floats.", ItemCategory.StoneAndMinerals, 0.25m);
 
         /// <summary>Coral fragment: placeholder beach find.</summary>
-        public static readonly ItemDefinition CoralFragment = new ItemDefinition("coral-fragment", "Coral fragment", "a coral fragment", "coral fragments", "A branch of white coral, brittle and sharp.", 0.2m);
+        public static readonly ItemDefinition CoralFragment = new ItemDefinition("coral-fragment", "Coral fragment", "a coral fragment", "coral fragments", "A branch of white coral, brittle and sharp.", ItemCategory.StoneAndMinerals, 0.2m);
 
         /// <summary>Sea sponge: placeholder beach find.</summary>
-        public static readonly ItemDefinition SeaSponge = new ItemDefinition("sea-sponge", "Sea sponge", "a sea sponge", "sea sponges", "A dried sponge. It would soak up water again.", 0.1m);
+        public static readonly ItemDefinition SeaSponge = new ItemDefinition("sea-sponge", "Sea sponge", "a sea sponge", "sea sponges", "A dried sponge. It would soak up water again.", ItemCategory.AnimalParts, 0.1m);
 
         /// <summary>Cuttlebone: placeholder beach find.</summary>
-        public static readonly ItemDefinition Cuttlebone = new ItemDefinition("cuttlebone", "Cuttlebone", "a cuttlebone", "cuttlebones", "A chalky, oval bone from a cuttlefish.", 0.05m);
+        public static readonly ItemDefinition Cuttlebone = new ItemDefinition("cuttlebone", "Cuttlebone", "a cuttlebone", "cuttlebones", "A chalky, oval bone from a cuttlefish.", ItemCategory.AnimalParts, 0.05m);
 
         /// <summary>Rope scrap: placeholder beach find.</summary>
-        public static readonly ItemDefinition RopeScrap = new ItemDefinition("rope-scrap", "Rope scrap", "a scrap of rope", "scraps of rope", "A frayed length of rope, tangled with seaweed.", 0.3m);
+        public static readonly ItemDefinition RopeScrap = new ItemDefinition("rope-scrap", "Rope scrap", "a scrap of rope", "scraps of rope", "A frayed length of rope, tangled with seaweed.", ItemCategory.Salvage, 0.3m);
 
         /// <summary>Glass float: placeholder beach find.</summary>
-        public static readonly ItemDefinition GlassFloat = new ItemDefinition("glass-float", "Glass float", "a glass float", "glass floats", "A hollow glass ball, once part of a fishing net.", 1.0m);
+        public static readonly ItemDefinition GlassFloat = new ItemDefinition("glass-float", "Glass float", "a glass float", "glass floats", "A hollow glass ball, once part of a fishing net.", ItemCategory.Salvage, 1.0m);
 
         /// <summary>Bamboo segment: placeholder beach find.</summary>
-        public static readonly ItemDefinition BambooSegment = new ItemDefinition("bamboo-segment", "Bamboo segment", "a bamboo segment", "bamboo segments", "A hollow length of bamboo, washed in from somewhere.", 0.5m);
+        public static readonly ItemDefinition BambooSegment = new ItemDefinition("bamboo-segment", "Bamboo segment", "a bamboo segment", "bamboo segments", "A hollow length of bamboo, washed in from somewhere.", ItemCategory.Wood, 0.5m);
 
         /// <summary>A small palm tree.</summary>
         public static readonly ZoneFeatureDefinition SmallPalmTree = new ZoneFeatureDefinition("small-palm-tree", "Small palm tree", "a small palm tree", "small palm trees", "A young palm, barely taller than you.", ZoneFeaturePermanence.Permanent);

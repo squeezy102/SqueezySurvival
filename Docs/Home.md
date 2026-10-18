@@ -40,7 +40,7 @@ Planned: Crafting, Buildings, Light Sources, Illness.
 - [HUD](Design/UI/HUD.md) - static status area, temperature, weather icons, event log.
 - [Controls](Design/UI/Controls.md) - mouse and modifiers, hotkeys, remapping.
 - [Startup Flow](Design/UI/StartupFlow.md) - splash logos, main menu, New Game screen and starting a run.
-- [Grid Panels](Design/UI/GridPanels.md) - configurable scrollable grids for zone features and the ground pool.
+- [Inventory Grids](Design/UI/InventoryGrids.md) - fixed grids of slots for the ground, zone features, inventory and hands; sorting; the ground-full prompt.
 - [Drag and Drop](Design/UI/DragAndDrop.md) - moving, reordering and combining things by dragging.
 - [Options](Design/UI/Options.md) - the Options screen and where it opens from.
 - [Day Summary](Design/UI/DaySummary.md) - the screen that marks the end of each day (concept).
