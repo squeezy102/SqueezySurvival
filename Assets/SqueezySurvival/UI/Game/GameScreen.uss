@@ -10,10 +10,23 @@
 
 
 
+.hud-clock-row {
+    flex-direction: row;
+    align-items: center;
+}
+
+/* Sized in code to the painted dial at the interface's pixel scale. */
+.hud-day-night-dial {
+    flex-shrink: 0;
+    margin-right: 12px;
+}
+
 .hud-clock {
     font-size: 30px;
     -unity-font-style: bold;
     color: rgb(240, 242, 250);
+    flex-shrink: 1;
+    white-space: normal;
 }
 
 .hud-time-buttons {

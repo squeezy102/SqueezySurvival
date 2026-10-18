@@ -89,8 +89,30 @@ namespace SqueezySurvival.Presentation.PixelArt
             _frameTextures.Clear();
         }
 
+        /// <summary>
+        /// Makes a texture of a pixel image with no smoothing, for images that change, such as the day and night dial.
+        /// The caller owns it and destroys it.
+        /// </summary>
+        public static Texture2D CreateTexture(PixelImage image, string name) => ToTexture(image, name);
+
+        /// <summary>Replaces a texture's pixels with an image of the same size.</summary>
+        public static void CopyInto(Texture2D texture, PixelImage image)
+        {
+            if (texture == null)
+            {
+                throw new ArgumentNullException(nameof(texture));
+            }
+
+            if (image == null)
+            {
+                throw new ArgumentNullException(nameof(image));
+            }
+
+            texture.SetPixels32(ToPixels(image));
+            texture.Apply(false, false);
+        }
+
         // Point filtering keeps pixels square when scaled (https://docs.unity3d.com/ScriptReference/FilterMode.Point.html).
-        // Texture rows start at the bottom, so the image is flipped as it is copied.
         private static Texture2D ToTexture(PixelImage image, string name)
         {
             var texture = new Texture2D(image.Width, image.Height, TextureFormat.RGBA32, false)
@@ -99,6 +121,14 @@ namespace SqueezySurvival.Presentation.PixelArt
                 filterMode = FilterMode.Point,
                 wrapMode = TextureWrapMode.Clamp,
             };
+            texture.SetPixels32(ToPixels(image));
+            texture.Apply(false, false);
+            return texture;
+        }
+
+        // Texture rows start at the bottom, so the image is flipped as it is copied.
+        private static Color32[] ToPixels(PixelImage image)
+        {
             var pixels = new Color32[image.Width * image.Height];
             for (int y = 0; y < image.Height; y++)
             {
@@ -109,9 +139,7 @@ namespace SqueezySurvival.Presentation.PixelArt
                 }
             }
 
-            texture.SetPixels32(pixels);
-            texture.Apply(false, true);
-            return texture;
+            return pixels;
         }
     }
 }

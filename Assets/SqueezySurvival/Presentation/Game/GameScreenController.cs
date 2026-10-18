@@ -34,6 +34,7 @@ namespace SqueezySurvival.Presentation.Game
         private InventoryGridView _handsView;
         private GroundOverflowPromptController _groundOverflowPrompt;
         private PixelArtTextureCache _pixelArtTextures;
+        private DayNightDialView _dayNightDial;
         private Button _exploreButton;
         private Button _restButton;
         private OptionsScreenController _optionsScreen;
@@ -166,6 +167,7 @@ namespace SqueezySurvival.Presentation.Game
             }
 
             session.EventLog.EntryAdded += AppendLogEntry;
+            _dayNightDial = new DayNightDialView(root.Q<VisualElement>("hud-day-night-dial"), session.Clock);
             session.ClockAdvanced += _ => RefreshClock();
             RefreshClock();
 
@@ -196,6 +198,7 @@ namespace SqueezySurvival.Presentation.Game
             _handsView?.Dispose();
             _groundOverflowPrompt?.Dispose();
             _pixelArtTextures?.Dispose();
+            _dayNightDial?.Dispose();
         }
 
         private Button BindTimePassingButton(Button button, string actionName, TimePassingAction action)
@@ -207,6 +210,7 @@ namespace SqueezySurvival.Presentation.Game
 
         private void RefreshClock()
         {
+            _dayNightDial.Show(_session.Clock);
             _clockLabel.text = GameClockFormatter.FormatHudClock(_session.Clock, _session.DayPhaseSchedule);
         }
 

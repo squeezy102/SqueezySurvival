@@ -61,7 +61,7 @@ Spacing is uniform: every panel is inset 16 px from the screen edge and separate
 | Region | Built | Placeholder |
 |---|---|---|
 | Scene | Placeholder beach art. | - |
-| HUD | Game clock: day, time and day phase, for example `Day 1 - 6:00 AM - Dawn` ([Time: display](../Systems/Time.md#display)). Wait (15 min) and Rest (1 hr) buttons, with their durations shown ([Time: passing time deliberately](../Systems/Time.md#passing-time-deliberately)). | Survival stats, temperature and weather. |
+| HUD | The day and night dial ([Time: display](../Systems/Time.md#display)) beside the game clock: day, time and day phase, for example `Day 1 - 6:00 AM - Dawn` ([Time: display](../Systems/Time.md#display)). Wait (15 min) and Rest (1 hr) buttons, with their durations shown ([Time: passing time deliberately](../Systems/Time.md#passing-time-deliberately)). | Survival stats, temperature and weather. |
 | Zone bar | Current zone name (Beach), its exploration progress ("Explored 4%"), and Explore with its duration ([Exploration: wireframe stage](../Systems/Exploration.md#wireframe-stage)). | No connected zones are known at the start. |
 | Zone features, ground pool | Two panels, "Zone features" above "On the ground", each a fixed 16 x 4 grid of what exploring has found ([Inventory Grids](InventoryGrids.md)). The ground has Sort with its order menu, and asks what to discard when it is full. | Filtering. |
 | Event log | Every action is logged with its time, starting with waking on the beach. | - |

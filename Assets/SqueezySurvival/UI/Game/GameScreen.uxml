@@ -6,7 +6,10 @@
             <ui:VisualElement class="upper-area gap-bottom">
                 <ui:VisualElement class="left-column gap-right">
                     <ui:VisualElement class="panel hud-panel gap-bottom">
-                        <ui:Label name="hud-clock" class="hud-clock" />
+                        <ui:VisualElement class="hud-clock-row">
+                            <ui:VisualElement name="hud-day-night-dial" class="hud-day-night-dial" />
+                            <ui:Label name="hud-clock" class="hud-clock" />
+                        </ui:VisualElement>
                         <ui:VisualElement class="hud-time-buttons">
                             <ui:Button name="wait-button" class="game-button" />
                             <ui:Button name="rest-button" class="game-button" />
