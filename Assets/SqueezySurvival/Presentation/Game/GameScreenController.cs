@@ -109,8 +109,11 @@ namespace SqueezySurvival.Presentation.Game
                 skin);
 
             // The hands are as wide as their cells need at the row's height, so their cells match the inventory's.
-            handsGrid.parent.RegisterCallback<GeometryChangedEvent>(changed =>
-                handsGrid.style.width = FixedGridLayoutCalculator.WidthForHeight(InventoryGridShapes.Hands, changed.newRect.height));
+            // Bind runs after the first layout pass, whose geometry event has already fired, so the width is also
+            // set from the current layout (#51).
+            VisualElement inventoryRow = handsGrid.parent;
+            inventoryRow.RegisterCallback<GeometryChangedEvent>(changed => SizeHandsGrid(handsGrid, changed.newRect.height));
+            SizeHandsGrid(handsGrid, inventoryRow.layout.height);
 
             _groundOverflowPrompt = new GroundOverflowPromptController(
                 session, _groundPoolView, root.Q<VisualElement>("ground-overflow-prompt"), root.Q<Label>("ground-discard-hint"));
@@ -201,6 +204,15 @@ namespace SqueezySurvival.Presentation.Game
         private void RefreshExplorationProgress(ExplorationProgress progress)
         {
             _explorationProgressLabel.text = $"Explored {progress.WholePercent}%";
+        }
+
+        private static void SizeHandsGrid(VisualElement handsGrid, float rowHeight)
+        {
+            // Before its first layout pass an element's height is NaN; the geometry event sizes it once known.
+            if (!float.IsNaN(rowHeight))
+            {
+                handsGrid.style.width = FixedGridLayoutCalculator.WidthForHeight(InventoryGridShapes.Hands, rowHeight);
+            }
         }
 
         // Nothing that takes time can happen while a find waits for room on the ground.
