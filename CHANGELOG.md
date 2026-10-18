@@ -6,6 +6,8 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-10-17
+
 ### Added
 - Unity 6 (6000.4.2f1) Universal 2D project with URP 2D Renderer.
 - Unity `.gitignore` and `.gitattributes` with Git LFS for binary assets.
