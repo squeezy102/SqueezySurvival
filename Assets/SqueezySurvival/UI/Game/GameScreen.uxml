@@ -71,13 +71,13 @@
             <ui:Button name="nav-options-button" text="Options" class="nav-button" />
         </ui:VisualElement>
         <ui:VisualElement name="not-built-notice" class="pause-overlay">
-            <ui:VisualElement class="pause-panel">
+            <ui:VisualElement class="pause-panel pixel-window">
                 <ui:Label name="not-built-notice-text" class="pause-warning" />
                 <ui:Button name="not-built-notice-close-button" text="Close" class="game-button pause-button" />
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="ground-overflow-prompt" class="pause-overlay">
-            <ui:VisualElement class="pause-panel">
+            <ui:VisualElement class="pause-panel pixel-window">
                 <ui:Label name="ground-overflow-question" class="pause-warning ground-overflow-question" />
                 <ui:Button name="ground-overflow-leave-button" class="game-button pause-button" />
                 <ui:Label name="ground-overflow-leave-warning" class="pause-warning" />
@@ -86,7 +86,7 @@
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="pause-menu" class="pause-overlay">
-            <ui:VisualElement class="pause-panel">
+            <ui:VisualElement class="pause-panel pixel-window">
                 <ui:Label text="Paused" class="pause-heading" />
                 <ui:Label text="Saving isn't built yet: this run won't be kept." class="pause-warning" />
                 <ui:Button name="pause-options-button" text="Options" class="game-button pause-button" />

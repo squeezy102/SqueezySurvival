@@ -5,6 +5,7 @@ using SqueezySurvival.Core.NewGame;
 using SqueezySurvival.Core.Runs;
 using SqueezySurvival.Core.Saving;
 using SqueezySurvival.Presentation.Options;
+using SqueezySurvival.Presentation.PixelArt;
 using SqueezySurvival.Presentation.Session;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -33,6 +34,7 @@ namespace SqueezySurvival.Presentation.MainMenu
         private Button _newGameButton;
         private Focusable _focusAfterNotice;
         private OptionsScreenController _optionsScreen;
+        private PixelArtTextureCache _pixelArtTextures;
         private Button _optionsButton;
 
         /// <summary>Fills in the menu and connects its controls. Called once by the scene's composition root.</summary>
@@ -86,6 +88,9 @@ namespace SqueezySurvival.Presentation.MainMenu
                     availableButtons.Add(button);
                 }
             }
+
+            _pixelArtTextures = new PixelArtTextureCache();
+            new PixelArtInterfaceSkin(_pixelArtTextures).ApplyTo(root);
 
             // Focus must be requested a frame after layout for UI Toolkit to apply it
             // (Unity Manual: runtime UI event system FAQ).
@@ -164,6 +169,11 @@ namespace SqueezySurvival.Presentation.MainMenu
             {
                 HideOptionsScreen();
             }
+        }
+
+        private void OnDestroy()
+        {
+            _pixelArtTextures?.Dispose();
         }
 
         private void HideOptionsScreen()

@@ -19,7 +19,7 @@ Sizes are placeholders, to be tuned in play.
 - Every slot is drawn, empty ones as faint squares. The cells are square and as large as the panel allows; the grid is centered in its panel. **The panel never resizes.**
 - Cells are 8 px apart (at the 1920 x 1080 reference resolution), and the panel's header sits the same 8 px above the grid.
 - Things stay in their slots until the player moves them ([Drag and Drop](DragAndDrop.md)); slots may be left empty on purpose. A newly arriving kind takes the first empty slot.
-- Icons are simple placeholder shapes drawn by the game until art exists.
+- Icons are placeholder pixel art drawn by the game until real art exists ([Art Direction](../ArtDirection.md#icons)).
 
 ## When the ground is full
 
@@ -59,4 +59,4 @@ Weights are in pounds ([Inventory](../Systems/Inventory.md)). Descriptions and w
 
 - A grid's slots, capacity, overflow and sorting live in Core (`CountedCollection`, `ThingSortComparer`); its geometry comes from `FixedGridLayoutCalculator`. The presentation layer only places cells where Core says (`InventoryGridView`), and the sort menu is UI Toolkit's `GenericDropdownMenu` ([Unity Scripting API](https://docs.unity3d.com/ScriptReference/UIElements.GenericDropdownMenu.html)).
 - UI Toolkit's own tooltip only works in the Unity Editor ([Unity Manual: tooltip event](https://docs.unity3d.com/Manual/UIE-Tooltip-Events.html)), so the game draws its own (`GridTooltipView`); its content comes from Core (`ThingTooltipContentFactory`).
-- Placeholder icons are drawn with UI Toolkit's vector API ([Unity Manual: generate 2D visual content](https://docs.unity3d.com/Manual/UIE-generate-2d-visual-content.html)) by `PlaceholderIconPainter`, keyed by each definition's id. They need no image files.
+- Placeholder icons are 16 x 16 pixel art drawn by the game from `PlaceholderIconCatalog`, keyed by each definition's id ([Art Direction](../ArtDirection.md#icons)). They need no image files.

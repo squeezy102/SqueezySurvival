@@ -2,6 +2,7 @@ using System;
 using SqueezySurvival.Core.DragAndDrop;
 using SqueezySurvival.Core.Items;
 using SqueezySurvival.Presentation.Icons;
+using SqueezySurvival.Presentation.PixelArt;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -16,7 +17,6 @@ namespace SqueezySurvival.Presentation.Game
     {
         // Movement before a press becomes a drag, so a plain click stays a click (Docs/Design/UI/DragAndDrop.md).
         private const float DragStartDistance = 6f;
-        private const float DraggedIconScale = 0.8f;
 
         // How often a held drag is re-checked, so the combine hold completes even while the pointer is still.
         private const long HoldCheckIntervalMilliseconds = 50;
@@ -35,18 +35,25 @@ namespace SqueezySurvival.Presentation.Game
         private Vector2 _pressPosition;
         private VisualElement _draggedIcon;
         private float _draggedIconSize;
+        private readonly PixelArtTextureCache _textures;
         private GridDropOutcome _shownOutcome = GridDropOutcome.ReturnToPlace;
         private readonly CombineHoldTimer _combineHoldTimer = new CombineHoldTimer();
         private Vector2 _pointerPosition;
         private IVisualElementScheduledItem _holdCheck;
 
         /// <summary>Creates the controller for one grid.</summary>
-        public GridCellDragController(InventoryGridView view, IInventoryGridContents contents, GridTooltipView tooltip, VisualElement dragLayer)
+        public GridCellDragController(
+            InventoryGridView view,
+            IInventoryGridContents contents,
+            GridTooltipView tooltip,
+            VisualElement dragLayer,
+            PixelArtTextureCache textures)
         {
             _view = view ?? throw new ArgumentNullException(nameof(view));
             _contents = contents ?? throw new ArgumentNullException(nameof(contents));
             _tooltip = tooltip ?? throw new ArgumentNullException(nameof(tooltip));
             _dragLayer = dragLayer ?? throw new ArgumentNullException(nameof(dragLayer));
+            _textures = textures ?? throw new ArgumentNullException(nameof(textures));
         }
 
         /// <summary>Whether a drag is in progress.</summary>
@@ -159,8 +166,9 @@ namespace SqueezySurvival.Presentation.Game
         {
             _tooltip.Hide();
 
-            _draggedIconSize = Math.Max(16f, _view.CurrentLayout.CellSize * DraggedIconScale);
-            _draggedIcon = new PlaceholderIconElement(_contents.DefinitionIdAt(_pressedSlot)) { pickingMode = PickingMode.Ignore };
+            // The same whole-pixel size as the icon in its cell, so the art pixels don't change size when picked up.
+            _draggedIconSize = PixelIconElement.WholePixelSize(_view.CurrentLayout.CellSize);
+            _draggedIcon = new PixelIconElement(_contents.DefinitionIdAt(_pressedSlot), _textures, fitsParent: false);
             _draggedIcon.AddToClassList("grid-dragged-icon");
             _draggedIcon.style.position = Position.Absolute;
             _draggedIcon.style.width = _draggedIconSize;

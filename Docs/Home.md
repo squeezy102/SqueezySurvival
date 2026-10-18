@@ -5,6 +5,7 @@ The single source of truth for the design, engineering and decisions behind Sque
 ## Design
 
 - [Game Design Document](Design/GameDesignDocument.md) - vision, pillars, core loop, MVP scope.
+- [Art Direction](Design/ArtDirection.md) - 16-bit pixel art icons and a wood-and-parchment interface.
 - [Open Questions](Design/OpenQuestions.md) - design questions still waiting for an answer.
 - [Question Log](Design/QuestionLog.md) - every design question in ID order, with its status and resolution.
 - [Glossary](Glossary.md) - canonical game terms.

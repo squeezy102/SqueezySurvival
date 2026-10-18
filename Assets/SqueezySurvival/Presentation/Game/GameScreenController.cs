@@ -7,6 +7,7 @@ using SqueezySurvival.Core.Runs;
 using SqueezySurvival.Core.Time;
 using SqueezySurvival.Core.Zones;
 using SqueezySurvival.Presentation.Options;
+using SqueezySurvival.Presentation.PixelArt;
 using SqueezySurvival.Presentation.Session;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -30,6 +31,7 @@ namespace SqueezySurvival.Presentation.Game
         private InventoryGridView _inventoryView;
         private InventoryGridView _handsView;
         private GroundOverflowPromptController _groundOverflowPrompt;
+        private PixelArtTextureCache _pixelArtTextures;
         private Button _exploreButton;
         private Button _restButton;
         private OptionsScreenController _optionsScreen;
@@ -62,6 +64,8 @@ namespace SqueezySurvival.Presentation.Game
             root.Q<Label>("zone-name").text = session.CurrentZone.Name;
             _explorationProgressLabel = root.Q<Label>("zone-exploration-progress");
             var gridTooltip = new GridTooltipView(root.Q<VisualElement>("grid-tooltip"));
+            _pixelArtTextures = new PixelArtTextureCache();
+            var skin = new PixelArtInterfaceSkin(_pixelArtTextures);
             var dropOutcomeResolver = new GridDropOutcomeResolver(new NoThingCombinations());
             VisualElement dragLayer = root.Q<VisualElement>("game-screen-root");
             Zone zone = session.CurrentZone;
@@ -71,7 +75,8 @@ namespace SqueezySurvival.Presentation.Game
                 new CountedCollectionInventoryGridContents<ZoneFeatureDefinition>(zone.Features, dropOutcomeResolver),
                 root.Q<VisualElement>("zone-features-grid"),
                 gridTooltip,
-                dragLayer);
+                dragLayer,
+                skin);
             var groundContents = new CountedCollectionInventoryGridContents<ItemDefinition>(zone.GroundPool, dropOutcomeResolver);
             _groundPoolView = new InventoryGridView(
                 InventoryGridShapes.Ground,
@@ -79,7 +84,8 @@ namespace SqueezySurvival.Presentation.Game
                 groundContents,
                 root.Q<VisualElement>("ground-pool-grid"),
                 gridTooltip,
-                dragLayer);
+                dragLayer,
+                skin);
             new InventoryGridSortController(groundContents, root.Q<Button>("ground-pool-sort-button"), root.Q<Button>("ground-pool-sort-menu-button"));
 
             var inventoryContents = new CountedCollectionInventoryGridContents<ItemDefinition>(session.Inventory, dropOutcomeResolver);
@@ -89,7 +95,8 @@ namespace SqueezySurvival.Presentation.Game
                 inventoryContents,
                 root.Q<VisualElement>("inventory-grid"),
                 gridTooltip,
-                dragLayer);
+                dragLayer,
+                skin);
             new InventoryGridSortController(inventoryContents, root.Q<Button>("inventory-sort-button"), root.Q<Button>("inventory-sort-menu-button"));
             VisualElement handsGrid = root.Q<VisualElement>("hands-grid");
             _handsView = new InventoryGridView(
@@ -98,7 +105,8 @@ namespace SqueezySurvival.Presentation.Game
                 new CountedCollectionInventoryGridContents<ItemDefinition>(session.Hands, dropOutcomeResolver),
                 handsGrid,
                 gridTooltip,
-                dragLayer);
+                dragLayer,
+                skin);
 
             // The hands are as wide as their cells need at the row's height, so their cells match the inventory's.
             handsGrid.parent.RegisterCallback<GeometryChangedEvent>(changed =>
@@ -153,6 +161,8 @@ namespace SqueezySurvival.Presentation.Game
             zone.ExplorationProgressChanged += RefreshExplorationProgress;
             RefreshExplorationProgress(zone.ExplorationProgress);
 
+            skin.ApplyTo(root);
+
             // Focus must be requested a frame after layout for UI Toolkit to apply it.
             root.schedule.Execute(() => _waitButton.Focus());
         }
@@ -173,6 +183,7 @@ namespace SqueezySurvival.Presentation.Game
             _inventoryView?.Dispose();
             _handsView?.Dispose();
             _groundOverflowPrompt?.Dispose();
+            _pixelArtTextures?.Dispose();
         }
 
         private Button BindTimePassingButton(Button button, string actionName, TimePassingAction action)

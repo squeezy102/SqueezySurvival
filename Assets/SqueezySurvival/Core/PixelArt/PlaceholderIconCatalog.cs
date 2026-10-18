@@ -1,43 +1,55 @@
-using UnityEngine;
-using UnityEngine.UIElements;
-
-namespace SqueezySurvival.Presentation.Icons
+namespace SqueezySurvival.Core.PixelArt
 {
     /// <summary>
-    /// Draws throwaway placeholder icons for items and zone features with simple vector shapes, until real icon art
-    /// exists (Docs/Design/UI/InventoryGrids.md, The grids). Shapes are described on a 1 x 1 square and scaled to fit.
+    /// The shapes and colors of every placeholder icon for items and zone features, keyed by definition id, until
+    /// real icon art exists (Docs/Design/ArtDirection.md, Icons). Shapes are described on a 1 x 1 square.
     /// </summary>
-    public static class PlaceholderIconPainter
+    public static class PlaceholderIconCatalog
     {
-        private const int CirclePointCount = 28;
+        /// <summary>The icon grid's size in pixels.</summary>
+        public const int IconSize = 16;
 
-        private static readonly Color Stone = new Color(0.62f, 0.62f, 0.60f);
-        private static readonly Color DarkStone = new Color(0.42f, 0.42f, 0.42f);
-        private static readonly Color Wood = new Color(0.55f, 0.36f, 0.18f);
-        private static readonly Color PaleWood = new Color(0.72f, 0.62f, 0.48f);
-        private static readonly Color Leaf = new Color(0.25f, 0.62f, 0.25f);
-        private static readonly Color DarkLeaf = new Color(0.16f, 0.45f, 0.20f);
-        private static readonly Color Seaweed = new Color(0.30f, 0.50f, 0.20f);
-        private static readonly Color ShellPink = new Color(0.96f, 0.76f, 0.70f);
-        private static readonly Color ShellOrange = new Color(0.95f, 0.62f, 0.38f);
-        private static readonly Color Coconut = new Color(0.45f, 0.30f, 0.17f);
-        private static readonly Color Water = new Color(0.30f, 0.62f, 0.86f);
-        private static readonly Color DeepWater = new Color(0.16f, 0.40f, 0.66f);
-        private static readonly Color Unknown = new Color(0.85f, 0.25f, 0.75f);
-        private static readonly Color White = new Color(0.94f, 0.94f, 0.92f);
-        private static readonly Color Gray = new Color(0.55f, 0.58f, 0.62f);
-        private static readonly Color CrabRed = new Color(0.86f, 0.35f, 0.22f);
-        private static readonly Color SeaGlass = new Color(0.45f, 0.80f, 0.62f);
-        private static readonly Color Sand = new Color(0.90f, 0.84f, 0.66f);
-        private static readonly Color Starfish = new Color(0.95f, 0.55f, 0.30f);
-        private static readonly Color Sponge = new Color(0.92f, 0.78f, 0.35f);
-        private static readonly Color Rope = new Color(0.80f, 0.68f, 0.45f);
-        private static readonly Color Bamboo = new Color(0.70f, 0.75f, 0.35f);
+        // One pixel on each side is kept clear for the outline.
+        private const int OutlineMargin = 1;
 
-        /// <summary>Draws the icon for the thing with the given definition id inside <paramref name="area"/>.</summary>
-        public static void Paint(Painter2D painter, Rect area, string definitionId)
+        private static readonly PixelColor Stone = new PixelColor(158, 158, 153);
+        private static readonly PixelColor DarkStone = new PixelColor(107, 107, 107);
+        private static readonly PixelColor Wood = new PixelColor(140, 92, 46);
+        private static readonly PixelColor PaleWood = new PixelColor(184, 158, 122);
+        private static readonly PixelColor Leaf = new PixelColor(64, 158, 64);
+        private static readonly PixelColor DarkLeaf = new PixelColor(41, 115, 51);
+        private static readonly PixelColor Seaweed = new PixelColor(76, 128, 51);
+        private static readonly PixelColor ShellPink = new PixelColor(245, 194, 178);
+        private static readonly PixelColor ShellOrange = new PixelColor(242, 158, 97);
+        private static readonly PixelColor Coconut = new PixelColor(115, 76, 43);
+        private static readonly PixelColor Water = new PixelColor(76, 158, 219);
+        private static readonly PixelColor DeepWater = new PixelColor(41, 102, 168);
+        private static readonly PixelColor Unknown = new PixelColor(217, 64, 191);
+        private static readonly PixelColor White = new PixelColor(240, 240, 235);
+        private static readonly PixelColor Gray = new PixelColor(140, 148, 158);
+        private static readonly PixelColor CrabRed = new PixelColor(219, 89, 56);
+        private static readonly PixelColor SeaGlass = new PixelColor(115, 204, 158);
+        private static readonly PixelColor Sand = new PixelColor(230, 214, 168);
+        private static readonly PixelColor Starfish = new PixelColor(242, 140, 76);
+        private static readonly PixelColor Sponge = new PixelColor(235, 199, 89);
+        private static readonly PixelColor Rope = new PixelColor(204, 173, 115);
+        private static readonly PixelColor Bamboo = new PixelColor(178, 191, 89);
+
+        /// <summary>The finished icon for the thing with the given definition id: drawn, shaded and outlined.</summary>
+        public static PixelImage CreateIcon(string definitionId)
         {
-            var canvas = new IconCanvas(painter, area);
+            var flat = new PixelImage(IconSize, IconSize);
+            Draw(new PixelIconCanvas(flat, OutlineMargin), definitionId);
+            return PixelIconStylizer.Stylize(flat);
+        }
+
+        /// <summary>Whether the catalog has an icon for the id, rather than the magenta square for anything unfinished.</summary>
+        public static bool HasIcon(string definitionId) =>
+            Draw(new PixelIconCanvas(new PixelImage(IconSize, IconSize), OutlineMargin), definitionId);
+
+        // Draws the icon and returns whether the id has one; anything else gets the magenta square.
+        private static bool Draw(PixelIconCanvas canvas, string definitionId)
+        {
             switch (definitionId)
             {
                 case "stone":
@@ -166,11 +178,13 @@ namespace SqueezySurvival.Presentation.Icons
                 default:
                     // Anything without a placeholder yet shows a plain square, so it is visible and obviously unfinished.
                     canvas.Polygon(Unknown, 0.25f, 0.25f, 0.75f, 0.25f, 0.75f, 0.75f, 0.25f, 0.75f);
-                    break;
+                    return false;
             }
+
+            return true;
         }
 
-        private static void PalmTree(IconCanvas canvas, float height)
+        private static void PalmTree(PixelIconCanvas canvas, float height)
         {
             float top = 0.92f - (0.80f * height);
             canvas.Line(Wood, 0.08f, 0.50f, 0.92f, 0.46f, (0.92f + top) / 2f, 0.52f, top);
@@ -179,78 +193,6 @@ namespace SqueezySurvival.Presentation.Icons
             canvas.Line(Leaf, 0.06f, 0.52f, top, 0.30f, top - 0.04f);
             canvas.Line(Leaf, 0.06f, 0.52f, top, 0.74f, top - 0.04f);
             canvas.Ellipse(Coconut, 0.52f, top + 0.04f, 0.05f, 0.05f);
-        }
-
-        /// <summary>Maps shapes on a 1 x 1 square onto the icon's area.</summary>
-        private readonly struct IconCanvas
-        {
-            private readonly Painter2D _painter;
-            private readonly Rect _area;
-
-            public IconCanvas(Painter2D painter, Rect area)
-            {
-                _painter = painter;
-                _area = area;
-            }
-
-            private float Scale => Mathf.Min(_area.width, _area.height);
-
-            public void Polygon(Color color, params float[] coordinates)
-            {
-                _painter.fillColor = color;
-                _painter.BeginPath();
-                _painter.MoveTo(Point(coordinates[0], coordinates[1]));
-                for (int index = 2; index < coordinates.Length; index += 2)
-                {
-                    _painter.LineTo(Point(coordinates[index], coordinates[index + 1]));
-                }
-
-                _painter.ClosePath();
-                _painter.Fill();
-            }
-
-            public void Ellipse(Color color, float centerX, float centerY, float radiusX, float radiusY)
-            {
-                _painter.fillColor = color;
-                _painter.BeginPath();
-                for (int index = 0; index < CirclePointCount; index++)
-                {
-                    float angle = index * Mathf.PI * 2f / CirclePointCount;
-                    Vector2 point = Point(centerX + (Mathf.Cos(angle) * radiusX), centerY + (Mathf.Sin(angle) * radiusY));
-                    if (index == 0)
-                    {
-                        _painter.MoveTo(point);
-                    }
-                    else
-                    {
-                        _painter.LineTo(point);
-                    }
-                }
-
-                _painter.ClosePath();
-                _painter.Fill();
-            }
-
-            public void Line(Color color, float width, params float[] coordinates)
-            {
-                _painter.strokeColor = color;
-                _painter.lineWidth = width * Scale;
-                _painter.lineCap = LineCap.Round;
-                _painter.lineJoin = LineJoin.Round;
-                _painter.BeginPath();
-                _painter.MoveTo(Point(coordinates[0], coordinates[1]));
-                for (int index = 2; index < coordinates.Length; index += 2)
-                {
-                    _painter.LineTo(Point(coordinates[index], coordinates[index + 1]));
-                }
-
-                _painter.Stroke();
-            }
-
-            // Centers the unit square in the area, so icons stay square in any cell shape.
-            private Vector2 Point(float x, float y) => new Vector2(
-                _area.x + ((_area.width - Scale) / 2f) + (x * Scale),
-                _area.y + ((_area.height - Scale) / 2f) + (y * Scale));
         }
     }
 }
