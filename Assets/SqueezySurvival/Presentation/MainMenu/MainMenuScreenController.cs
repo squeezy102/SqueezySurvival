@@ -90,7 +90,9 @@ namespace SqueezySurvival.Presentation.MainMenu
             }
 
             _pixelArtTextures = new PixelArtTextureCache();
-            new PixelArtInterfaceSkin(_pixelArtTextures).ApplyTo(root);
+            var skin = new PixelArtInterfaceSkin(_pixelArtTextures);
+            skin.ApplyTo(root);
+            skin.ApplyBackdrop(root.Q<VisualElement>("main-menu-root"));
 
             // Focus must be requested a frame after layout for UI Toolkit to apply it
             // (Unity Manual: runtime UI event system FAQ).

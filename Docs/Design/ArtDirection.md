@@ -2,7 +2,7 @@
 
 **Status:** Draft - first pass, to be judged in play ([#50](https://github.com/squeezy102/SqueezySurvival/issues/50))
 
-How the game looks: 16-bit pixel art in the spirit of Chrono Trigger, Final Fantasy VI and Stardew Valley, with a warm, hand-made interface in the spirit of Harvest Moon, Stardew Valley and Terraria. It is not a full SNES pastiche: no blue boxes with white borders.
+How the game looks: 16-bit pixel art in the spirit of Chrono Trigger, Final Fantasy VI and Stardew Valley, with an interface of see-through navy glass and gold trim, in the spirit of Chrono Trigger's windows. It is not a full SNES pastiche: no opaque blue boxes with white borders, and the scene always shows through.
 
 ## Principles
 
@@ -30,34 +30,45 @@ Panels, buttons and slots are drawn as pixel-art frames, scaled up by **3** (eac
 
 | Element | Look |
 |---|---|
-| Panel | A wood frame: a 1-pixel dark outline, then a 2-pixel wood rim, light along the top and left and dark along the bottom and right. Inside, a deep warm brown, slightly see-through. Cream text. |
-| Window (pause, prompts, Options) | The panel frame, fully opaque. |
-| Button | A raised tan block: 1-pixel dark outline and a 1-pixel bevel, light top and left, dark bottom and right. Dark brown text. Brighter while hovered, darker while pressed, faded while unavailable. |
-| Slot | A sunken square: the bevel reversed, dark top and left, light bottom and right, so slots read as holes items sit in. |
+| Panel | Navy glass: a 1-pixel dark outline, a 1-pixel gold rim (light along the top and left, dark along the bottom and right), then a 1-pixel navy band. Inside, deep navy at 65% opacity, so the scene shows through. Near-white text, gold headings. |
+| Window (pause, prompts, Options, main menu) | The panel frame, nearly opaque (94%), so it reads over anything. |
+| Button | A raised blue block: 1-pixel dark outline and a 1-pixel bevel, light top and left, dark bottom and right. White text. Lighter while hovered, sunk while pressed, faded while unavailable. |
+| Slot | A sunken square: the bevel reversed, dark top and left, light bottom and right, slightly see-through, so slots read as holes items sit in. |
 | Item cell | No frame of its own: the icon sits in its slot. |
-| Tooltip | Parchment: a cream block with a dark outline and dark brown text, like Stardew Valley's tooltips. |
+| Tooltip | A pale card with a dark outline and navy text. |
 
 ### Palette
 
+Chosen by squeezy102 from three options (navy glass, sea glass, slate) to replace the first pass's wood and parchment, which hid the scene ([#50](https://github.com/squeezy102/SqueezySurvival/issues/50)).
+
 | Name | RGB | Used for |
 |---|---|---|
-| Outline | 42, 24, 16 | Frame outlines |
-| Wood light | 196, 136, 76 | Rim highlight |
-| Wood | 150, 96, 52 | Rim |
-| Wood dark | 98, 58, 32 | Rim shadow |
-| Panel fill | 52, 34, 26, at 92% opacity | Panel interiors |
-| Tan light | 246, 214, 160 | Button highlight |
-| Tan | 222, 182, 122 | Button face |
-| Tan dark | 170, 126, 74 | Button shadow |
-| Slot | 34, 22, 16 | Slot interiors |
-| Parchment | 250, 236, 200 | Tooltip face |
-| Cream | 250, 236, 200 | Text on dark |
-| Ink | 58, 36, 22 | Text on light |
+| Outline | 14, 18, 40 | Frame outlines |
+| Gold light | 222, 190, 110 | Rim highlight, headings |
+| Gold dark | 150, 112, 52 | Rim shadow |
+| Navy rim | 60, 80, 140 | Band inside the rim |
+| Panel fill | 24, 36, 84, at 65% opacity | Panel interiors |
+| Window fill | 24, 36, 84, at 94% opacity | Window interiors |
+| Button light | 120, 150, 220 | Button highlight |
+| Button | 70, 96, 170 | Button face |
+| Button dark | 40, 56, 110 | Button shadow, pressed face |
+| Slot | 10, 16, 40, at 75% opacity | Slot interiors |
+| Tooltip | 236, 240, 250 | Tooltip face |
+| Text | 240, 242, 250 | Text on navy |
+| Ink | 30, 34, 60 | Text on the tooltip |
+
+## Backgrounds
+
+Scenes are pixel art too, drawn at a quarter of the reference resolution (**480 x 270**) and scaled by 4 with no smoothing, so their pixels match the interface's.
+
+- Skies and water are flat bands of color, ordered-dithered where one band meets the next, as in 16-bit games.
+- Objects in the scene (the palm) are drawn on their own layer and shaded and outlined by the icon rules.
+- The placeholder beach is painted by the game (`PlaceholderBeachScenePainter`) and needs no image file. It replaced a smooth painted image, which looked out of place beside the pixel art; reducing that image automatically muddied its colors.
 
 ## Not yet decided
 
 - A pixel font. The look would gain most from one; choosing one needs a font with a license that allows shipping, credited in [Asset Credits](../Engineering/AssetCredits.md).
-- Background and scene art.
+- Real scene art, and whether scenes change with the time of day.
 
 ## Implementation notes
 

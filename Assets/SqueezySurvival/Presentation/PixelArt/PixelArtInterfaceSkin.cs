@@ -37,6 +37,17 @@ namespace SqueezySurvival.Presentation.PixelArt
             root.Query<Button>().ForEach(ApplyButton);
         }
 
+        /// <summary>Shows the beach backdrop behind <paramref name="screenRoot"/>, cropped to fill it.</summary>
+        public void ApplyBackdrop(VisualElement screenRoot)
+        {
+            if (screenRoot == null)
+            {
+                throw new ArgumentNullException(nameof(screenRoot));
+            }
+
+            screenRoot.style.backgroundImage = Background.FromTexture2D(_textures.BeachBackdrop);
+        }
+
         /// <summary>Draws a frame as the element's background, replacing its color, borders and rounded corners.</summary>
         public void ApplyFrame(VisualElement element, PixelFrameStyle style)
         {

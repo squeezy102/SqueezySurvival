@@ -22,14 +22,14 @@
     margin-bottom: 16px;
     font-size: 36px;
     -unity-font-style: bold;
-    color: rgb(250, 236, 200);
+    color: rgb(240, 242, 250);
 }
 
 .options-scope-note {
     margin-bottom: 12px;
     font-size: 18px;
     white-space: normal;
-    color: rgb(222, 200, 160);
+    color: rgb(190, 200, 225);
 }
 
 .options-button {
@@ -41,5 +41,5 @@
 }
 
 .unity-button {
-    color: rgb(58, 36, 22);
+    color: rgb(245, 245, 255);
 }

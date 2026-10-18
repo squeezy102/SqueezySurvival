@@ -165,6 +165,7 @@ namespace SqueezySurvival.Presentation.Game
             RefreshExplorationProgress(zone.ExplorationProgress);
 
             skin.ApplyTo(root);
+            skin.ApplyBackdrop(dragLayer);
 
             // Focus must be requested a frame after layout for UI Toolkit to apply it.
             root.schedule.Execute(() => _waitButton.Focus());

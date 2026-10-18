@@ -2,7 +2,6 @@
     flex-grow: 1;
     padding-top: 64px;
     padding-left: 96px;
-    background-image: url("../../Art/Placeholder/PlaceholderBeachBackground.png");
     -unity-background-scale-mode: scale-and-crop;
 }
 
@@ -69,7 +68,7 @@
 .notice-text {
     margin-bottom: 24px;
     font-size: 32px;
-    color: rgb(250, 236, 200);
+    color: rgb(240, 242, 250);
     -unity-text-align: middle-center;
 }
 
@@ -81,7 +80,7 @@
     margin-bottom: 16px;
     font-size: 44px;
     -unity-font-style: bold;
-    color: rgb(250, 236, 200);
+    color: rgb(240, 242, 250);
 }
 
 .setting-heading {
@@ -89,19 +88,19 @@
     margin-bottom: 6px;
     font-size: 26px;
     -unity-font-style: bold;
-    color: rgb(250, 236, 200);
+    color: rgb(240, 242, 250);
 }
 
 .setting-row {
     margin-top: 4px;
     margin-bottom: 4px;
     font-size: 26px;
-    color: rgb(250, 236, 200);
+    color: rgb(240, 242, 250);
 }
 
 .run-points-summary {
     font-size: 26px;
-    color: rgb(255, 214, 120);
+    color: rgb(250, 222, 130);
 }
 
 .screen-buttons {
@@ -131,7 +130,7 @@
     width: 720px;
     padding-right: 24px;
     font-size: 24px;
-    color: rgb(250, 236, 200);
+    color: rgb(240, 242, 250);
     white-space: normal;
 }
 
@@ -152,7 +151,7 @@
 .setting-row:hover > .unity-base-field__label,
 .setting-row:focus > .unity-base-field__label,
 .setting-row:checked > .unity-base-field__label {
-    color: rgb(250, 236, 200);
+    color: rgb(240, 242, 250);
 }
 
 .setting-row:disabled > .unity-base-field__label,
@@ -179,9 +178,9 @@
 }
 
 
-/* Buttons are drawn as pixel-art frames in code (Docs/Design/ArtDirection.md, Interface); their text is ink. */
+/* Buttons are drawn as pixel-art frames in code (Docs/Design/ArtDirection.md, Interface); their text is white. */
 .unity-button {
-    color: rgb(58, 36, 22);
+    color: rgb(245, 245, 255);
 }
 
 .unity-button:disabled {

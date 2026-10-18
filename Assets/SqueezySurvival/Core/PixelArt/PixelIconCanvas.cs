@@ -29,7 +29,7 @@ namespace SqueezySurvival.Core.PixelArt
         public void Polygon(PixelColor color, params float[] coordinates)
         {
             RequirePoints(coordinates, 3);
-            FillWhere(color, (x, y) => IsInsidePolygon(x, y, coordinates));
+            FillWhere(color, (x, y) => PixelGeometry.IsInsidePolygon(x, y, coordinates));
         }
 
         /// <summary>Fills an ellipse.</summary>
@@ -57,18 +57,7 @@ namespace SqueezySurvival.Core.PixelArt
         {
             RequirePoints(coordinates, 2);
             float halfWidth = Math.Max(width, 1f / _drawnSize) / 2f;
-            FillWhere(color, (x, y) =>
-            {
-                for (int index = 0; index + 3 < coordinates.Length; index += 2)
-                {
-                    if (DistanceToSegment(x, y, coordinates[index], coordinates[index + 1], coordinates[index + 2], coordinates[index + 3]) <= halfWidth)
-                    {
-                        return true;
-                    }
-                }
-
-                return false;
-            });
+            FillWhere(color, (x, y) => PixelGeometry.DistanceToPolyline(x, y, coordinates) <= halfWidth);
         }
 
         private void FillWhere(PixelColor color, Func<float, float, bool> isInside)
@@ -85,37 +74,6 @@ namespace SqueezySurvival.Core.PixelArt
                     }
                 }
             }
-        }
-
-        // Even-odd ray casting: a point is inside when a ray from it crosses the edges an odd number of times.
-        private static bool IsInsidePolygon(float x, float y, float[] coordinates)
-        {
-            bool inside = false;
-            int count = coordinates.Length / 2;
-            for (int current = 0, previous = count - 1; current < count; previous = current++)
-            {
-                float xi = coordinates[current * 2];
-                float yi = coordinates[(current * 2) + 1];
-                float xj = coordinates[previous * 2];
-                float yj = coordinates[(previous * 2) + 1];
-                if ((yi > y) != (yj > y) && x < ((xj - xi) * (y - yi) / (yj - yi)) + xi)
-                {
-                    inside = !inside;
-                }
-            }
-
-            return inside;
-        }
-
-        private static float DistanceToSegment(float x, float y, float x1, float y1, float x2, float y2)
-        {
-            float dx = x2 - x1;
-            float dy = y2 - y1;
-            float lengthSquared = (dx * dx) + (dy * dy);
-            float along = lengthSquared == 0f ? 0f : Math.Max(0f, Math.Min(1f, (((x - x1) * dx) + ((y - y1) * dy)) / lengthSquared));
-            float nearestX = x1 + (along * dx);
-            float nearestY = y1 + (along * dy);
-            return (float)Math.Sqrt(((x - nearestX) * (x - nearestX)) + ((y - nearestY) * (y - nearestY)));
         }
 
         private static void RequirePoints(float[] coordinates, int minimumPoints)

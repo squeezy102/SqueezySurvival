@@ -13,6 +13,10 @@ namespace SqueezySurvival.Presentation.PixelArt
     {
         private readonly Dictionary<string, Texture2D> _iconTextures = new Dictionary<string, Texture2D>();
         private readonly Dictionary<PixelFrameStyle, Texture2D> _frameTextures = new Dictionary<PixelFrameStyle, Texture2D>();
+        private Texture2D _beachBackdrop;
+
+        /// <summary>The placeholder beach backdrop, painted once.</summary>
+        public Texture2D BeachBackdrop => _beachBackdrop ?? (_beachBackdrop = ToTexture(PlaceholderBeachScenePainter.Create(), "Beach backdrop"));
 
         /// <summary>The icon for the thing with the given definition id.</summary>
         public Texture2D Icon(string definitionId)
@@ -54,6 +58,12 @@ namespace SqueezySurvival.Presentation.PixelArt
             foreach (Texture2D texture in _frameTextures.Values)
             {
                 UnityEngine.Object.Destroy(texture);
+            }
+
+            if (_beachBackdrop != null)
+            {
+                UnityEngine.Object.Destroy(_beachBackdrop);
+                _beachBackdrop = null;
             }
 
             _iconTextures.Clear();

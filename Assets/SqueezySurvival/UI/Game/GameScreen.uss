@@ -5,7 +5,6 @@
     padding-bottom: 16px;
     padding-left: 16px;
     padding-right: 16px;
-    background-image: url("../../Art/Placeholder/PlaceholderBeachBackground.png");
     -unity-background-scale-mode: scale-and-crop;
 }
 
@@ -14,7 +13,7 @@
 .hud-clock {
     font-size: 30px;
     -unity-font-style: bold;
-    color: rgb(250, 236, 200);
+    color: rgb(240, 242, 250);
 }
 
 .hud-time-buttons {
@@ -27,7 +26,7 @@
 .zone-name {
     font-size: 36px;
     -unity-font-style: bold;
-    color: rgb(250, 236, 200);
+    color: rgb(240, 242, 250);
 }
 
 .zone-bar-title {
@@ -38,7 +37,7 @@
 .zone-exploration-progress {
     margin-left: 16px;
     font-size: 22px;
-    color: rgb(222, 200, 160);
+    color: rgb(190, 200, 225);
 }
 
 /* The header sits one cell gap (8 px) above the grid, matching the gap between cells. */
@@ -80,7 +79,7 @@
     width: 2px;
     margin-left: 8px;
     margin-right: 8px;
-    background-color: rgb(196, 136, 76);
+    background-color: rgb(222, 190, 110);
 }
 
 .sort-controls {
@@ -124,13 +123,13 @@
 
 .ground-overflow-question {
     font-size: 24px;
-    color: rgb(250, 236, 200);
+    color: rgb(240, 242, 250);
 }
 
 .grid-tooltip-subtitle {
     font-size: 16px;
     -unity-font-style: italic;
-    color: rgb(120, 86, 50);
+    color: rgb(80, 90, 130);
 }
 
 
@@ -153,10 +152,10 @@
     border-right-width: 2px;
     border-top-width: 2px;
     border-bottom-width: 2px;
-    border-left-color: rgb(255, 214, 120);
-    border-right-color: rgb(255, 214, 120);
-    border-top-color: rgb(255, 214, 120);
-    border-bottom-color: rgb(255, 214, 120);
+    border-left-color: rgb(250, 222, 130);
+    border-right-color: rgb(250, 222, 130);
+    border-top-color: rgb(250, 222, 130);
+    border-bottom-color: rgb(250, 222, 130);
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
     border-bottom-left-radius: 6px;
@@ -179,7 +178,7 @@
 .grid-tooltip-title {
     font-size: 22px;
     -unity-font-style: bold;
-    color: rgb(120, 62, 26);
+    color: rgb(30, 40, 90);
 }
 
 .grid-tooltip-description {
@@ -187,12 +186,12 @@
     margin-bottom: 6px;
     font-size: 18px;
     white-space: normal;
-    color: rgb(58, 36, 22);
+    color: rgb(30, 34, 60);
 }
 
 .grid-tooltip-detail {
     font-size: 18px;
-    color: rgb(90, 60, 36);
+    color: rgb(50, 58, 90);
 }
 
 .grid-cell-count {
@@ -203,7 +202,7 @@
     font-size: 20px;
     -unity-font-style: bold;
     -unity-text-align: lower-right;
-    color: rgb(250, 236, 200);
+    color: rgb(240, 242, 250);
     -unity-text-outline-width: 1px;
     -unity-text-outline-color: rgb(0, 0, 0);
 }
@@ -218,7 +217,7 @@
 .event-log-entry {
     margin-bottom: 4px;
     font-size: 20px;
-    color: rgb(250, 236, 200);
+    color: rgb(240, 242, 250);
     white-space: normal;
 }
 
@@ -227,13 +226,13 @@
     margin-bottom: 6px;
     font-size: 22px;
     -unity-font-style: bold;
-    color: rgb(255, 214, 120);
+    color: rgb(250, 222, 130);
 }
 
 .placeholder-text {
     font-size: 20px;
     -unity-font-style: italic;
-    color: rgb(222, 200, 160);
+    color: rgb(190, 200, 225);
     white-space: normal;
 }
 
@@ -271,7 +270,7 @@
 .pause-heading {
     font-size: 40px;
     -unity-font-style: bold;
-    color: rgb(250, 236, 200);
+    color: rgb(240, 242, 250);
     -unity-text-align: middle-center;
 }
 
@@ -279,7 +278,7 @@
     margin-top: 8px;
     margin-bottom: 16px;
     font-size: 22px;
-    color: rgb(255, 214, 120);
+    color: rgb(250, 222, 130);
     white-space: normal;
     -unity-text-align: middle-center;
 }
@@ -367,9 +366,9 @@
     width: 160px;
 }
 
-/* Buttons are drawn as pixel-art frames in code (Docs/Design/ArtDirection.md, Interface); their text is ink. */
+/* Buttons are drawn as pixel-art frames in code (Docs/Design/ArtDirection.md, Interface); their text is white. */
 .unity-button {
-    color: rgb(58, 36, 22);
+    color: rgb(245, 245, 255);
 }
 
 .unity-button:disabled {
