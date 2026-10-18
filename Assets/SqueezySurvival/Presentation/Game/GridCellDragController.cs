@@ -180,8 +180,8 @@ namespace SqueezySurvival.Presentation.Game
         private GridDropTarget TargetAt(Vector2 pointerWorldPosition)
         {
             int slot = _view.SlotAtWorldPosition(pointerWorldPosition, out _, out _);
-            bool overAnotherThing = slot >= 0 && slot != _pressedSlot && _contents.IsOccupied(slot);
-            bool attemptsCombine = _combineHoldTimer.Update(overAnotherThing ? slot : -1, Time.unscaledTimeAsDouble);
+            bool overAThing = slot >= 0 && _contents.IsOccupied(slot);
+            bool attemptsCombine = _combineHoldTimer.Update(overAThing ? slot : -1, Time.unscaledTimeAsDouble);
             if (slot < 0)
             {
                 return GridDropTarget.Nowhere;

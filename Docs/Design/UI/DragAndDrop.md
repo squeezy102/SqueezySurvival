@@ -26,9 +26,10 @@ Grids work like Diablo's inventory ([#49](https://github.com/squeezy102/SqueezyS
 | Another thing | The two **swap** slots. Nothing else moves. | "Swap. The lizard and the paper trade places." |
 | Another thing, after holding over it for **1 second** | They **combine**, if they can (see below). | What the combination makes, or "Can't combine. The lizard and the paper can't be combined." |
 | Itself | Nothing. | "No change. It stays where it is." |
+| Itself, after holding over it for **1 second** | Two of the stack **combine with each other**, if they can: two stones make a sharpened stone. A single thing can't. | What the combination makes, "Can't combine. The stone and the stone can't be combined.", or "Can't combine. There is only one stone. It takes two to combine one with itself." |
 | Anywhere else, including another panel | Nothing. | - |
 
-- The hold starts when the pointer enters another thing's cell and resets when it leaves; moving within the cell does not reset it. The tooltip changes from Swap to the combine preview when the second is up. The time is a placeholder, to be tuned in play.
+- The hold starts when the pointer enters an occupied cell, the thing's own included, and resets when it leaves; moving within the cell does not reset it. The tooltip changes from Swap or No change to the combine preview when the second is up. The time is a placeholder, to be tuned in play.
 - **A combine that can't happen changes nothing:** on release the thing goes back to its slot, and a message by that slot says so ("The lizard and the paper can't be combined.") for 2 seconds. Nothing is logged.
 - While dragging, an outline marks the slot the thing will go to or combine with. Nothing in the grid moves until release.
 

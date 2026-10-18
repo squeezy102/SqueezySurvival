@@ -55,9 +55,19 @@ namespace SqueezySurvival.Core.DragAndDrop
             bool attemptsCombine)
             where TDefinition : class, ICountableThingDefinition
         {
-            if (hovered.Slot == dragged.Slot)
+            if (hovered.Slot == dragged.Slot && !attemptsCombine)
             {
                 return NoChange(hovered.Slot);
+            }
+
+            // A stack held over itself combines two of its own, as two stones make a sharpened stone.
+            if (hovered.Slot == dragged.Slot && dragged.Count < 2)
+            {
+                return new GridDropOutcome(
+                    GridDropOutcomeKind.CannotCombine,
+                    -1,
+                    hovered.Slot,
+                    $"There is only one {Lower(dragged.Definition)}. It takes two to combine one with itself.");
             }
 
             if (attemptsCombine)

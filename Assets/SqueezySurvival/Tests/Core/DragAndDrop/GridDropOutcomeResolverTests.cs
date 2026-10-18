@@ -36,11 +36,32 @@ namespace SqueezySurvival.Core.Tests.DragAndDrop
             Assert.That(outcome.Description, Is.EqualTo("The scissors and the rock trade places."));
         }
 
-        [TestCase(false)]
-        [TestCase(true)]
-        public void OverItself_IsNoChange(bool attemptsCombine)
+        [Test]
+        public void QuickDropOnItself_IsNoChange()
         {
-            Assert.That(Resolve(GridDropTarget.OccupiedSlot(2, attemptsCombine)).Kind, Is.EqualTo(GridDropOutcomeKind.NoChange));
+            Assert.That(Resolve(GridDropTarget.OccupiedSlot(2, attemptsCombine: false)).Kind, Is.EqualTo(GridDropOutcomeKind.NoChange));
+        }
+
+        [Test]
+        public void HeldOverItself_StackOfTwo_CombinesWithItself()
+        {
+            CountedCollection<ItemDefinition> collection = ThreeThings();
+            collection.AddRange(new[] { Scissors });
+
+            GridDropOutcome outcome = new GridDropOutcomeResolver(new EverythingCombines())
+                .Resolve(collection, 2, GridDropTarget.OccupiedSlot(2, attemptsCombine: true));
+
+            Assert.That(outcome.Kind, Is.EqualTo(GridDropOutcomeKind.Combine));
+            Assert.That(outcome.Description, Is.EqualTo("Combine: scissors + scissors."));
+        }
+
+        [Test]
+        public void HeldOverItself_SingleThing_CannotCombine()
+        {
+            GridDropOutcome outcome = Resolve(GridDropTarget.OccupiedSlot(2, attemptsCombine: true), new EverythingCombines());
+
+            Assert.That(outcome.Kind, Is.EqualTo(GridDropOutcomeKind.CannotCombine));
+            Assert.That(outcome.Description, Is.EqualTo("There is only one scissors. It takes two to combine one with itself."));
         }
 
         [Test]
