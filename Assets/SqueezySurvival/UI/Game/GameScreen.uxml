@@ -8,7 +8,11 @@
                     <ui:VisualElement class="panel hud-panel gap-bottom">
                         <ui:VisualElement class="hud-clock-row">
                             <ui:VisualElement name="hud-day-night-dial" class="hud-day-night-dial" />
-                            <ui:Label name="hud-clock" class="hud-clock" />
+                            <ui:VisualElement class="hud-clock">
+                                <ui:Label name="hud-clock-day" class="hud-clock-day" />
+                                <ui:Label name="hud-clock-time" class="hud-clock-time" />
+                                <ui:Label name="hud-clock-phase" class="hud-clock-phase" />
+                            </ui:VisualElement>
                         </ui:VisualElement>
                         <ui:VisualElement class="hud-time-buttons">
                             <ui:Button name="wait-button" class="game-button" />
@@ -64,7 +68,6 @@
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="nav-bar" class="panel nav-bar">
-            <ui:Button name="nav-inventory-button" class="nav-button" />
             <ui:Button name="nav-map-button" class="nav-button" />
             <ui:Button name="nav-crafting-button" class="nav-button" />
             <ui:Button name="nav-skills-button" class="nav-button" />

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using SqueezySurvival.Core.PixelArt;
+using SqueezySurvival.Core.Survivor;
 using UnityEngine;
 
 namespace SqueezySurvival.Presentation.PixelArt
@@ -15,6 +16,19 @@ namespace SqueezySurvival.Presentation.PixelArt
         private readonly Dictionary<string, Texture2D> _navigationIconTextures = new Dictionary<string, Texture2D>();
         private readonly Dictionary<PixelFrameStyle, Texture2D> _frameTextures = new Dictionary<PixelFrameStyle, Texture2D>();
         private Texture2D _beachBackdrop;
+        private readonly Dictionary<Hand, Texture2D> _handGhostTextures = new Dictionary<Hand, Texture2D>();
+
+        /// <summary>The faint hand shown in an empty hand slot.</summary>
+        public Texture2D HandGhost(Hand hand)
+        {
+            if (!_handGhostTextures.TryGetValue(hand, out Texture2D texture))
+            {
+                texture = ToTexture(HandGhostIconPainter.Create(hand), $"{hand} hand ghost");
+                _handGhostTextures.Add(hand, texture);
+            }
+
+            return texture;
+        }
 
         /// <summary>The placeholder beach backdrop, painted once.</summary>
         public Texture2D BeachBackdrop => _beachBackdrop ?? (_beachBackdrop = ToTexture(PlaceholderBeachScenePainter.Create(), "Beach backdrop"));
@@ -68,6 +82,12 @@ namespace SqueezySurvival.Presentation.PixelArt
                 UnityEngine.Object.Destroy(texture);
             }
 
+            foreach (Texture2D texture in _handGhostTextures.Values)
+            {
+                UnityEngine.Object.Destroy(texture);
+            }
+
+            _handGhostTextures.Clear();
             foreach (Texture2D texture in _navigationIconTextures.Values)
             {
                 UnityEngine.Object.Destroy(texture);

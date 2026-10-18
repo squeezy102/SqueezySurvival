@@ -25,6 +25,8 @@ namespace SqueezySurvival.Presentation.Game
         private readonly PixelArtInterfaceSkin _skin;
         private readonly GridCellDragController _dragController;
         private readonly List<VisualElement> _slotBackgrounds = new List<VisualElement>();
+        private readonly Dictionary<int, VisualElement> _slotGhosts = new Dictionary<int, VisualElement>();
+        private readonly Func<int, Texture2D> _emptySlotGhost;
         private readonly Dictionary<int, VisualElement> _itemCells = new Dictionary<int, VisualElement>();
         private readonly VisualElement _dropTargetOutline;
         private int _dropTargetSlot = -1;
@@ -39,6 +41,7 @@ namespace SqueezySurvival.Presentation.Game
         /// <param name="tooltip">The shared hover and drop-preview tooltip.</param>
         /// <param name="dragLayer">The screen-wide element a dragged icon is drawn on.</param>
         /// <param name="skin">Draws the slots and icons.</param>
+        /// <param name="emptySlotGhost">A faint picture for each empty slot, such as a hand, or null for none.</param>
         public InventoryGridView(
             FixedGridShape shape,
             FixedGridHorizontalAlignment horizontalAlignment,
@@ -46,7 +49,8 @@ namespace SqueezySurvival.Presentation.Game
             VisualElement gridArea,
             GridTooltipView tooltip,
             VisualElement dragLayer,
-            PixelArtInterfaceSkin skin)
+            PixelArtInterfaceSkin skin,
+            Func<int, Texture2D> emptySlotGhost = null)
         {
             _shape = shape ?? throw new ArgumentNullException(nameof(shape));
             _horizontalAlignment = horizontalAlignment;
@@ -54,6 +58,7 @@ namespace SqueezySurvival.Presentation.Game
             GridArea = gridArea ?? throw new ArgumentNullException(nameof(gridArea));
             _tooltip = tooltip ?? throw new ArgumentNullException(nameof(tooltip));
             _skin = skin ?? throw new ArgumentNullException(nameof(skin));
+            _emptySlotGhost = emptySlotGhost;
             if (_contents.SlotCapacity != _shape.SlotCount)
             {
                 throw new ArgumentException("The grid's shape must have exactly one cell per slot.", nameof(contents));
@@ -195,6 +200,11 @@ namespace SqueezySurvival.Presentation.Game
                 }
             }
 
+            foreach (KeyValuePair<int, VisualElement> ghost in _slotGhosts)
+            {
+                ghost.Value.style.display = _contents.IsOccupied(ghost.Key) ? DisplayStyle.None : DisplayStyle.Flex;
+            }
+
             Relayout();
         }
 
@@ -287,6 +297,15 @@ namespace SqueezySurvival.Presentation.Game
                 background.AddToClassList("grid-slot");
                 background.style.position = Position.Absolute;
                 _skin.ApplyFrame(background, InterfaceFrameStyles.Slot);
+                Texture2D ghost = _emptySlotGhost?.Invoke(slot);
+                if (ghost != null)
+                {
+                    var ghostIcon = new PixelIconElement(ghost);
+                    ghostIcon.AddToClassList("grid-slot-ghost");
+                    background.Add(ghostIcon);
+                    _slotGhosts.Add(slot, ghostIcon);
+                }
+
                 _slotBackgrounds.Add(background);
                 GridArea.Add(background);
             }

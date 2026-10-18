@@ -8,9 +8,6 @@ namespace SqueezySurvival.Core.PixelArt
     /// </summary>
     public static class NavigationIconCatalog
     {
-        /// <summary>The inventory: a bag.</summary>
-        public const string Inventory = "nav-inventory";
-
         /// <summary>The map: a folded map.</summary>
         public const string Map = "nav-map";
 
@@ -34,9 +31,6 @@ namespace SqueezySurvival.Core.PixelArt
 
         private const int OutlineMargin = 1;
 
-        private static readonly PixelColor Leather = new PixelColor(156, 104, 60);
-        private static readonly PixelColor DarkLeather = new PixelColor(116, 74, 40);
-        private static readonly PixelColor Rope = new PixelColor(222, 194, 130);
         private static readonly PixelColor Parchment = new PixelColor(232, 214, 166);
         private static readonly PixelColor Fold = new PixelColor(190, 168, 120);
         private static readonly PixelColor MarkRed = new PixelColor(210, 52, 44);
@@ -62,13 +56,6 @@ namespace SqueezySurvival.Core.PixelArt
             var canvas = new PixelIconCanvas(flat, OutlineMargin);
             switch (iconId)
             {
-                case Inventory:
-                    canvas.Polygon(Leather, 0.30f, 0.12f, 0.70f, 0.12f, 0.62f, 0.32f, 0.38f, 0.32f);
-                    canvas.Polygon(Leather, 0.24f, 0.40f, 0.76f, 0.40f, 0.90f, 0.80f, 0.10f, 0.80f);
-                    canvas.Ellipse(Leather, 0.50f, 0.80f, 0.40f, 0.14f);
-                    canvas.Polygon(DarkLeather, 0.38f, 0.30f, 0.62f, 0.30f, 0.66f, 0.42f, 0.34f, 0.42f);
-                    canvas.Line(Rope, 0.07f, 0.32f, 0.36f, 0.68f, 0.36f);
-                    break;
                 case Map:
                     canvas.Polygon(Parchment, 0.06f, 0.24f, 0.36f, 0.14f, 0.64f, 0.24f, 0.94f, 0.14f, 0.94f, 0.78f, 0.64f, 0.88f, 0.36f, 0.78f, 0.06f, 0.88f);
                     canvas.Line(Fold, 0.04f, 0.36f, 0.16f, 0.36f, 0.78f);

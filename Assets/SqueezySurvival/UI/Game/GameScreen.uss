@@ -24,11 +24,23 @@
 }
 
 .hud-clock {
-    font-size: 30px;
+    flex-shrink: 1;
+}
+
+.hud-clock-day {
+    font-size: 22px;
+    color: rgb(250, 222, 130);
+}
+
+.hud-clock-time {
+    font-size: 34px;
     -unity-font-style: bold;
     color: rgb(240, 242, 250);
-    flex-shrink: 1;
-    white-space: normal;
+}
+
+.hud-clock-phase {
+    font-size: 22px;
+    color: rgb(190, 200, 225);
 }
 
 .hud-time-buttons {
@@ -89,12 +101,21 @@
     flex-basis: auto;
 }
 
-/* The hands are set apart from the inventory by a vertical rule with a cell gap on each side. */
+/* The hands are set well apart from the inventory: a wide gap on each side of a bold gold rule. */
 .hands-divider {
-    width: 2px;
-    margin-left: 8px;
-    margin-right: 8px;
+    width: 6px;
+    margin-left: 24px;
+    margin-right: 24px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-left-color: rgb(14, 18, 40);
+    border-right-color: rgb(14, 18, 40);
     background-color: rgb(222, 190, 110);
+}
+
+/* An empty hand slot shows a faint hand, so the slot reads as a hand at a glance. */
+.grid-slot-ghost {
+    opacity: 0.35;
 }
 
 .sort-controls {

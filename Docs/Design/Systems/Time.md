@@ -80,6 +80,7 @@ Crepuscular animals are active at dawn and dusk.
 
 - Clock in 12-hour format with AM/PM (for example `7:45 AM`).
 - Day counter starting at Day 1.
+- In the HUD, the day, the time and the day phase each have their own row, with no separators.
 - Every action shows its duration before the player commits, as hours and minutes (for example `1 hr 30 min`).
 - A **day and night dial** beside the clock ([#52](https://github.com/squeezy102/SqueezySurvival/issues/52)): a disc split in half, one half a bright day sky with the sun, the other a dim night sky with the moon and stars, seen through a half-circle window. The disc turns once a day with the clock: the sun is at the top at noon, the moon at midnight; at 6:00 AM the sun is rising on the left, and at 6:00 PM it is setting on the right. The disc is redrawn pixel by pixel at each angle, so it stays crisp pixel art as it turns ([Art Direction](../ArtDirection.md)).
 

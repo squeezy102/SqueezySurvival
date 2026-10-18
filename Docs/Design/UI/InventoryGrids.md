@@ -11,9 +11,11 @@ How the game screen shows items and zone features: fixed grids of slots, like Di
 | Ground | On the ground | 16 x 4 (64 slots) | The zone's [ground pool](../Systems/Zones.md#ground-pool) |
 | Zone features | Zone features | 16 x 4 (64 slots) | The zone's features |
 | Inventory | Inventory | 8 slots in one row | What the survivor carries ([Inventory](../Systems/Inventory.md#slots)) |
-| Hands | Inventory, far left, set apart | 2 slots | The tool hand and offhand ([Equipment](../Systems/Equipment.md)) |
+| Hands | Inventory, far left, set apart | 2 slots | The left hand, then the right hand; the dominant one is the tool hand ([Equipment: handedness](../Systems/Equipment.md#handedness)) |
 
 Sizes are placeholders, to be tuned in play.
+
+The hands must never be mistaken for inventory slots ([#57](https://github.com/squeezy102/SqueezySurvival/issues/57)): a bold gold rule with a wide gap on each side separates them, and an empty hand slot shows a faint hand, the left hand's on the left, seen from behind with fingers up.
 
 - Each slot holds one kind of thing, with its count in the bottom-right corner when there are 2 or more. A grid of 64 slots holds 64 different kinds; a kind's count has no limit.
 - Every slot is drawn, empty ones as faint squares. The cells are square and as large as the panel allows; the grid is centered in its panel. **The panel never resizes.**

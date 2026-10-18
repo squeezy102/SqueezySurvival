@@ -10,10 +10,9 @@ namespace SqueezySurvival.Core.Navigation
         public static readonly NavigationBarEntry Options =
             new NavigationBarEntry("options", "Options", "Game settings.", NavigationIconCatalog.Options, isBuilt: true);
 
-        /// <summary>The gameplay windows, in bar order.</summary>
+        /// <summary>The gameplay windows, in bar order. The inventory has none: it is always on screen.</summary>
         public static readonly IReadOnlyList<NavigationBarEntry> GameplayWindows = new[]
         {
-            new NavigationBarEntry("inventory", "Inventory", "What you carry.", NavigationIconCatalog.Inventory, isBuilt: false),
             new NavigationBarEntry("map", "Map", "Where you've been, and what you know is out there.", NavigationIconCatalog.Map, isBuilt: false),
             new NavigationBarEntry("crafting", "Crafting", "Make things from what you've found.", NavigationIconCatalog.Crafting, isBuilt: false),
             new NavigationBarEntry("skills", "Skills", "What you're good at, and how good.", NavigationIconCatalog.Skills, isBuilt: false),

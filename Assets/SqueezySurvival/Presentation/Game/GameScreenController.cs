@@ -1,10 +1,12 @@
 using System;
+using System.Collections.Generic;
 using SqueezySurvival.Core.DragAndDrop;
 using SqueezySurvival.Core.EventLog;
 using SqueezySurvival.Core.InventoryGrids;
 using SqueezySurvival.Core.Items;
 using SqueezySurvival.Core.Navigation;
 using SqueezySurvival.Core.Runs;
+using SqueezySurvival.Core.Survivor;
 using SqueezySurvival.Core.Time;
 using SqueezySurvival.Core.Zones;
 using SqueezySurvival.Presentation.Icons;
@@ -26,7 +28,9 @@ namespace SqueezySurvival.Presentation.Game
     public sealed class GameScreenController : MonoBehaviour
     {
         private RunSession _session;
-        private Label _clockLabel;
+        private Label _clockDayLabel;
+        private Label _clockTimeLabel;
+        private Label _clockPhaseLabel;
         private Label _explorationProgressLabel;
         private InventoryGridView _zoneFeaturesView;
         private InventoryGridView _groundPoolView;
@@ -58,7 +62,9 @@ namespace SqueezySurvival.Presentation.Game
             _session = session ?? throw new ArgumentNullException(nameof(session));
 
             VisualElement root = GetComponent<UIDocument>().rootVisualElement;
-            _clockLabel = root.Q<Label>("hud-clock");
+            _clockDayLabel = root.Q<Label>("hud-clock-day");
+            _clockTimeLabel = root.Q<Label>("hud-clock-time");
+            _clockPhaseLabel = root.Q<Label>("hud-clock-phase");
             _eventLogEntries = root.Q<ScrollView>("event-log-entries");
 
             // New entries are laid out a frame after they are added, so scroll once the content's size changes
@@ -109,7 +115,8 @@ namespace SqueezySurvival.Presentation.Game
                 handsGrid,
                 gridTooltip,
                 dragLayer,
-                skin);
+                skin,
+                slot => _pixelArtTextures.HandGhost(HandSlots.HandAt(slot)));
 
             // The hands are as wide as their cells need at the row's height, so their cells match the inventory's.
             // Bind runs after the first layout pass, whose geometry event has already fired, so the width is also
@@ -211,7 +218,10 @@ namespace SqueezySurvival.Presentation.Game
         private void RefreshClock()
         {
             _dayNightDial.Show(_session.Clock);
-            _clockLabel.text = GameClockFormatter.FormatHudClock(_session.Clock, _session.DayPhaseSchedule);
+            IReadOnlyList<string> rows = GameClockFormatter.FormatHudClockRows(_session.Clock, _session.DayPhaseSchedule);
+            _clockDayLabel.text = rows[0];
+            _clockTimeLabel.text = rows[1];
+            _clockPhaseLabel.text = rows[2];
         }
 
         private void RefreshExplorationProgress(ExplorationProgress progress)

@@ -16,10 +16,10 @@ namespace SqueezySurvival.Core.Tests.Time
         }
 
         [Test]
-        public void FormatHudClock_AtRunStart_ShowsDayTimeAndPhase()
+        public void FormatHudClockRows_AtRunStart_ShowsDayTimeAndPhaseOnePerRow()
         {
-            Assert.That(GameClockFormatter.FormatHudClock(GameClock.RunStart, DayPhaseSchedule.Default),
-                Is.EqualTo("Day 1 - 6:00 AM - Dawn"));
+            Assert.That(GameClockFormatter.FormatHudClockRows(GameClock.RunStart, DayPhaseSchedule.Default),
+                Is.EqualTo(new[] { "Day 1", "6:00 AM", "Dawn" }));
         }
 
         [TestCase(15, "15 min")]
