@@ -6,6 +6,8 @@
     padding-left: 16px;
     padding-right: 16px;
     -unity-background-scale-mode: scale-and-crop;
+    /* Pixelify Sans, a pixel font (Docs/Design/ArtDirection.md, Font). Text properties are inherited by every child. */
+    -unity-font-definition: url("../../Art/Fonts/PixelifySans.ttf");
 }
 
 

@@ -65,12 +65,16 @@ Scenes are pixel art too, drawn at a quarter of the reference resolution (**480 
 - Objects in the scene (the palm) are drawn on their own layer and shaded and outlined by the icon rules.
 - The placeholder beach is painted by the game (`PlaceholderBeachScenePainter`) and needs no image file. It replaced a smooth painted image, which looked out of place beside the pixel art; reducing that image automatically muddied its colors.
 
+## Font
+
+All interface text is set in **Pixelify Sans** ([#53](https://github.com/squeezy102/SqueezySurvival/issues/53)), a pixel font in the spirit of 16-bit games that stays readable at body sizes. It is licensed under the SIL Open Font License, which allows shipping it with the game ([Asset Credits](../Engineering/AssetCredits.md)). It is set once on each screen's root element and inherited by everything on it.
+
 ## Not yet decided
 
-- A pixel font. The look would gain most from one; choosing one needs a font with a license that allows shipping, credited in [Asset Credits](../Engineering/AssetCredits.md).
 - Real scene art, and whether scenes change with the time of day.
 
 ## Implementation notes
 
 - Icons and frames are drawn as pixel images in Core (`PixelImage`, `PixelIconCanvas`, `PixelIconStylizer`, `PixelFrameImageFactory`) and unit tested; the presentation layer turns each into a texture with no smoothing and caches it (`PixelArtTextureCache`). No image files are needed.
+- The font is set with USS `-unity-font-definition` pointing at the font file, as Unity's App UI package does ([App UI: custom typography](https://docs.unity3d.com/Packages/com.unity.dt.app-ui@2.0/manual/custom-typography.html)); it takes precedence over `-unity-font` ([Unity Manual: USS text properties](https://docs.unity3d.com/Manual/UIE-USS-SupportedProperties.html)).
 - Frames are nine-sliced, so they stretch to any size without distorting their borders ([Unity Manual: 9-slice](https://docs.unity3d.com/Manual/UIB-styling-ui-backgrounds.html)).

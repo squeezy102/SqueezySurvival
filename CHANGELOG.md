@@ -29,6 +29,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 - Nav bar: icon buttons (a bag, a map, a hammer and anvil, a book, a vial and atom, a crossed sword and pickaxe, a steaming pot) with tooltips, and Options as a gear at the bottom. The bar is narrower. See [Screen Layout](Docs/Design/UI/ScreenLayout.md).
 - Item tooltips show the item's icon. Clicking an item selects it and keeps its tooltip open until the next click elsewhere, drag or Escape. See [Inventory Grids](Docs/Design/UI/InventoryGrids.md#selecting).
 - Day and night dial in the HUD: half day sky with the sun, half night sky with the moon and stars, turning with the clock. See [Time: display](Docs/Design/Systems/Time.md#display).
+- Interface text is set in Pixelify Sans, a pixel font under the SIL Open Font License. See [Art Direction: font](Docs/Design/ArtDirection.md#font).
 - Design principle: nothing happens until you let go. See [GDD: design principles](Docs/Design/GameDesignDocument.md#design-principles).
 - [Testing and Quality Standards](Docs/Engineering/TestingStandards.md) based on ISTQB CTFL v4.0 and CT-GaMe, binding on contributors and AI assistants. The bug form adds severity, environment and design reference.
 - Combat presentation follows Pokémon and EarthBound instead of Final Fantasy: the survivor is never shown, and text boxes announce each action and wait for the player. See [Combat: presentation](Docs/Design/Systems/Combat.md#presentation).
