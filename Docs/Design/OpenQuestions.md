@@ -21,7 +21,7 @@ Design questions still waiting for an answer. The full history of every question
 | OQ-082 | Content | Messages in bottles from contributors and backers: who can submit, what review keeps them appropriate, and how are names and consent handled? | Content/BeachFinds |
 | OQ-083 | Crafting | Crafting stations (a forge with fuel and ore): are they worked from the crafting window or from their own window? | Systems/Crafting |
 | OQ-084 | Inventory | Haulers and carrying help: when are the sled and the cart available, and how much of the load in a carrier (a hand basket, a backpack) or a hauler counts toward what the survivor carries? Today's rule says none of a carrier's load counts for movement; squeezy102 describes the hand basket as a slight help. (The rest of OQ-078.) | Systems/Inventory |
-| OQ-085 | Controls | Modifier defaults: which of Shift, Ctrl and Alt moves all, half and one by default, and where does a modified click send things (to the other side: inventory and ground, or a container and where it stands)? Proposal: Shift all, Ctrl half, Alt one. (The rest of OQ-072.) | UI/Controls |
+| OQ-086 | Controls | Modified clicks with containers: when a container is open, where does a Shift, Ctrl or Alt click send things: between the inventory and the container, between the container and the ground it stands on, or somewhere the player chooses? (The rest of OQ-085.) | UI/Controls |
 
 ## Deferred to the balancing pass
 
@@ -31,7 +31,7 @@ Answered together in a dedicated mathematical balancing pass.
 |---|---|---|---|
 | OQ-004 | Stats | Stat ranges, decay rates per time unit, thresholds and their effects. | Systems/SurvivalStats |
 | OQ-036 | Encounters | Encounter chance per minute of action, and per zone, phase and weather. | Systems/Encounters |
-| OQ-056 | Inventory | Weight balancing: the personal weight limit, carrier capacities, item weights, and whether load can exceed 100%. Weight is a delicate balancing lever affecting carrying, exploration, exertion, food logistics and crafting. **Deferred to a dedicated weight balancing session.** | Systems/Inventory |
+| OQ-087 | Inventory | Weight balancing: the personal weight limit (100 lb placeholder), carrier capacities, item weights, and the time it takes to move things between panels (2 seconds per lb placeholder). Weight is a delicate balancing lever affecting carrying, exploration, exertion, food logistics and crafting. (The rest of OQ-056.) | Systems/Inventory |
 | OQ-057 | Combat | Damage values for weapons and animals, animal health, and which injuries each animal inflicts. | Systems/Combat |
 | OQ-059 | Runs | Easy and hard mode: how much lower (easy) or higher (hard) are penalties, decay and stat depletion? | Systems/Runs |
 | OQ-061 | Weather | Wildfire tuning: the chance an unattended fire starts one, how long the zone burns, how much is turned to charcoal, destroyed or damaged and how fast, the exact escape window, and how fast harm escalates for a survivor who stays past it. | Systems/Weather |

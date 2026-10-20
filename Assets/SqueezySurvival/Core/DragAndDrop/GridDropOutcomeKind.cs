@@ -20,5 +20,11 @@ namespace SqueezySurvival.Core.DragAndDrop
 
         /// <summary>The two things cannot be combined; releasing changes nothing.</summary>
         CannotCombine,
+
+        /// <summary>Things move to another panel (Docs/Design/UI/DragAndDrop.md, Between panels).</summary>
+        Transfer,
+
+        /// <summary>The other panel has no free slot; releasing changes nothing.</summary>
+        NoRoom,
     }
 }

@@ -30,17 +30,19 @@ Every item belongs to one category. Categories group items in tooltips and sorti
 
 ## Weight
 
-The survivor has a static personal weight limit. It does not grow with progression; carrying more requires carriers. All weight values (the personal limit, carrier capacities, item weights) are a delicate balancing lever and are set in a dedicated weight balancing session ([OQ-056](../OpenQuestions.md)).
+The survivor has a static personal weight limit of **100 lb**, a placeholder until the weight balancing pass ([OQ-087](../OpenQuestions.md)). It does not grow with progression; carrying more requires carriers.
+
+**There is no cap on what the survivor carries** (resolves part of OQ-056). Anything can be picked up, however heavy: 500,000 stones if the player wants. Weight only ever limits moving and travelling, through load below.
 
 ### Load
 
-Load is the personal inventory's weight as a percentage of the limit.
+Load is the weight of everything the survivor carries, the inventory and both hands, as a percentage of the limit. It can go past 100%.
 
 | Load | State | Effect |
 |---|---|---|
 | Below 75% | Normal | None. |
 | 75-99% | Overburdened | Stamina costs of actions increase, compounding as load rises. |
-| 100% | Immobile | Local actions remain available; any action that moves the survivor (exploring, travelling to another zone) is unavailable until load drops below 100%. |
+| 100% and over | Immobile | Local actions remain available; any action that moves the survivor (exploring, travelling to another zone) is unavailable until load drops below 100%. |
 
 ### Overburdened penalties (proposed, not approved)
 
@@ -62,6 +64,14 @@ Intent: just over 75% is effectively free; near 100%, moving can make the surviv
 **Injury.** Carrying a heavy load is a high-risk strenuous action for the legs. Overburdened movement drains stamina quickly, and low stamina brings injury risk. See [Exertion](Exertion.md).
 
 **Passing out:** a survivor whose Stamina reaches 0 collapses. This is a general Stamina rule ([Survival Stats](SurvivalStats.md)), which heavy loads make likely.
+
+## Moving things
+
+Things move between the ground and the inventory by dragging, by modified clicks ([Drag and Drop: between panels](../UI/DragAndDrop.md#between-panels)) and, later, by the stack's edges ([#103](https://github.com/squeezy102/SqueezySurvival/issues/103)).
+
+- **Rearranging within one panel is free.**
+- **Moving between panels costs seconds by weight**, so it is never free but never feels like a penalty: lifting a pound of rocks takes a moment. Placeholder: **2 seconds per lb moved**, rounded up to a whole second, at least 1 second. The clock counts them like any other time ([Time: rules](Time.md#rules)). The rate is set in the weight balancing pass ([OQ-087](../OpenQuestions.md)).
+- Every move between panels is logged: "You picked up 5 stones." / "You put 2 sticks on the ground."
 
 ## Carriers
 
