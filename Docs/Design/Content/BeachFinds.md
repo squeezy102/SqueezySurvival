@@ -25,7 +25,7 @@ What the survivor can find lying around on the Beach, the first zone ([Explorati
 | Driftwood | Splits into a random mix of big and small sticks, or becomes a crude shield. Too crooked to build with. |
 | Bone | Bone meal for fertilizer; bone tools (a knife, a spear). |
 | Feather | Pillows, jackets, blankets, feather meal, arrows, darts, decorations, kindling. Also from birds and nests. |
-| Cone snail | Best left alone ([Exploration: light and visibility](../Systems/Exploration.md#light-and-visibility)). Finding one logs a warning ("Found a cone snail. I've heard these are very, very dangerous. Best to leave it alone."); picking one up bare-handed carries a tiny chance of a sting. Beautiful shell; the creature inside is edible. |
+| Cone snail | Best left alone ([Exploration: light and visibility](../Systems/Exploration.md#light-and-visibility)). Finding one makes that find's log entry a [warning](../UI/HUD.md#event-log) ending "You've heard cone snails are very, very dangerous. Best to leave them alone."; picking one up bare-handed carries a tiny chance of a sting. Beautiful shell; the creature inside is edible. |
 | Hermit crab | Skittish: catching one is an encounter, and it usually gets away. Tasty cooked; shell crushes. |
 | Sea sponge | Uncommon, dry and brittle. Soaks up liquids; helps bathing and cleaning wounds. More by diving. |
 | Sand dollar | Inedible. Crushes into a calcium-rich powder. |

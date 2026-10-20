@@ -100,9 +100,9 @@ namespace SqueezySurvival.Core.Runs
             RequireNoPendingGroundOverflow();
             Clock = Clock.Advance(ExploreMinutes);
             ExplorationOutcome outcome = _zoneExplorer.Explore(CurrentZone);
-            foreach (string entry in ExplorationLogTextFormatter.Format(CurrentZone.Name, outcome))
+            foreach (EventLogMessage message in ExplorationLogTextFormatter.Format(CurrentZone.Name, outcome))
             {
-                EventLog.Add(Clock, entry);
+                EventLog.Add(Clock, message.Text, message.Severity);
             }
 
             _pendingGroundOverflow.AddRange(outcome.GroundOverflow);

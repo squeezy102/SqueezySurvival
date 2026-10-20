@@ -1,4 +1,6 @@
+using System.Linq;
 using NUnit.Framework;
+using SqueezySurvival.Core.EventLog;
 using SqueezySurvival.Core.Exploration;
 using SqueezySurvival.Core.Items;
 using SqueezySurvival.Core.Tests.Zones;
@@ -22,7 +24,7 @@ namespace SqueezySurvival.Core.Tests.Exploration
         {
             ExplorationOutcome outcome = Outcome(0, 4, new[] { TestZoneDefinitions.Pebble, TestZoneDefinitions.Pebble }, new ZoneFeatureDefinition[0]);
 
-            Assert.That(ExplorationLogTextFormatter.Format("Cove", outcome), Is.EqualTo(new[] { "You explored the Cove and found 2 pebbles." }));
+            Assert.That(ExplorationLogTextFormatter.Format("Cove", outcome).Select(message => message.Text), Is.EqualTo(new[] { "You explored the Cove and found 2 pebbles." }));
         }
 
         [Test]
@@ -30,7 +32,7 @@ namespace SqueezySurvival.Core.Tests.Exploration
         {
             ExplorationOutcome outcome = Outcome(0, 4, new[] { TestZoneDefinitions.Twig }, new[] { TestZoneDefinitions.Pond });
 
-            Assert.That(ExplorationLogTextFormatter.Format("Cove", outcome)[1], Is.EqualTo("You came across a pond."));
+            Assert.That(ExplorationLogTextFormatter.Format("Cove", outcome)[1].Text, Is.EqualTo("You came across a pond."));
         }
 
         [Test]
@@ -39,8 +41,28 @@ namespace SqueezySurvival.Core.Tests.Exploration
             ExplorationOutcome outcome = Outcome(3, 4, new[] { TestZoneDefinitions.Twig }, new ZoneFeatureDefinition[0]);
 
             Assert.That(
-                ExplorationLogTextFormatter.Format("Cove", outcome)[1],
+                ExplorationLogTextFormatter.Format("Cove", outcome)[1].Text,
                 Is.EqualTo("You have explored every corner of the Cove, though there is always more to find."));
+        }
+
+        [Test]
+        public void Format_FindWithWarning_MakesTheEntryAWarningThatSaysWhy()
+        {
+            var snail = new ItemDefinition("snail", "Snail", "a snail", "snails", "A snail.", ItemCategory.Animals, 0.1m, "Snails are dangerous.");
+            ExplorationOutcome outcome = Outcome(0, 4, new[] { snail, snail, TestZoneDefinitions.Twig }, new ZoneFeatureDefinition[0]);
+
+            EventLogMessage entry = ExplorationLogTextFormatter.Format("Cove", outcome)[0];
+
+            Assert.That(entry.Severity, Is.EqualTo(EventLogSeverity.Warning));
+            Assert.That(entry.Text, Is.EqualTo("You explored the Cove and found 2 snails and a twig. Snails are dangerous."));
+        }
+
+        [Test]
+        public void Format_FindsWithoutWarnings_AreOrdinary()
+        {
+            ExplorationOutcome outcome = Outcome(0, 4, new[] { TestZoneDefinitions.Twig }, new ZoneFeatureDefinition[0]);
+
+            Assert.That(ExplorationLogTextFormatter.Format("Cove", outcome)[0].Severity, Is.EqualTo(EventLogSeverity.Normal));
         }
     }
 }

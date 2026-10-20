@@ -68,7 +68,7 @@ namespace SqueezySurvival.Core.Zones
         public static readonly ItemDefinition Feather = new ItemDefinition("feather", "Feather", "a feather", "feathers", "A gull feather, gray and white. Fletching, bedding, kindling.", ItemCategory.AnimalParts, 0.01m);
 
         /// <summary>Cone snail: a Beach find.</summary>
-        public static readonly ItemDefinition ConeSnail = new ItemDefinition("cone-snail", "Cone snail", "a cone snail", "cone snails", "A beautiful patterned shell. You have heard these are very, very dangerous. Best to leave it alone.", ItemCategory.Animals, 0.1m);
+        public static readonly ItemDefinition ConeSnail = new ItemDefinition("cone-snail", "Cone snail", "a cone snail", "cone snails", "A beautiful patterned shell. You have heard these are very, very dangerous. Best to leave it alone.", ItemCategory.Animals, 0.1m, "You've heard cone snails are very, very dangerous. Best to leave them alone.");
 
         /// <summary>Sea sponge: a Beach find.</summary>
         public static readonly ItemDefinition SeaSponge = new ItemDefinition("sea-sponge", "Sea sponge", "a sea sponge", "sea sponges", "A dried, brittle sponge. It soaks up liquids and helps with washing and cleaning wounds.", ItemCategory.AnimalParts, 0.1m);

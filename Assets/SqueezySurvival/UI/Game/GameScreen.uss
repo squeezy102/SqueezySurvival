@@ -276,6 +276,24 @@
     white-space: normal;
 }
 
+/* A warning entry: red, beside a warning icon, and worded as a warning (Docs/Design/UI/HUD.md, Event log). */
+.event-log-warning-row {
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.event-log-warning-icon {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    margin-right: 6px;
+}
+
+.event-log-entry--warning {
+    flex-shrink: 1;
+    color: rgb(255, 120, 110);
+}
+
 
 .panel-heading {
     margin-bottom: 6px;
