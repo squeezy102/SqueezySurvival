@@ -31,7 +31,7 @@ Every action is in one of three states. The UI always shows the state and the re
 **Proposal from squeezy102's notes (2026-10-19), not approved.** Every action should carry weight: today, clicking Explore over and over maps the Beach and fills the ground in seconds, and waiting doesn't feel like waiting.
 
 - **An action takes real time.** While it runs, a small window in the middle of the screen names it ("Exploring the Beach") with a progress bar, and nothing else can be started.
-- **Standard: 15 minutes of game time takes 1 second.** Other durations scale from it. Whether long actions are capped: [OQ-075](../OpenQuestions.md) (at this rate, a 1-hour Rest takes 4 seconds and an 8-hour sleep 32).
+- **Standard: 15 minutes of game time takes 1 second.** Other durations scale from it, tuned as needed; uniform scaling is preferred where reasonable, but the player must never sit watching a bar for long (an 8-hour sleep would take 32 seconds). How long actions are handled: [OQ-075](../OpenQuestions.md), for discussion.
 - **Later, small animations** replace the bar: dashed lines appearing one by one to an X for exploring, a bed giving off Zs for sleeping, a clock turning for waiting, a hammer striking an anvil for crafting. Never the survivor. Out of scope for the MVP ([GDD: presentation](../GameDesignDocument.md#presentation)); sound comes later too.
 
 ## Light level

@@ -1,8 +1,8 @@
 # Containers
 
-**Status:** Concept - proposals from squeezy102's notes (2026-10-19), not approved
+**Status:** Concept - proposals from squeezy102's notes (2026-10-19), not approved except where marked
 
-Containers hold items in their own inventory and stand in a zone, on the ground or as a zone feature. Haulers (a sled, a cart) are containers built for moving heavy loads between zones.
+Containers are **placeable storage objects**: they hold items in their own inventory and stand in a zone, on the ground or as a zone feature. They are not [carriers](Inventory.md#carriers), the **inventory expansion objects** the survivor wears or holds, such as the hand basket (resolves OQ-078). Haulers (a sled, a cart) are containers built for moving heavy loads between zones.
 
 ## Containers
 
@@ -16,7 +16,7 @@ Containers hold items in their own inventory and stand in a zone, on the ground 
 | How many | As many as there are free slots where they stand. |
 | Names | Each can be renamed. Its tooltip shows its name and how full it is, as a percentage of its capacity. |
 | Empty all | A button tips everything out onto the ground, after an "Are you sure?" with a Don't show this again checkbox. |
-| First container | The **woven palm basket**, an early craft. Later: clay vessels, chests, cabinets. |
+| First container | The **woven palm basket**, an early craft: large, static storage. It can be picked up and moved, in both hands, with no carrying help (resolves OQ-078). Later: clay vessels, chests, cabinets. |
 
 ### Affinities
 
@@ -32,7 +32,7 @@ A **sled** (early) and a **hand cart** (mid game; needs good woodworking and ref
 - **Only part of the load counts** toward what the survivor carries, so a full hauler is the whole job: the survivor carries little else, perhaps one tool. Backpacks, sacks and baskets help a little.
 - **Few slots, large capacity:** a sled has about 2 slots, a cart about 4. As a rough comparison, a sled carries 3 logs back to camp without strain; a cart carries 8.
 
-## Conflicts with approved design
+## Open
 
-- [Inventory: carriers](Inventory.md#carriers) puts a **hand basket in the offhand** as a carrier whose weight doesn't count toward movement, and lists wagons, carts and sleighs as late game. These notes make a woven basket a **two-handed container that counts fully**, with a sled early and a cart mid game. Which stands: [OQ-078](../OpenQuestions.md).
+- When the sled and cart arrive, and how much of a load in a carrier or hauler counts toward what the survivor carries: [OQ-084](../OpenQuestions.md).
 - "Don't show this again" checkboxes need somewhere to store the choice: the settings system ([#46](https://github.com/squeezy102/SqueezySurvival/issues/46)).

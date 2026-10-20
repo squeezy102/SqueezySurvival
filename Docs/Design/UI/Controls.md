@@ -46,5 +46,5 @@ Every drag has a click alternative (resolves OQ-033): **clicking a thing picks i
 
 Baseline: [Game Accessibility Guidelines](https://gameaccessibilityguidelines.com/full-list/), Basic tier ([GDD](../GameDesignDocument.md#pillars)).
 
-- **All hotkeys can be remapped.** Whether mouse buttons and modifier keys can be remapped too, as the Basic tier asks ("Allow controls to be remapped / reconfigured"): [OQ-073](../OpenQuestions.md).
+- **All hotkeys can be remapped.** Whether mouse buttons and modifier keys can be remapped too, as the Basic tier asks ("Allow controls to be remapped / reconfigured"): [OQ-073](../OpenQuestions.md). squeezy102 leans toward keeping them fixed, so the control scheme stays consistent; to be discussed.
 - Every drag has a click alternative, so nothing needs a held button ([Click to pick up and place](#click-to-pick-up-and-place), Intermediate tier).

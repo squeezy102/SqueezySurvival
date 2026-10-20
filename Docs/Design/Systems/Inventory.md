@@ -65,18 +65,18 @@ Intent: just over 75% is effectively free; near 100%, moving can make the surviv
 
 ## Carriers
 
-Carriers are equipment that add their own weight-limited inventory.
+Carriers are **inventory expansion objects**: equipment that adds its own weight-limited inventory to what the survivor carries. They are not [placeable storage](Containers.md), which stands in a zone and gives no carrying help (resolves OQ-078).
 
 | Carrier | Availability |
 |---|---|
-| Hand basket | Early; carried in the offhand, slightly increases carrying capacity |
+| Hand basket | Early. Held in either hand, so two can be carried. A slight carrying help and extra capacity, for foraging and gathering trips. |
 | Belt | Early |
 | Backpack | Mid |
-| Wagon, cart, sleigh | Late |
+| Wagon, cart, sleigh | Late. When sleds and carts arrive, and how much of their load counts: [OQ-084](../OpenQuestions.md) |
 
 - Each carrier's inventory has its own weight limit.
 - Weight in a carrier does not count against the survivor's personal limit for the purposes of movement.
-- Worn and held carriers occupy an equipment slot: the hand basket uses the offhand, the belt the belt slot, the backpack the back slot. Example: a backpack might hold 5 more sticks, at the cost of the slot it uses.
+- Worn and held carriers occupy an equipment slot: a hand basket uses a hand, the belt the belt slot, the backpack the back slot. Example: a backpack might hold 5 more sticks, at the cost of the slot it uses.
 - How vehicles (wagon, cart, sleigh) are moved and used is specified with zone travel.
 
 Equipment slots are specified in [Equipment](Equipment.md).
