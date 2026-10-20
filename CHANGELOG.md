@@ -16,6 +16,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 - The calendar: 120-day years of four 30-day seasons. See [Time: calendar](Docs/Design/Systems/Time.md#calendar).
 
 ### Changed
+- Inventory grids keep one cell per slot and update it in place instead of rebuilding every cell on each change, so hovering, selecting and dragging are no longer interrupted when something else moves (#114).
 - The clock keeps and shows seconds ("6:04:20 AM"), in the HUD and the event log, so tiny actions can cost seconds without hiding any time (#107). See [Time: rules](Docs/Design/Systems/Time.md#rules).
 - The Beach's finds are the items in [Beach Finds](Docs/Design/Content/BeachFinds.md), each with a pixel-art icon: big rocks, small and big sticks, logs, crabs (now with legs), lobsters, clams, oysters, gooseneck barnacles, bones and cone snails join the familiar finds. Sea glass, starfish, pumice, cuttlebone, rope scraps, glass floats and bamboo are gone (#95).
 - The ghost hands' fingers are straight, so they no longer look broken (#64).
