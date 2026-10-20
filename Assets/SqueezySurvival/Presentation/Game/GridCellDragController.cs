@@ -68,6 +68,9 @@ namespace SqueezySurvival.Presentation.Game
             _panel = panel;
         }
 
+        /// <summary>The slot pressed or being dragged, or -1.</summary>
+        public int PressedSlot => _pressedSlot;
+
         /// <summary>Whether a drag is in progress.</summary>
         public bool IsDragging => _draggedIcon != null;
 

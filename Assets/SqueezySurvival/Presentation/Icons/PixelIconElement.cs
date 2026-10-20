@@ -37,6 +37,17 @@ namespace SqueezySurvival.Presentation.Icons
             }
         }
 
+        /// <summary>Shows a different icon texture in the same place.</summary>
+        public void SetIcon(Texture2D icon)
+        {
+            if (icon == null)
+            {
+                throw new ArgumentNullException(nameof(icon));
+            }
+
+            style.backgroundImage = Background.FromTexture2D(icon);
+        }
+
         /// <summary>The largest whole multiple of the icon size that fits in <paramref name="available"/>, never under 1x.</summary>
         public static float WholePixelSize(float available)
         {

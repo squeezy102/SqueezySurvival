@@ -13,6 +13,7 @@ namespace SqueezySurvival.Presentation.PixelArt
     public sealed class PixelArtTextureCache : IDisposable
     {
         private readonly Dictionary<string, Texture2D> _iconTextures = new Dictionary<string, Texture2D>();
+        private Texture2D _emptyIcon;
         private readonly Dictionary<string, Texture2D> _navigationIconTextures = new Dictionary<string, Texture2D>();
         private readonly Dictionary<PixelFrameStyle, Texture2D> _frameTextures = new Dictionary<PixelFrameStyle, Texture2D>();
         private Texture2D _beachBackdrop;
@@ -43,6 +44,20 @@ namespace SqueezySurvival.Presentation.PixelArt
             }
 
             return texture;
+        }
+
+        /// <summary>A fully transparent icon, for a cell that is empty.</summary>
+        public Texture2D EmptyIcon
+        {
+            get
+            {
+                if (_emptyIcon == null)
+                {
+                    _emptyIcon = ToTexture(new PixelImage(PlaceholderIconCatalog.IconSize, PlaceholderIconCatalog.IconSize), "empty-icon");
+                }
+
+                return _emptyIcon;
+            }
         }
 
         /// <summary>The icon of a nav bar button, by its id in <see cref="NavigationIconCatalog"/>.</summary>
@@ -108,6 +123,12 @@ namespace SqueezySurvival.Presentation.PixelArt
             foreach (Texture2D texture in _frameTextures.Values)
             {
                 UnityEngine.Object.Destroy(texture);
+            }
+
+            if (_emptyIcon != null)
+            {
+                UnityEngine.Object.Destroy(_emptyIcon);
+                _emptyIcon = null;
             }
 
             if (_beachBackdrop != null)
