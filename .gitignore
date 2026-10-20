@@ -121,3 +121,6 @@ InitTestScene*.unity*
 !/Launcher/**/*.csproj
 /Launcher/**/bin/
 /Launcher/**/obj/
+
+# The owner's local offline notes: never tracked, and not included in the repository.
+/[Oo]ffline/

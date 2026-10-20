@@ -67,7 +67,10 @@ Scenes are pixel art too, drawn at a quarter of the reference resolution (**480 
 
 ## Font
 
-All interface text is set in **Pixelify Sans** ([#53](https://github.com/squeezy102/SqueezySurvival/issues/53)), a pixel font in the spirit of 16-bit games that stays readable at body sizes. It is licensed under the SIL Open Font License, which allows shipping it with the game ([Asset Credits](../Engineering/AssetCredits.md)). It is set once on each screen's root element and inherited by everything on it.
+All interface text is set in **Press Start 2P** ([#60](https://github.com/squeezy102/SqueezySurvival/issues/60)), the classic 8-bit arcade font, chosen by squeezy102. It replaced Pixelify Sans, whose 5 and S, 2 and Z, and 8 and B were too hard to tell apart. It is licensed under the SIL Open Font License, which allows shipping it with the game ([Asset Credits](../Engineering/AssetCredits.md)). It is set once on each screen's root element and inherited by everything on it.
+
+- The font is drawn on an 8-pixel grid, so text sizes are whole multiples of 8 px at the reference resolution and stay crisp: **16 px** for body text, **24 px** for headings and the time, **32 px** for screen titles, **64 px** for the game's title.
+- It is wide, so long lines wrap rather than shrink.
 
 ## Not yet decided
 

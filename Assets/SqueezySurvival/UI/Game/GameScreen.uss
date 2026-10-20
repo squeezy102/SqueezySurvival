@@ -6,8 +6,8 @@
     padding-left: 16px;
     padding-right: 16px;
     -unity-background-scale-mode: scale-and-crop;
-    /* Pixelify Sans, a pixel font (Docs/Design/ArtDirection.md, Font). Text properties are inherited by every child. */
-    -unity-font-definition: url("../../Art/Fonts/PixelifySans.ttf");
+    /* Press Start 2P, a pixel font (Docs/Design/ArtDirection.md, Font). Text properties are inherited by every child. */
+    -unity-font-definition: url("../../Art/Fonts/PressStart2P-Regular.ttf");
 }
 
 
@@ -28,18 +28,18 @@
 }
 
 .hud-clock-day {
-    font-size: 22px;
+    font-size: 16px;
     color: rgb(250, 222, 130);
 }
 
 .hud-clock-time {
-    font-size: 34px;
+    font-size: 24px;
     -unity-font-style: bold;
     color: rgb(240, 242, 250);
 }
 
 .hud-clock-phase {
-    font-size: 22px;
+    font-size: 16px;
     color: rgb(190, 200, 225);
 }
 
@@ -51,7 +51,7 @@
 
 
 .zone-name {
-    font-size: 36px;
+    font-size: 24px;
     -unity-font-style: bold;
     color: rgb(240, 242, 250);
 }
@@ -63,7 +63,7 @@
 
 .zone-exploration-progress {
     margin-left: 16px;
-    font-size: 22px;
+    font-size: 16px;
     color: rgb(190, 200, 225);
 }
 
@@ -130,7 +130,7 @@
     margin-bottom: 0;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .sort-menu-button {
@@ -152,7 +152,7 @@
     display: none;
     flex-grow: 1;
     margin-left: 12px;
-    font-size: 18px;
+    font-size: 16px;
     -unity-font-style: italic;
     color: rgb(255, 160, 140);
 }
@@ -233,7 +233,7 @@
 }
 
 .grid-tooltip-title {
-    font-size: 22px;
+    font-size: 16px;
     -unity-font-style: bold;
     color: rgb(30, 40, 90);
 }
@@ -241,13 +241,13 @@
 .grid-tooltip-description {
     margin-top: 4px;
     margin-bottom: 6px;
-    font-size: 18px;
+    font-size: 16px;
     white-space: normal;
     color: rgb(30, 34, 60);
 }
 
 .grid-tooltip-detail {
-    font-size: 18px;
+    font-size: 16px;
     color: rgb(50, 58, 90);
 }
 
@@ -256,7 +256,7 @@
     right: 6px;
     bottom: 2px;
     padding: 0;
-    font-size: 20px;
+    font-size: 16px;
     -unity-font-style: bold;
     -unity-text-align: lower-right;
     color: rgb(240, 242, 250);
@@ -273,7 +273,7 @@
 
 .event-log-entry {
     margin-bottom: 4px;
-    font-size: 20px;
+    font-size: 16px;
     color: rgb(240, 242, 250);
     white-space: normal;
 }
@@ -281,13 +281,13 @@
 
 .panel-heading {
     margin-bottom: 6px;
-    font-size: 22px;
+    font-size: 16px;
     -unity-font-style: bold;
     color: rgb(250, 222, 130);
 }
 
 .placeholder-text {
-    font-size: 20px;
+    font-size: 16px;
     -unity-font-style: italic;
     color: rgb(190, 200, 225);
     white-space: normal;
@@ -298,7 +298,7 @@
     min-width: 200px;
     margin-left: 0;
     margin-right: 0;
-    font-size: 22px;
+    font-size: 16px;
 }
 
 .hud-time-buttons > .game-button {
@@ -325,7 +325,7 @@
 }
 
 .pause-heading {
-    font-size: 40px;
+    font-size: 32px;
     -unity-font-style: bold;
     color: rgb(240, 242, 250);
     -unity-text-align: middle-center;
@@ -334,7 +334,7 @@
 .pause-warning {
     margin-top: 8px;
     margin-bottom: 16px;
-    font-size: 22px;
+    font-size: 16px;
     color: rgb(250, 222, 130);
     white-space: normal;
     -unity-text-align: middle-center;

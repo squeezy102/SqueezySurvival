@@ -6,6 +6,14 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-10-20
+
+### Fixed
+- Text is set in Press Start 2P instead of Pixelify Sans, whose 5 and S, 2 and Z, and 8 and B were hard to tell apart (#60). Text sizes are multiples of 8 px so the font stays crisp. See [Art Direction: font](Docs/Design/ArtDirection.md#font).
+
+### Changed
+- `.gitignore` ignores an `offline/` folder at the repository root, for the owner's untracked notes.
+
 ## [0.1.0] - 2026-10-17
 
 ### Added
