@@ -47,7 +47,7 @@ namespace SqueezySurvival.Presentation.Game
         private Button _navOptionsButton;
         private bool _optionsOpenedFromPauseMenu;
         private InputAction _cancelAction;
-        private ScrollView _eventLogEntries;
+        private EventLogView _eventLogView;
         private VisualElement _pauseMenu;
         private Button _saveAndExitButton;
         private Button _waitButton;
@@ -66,11 +66,6 @@ namespace SqueezySurvival.Presentation.Game
             _clockDayLabel = root.Q<Label>("hud-clock-day");
             _clockTimeLabel = root.Q<Label>("hud-clock-time");
             _clockPhaseLabel = root.Q<Label>("hud-clock-phase");
-            _eventLogEntries = root.Q<ScrollView>("event-log-entries");
-
-            // New entries are laid out a frame after they are added, so scroll once the content's size changes
-            // to keep the most recent entry visible.
-            _eventLogEntries.contentContainer.RegisterCallback<GeometryChangedEvent>(_ => ScrollEventLogToNewest());
             root.Q<Label>("zone-name").text = session.CurrentZone.Name;
             _explorationProgressLabel = root.Q<Label>("zone-exploration-progress");
             _pixelArtTextures = new PixelArtTextureCache();
@@ -169,12 +164,7 @@ namespace SqueezySurvival.Presentation.Game
             _cancelAction.performed += _ => OnCancel();
             _cancelAction.Enable();
 
-            foreach (EventLogEntry entry in session.EventLog.Entries)
-            {
-                AppendLogEntry(entry);
-            }
-
-            session.EventLog.EntryAdded += AppendLogEntry;
+            _eventLogView = new EventLogView(root.Q<VisualElement>("event-log-panel"), session.EventLog, _pixelArtTextures, new UnreadWarningTracker());
             _dayNightDial = new DayNightDialView(root.Q<VisualElement>("hud-day-night-dial"), session.Clock);
             session.ClockAdvanced += _ => RefreshClock();
             RefreshClock();
@@ -195,11 +185,11 @@ namespace SqueezySurvival.Presentation.Game
             _cancelAction?.Dispose();
             if (_session != null)
             {
-                _session.EventLog.EntryAdded -= AppendLogEntry;
                 _session.CurrentZone.ExplorationProgressChanged -= RefreshExplorationProgress;
                 _session.PendingGroundOverflowChanged -= RefreshTimeTakingActions;
             }
 
+            _eventLogView?.Dispose();
             _zoneFeaturesView?.Dispose();
             _groundPoolView?.Dispose();
             _inventoryView?.Dispose();
@@ -268,34 +258,6 @@ namespace SqueezySurvival.Presentation.Game
             {
                 _navOptionsButton.Focus();
             }
-        }
-
-        private void AppendLogEntry(EventLogEntry entry)
-        {
-            string time = GameClockFormatter.FormatTimeOfDay(entry.Time.MinuteOfDay);
-            var line = new Label($"Day {entry.Time.Day}, {time}: {entry.Text}");
-            line.AddToClassList("event-log-entry");
-            if (entry.Severity != EventLogSeverity.Warning)
-            {
-                _eventLogEntries.Add(line);
-                return;
-            }
-
-            // Warnings are red and carry a warning icon, so color is never the only signal (Docs/Design/UI/HUD.md).
-            var row = new VisualElement();
-            row.AddToClassList("event-log-warning-row");
-            var icon = new PixelIconElement(_pixelArtTextures.StatusIcon(StatusIconCatalog.Warning), fitsParent: false);
-            icon.AddToClassList("event-log-warning-icon");
-            icon.style.position = Position.Relative;
-            line.AddToClassList("event-log-entry--warning");
-            row.Add(icon);
-            row.Add(line);
-            _eventLogEntries.Add(row);
-        }
-
-        private void ScrollEventLogToNewest()
-        {
-            _eventLogEntries.verticalScroller.value = _eventLogEntries.verticalScroller.highValue;
         }
 
         // Every window behind the nav bar is unbuilt at the wireframe stage (Docs/Design/UI/ScreenLayout.md).

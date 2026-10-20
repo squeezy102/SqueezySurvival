@@ -20,9 +20,16 @@
                         </ui:VisualElement>
                         <ui:Label text="Survival stats, temperature and weather: not built yet" class="placeholder-text" />
                     </ui:VisualElement>
-                    <ui:VisualElement class="panel event-log-panel">
-                        <ui:Label text="Event log" class="panel-heading display-text" />
+                    <ui:VisualElement name="event-log-panel" class="panel event-log-panel">
+                        <ui:VisualElement class="panel-header">
+                            <ui:Label text="Event log" class="panel-heading display-text" />
+                            <ui:Button name="event-log-unread-button" class="event-log-unread-button display-text" />
+                        </ui:VisualElement>
                         <ui:ScrollView name="event-log-entries" class="event-log-entries" />
+                        <ui:VisualElement name="event-log-jump-area" class="event-log-jump-area">
+                            <ui:Button name="event-log-jump-button" class="event-log-jump-button" />
+                        </ui:VisualElement>
+                        <ui:VisualElement name="event-log-alert-outline" class="event-log-alert-outline" picking-mode="Ignore" />
                     </ui:VisualElement>
                 </ui:VisualElement>
                 <ui:VisualElement class="center-column">

@@ -294,6 +294,53 @@
     color: rgb(255, 120, 110);
 }
 
+/* Unread warnings: a red "!" by the heading and a pulsing red border (Docs/Design/UI/HUD.md, Event log). */
+.event-log-unread-button {
+    min-height: 32px;
+    padding: 4px 10px;
+    font-size: 16px;
+    color: rgb(255, 96, 84);
+}
+
+.event-log-alert-outline {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border-width: 4px;
+    border-color: rgb(232, 72, 60);
+    opacity: 0.25;
+    transition-property: opacity;
+    transition-duration: 0.6s;
+}
+
+.event-log-alert-outline--bright {
+    opacity: 1;
+}
+
+/* Jump to newest: a strip along the bottom of the log that shows a down arrow while hovered. */
+.event-log-jump-area {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+}
+
+.event-log-jump-button {
+    width: 56px;
+    height: 36px;
+    padding: 0;
+    visibility: hidden;
+}
+
+.event-log-jump-area:hover > .event-log-jump-button {
+    visibility: visible;
+}
+
 
 .panel-heading {
     margin-bottom: 6px;

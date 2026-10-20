@@ -53,6 +53,11 @@ You pulled a muscle!
 - Positioned lower left.
 - Hides automatically when idle and reappears when a new event arrives. Auto-hide is a player setting, on by default.
 - **Important events are highlighted** for a couple of seconds, both the entry and the log window: bad (red), good (green), notification (yellow). Each also carries an icon, so color is never the only signal. The MVP uses a static highlight (colored border, icon and bold text for a few seconds); pulsing and glowing arrive with animation, together with a reduce-motion setting (resolves OQ-034).
+- **Unread warnings:** every new warning starts unread. While any warning is unread, the log's border pulses red and a red **!** sits beside the log's heading, with the number unread beside it when there is more than one ("! 3"). The pulse is not a flash, so the reduced-flashing option does not change it.
+  - Clicking the **!** scrolls to the oldest unread warning and marks it read. Each click takes the player to the next one; when none are left, the **!** disappears and the pulse stops.
+  - A warning also counts as read once the player scrolls the log (mouse wheel, scroll bar or the jump-to-newest arrow) and the warning is fully in view. A warning that arrives on screen is still unread, so it always alerts.
+- **Following the newest entry:** while the log is scrolled to the bottom, new entries scroll into view as they arrive. Once the player scrolls up, the log stays where they left it.
+- **Jump to newest:** hovering the bottom edge of the log shows a down arrow; clicking it scrolls to the newest entry and follows new entries again.
 - **Header controls:** clicking the top of the log offers pin, hide, configure, and open the full history.
 - **Full history view:** the whole run, searchable and filterable by type (actions, finds, warnings) (resolves OQ-031).
 
