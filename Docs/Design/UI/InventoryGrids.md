@@ -8,16 +8,16 @@ How the game screen shows items and zone features: fixed grids of slots, like Di
 
 | Grid | Panel | Size | Holds |
 |---|---|---|---|
-| Ground | On the ground | 16 x 4 (64 slots) | The zone's [ground pool](../Systems/Zones.md#ground-pool) |
-| Zone features | Zone features | 16 x 4 (64 slots) | The zone's features |
+| Ground | On the ground | 12 x 3 (36 slots) | The zone's [ground pool](../Systems/Zones.md#ground-pool) |
+| Zone features | Zone features | 12 x 3 (36 slots) | The zone's features |
 | Inventory | Inventory | 8 slots in one row | What the survivor carries ([Inventory](../Systems/Inventory.md#slots)) |
 | Hands | Inventory, far left, set apart | 2 slots | The left hand, then the right hand; the dominant one is the tool hand ([Equipment: handedness](../Systems/Equipment.md#handedness)) |
 
-Sizes are placeholders, to be tuned in play.
+Sizes are placeholders, to be tuned in play. The ground and features grids were 16 x 4; squeezy102 cut them to 12 x 3 to try (2026-10-19): the survivor doesn't need that many slots there, and fewer slots make bigger, more readable icons.
 
 The hands must never be mistaken for inventory slots ([#57](https://github.com/squeezy102/SqueezySurvival/issues/57)): a bold gold rule with a wide gap on each side separates them, and an empty hand slot shows a faint hand, the left hand's on the left, seen from behind with fingers up.
 
-- Each slot holds one kind of thing, with its count in the bottom-right corner when there are 2 or more. A grid of 64 slots holds 64 different kinds; a kind's count has no limit.
+- Each slot holds one kind of thing, with its count in the bottom-right corner when there are 2 or more. A grid of 36 slots holds 36 different kinds; a kind's count has no limit.
 - Every slot is drawn, empty ones as faint squares. The cells are square and as large as the panel allows; the grid is centered in its panel. **The panel never resizes.**
 - Cells are 8 px apart (at the 1920 x 1080 reference resolution), and the panel's header sits the same 8 px above the grid.
 - Things stay in their slots until the player moves them ([Drag and Drop](DragAndDrop.md)); slots may be left empty on purpose. A newly arriving kind takes the first empty slot.
@@ -25,7 +25,7 @@ The hands must never be mistaken for inventory slots ([#57](https://github.com/s
 
 ## When the ground is full
 
-Exploring can find a new kind when the ground's 64 slots are full. The game stops and asks, rather than losing anything silently:
+Exploring can find a new kind when the ground's slots are all full. The game stops and asks, rather than losing anything silently:
 
 > There's no room on the ground for the conch.
 >
@@ -34,7 +34,7 @@ Exploring can find a new kind when the ground's 64 slots are full. The game stop
 
 Choosing something to discard highlights the ground's slots; hovering one says what will happen ("Discard the stone (3) to make room for the conch. It will be gone for good."), and clicking it does it. Escape returns to the question. Either choice is logged. Each new kind that does not fit is asked about in turn.
 
-Zone features beyond their grid's 64 slots are not revealed.
+Zone features beyond their grid's slots are not revealed.
 
 ## Sorting
 

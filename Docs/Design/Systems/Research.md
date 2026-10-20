@@ -37,3 +37,14 @@ Having nothing researching wastes time, so the game says so:
 - **Nav bar:** the research icon is highlighted while nothing is researching or queued. The MVP uses a static highlight (icon and border, never color alone); a bounce or pulse arrives with animation, together with the reduce-motion setting ([HUD: event log](../UI/HUD.md#event-log)).
 - **Idle icon:** an atom with "zzz" in the [HUD](../UI/HUD.md) static status area while nothing is researching. Hovering explains it: "No research queued."
 - **Event log:** "Your research is complete. Your mind is idle." when the last topic finishes.
+
+## Proposals (not approved)
+
+From squeezy102's notes (2026-10-19), for discussion.
+
+- **What is researched:** single things (a stone axe, a campfire, a clay vessel) or whole fields (stone tools, clay forming, firemaking)? [OQ-076](../OpenQuestions.md).
+- **Speeding research up with materials.** A topic takes its time, or the player can hand in its listed materials (for example 5 stones, 5 sticks and 5 cords) to cut its **total** time in half; with less than half left, it completes at once. Only the full list counts. This changes rule 2 above ("its only cost is time", OQ-005): [OQ-077](../OpenQuestions.md).
+- **Finding things in the window.** Sort alphabetically, by time, or by materials on hand, ascending or descending. Topics are grouped by category, each opening a list beside it, like the old Windows Start menu. There will be many recipes; the window does the organizing, never the player.
+- **New topics are announced** in the HUD, in the research window, in the event log ("New research unlocked: Ceramics"), perhaps with a pop-up, and the player can always see where in the window a new topic is.
+- **Layout.** The research window covers the zone features panel, like the other windows from the nav bar, and leaves the ground and inventory usable. To be designed in a dedicated session.
+

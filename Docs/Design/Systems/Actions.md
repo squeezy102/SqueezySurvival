@@ -26,6 +26,14 @@ Every action is in one of three states. The UI always shows the state and the re
 | Available with penalties | Can be performed, but with added time, failure chance or risk. The penalties are shown. | Forage in the dark: injury risk. |
 | Unavailable | Cannot be performed. The blocking requirement is named. | Sleep while dangerously thirsty. |
 
+## Pacing
+
+**Proposal from squeezy102's notes (2026-10-19), not approved.** Every action should carry weight: today, clicking Explore over and over maps the Beach and fills the ground in seconds, and waiting doesn't feel like waiting.
+
+- **An action takes real time.** While it runs, a small window in the middle of the screen names it ("Exploring the Beach") with a progress bar, and nothing else can be started.
+- **Standard: 15 minutes of game time takes 1 second.** Other durations scale from it. Whether long actions are capped: [OQ-075](../OpenQuestions.md) (at this rate, a 1-hour Rest takes 4 seconds and an 8-hour sleep 32).
+- **Later, small animations** replace the bar: dashed lines appearing one by one to an X for exploring, a bed giving off Zs for sleeping, a clock turning for waiting, a hammer striking an anvil for crafting. Never the survivor. Out of scope for the MVP ([GDD: presentation](../GameDesignDocument.md#presentation)); sound comes later too.
+
 ## Light level
 
 Light level is a requirement and penalty source for many actions. It is derived from the day phase and modified by light sources.
