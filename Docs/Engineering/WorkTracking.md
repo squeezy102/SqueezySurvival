@@ -58,7 +58,7 @@ New issues use a form ([`.github/ISSUE_TEMPLATE/`](../../.github/ISSUE_TEMPLATE/
 - **Source:** `playtest` for anything found by playing a build.
 - **Newcomers:** `good first issue` for small, well-described work, and `help wanted` for work squeezy102 would welcome help with ([Getting Started](../../GETTING_STARTED.md#find-something-to-work-on)).
 - **Status:** `status: in progress` and `status: in development branch` (see the lifecycle below).
-- **Milestones:** `Wireframe` (a clickable wireframe of the core loop) and `MVP` (the game described in the [Game Design Document](../Design/GameDesignDocument.md)).
+- **Milestones**, in order: `Wireframe` (a clickable wireframe of the core loop), `Tutorial: the first day` (a new player is guided through their first day; gives playtesters a script and an in-game way to report bugs and feedback), `Explore the MVP world` (every MVP zone, its finds and the recipes to get through them), and `MVP` (the game described in the [Game Design Document](../Design/GameDesignDocument.md)).
 
 ## Lifecycle
 
