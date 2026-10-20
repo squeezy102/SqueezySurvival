@@ -85,7 +85,7 @@ namespace SqueezySurvival.Core.Runs
         public void PassTime(TimePassingAction action)
         {
             RequireNoPendingGroundOverflow();
-            Clock = Clock.Advance(TimePassingActions.DurationMinutes(action));
+            Clock = Clock.AdvanceMinutes(TimePassingActions.DurationMinutes(action));
             EventLog.Add(Clock, TimePassingActions.LogText(action));
             ClockAdvanced?.Invoke(Clock);
         }
@@ -98,7 +98,7 @@ namespace SqueezySurvival.Core.Runs
         public ExplorationOutcome Explore()
         {
             RequireNoPendingGroundOverflow();
-            Clock = Clock.Advance(ExploreMinutes);
+            Clock = Clock.AdvanceMinutes(ExploreMinutes);
             ExplorationOutcome outcome = _zoneExplorer.Explore(CurrentZone);
             foreach (EventLogMessage message in ExplorationLogTextFormatter.Format(CurrentZone.Name, outcome))
             {

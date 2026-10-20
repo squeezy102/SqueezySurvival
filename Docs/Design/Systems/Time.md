@@ -7,19 +7,19 @@ Time is the game's core currency ([Pillar 1](../GameDesignDocument.md#pillars)).
 ## Rules
 
 1. **Time advances only through player actions.** Nothing happens between actions. There is no real-time clock.
-2. **The time unit (TU) is 1 minute of game time.** It is the smallest unit of time; no duration is fractional. Minute resolution lets quick actions (drinking, eating, breaking a rock) cost realistically little without being free.
-3. **Every action costs at least 1 TU** ([Pillar 2](../GameDesignDocument.md#pillars)).
-4. **A day is 1,440 TU** (24 hours x 60 minutes).
+2. **The clock counts seconds** ([#109](https://github.com/squeezy102/SqueezySurvival/issues/109)). A second is the smallest unit of game time; no duration is fractional. Most actions last whole minutes; seconds let the quickest ones, such as picking things up, cost realistically little without being free, and the player always sees exactly what they cost. (Until 2026-10-20 the smallest unit was 1 minute, called a time unit, TU.)
+3. **Every action costs at least 1 second** ([Pillar 2](../GameDesignDocument.md#pillars)).
+4. **A day is 24 hours** (86,400 seconds).
 5. **When an action resolves, all time-dependent systems advance by its full duration** (stat changes, research progress, weather).
 
 ## Passing time deliberately
 
 | Action | Duration | Game time |
 |---|---|---|
-| Wait | 15 TU | 15 minutes |
-| Rest | 60 TU | 1 hour |
-| Nap | 240 TU | 4 hours |
-| Sleep | 480 TU | 8 hours |
+| Wait | 15 min | 15 minutes |
+| Rest | 60 min | 1 hour |
+| Nap | 240 min | 4 hours |
+| Sleep | 480 min | 8 hours |
 
 Wait and Rest are always available. Nap and Sleep are unavailable while any survival stat is dangerous, and a stat becoming dangerous ends them early (resolves OQ-018). See [Actions: condition gates](Actions.md#condition-gates).
 
@@ -33,15 +33,15 @@ What Rest, Nap and Sleep restore, and how they differ beyond duration, depends o
 
 ## Rates
 
-Rates that change over time (stat decay, research progress, weather effects) are authored per hour, the unit designers reason in, and applied for the exact minutes an action takes. Values that can change by less than one whole point per minute are stored with fractional precision.
+Rates that change over time (stat decay, research progress, weather effects) are authored per hour, the unit designers reason in, and applied for the exact time an action takes. Values that can change by less than one whole point per second are stored with fractional precision.
 
 | Example action | Indicative cost |
 |---|---|
-| Drink | 1 TU |
-| Eat a coconut | 5 TU |
-| Break a rock | 10 TU |
-| Skin a fish | 15 TU |
-| Explore | 15 TU |
+| Drink | 1 min |
+| Eat a coconut | 5 min |
+| Break a rock | 10 min |
+| Skin a fish | 15 min |
+| Explore | 15 min |
 
 Indicative only; each action's cost is set in its own specification.
 
@@ -82,14 +82,14 @@ A year is **120 days**: four seasons of **30 days** each, in the order Temperate
 
 ## Display
 
-- Clock in 12-hour format with AM/PM (for example `7:45 AM`).
+- Clock in 12-hour format with AM/PM. The HUD shows seconds (`7:45:12 AM`); the event log shows hours and minutes (`7:45 AM`).
 - Day counter starting at Day 1.
 - In the HUD, the day, the time and the day phase each have their own row, with no separators.
-- Every action shows its duration before the player commits, as hours and minutes (for example `1 hr 30 min`).
+- Every action shows its duration before the player commits, in the largest units that apply, leaving out any that are zero (for example `10 sec`, `1 min 20 sec`, `1 hr 30 min`).
 - A **day and night dial** beside the clock ([#52](https://github.com/squeezy102/SqueezySurvival/issues/52)): a disc split in half, one half a bright day sky with the sun, the other a dim night sky with the moon and stars, seen through a half-circle window. The disc turns once a day with the clock: the sun is at the top at noon, the moon at midnight; at 6:00 AM the sun is rising on the left, and at 6:00 PM it is setting on the right. The disc is redrawn pixel by pixel at each angle, so it stays crisp pixel art as it turns ([Art Direction](../ArtDirection.md)).
 
 ## Implementation notes
 
-- Game time is stored as a whole number of TU elapsed since the start of the run. Clock and day are derived from it, never stored separately.
+- Game time is stored as a whole number of seconds elapsed since the start of the run. Clock and day are derived from it, never stored separately.
 - Time advances only through one simulation entry point, so every time-dependent system sees the same duration in the same order. This keeps the simulation deterministic and unit testable.
 

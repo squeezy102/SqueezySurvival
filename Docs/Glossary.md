@@ -14,7 +14,7 @@ Canonical terms. Code, UI text and documents use these words with these meanings
 | Combat | Turn-based fight with an animal, using hidden animal decks. See [Combat](Design/Systems/Combat.md). |
 | Cost | What an action consumes: time, and optionally stats, materials or tool durability. |
 | Creature familiarity | Per-species knowledge from encounters; unlocks combat tells and bestiary detail. |
-| Day | 1,440 TU (24 hours of game time). |
+| Day | 24 hours of game time. |
 | Day phase | One of six named parts of the day (Dawn, Morning, Midday, Afternoon, Dusk, Night) that other systems use to vary behavior. See [Time](Design/Systems/Time.md). |
 | Decay | Deterioration of items over time, at a per-item rate, slowed by storage. Inorganic items decay very slowly. See [Decay](Design/Systems/Decay.md). |
 | Dominant hand | Left or right, chosen at character select. It is the tool hand; the other hand is the offhand. See [Equipment](Design/Systems/Equipment.md#handedness). |
@@ -51,7 +51,7 @@ Canonical terms. Code, UI text and documents use these words with these meanings
 | Survival points | Earned per day survived in a run; spent on perks and boosts. See [Runs](Design/Systems/Runs.md). |
 | Survival stat | A core condition of the survivor shown as a bar where higher is always better, such as Food or Water. See [Survival Stats](Design/Systems/SurvivalStats.md). |
 | Tell | A truthful combat hint. Rule-out tells eliminate one of an animal's three options; at mastery, explicit tells sometimes state its action. |
-| Time unit (TU) | The smallest unit of game time: 1 minute. See [Time](Design/Systems/Time.md). |
+| Time unit (TU) | Retired: the smallest unit of game time was 1 minute until the clock began counting seconds. See [Time](Design/Systems/Time.md). |
 | Tracking | A skill and action for finding an animal that escaped a fight. Injured animals are easier to track. See [Combat](Design/Systems/Combat.md#tracking). |
 | Unattended fire | A fire burning while the survivor starts a full Sleep, or spends an hour or more in another zone. See [Weather](Design/Systems/Weather.md#wildfire). |
 | Wardrobe building | A placeable building that stores whole gear sets for one-action swapping: stick dummy, wardrobe, armoire. See [Equipment](Design/Systems/Equipment.md#saved-loadouts). |

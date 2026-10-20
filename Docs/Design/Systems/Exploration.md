@@ -6,7 +6,7 @@ Exploring a zone is how the survivor finds resources, features and the way to ot
 
 ## The Explore action
 
-- **Duration: 15 TU** (a short walk).
+- **Duration: 15 minutes** (a short walk).
 - Exploring is always a worthwhile choice when the player has nothing better to do, and never carries a severe time cost.
 - Finds are unlimited. The limit is the survivor: every explore taxes time, stamina, food, water, exposure to the elements and the risk of hazards.
 
@@ -57,7 +57,7 @@ The first playable version of exploring, built as the real system with placehold
 
 | Rule | Wireframe value |
 |---|---|
-| Duration | 15 TU |
+| Duration | 15 minutes |
 | Progress | The Beach takes 24 explores to map, so each explore adds about 4%. Shown rounded down, so 100% appears only when the zone is fully mapped. |
 | Scripted explores | The Beach's first 4: 2 stones and a small stick; 2 small sticks and some seaweed; some seaweed and a seashell; a stone and a coconut. No features. |
 | Random finds | 1 to 3 loose items per explore, drawn from the zone's find pool by weight. Continues forever, also after the zone is fully explored. |
