@@ -14,6 +14,7 @@
 - **Dependency injection.** Classes receive their dependencies through constructors, typed as interfaces. Composition happens at a single composition root per scene.
 - **Data-driven content.** Items, resources, recipes and biomes are defined as data (ScriptableObjects), not hard-coded.
 - **Deterministic simulation.** Randomness and time come from injected interfaces (for example `IRandomNumberSource`, `IGameClock`) so tests are repeatable.
+- **How these apply to this codebase**, and where it falls short today: [Architecture](Architecture.md).
 - **Patterns are tools, not goals.** Use factories, builders, strategies, observers and similar patterns where they reduce coupling or simplify testing. Avoid global singletons for game state.
 
 ## Assemblies

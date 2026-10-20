@@ -15,6 +15,7 @@ The owner, **squeezy102** (Pj), has the final say on every change.
 | [Docs/Home.md](Docs/Home.md) | Index of all documentation and the documentation policy |
 | [Docs/Design/GameDesignDocument.md](Docs/Design/GameDesignDocument.md) | Vision, pillars, design principles |
 | [Docs/Engineering/CodingStandards.md](Docs/Engineering/CodingStandards.md) | Code rules |
+| [Docs/Engineering/Architecture.md](Docs/Engineering/Architecture.md) | How the runtime is organized: services, time, events, composition, element lifetime |
 | [Docs/Engineering/TestingStandards.md](Docs/Engineering/TestingStandards.md) | Test design (ISTQB), game testing, definition of done |
 | [Docs/Engineering/WorkTracking.md](Docs/Engineering/WorkTracking.md) | Issues, labels, lifecycle |
 | [Docs/Engineering/SourceControl.md](Docs/Engineering/SourceControl.md) | Branches, commits, protected branches |
