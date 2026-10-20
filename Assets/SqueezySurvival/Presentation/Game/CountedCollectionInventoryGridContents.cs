@@ -41,8 +41,8 @@ namespace SqueezySurvival.Presentation.Game
         public ThingTooltipContent TooltipAt(int slot) => ThingTooltipContentFactory.Create(Entry(slot));
 
         /// <inheritdoc />
-        public GridDropOutcome ResolveDrop(int sourceSlot, GridDropTarget target) =>
-            _dropOutcomeResolver.Resolve(_collection, sourceSlot, target);
+        public GridDropOutcome ResolveDrop(int sourceSlot, GridDropTarget target, ItemTransferQuantity quantity) =>
+            _dropOutcomeResolver.Resolve(_collection, sourceSlot, target, quantity);
 
         /// <inheritdoc />
         public void ApplyDrop(int sourceSlot, GridDropOutcome outcome)
@@ -57,6 +57,12 @@ namespace SqueezySurvival.Presentation.Game
                 case GridDropOutcomeKind.Move:
                 case GridDropOutcomeKind.Swap:
                     _collection.MoveToSlot(sourceSlot, outcome.TargetSlot);
+                    break;
+                case GridDropOutcomeKind.Split:
+                    _collection.SplitToSlot(sourceSlot, outcome.TargetSlot, outcome.Count);
+                    break;
+                case GridDropOutcomeKind.Merge:
+                    _collection.MergeIntoSlot(sourceSlot, outcome.TargetSlot, outcome.Count);
                     break;
                 case GridDropOutcomeKind.Combine:
                     // No combination rules return a match until crafting exists (Docs/Design/UI/DragAndDrop.md, Combining).

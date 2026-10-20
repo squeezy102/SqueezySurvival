@@ -21,7 +21,7 @@ Dragging in inventory grids is defined in [Drag and Drop](DragAndDrop.md).
 ### Principles (from OQ-032)
 
 - **Left click** does the quick action; **right click** opens the actions available for what was clicked. Right-clicking a tree lists Climb, Chop and so on.
-- **Modifier keys pair up by how much moves** (resolves OQ-072): one modifier moves all of a stack, one moves half, one moves one. The same modifier means the same amount everywhere. Defaults (resolves OQ-085): **Shift moves all, Ctrl moves half, Alt moves one**; a modified click sends things to the other panel ([Drag and Drop: between panels](DragAndDrop.md#between-panels)). Where modified clicks go once containers exist: [OQ-086](../OpenQuestions.md).
+- **Modifier keys pair up by how much moves** (resolves OQ-072): one modifier moves all of a stack, one moves half, one moves one. The same modifier means the same amount everywhere. Defaults (resolves OQ-085): **Shift moves all, Ctrl moves half, Alt moves one**; a modified click sends things to the other panel ([Drag and Drop: between panels](DragAndDrop.md#between-panels)). An open container takes modified clicks before the inventory (resolves OQ-086); where clicks in the container go: [OQ-088](../OpenQuestions.md).
 - **Moving things** covers: move all, move half (split a stack), move one, to and from containers, and drop on the ground.
 - **Deleting is never a click.** The far right of the inventory has a **trash slot**: an item dropped there stays until something else is dropped on it, which replaces it and destroys it for good, as in Terraria and Stardew Valley. An **Empty trash** button under it destroys what is there at once.
 

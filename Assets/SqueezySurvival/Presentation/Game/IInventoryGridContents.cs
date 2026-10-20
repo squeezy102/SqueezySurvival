@@ -28,8 +28,11 @@ namespace SqueezySurvival.Presentation.Game
         /// <summary>The hover tooltip of a slot.</summary>
         ThingTooltipContent TooltipAt(int slot);
 
-        /// <summary>What releasing the thing in <paramref name="sourceSlot"/> over <paramref name="target"/> would do.</summary>
-        GridDropOutcome ResolveDrop(int sourceSlot, GridDropTarget target);
+        /// <summary>
+        /// What releasing <paramref name="quantity"/> of the stack in <paramref name="sourceSlot"/> over
+        /// <paramref name="target"/> would do.
+        /// </summary>
+        GridDropOutcome ResolveDrop(int sourceSlot, GridDropTarget target, ItemTransferQuantity quantity);
 
         /// <summary>Carries out an outcome returned by <see cref="ResolveDrop"/> for the same source slot.</summary>
         void ApplyDrop(int sourceSlot, GridDropOutcome outcome);

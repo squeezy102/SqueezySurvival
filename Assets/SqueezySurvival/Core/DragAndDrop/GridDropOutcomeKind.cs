@@ -21,6 +21,12 @@ namespace SqueezySurvival.Core.DragAndDrop
         /// <summary>The two things cannot be combined; releasing changes nothing.</summary>
         CannotCombine,
 
+        /// <summary>Part of the dragged stack splits off into an empty slot (Docs/Design/UI/DragAndDrop.md, Splitting and merging).</summary>
+        Split,
+
+        /// <summary>Some or all of the dragged stack joins another stack of the same kind.</summary>
+        Merge,
+
         /// <summary>Things move to another panel (Docs/Design/UI/DragAndDrop.md, Between panels).</summary>
         Transfer,
 

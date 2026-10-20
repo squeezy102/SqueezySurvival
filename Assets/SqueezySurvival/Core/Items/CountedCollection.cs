@@ -7,7 +7,7 @@ namespace SqueezySurvival.Core.Items
     /// A fixed number of slots, each holding one kind of thing and its count, like Diablo's inventory
     /// (Docs/Design/UI/InventoryGrids.md). A kind keeps its slot until the player moves it; slots may be left empty on
     /// purpose, and a new kind takes the first empty slot. When every slot is taken, a new kind does not fit; more of a
-    /// kind already present always does.
+    /// kind already present always does, joining its first stack. The player may split a kind across several slots.
     /// </summary>
     public sealed class CountedCollection<TDefinition> where TDefinition : class, ICountableThingDefinition
     {
@@ -37,11 +37,24 @@ namespace SqueezySurvival.Core.Items
         /// <summary>Whether every slot is taken.</summary>
         public bool IsFull => _entries.Count == SlotCapacity;
 
-        /// <summary>How many of the given kind there are.</summary>
+        /// <summary>How many of the given kind there are, across all its stacks.</summary>
         public int CountOf(TDefinition definition)
         {
-            int index = IndexOfKind(definition);
-            return index < 0 ? 0 : _entries[index].Count;
+            if (definition == null)
+            {
+                throw new ArgumentNullException(nameof(definition));
+            }
+
+            int count = 0;
+            foreach (CountedEntry<TDefinition> entry in _entries)
+            {
+                if (entry.Definition.Id == definition.Id)
+                {
+                    count += entry.Count;
+                }
+            }
+
+            return count;
         }
 
         /// <summary>Whether the given kind fits: it is already present, or there is an empty slot for it.</summary>
@@ -56,26 +69,33 @@ namespace SqueezySurvival.Core.Items
         }
 
         /// <summary>
-        /// The slot <paramref name="definition"/> would go to if added here: its own stack when the kind is present
-        /// (auto-stack); otherwise <paramref name="preferredSlot"/> when that slot is empty; otherwise the first empty
+        /// The slot <paramref name="definition"/> would go to if added here: <paramref name="preferredSlot"/> when it
+        /// holds the same kind; else the kind's first stack when present (auto-stack); otherwise <paramref name="preferredSlot"/> when that slot is empty; otherwise the first empty
         /// slot. -1 when there is no room. Pass -1 as <paramref name="preferredSlot"/> for no preference
         /// (Docs/Design/UI/DragAndDrop.md, Between panels).
         /// </summary>
         public int SlotToReceive(TDefinition definition, int preferredSlot)
         {
             int kindIndex = IndexOfKind(definition);
+            int preferredIndex = -1;
+            if (preferredSlot != -1)
+            {
+                RequireSlot(preferredSlot, nameof(preferredSlot));
+                preferredIndex = IndexOfSlot(preferredSlot);
+                if (preferredIndex >= 0 && _entries[preferredIndex].Definition.Id == definition.Id)
+                {
+                    return preferredSlot;
+                }
+            }
+
             if (kindIndex >= 0)
             {
                 return _entries[kindIndex].Slot;
             }
 
-            if (preferredSlot != -1)
+            if (preferredSlot != -1 && preferredIndex < 0)
             {
-                RequireSlot(preferredSlot, nameof(preferredSlot));
-                if (IndexOfSlot(preferredSlot) < 0)
-                {
-                    return preferredSlot;
-                }
+                return preferredSlot;
             }
 
             return IsFull ? -1 : FirstEmptySlot();
@@ -141,6 +161,58 @@ namespace SqueezySurvival.Core.Items
 
             Changed?.Invoke();
             return new CountedThing<TDefinition>(entry.Definition, count);
+        }
+
+        /// <summary>
+        /// Moves <paramref name="count"/> of the stack in <paramref name="fromSlot"/> into the empty
+        /// <paramref name="toSlot"/>, starting a second stack of the kind there; all of it simply moves
+        /// (Docs/Design/UI/DragAndDrop.md, Splitting and merging). Raises <see cref="Changed"/>.
+        /// </summary>
+        public void SplitToSlot(int fromSlot, int toSlot, int count)
+        {
+            CountedEntry<TDefinition> source = RequireEntryToMove(fromSlot, toSlot, count);
+            if (IndexOfSlot(toSlot) >= 0)
+            {
+                throw new InvalidOperationException("A stack can only be split onto an empty slot.");
+            }
+
+            if (count == source.Count)
+            {
+                MoveToSlot(fromSlot, toSlot);
+                return;
+            }
+
+            _entries[IndexOfSlot(fromSlot)] = new CountedEntry<TDefinition>(source.Definition, source.Count - count, fromSlot);
+            Insert(new CountedEntry<TDefinition>(source.Definition, count, toSlot));
+            Changed?.Invoke();
+        }
+
+        /// <summary>
+        /// Moves <paramref name="count"/> of the stack in <paramref name="fromSlot"/> onto the stack of the same kind in
+        /// <paramref name="toSlot"/> (Docs/Design/UI/DragAndDrop.md, Splitting and merging). Raises <see cref="Changed"/>.
+        /// </summary>
+        public void MergeIntoSlot(int fromSlot, int toSlot, int count)
+        {
+            CountedEntry<TDefinition> source = RequireEntryToMove(fromSlot, toSlot, count);
+            int toIndex = IndexOfSlot(toSlot);
+            if (toIndex < 0 || _entries[toIndex].Definition.Id != source.Definition.Id)
+            {
+                throw new InvalidOperationException("Stacks only merge with the same kind.");
+            }
+
+            CountedEntry<TDefinition> target = _entries[toIndex];
+            _entries[toIndex] = new CountedEntry<TDefinition>(target.Definition, target.Count + count, toSlot);
+            int fromIndex = IndexOfSlot(fromSlot);
+            if (count == source.Count)
+            {
+                _entries.RemoveAt(fromIndex);
+            }
+            else
+            {
+                _entries[fromIndex] = new CountedEntry<TDefinition>(source.Definition, source.Count - count, fromSlot);
+            }
+
+            Changed?.Invoke();
         }
 
         /// <summary>
@@ -267,7 +339,20 @@ namespace SqueezySurvival.Core.Items
                 throw new ArgumentNullException(nameof(order));
             }
 
-            var sorted = new List<CountedEntry<TDefinition>>(_entries);
+            // Split stacks of a kind join back together, in the slot of the kind's first stack.
+            var sorted = new List<CountedEntry<TDefinition>>();
+            foreach (CountedEntry<TDefinition> entry in _entries)
+            {
+                int index = sorted.FindIndex(kept => kept.Definition.Id == entry.Definition.Id);
+                if (index < 0)
+                {
+                    sorted.Add(entry);
+                }
+                else
+                {
+                    sorted[index] = new CountedEntry<TDefinition>(entry.Definition, sorted[index].Count + entry.Count, sorted[index].Slot);
+                }
+            }
 
             // List.Sort is unstable; slot order breaks ties so equal things keep their relative order.
             sorted.Sort((first, second) =>
@@ -302,6 +387,30 @@ namespace SqueezySurvival.Core.Items
 
             Insert(new CountedEntry<TDefinition>(definition, 1, FirstEmptySlot()));
             return true;
+        }
+
+        private CountedEntry<TDefinition> RequireEntryToMove(int fromSlot, int toSlot, int count)
+        {
+            RequireSlot(fromSlot, nameof(fromSlot));
+            RequireSlot(toSlot, nameof(toSlot));
+            if (fromSlot == toSlot)
+            {
+                throw new ArgumentException("A stack can't be split or merged onto itself.", nameof(toSlot));
+            }
+
+            int fromIndex = IndexOfSlot(fromSlot);
+            if (fromIndex < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(fromSlot), fromSlot, "Nothing is in that slot.");
+            }
+
+            CountedEntry<TDefinition> source = _entries[fromIndex];
+            if (count < 1 || count > source.Count)
+            {
+                throw new ArgumentOutOfRangeException(nameof(count), count, "Must move between one and all of the stack.");
+            }
+
+            return source;
         }
 
         // Entries are kept sorted by slot, so the first slot that doesn't match its position is the first gap.
