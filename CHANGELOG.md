@@ -7,6 +7,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 ## [Unreleased]
 
 ### Added
+- [Architecture](Docs/Engineering/Architecture.md): how the runtime is organized, and the gaps found in the 2026-10-20 review (#116).
 - Split a stack inside a panel: Ctrl-drag half or Alt-drag one onto an empty slot; drop a stack on its own kind to merge them. Sorting joins split stacks back together. An open container will take modified clicks before the inventory (#112). See [Drag and Drop: splitting and merging](Docs/Design/UI/DragAndDrop.md#splitting-and-merging).
 - Things move between the ground and the inventory: drag them (Ctrl moves half, Alt moves one), or Shift, Ctrl or Alt + click to send all, half or one straight across. Like kinds stack automatically. Each move takes a few seconds by weight and is logged (#86). See [Drag and Drop: between panels](Docs/Design/UI/DragAndDrop.md#between-panels).
 - A 100 lb weight limit with no cap: the inventory header shows the load, and an immobile survivor (100% or more) can't explore (#86). See [Inventory: weight](Docs/Design/Systems/Inventory.md#weight).

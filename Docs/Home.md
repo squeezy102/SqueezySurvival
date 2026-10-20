@@ -65,6 +65,7 @@ Files at the repository root:
 
 ## Engineering
 
+- [Architecture](Engineering/Architecture.md) - how the runtime is organized: the run's services, the one time path, change events, scene composition, element lifetime.
 - [Coding Standards](Engineering/CodingStandards.md) - testability, naming, architecture, warnings policy.
 - [Testing and Quality Standards](Engineering/TestingStandards.md) - ISTQB-based test design, game testing, defect reports, definition of done.
 - [Project Setup](Engineering/ProjectSetup.md) - editor version, packages, folder layout.
