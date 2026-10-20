@@ -12,7 +12,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 
 ### Changed
 - Answers to OQ-025 (exploring in poor light), OQ-032 (control principles), OQ-033 (click to pick up and place), OQ-058 (run perks direction) and OQ-064 (day summary).
-- The ground and zone features grids are 12 x 3 instead of 16 x 4 (design; build tracked separately).
+- The ground and zone features grids are 12 x 3 instead of 16 x 4, so their icons are bigger (#73).
 
 ## [0.1.1] - 2026-10-20
 
