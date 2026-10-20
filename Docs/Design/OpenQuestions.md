@@ -11,11 +11,10 @@ Design questions still waiting for an answer. The full history of every question
 
 | ID | Area | Question | Owner doc |
 |---|---|---|---|
-| OQ-025 | Exploration | How does exploring work at Dawn, Dusk and Night (light level penalties, hazard and injury chances)? | Systems/Exploration |
-| OQ-032 | Controls | What does each mouse button and modifier combination do (for example Shift + left click to move a whole stack, Ctrl + left click to move one)? Defined per screen as screens are designed. | UI/Controls |
-| OQ-033 | Controls | Should every drag have a click alternative (click an item to pick it up, click a destination to place it)? The Intermediate tier of the Game Accessibility Guidelines asks that "multiple simultaneous actions (eg. click/drag or swipe) are not required". Proposal: yes. | UI/Controls |
-| OQ-058 | Runs | What perks, boosts and challenge unlocks can survival and challenge points buy, and at what prices? Deferred to a dedicated session. | Systems/Runs |
-| OQ-064 | UI | Day summary: when exactly does it appear (at midnight, or when the survivor next wakes), and what does it show? Proposal in Design/UI/DaySummary. | UI/DaySummary |
+| OQ-071 | Controls | Click to pick up and place: what puts a picked-up thing back (Escape, right click, clicking outside any grid), how combining works without a drag (the same one-second hover over a thing?), and can a picked-up thing be carried to another panel or a container? | UI/Controls |
+| OQ-072 | Controls | Modifier pairing: are modifiers paired by how much moves or by where it goes? Proposal (by how much, destination implied): left click picks up and places; **Shift + left click** sends the whole stack to the other side (inventory and ground, or a container and where it stands); **Ctrl + left click** sends half; **Alt + left click** sends one; right click opens the thing's actions. | UI/Controls |
+| OQ-073 | Controls | Remapping: squeezy102 expects mouse buttons and modifier keys not to be remappable, but the Game Accessibility Guidelines Basic tier, our baseline, asks that controls can be remapped. Remap mouse and modifiers too, or record an exception to the baseline? | UI/Controls |
+| OQ-074 | Runs | Run perks: which traits, items and challenges can survival and challenge points buy, at what prices, and what penalty offsets each easier choice? (The rest of OQ-058.) | Systems/Runs |
 
 ## Deferred to the balancing pass
 

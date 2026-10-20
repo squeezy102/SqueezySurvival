@@ -45,14 +45,7 @@ The ground and inventory panels have a **Sort** button in their header, labeled 
 
 ## Selecting
 
-Clicking a thing **selects** it: a gold outline marks its slot, and its tooltip stays open ([#56](https://github.com/squeezy102/SqueezySurvival/issues/56)). The selection ends, and the tooltip closes, when the player:
-
-- clicks anywhere else, including another thing (which selects that one instead) or any button;
-- starts dragging any thing;
-- presses Escape; or
-- does something that changes the grid, such as exploring or sorting.
-
-While a thing is selected, hovering over others does not replace its tooltip.
+Clicking a thing selected it and kept its tooltip open ([#56](https://github.com/squeezy102/SqueezySurvival/issues/56)). This is being replaced: clicking picks the thing up onto the cursor instead ([Controls: click to pick up and place](Controls.md#click-to-pick-up-and-place)).
 
 ## Tooltips
 

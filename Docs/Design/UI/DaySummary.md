@@ -1,6 +1,6 @@
 # Day Summary
 
-**Status:** Concept
+**Status:** Draft
 
 Something should happen when a day ends: a screen that marks the passing of the day and breaks the rhythm of action after action.
 
@@ -10,17 +10,22 @@ Something should happen when a day ends: a screen that marks the passing of the 
 - **A pause.** A natural moment to step back from moment-to-moment play.
 - **A review.** A look back at what the day produced and how the survivor is doing.
 
-## Candidate contents (proposal, not approved)
+## When it appears
+
+For the summary, a day runs from 8:00 AM to 10:00 PM. **The summary appears when the clock reaches 10:00 PM**, the start of [Night](../Systems/Time.md#day-phases) (resolves OQ-064). It closes with Escape or the X in its top-right corner, and has a **Don't show this again** checkbox for players who don't want it.
+
+## Contents
+
+It never tells the player anything they couldn't have tracked themselves. It's there to break up the days for players who like that.
 
 | Section | Shows |
 |---|---|
 | Headline | "Day 3 survived", with the survival points it earned. |
-| Today | What was gathered, crafted and discovered, drawn from the [event log](HUD.md#event-log). |
-| Status | The survivor's condition: survival stats and any injuries. |
-| Tomorrow | The season, and a hint of the weather trend ("The air feels heavy. Rain is coming."), in the voice of the event log. |
+| Food and water | How much was eaten and drunk that day. |
+| Changes | How the survival stats changed since the last summary. |
+| Warnings | Any stat that is now critical. |
+| Discoveries | New finds and landmarks. |
 
 ## Setting
 
-**End of day summary: On / Off**, in Options. On by default. Turned off, days pass without the screen; the day's points are still earned.
-
-Open: [OQ-064](../OpenQuestions.md).
+**End of day summary: On / Off**, in Options; the same setting as the summary's Don't show this again checkbox. On by default. Turned off, days pass without the screen; the day's points are still earned.
