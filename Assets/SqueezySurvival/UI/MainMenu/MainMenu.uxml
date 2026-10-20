@@ -3,7 +3,7 @@
     <ui:Template name="OptionsScreen" src="../Options/OptionsScreen.uxml" />
     <Style src="MainMenu.uss" />
     <ui:VisualElement name="main-menu-root" class="main-menu-root">
-        <ui:Label name="game-title" text="SqueezySurvival" class="game-title" />
+        <ui:Label name="game-title" text="SqueezySurvival" class="game-title display-text" />
         <ui:VisualElement name="menu-options" class="menu-options pixel-window">
             <ui:Button name="new-game-button" class="menu-button" />
             <ui:Button name="continue-button" class="menu-button" />
