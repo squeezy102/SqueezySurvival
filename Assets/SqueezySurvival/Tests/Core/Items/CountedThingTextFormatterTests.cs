@@ -8,7 +8,7 @@ namespace SqueezySurvival.Core.Tests.Items
     public sealed class CountedThingTextFormatterTests
     {
         private static readonly ItemDefinition Stone = PlaceholderBeachZoneContent.Stone;
-        private static readonly ItemDefinition Stick = PlaceholderBeachZoneContent.Stick;
+        private static readonly ItemDefinition Stick = PlaceholderBeachZoneContent.SmallStick;
         private static readonly ItemDefinition Seashell = PlaceholderBeachZoneContent.Seashell;
 
         [Test]
@@ -32,7 +32,7 @@ namespace SqueezySurvival.Core.Tests.Items
         [Test]
         public void FormatSentencePhrase_GroupsRepeatsAndJoinsWithAnd()
         {
-            Assert.That(CountedThingTextFormatter.FormatSentencePhrase(new[] { Stone, Stick, Stone }), Is.EqualTo("2 stones and a stick"));
+            Assert.That(CountedThingTextFormatter.FormatSentencePhrase(new[] { Stone, Stick, Stone }), Is.EqualTo("2 stones and a small stick"));
         }
 
         [Test]
@@ -40,7 +40,7 @@ namespace SqueezySurvival.Core.Tests.Items
         {
             Assert.That(
                 CountedThingTextFormatter.FormatSentencePhrase(new[] { Stone, Stick, Seashell }),
-                Is.EqualTo("a stone, a stick and a seashell"));
+                Is.EqualTo("a stone, a small stick and a seashell"));
         }
     }
 }

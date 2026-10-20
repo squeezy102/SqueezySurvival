@@ -1,8 +1,8 @@
 # Beach Finds
 
-**Status:** Concept - first pass from squeezy102's notes (2026-10-19), not approved. Needs a realism check: what a person could actually find on a tropical beach.
+**Status:** Draft - the item list is approved and built ([#95](https://github.com/squeezy102/SqueezySurvival/issues/95)); uses, weights and how often each is found are placeholders. A realism check is still to come ([#82](https://github.com/squeezy102/SqueezySurvival/issues/82)).
 
-What the survivor can find lying around on the Beach, the first zone. Replaces the [placeholder content](../Systems/Exploration.md#wireframe-stage) once approved.
+What the survivor can find lying around on the Beach, the first zone ([Exploration: wireframe stage](../Systems/Exploration.md#wireframe-stage)). Everything listed is found except flotsam, which needs a way to open it, and hermit crabs, which need catching.
 
 ## Finds
 
@@ -43,7 +43,3 @@ What the survivor can find lying around on the Beach, the first zone. Replaces t
 | Rotten fish carcass | Bones, rarely a fish hook; compost. Handling it is gross and adds filth. |
 | Rotten bird carcass | Bones, rarely feathers; compost. Gross; adds filth. |
 | Message in a bottle | Extremely rare. Holds a message and a bottle that stops evaporation. Could carry messages from contributors and backers, or start a quest: [OQ-082](../OpenQuestions.md). |
-
-## Compared with today's placeholders
-
-These replace about half of the [wireframe placeholders](../Systems/Exploration.md#wireframe-stage): pumice, starfish, cuttlebone, rope scrap, glass float and bamboo segment have no counterpart here.

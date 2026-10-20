@@ -11,6 +11,8 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 - The calendar: 120-day years of four 30-day seasons. See [Time: calendar](Docs/Design/Systems/Time.md#calendar).
 
 ### Changed
+- The Beach's finds are the items in [Beach Finds](Docs/Design/Content/BeachFinds.md), each with a pixel-art icon: big rocks, small and big sticks, logs, crabs (now with legs), lobsters, clams, oysters, gooseneck barnacles, bones and cone snails join the familiar finds. Sea glass, starfish, pumice, cuttlebone, rope scraps, glass floats and bamboo are gone (#95).
+- The ghost hands' fingers are straight, so they no longer look broken (#64).
 - Answers to OQ-025 (exploring in poor light), OQ-032 (control principles), OQ-033 (click to pick up and place), OQ-058 (run perks direction) and OQ-064 (day summary).
 - The ground and zone features grids are 12 x 3 instead of 16 x 4, so their icons are bigger (#73).
 

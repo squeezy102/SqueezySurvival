@@ -18,12 +18,13 @@ namespace SqueezySurvival.Core.PixelArt
         {
             var flat = new PixelImage(PlaceholderIconCatalog.IconSize, PlaceholderIconCatalog.IconSize);
             var canvas = new PixelIconCanvas(flat, OutlineMargin);
-            canvas.Polygon(Skin, 0.24f, 0.52f, 0.82f, 0.52f, 0.82f, 0.80f, 0.68f, 0.97f, 0.36f, 0.97f, 0.24f, 0.80f);
-            canvas.Line(Skin, 0.09f, 0.31f, 0.56f, 0.30f, 0.22f);
-            canvas.Line(Skin, 0.09f, 0.46f, 0.54f, 0.46f, 0.08f);
-            canvas.Line(Skin, 0.09f, 0.61f, 0.54f, 0.62f, 0.14f);
-            canvas.Line(Skin, 0.09f, 0.76f, 0.58f, 0.78f, 0.30f);
-            canvas.Line(Skin, 0.10f, 0.26f, 0.76f, 0.06f, 0.52f);
+            // Fingers are straight and upright, each with a pixel of space beside it, so none reads as bent.
+            canvas.Polygon(Skin, 0.24f, 0.50f, 0.82f, 0.50f, 0.82f, 0.80f, 0.68f, 0.97f, 0.36f, 0.97f, 0.24f, 0.80f);
+            canvas.Line(Skin, 0.10f, 0.31f, 0.56f, 0.31f, 0.22f);
+            canvas.Line(Skin, 0.10f, 0.46f, 0.54f, 0.46f, 0.08f);
+            canvas.Line(Skin, 0.10f, 0.61f, 0.54f, 0.61f, 0.12f);
+            canvas.Line(Skin, 0.09f, 0.76f, 0.56f, 0.76f, 0.30f);
+            canvas.Line(Skin, 0.11f, 0.26f, 0.78f, 0.08f, 0.56f);
             PixelImage right = PixelIconStylizer.Stylize(flat);
             return hand == Hand.Right ? right : Mirrored(right);
         }

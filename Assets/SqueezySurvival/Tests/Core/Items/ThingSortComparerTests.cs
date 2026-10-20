@@ -9,7 +9,7 @@ namespace SqueezySurvival.Core.Tests.Items
     [TestFixture]
     public sealed class ThingSortComparerTests
     {
-        // Stone and minerals: stone (1 lb), pumice (0.25 lb). Wood: stick (0.5 lb). Shells: seashell (0.1 lb).
+        // Wood: small stick (0.25 lb) x3. Stone and minerals: coral (0.2 lb) x4, stone (1 lb). Shells: seashell (0.1 lb).
         private static string[] SortedIds(ThingSortOrder order)
         {
             var collection = new CountedCollection<ItemDefinition>(8);
@@ -17,9 +17,9 @@ namespace SqueezySurvival.Core.Tests.Items
             {
                 PlaceholderBeachZoneContent.Seashell,
                 PlaceholderBeachZoneContent.Stone,
-                PlaceholderBeachZoneContent.Pumice, PlaceholderBeachZoneContent.Pumice, PlaceholderBeachZoneContent.Pumice,
-                PlaceholderBeachZoneContent.Pumice, PlaceholderBeachZoneContent.Pumice,
-                PlaceholderBeachZoneContent.Stick, PlaceholderBeachZoneContent.Stick, PlaceholderBeachZoneContent.Stick,
+                PlaceholderBeachZoneContent.Coral, PlaceholderBeachZoneContent.Coral, PlaceholderBeachZoneContent.Coral,
+                PlaceholderBeachZoneContent.Coral,
+                PlaceholderBeachZoneContent.SmallStick, PlaceholderBeachZoneContent.SmallStick, PlaceholderBeachZoneContent.SmallStick,
             });
             collection.Sort(new ThingSortComparer<ItemDefinition>(order));
             return collection.Entries.Select(entry => entry.Definition.Id).ToArray();
@@ -28,26 +28,26 @@ namespace SqueezySurvival.Core.Tests.Items
         [Test]
         public void ByType_GroupsInCategoryOrderThenByName()
         {
-            Assert.That(SortedIds(ThingSortOrder.ByType), Is.EqualTo(new[] { "stick", "pumice", "stone", "seashell" }));
+            Assert.That(SortedIds(ThingSortOrder.ByType), Is.EqualTo(new[] { "small-stick", "coral", "stone", "seashell" }));
         }
 
         [Test]
         public void Alphabetical_SortsByName()
         {
-            Assert.That(SortedIds(ThingSortOrder.Alphabetical), Is.EqualTo(new[] { "pumice", "seashell", "stick", "stone" }));
+            Assert.That(SortedIds(ThingSortOrder.Alphabetical), Is.EqualTo(new[] { "coral", "seashell", "small-stick", "stone" }));
         }
 
         [Test]
         public void ByQuantity_PutsLargestCountFirstThenByName()
         {
-            Assert.That(SortedIds(ThingSortOrder.ByQuantity), Is.EqualTo(new[] { "pumice", "stick", "seashell", "stone" }));
+            Assert.That(SortedIds(ThingSortOrder.ByQuantity), Is.EqualTo(new[] { "coral", "small-stick", "seashell", "stone" }));
         }
 
         [Test]
         public void ByWeight_PutsHeaviestStackFirst()
         {
-            // Stacks: stick 1.5 lb, pumice 1.25 lb, stone 1 lb, seashell 0.1 lb.
-            Assert.That(SortedIds(ThingSortOrder.ByWeight), Is.EqualTo(new[] { "stick", "pumice", "stone", "seashell" }));
+            // Stacks: stone 1 lb, coral 0.8 lb, small stick 0.75 lb, seashell 0.1 lb.
+            Assert.That(SortedIds(ThingSortOrder.ByWeight), Is.EqualTo(new[] { "stone", "coral", "small-stick", "seashell" }));
         }
 
         [Test]

@@ -10,7 +10,7 @@ namespace SqueezySurvival.Core.Tests.Items
     public sealed class CountedCollectionTests
     {
         private static readonly ItemDefinition Stone = PlaceholderBeachZoneContent.Stone;
-        private static readonly ItemDefinition Stick = PlaceholderBeachZoneContent.Stick;
+        private static readonly ItemDefinition Stick = PlaceholderBeachZoneContent.SmallStick;
         private static readonly ItemDefinition Shell = PlaceholderBeachZoneContent.Seashell;
         private static readonly ItemDefinition Conch = PlaceholderBeachZoneContent.Conch;
 
@@ -107,7 +107,7 @@ namespace SqueezySurvival.Core.Tests.Items
 
             collection.MoveToSlot(0, 5);
 
-            Assert.That(collection.Entries.Select(entry => (entry.Slot, entry.Definition.Id)), Is.EqualTo(new[] { (1, "stick"), (2, "seashell"), (5, "stone") }));
+            Assert.That(collection.Entries.Select(entry => (entry.Slot, entry.Definition.Id)), Is.EqualTo(new[] { (1, "small-stick"), (2, "seashell"), (5, "stone") }));
         }
 
         [Test]
@@ -117,7 +117,7 @@ namespace SqueezySurvival.Core.Tests.Items
 
             collection.MoveToSlot(2, 0);
 
-            Assert.That(collection.Entries.Select(entry => (entry.Slot, entry.Definition.Id)), Is.EqualTo(new[] { (0, "seashell"), (1, "stick"), (2, "stone") }));
+            Assert.That(collection.Entries.Select(entry => (entry.Slot, entry.Definition.Id)), Is.EqualTo(new[] { (0, "seashell"), (1, "small-stick"), (2, "stone") }));
         }
 
         [Test]
@@ -171,7 +171,7 @@ namespace SqueezySurvival.Core.Tests.Items
 
             CountedEntry<ItemDefinition> discarded = collection.ReplaceSlot(1, new CountedThing<ItemDefinition>(Conch, 2));
 
-            Assert.That((discarded.Definition.Id, discarded.Count), Is.EqualTo(("stick", 2)));
+            Assert.That((discarded.Definition.Id, discarded.Count), Is.EqualTo(("small-stick", 2)));
             Assert.That(collection.Entries.Select(entry => (entry.Slot, entry.Definition.Id, entry.Count)), Is.EqualTo(new[] { (0, "stone", 1), (1, "conch", 2), (2, "seashell", 1) }));
         }
 
@@ -191,7 +191,7 @@ namespace SqueezySurvival.Core.Tests.Items
 
             collection.Sort(new ThingSortComparer<ItemDefinition>(ThingSortOrder.Alphabetical));
 
-            Assert.That(collection.Entries.Select(entry => (entry.Slot, entry.Definition.Id)), Is.EqualTo(new[] { (0, "seashell"), (1, "stick"), (2, "stone") }));
+            Assert.That(collection.Entries.Select(entry => (entry.Slot, entry.Definition.Id)), Is.EqualTo(new[] { (0, "seashell"), (1, "small-stick"), (2, "stone") }));
         }
     }
 }
