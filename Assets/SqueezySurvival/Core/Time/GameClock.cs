@@ -51,26 +51,18 @@ namespace SqueezySurvival.Core.Time
 
         private long SecondsSinceDayOneMidnight => (RunStartMinuteOfDay * (long)SecondsPerMinute) + ElapsedSeconds;
 
-        /// <summary>The clock after an action lasting whole minutes. Every such action takes at least 1 minute.</summary>
-        public GameClock AdvanceMinutes(int minutes)
+        /// <summary>
+        /// The clock after an action of <paramref name="duration"/>. Pure: only <see cref="GameTimeAdvancer"/> moves a
+        /// run's clock.
+        /// </summary>
+        public GameClock Advance(ActionDuration duration)
         {
-            if (minutes < 1)
+            if (duration == null)
             {
-                throw new ArgumentOutOfRangeException(nameof(minutes), minutes, "An action in minutes takes at least 1 minute.");
+                throw new ArgumentNullException(nameof(duration));
             }
 
-            return new GameClock(ElapsedSeconds + ((long)minutes * SecondsPerMinute));
-        }
-
-        /// <summary>The clock after a tiny action lasting whole seconds. Every such action takes at least 1 second.</summary>
-        public GameClock AdvanceSeconds(int seconds)
-        {
-            if (seconds < 1)
-            {
-                throw new ArgumentOutOfRangeException(nameof(seconds), seconds, "An action in seconds takes at least 1 second.");
-            }
-
-            return new GameClock(ElapsedSeconds + seconds);
+            return new GameClock(ElapsedSeconds + duration.Seconds);
         }
     }
 }

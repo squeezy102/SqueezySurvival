@@ -29,9 +29,12 @@ namespace SqueezySurvival.Presentation.Game
 
             // A new seed each run. Saving the generator's state with the run belongs to saving (#2).
             var randomNumberSource = new SystemRandomNumberSource(Environment.TickCount);
+            // Time-dependent systems in the order Architecture.md documents (Time: one path). None exist yet.
+            var gameTimeAdvancer = new GameTimeAdvancer(GameClock.RunStart, Array.Empty<ITimeDependentSystem>());
             var session = new RunSession(
                 configuration,
                 DayPhaseSchedule.Default,
+                gameTimeAdvancer,
                 PlaceholderBeachZoneContent.Beach,
                 new ZoneExplorer(ExplorationRules.Wireframe, randomNumberSource));
             GetComponent<GameScreenController>().Bind(session);

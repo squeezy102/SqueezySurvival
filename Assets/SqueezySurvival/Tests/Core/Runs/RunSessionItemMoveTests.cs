@@ -5,6 +5,7 @@ using SqueezySurvival.Core.Items;
 using SqueezySurvival.Core.Runs;
 using SqueezySurvival.Core.Survivor;
 using SqueezySurvival.Core.Tests.Randomness;
+using SqueezySurvival.Core.Tests.Time;
 using SqueezySurvival.Core.Tests.Zones;
 using SqueezySurvival.Core.Time;
 using SqueezySurvival.Core.Zones;
@@ -17,11 +18,12 @@ namespace SqueezySurvival.Core.Tests.Runs
         private static readonly ItemDefinition Stone = PlaceholderBeachZoneContent.Stone;
         private static readonly ItemDefinition Log = PlaceholderBeachZoneContent.Log;
 
-        private static RunSession SessionWithOnTheGround(ItemDefinition definition, int count)
+        private static RunSession SessionWithOnTheGround(ItemDefinition definition, int count, params ITimeDependentSystem[] timeDependentSystems)
         {
             var session = new RunSession(
                 new NewRunConfiguration(DominantHand.Right, RunOptions.Standard),
                 DayPhaseSchedule.Default,
+                new GameTimeAdvancer(GameClock.RunStart, timeDependentSystems),
                 TestZoneDefinitions.Create(4),
                 new ZoneExplorer(ExplorationRules.Wireframe, new QueuedRandomNumberSource()));
             session.CurrentZone.GroundPool.Receive(definition, count, -1);
@@ -46,15 +48,15 @@ namespace SqueezySurvival.Core.Tests.Runs
         }
 
         [Test]
-        public void MoveItems_RaisesClockAdvancedWithTheNewTime()
+        public void MoveItems_TellsTimeDependentSystemsTheMovesSeconds()
         {
-            RunSession session = SessionWithOnTheGround(Stone, 1);
-            GameClock reported = null;
-            session.ClockAdvanced += clock => reported = clock;
+            var system = new RecordingTimeDependentSystem();
+            RunSession session = SessionWithOnTheGround(Stone, 5, system);
 
-            session.MoveItems(ItemPanel.Ground, SlotOf(session.CurrentZone.GroundPool, Stone), -1, ItemTransferQuantity.One);
+            session.MoveItems(ItemPanel.Ground, SlotOf(session.CurrentZone.GroundPool, Stone), -1, ItemTransferQuantity.All);
 
-            Assert.That(reported, Is.SameAs(session.Clock));
+            Assert.That(system.Advances, Has.Count.EqualTo(1));
+            Assert.That(system.Advances[0].Duration, Is.EqualTo(ActionDuration.FromSeconds(10)));
         }
 
         [TestCase(ItemTransferQuantity.Half, 4, 3)]

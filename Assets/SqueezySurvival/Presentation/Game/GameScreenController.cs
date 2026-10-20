@@ -176,7 +176,7 @@ namespace SqueezySurvival.Presentation.Game
 
             _eventLogView = new EventLogView(root.Q<VisualElement>("event-log-panel"), session.EventLog, _pixelArtTextures, new UnreadWarningTracker());
             _dayNightDial = new DayNightDialView(root.Q<VisualElement>("hud-day-night-dial"), session.Clock);
-            session.ClockAdvanced += _ => RefreshClock();
+            session.GameTime.TimeAdvanced += (_, _) => RefreshClock();
             RefreshClock();
 
             zone.ExplorationProgressChanged += RefreshExplorationProgress;

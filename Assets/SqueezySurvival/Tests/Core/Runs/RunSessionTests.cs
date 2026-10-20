@@ -1,9 +1,12 @@
+using System;
 using System.Linq;
 using NUnit.Framework;
 using SqueezySurvival.Core.Exploration;
+using SqueezySurvival.Core.Items;
 using SqueezySurvival.Core.Runs;
 using SqueezySurvival.Core.Survivor;
 using SqueezySurvival.Core.Tests.Randomness;
+using SqueezySurvival.Core.Tests.Time;
 using SqueezySurvival.Core.Tests.Zones;
 using SqueezySurvival.Core.Time;
 using SqueezySurvival.Core.Zones;
@@ -16,9 +19,13 @@ namespace SqueezySurvival.Core.Tests.Runs
         private static RunSession CreateSession(params int[] randomNumbers) => CreateSession(TestZoneDefinitions.Create(4), randomNumbers);
 
         private static RunSession CreateSession(ZoneDefinition startingZone, params int[] randomNumbers) =>
+            CreateSession(startingZone, Array.Empty<ITimeDependentSystem>(), randomNumbers);
+
+        private static RunSession CreateSession(ZoneDefinition startingZone, ITimeDependentSystem[] timeDependentSystems, params int[] randomNumbers) =>
             new RunSession(
                 new NewRunConfiguration(DominantHand.Right, RunOptions.Standard),
                 DayPhaseSchedule.Default,
+                new GameTimeAdvancer(GameClock.RunStart, timeDependentSystems),
                 startingZone,
                 new ZoneExplorer(ExplorationRules.Wireframe, new QueuedRandomNumberSource(randomNumbers)));
 
@@ -62,15 +69,27 @@ namespace SqueezySurvival.Core.Tests.Runs
         }
 
         [Test]
-        public void PassTime_RaisesClockAdvanced()
+        public void PassTime_Wait_TellsTimeDependentSystemsFifteenMinutes()
         {
-            RunSession session = CreateSession();
-            GameClock raised = null;
-            session.ClockAdvanced += clock => raised = clock;
+            var system = new RecordingTimeDependentSystem();
+            RunSession session = CreateSession(TestZoneDefinitions.Create(4), new ITimeDependentSystem[] { system });
 
             session.PassTime(TimePassingAction.Wait);
 
-            Assert.That(raised, Is.SameAs(session.Clock));
+            Assert.That(system.Advances, Has.Count.EqualTo(1));
+            Assert.That(system.Advances[0].Duration, Is.EqualTo(ActionDuration.FromMinutes(15)));
+        }
+
+        [Test]
+        public void PassTime_RaisesTimeAdvancedWithTheNewClock()
+        {
+            RunSession session = CreateSession();
+            GameTimeAdvance raised = null;
+            session.GameTime.TimeAdvanced += (sender, advance) => raised = advance;
+
+            session.PassTime(TimePassingAction.Wait);
+
+            Assert.That(raised.Current, Is.SameAs(session.Clock));
         }
 
         [Test]
@@ -92,19 +111,18 @@ namespace SqueezySurvival.Core.Tests.Runs
 
             Assert.That(session.CurrentZone.GroundPool.CountOf(TestZoneDefinitions.Twig), Is.EqualTo(2));
             Assert.That(session.EventLog.Entries[1].Text, Is.EqualTo("You explored the Cove and found 2 twigs."));
-            Assert.That(session.EventLog.Entries[1].Time, Is.SameAs(session.Clock));
+            Assert.That(session.EventLog.Entries[1].Time.ElapsedSeconds, Is.EqualTo(session.Clock.ElapsedSeconds));
         }
 
         [Test]
-        public void Explore_RaisesClockAdvanced()
+        public void Explore_TellsTimeDependentSystemsTheExploreMinutes()
         {
-            RunSession session = CreateSession(1, 0, 99);
-            GameClock raised = null;
-            session.ClockAdvanced += clock => raised = clock;
+            var system = new RecordingTimeDependentSystem();
+            RunSession session = CreateSession(TestZoneDefinitions.Create(4), new ITimeDependentSystem[] { system }, 1, 0, 99);
 
             session.Explore();
 
-            Assert.That(raised, Is.SameAs(session.Clock));
+            Assert.That(system.Advances[0].Duration, Is.EqualTo(ActionDuration.FromMinutes(session.ExploreMinutes)));
         }
 
         [Test]
@@ -152,6 +170,7 @@ namespace SqueezySurvival.Core.Tests.Runs
 
             Assert.That(() => session.Explore(), Throws.InvalidOperationException);
             Assert.That(() => session.PassTime(TimePassingAction.Wait), Throws.InvalidOperationException);
+            Assert.That(() => session.MoveItems(ItemPanel.Ground, 0, -1, ItemTransferQuantity.All), Throws.InvalidOperationException);
             Assert.That(session.Clock.ElapsedMinutes, Is.EqualTo(minutesBefore));
         }
 

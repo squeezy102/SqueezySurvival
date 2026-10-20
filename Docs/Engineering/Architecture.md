@@ -42,12 +42,18 @@ Services are added the same way as systems are designed: survival stats, weather
 
 Every action advances time through **one entry point**, as [Time: implementation notes](../Design/Systems/Time.md#implementation-notes) requires:
 
-1. The action is validated and its duration worked out (whole seconds; most actions are whole minutes).
-2. The action's own effects are applied (things move, finds are added).
-3. The game time service advances the clock by the duration and tells each **time-dependent system** in a fixed, documented order (stats, then weather, then research, as they arrive). Each receives the exact duration.
-4. The clock-advanced event is raised for Presentation.
+1. The action is validated and its duration worked out as an `ActionDuration` (`FromMinutes` or `FromSeconds`; never less than 1 second).
+2. The action's own effects are applied (things move, finds are added), and its event log entries are written, stamped with the time the action ends. Writing them first keeps an action's own entries ahead of anything a time-dependent system logs about the time that passed.
+3. `GameTimeAdvancer.Advance` moves the clock by the duration and tells each **time-dependent system** (`ITimeDependentSystem`) in a fixed order. Each receives a `GameTimeAdvance`: the clock before, the clock after and the exact duration.
+4. `TimeAdvanced` is raised for Presentation, carrying the same `GameTimeAdvance`.
 
-No other code assigns the clock. A time-dependent system never reads the clock to work out how much time passed; it uses the duration it is given. This keeps the simulation deterministic and each system testable on its own.
+**Order of time-dependent systems.** The game scene's composition root passes them to `GameTimeAdvancer`'s constructor as an ordered list, so the order is set in one place and changed only deliberately. Order, as they arrive: survival stats, then weather, then research. None exist yet.
+
+**Rules.**
+
+- No other code changes the clock. `GameClock` is immutable; `GameTimeAdvancer` is its only owner. The run's commands hold `IGameTimeAdvancer`; everything else, Presentation included, sees the read-only `IGameTime`.
+- A time-dependent system never reads the clock to work out how much time passed; it uses the duration it is given. This keeps the simulation deterministic and each system testable on its own.
+- Time cannot advance while an advance is being applied: `Advance` called from a time-dependent system or a `TimeAdvanced` handler throws. A reaction to time passing belongs to the action that caused it.
 
 ### Commands, state and change events
 
@@ -102,7 +108,6 @@ Found in the architecture review of 2026-10-20 ([Architecture pass milestone](ht
 
 | Gap | Issue |
 |---|---|
-| Time advances in four places | [#117](https://github.com/squeezy102/SqueezySurvival/issues/117) |
 | The event log keeps every entry as a live element | [#118](https://github.com/squeezy102/SqueezySurvival/issues/118) |
 | `GameScreenController` composes the scene and presents everything | [#119](https://github.com/squeezy102/SqueezySurvival/issues/119) |
 | `RunSession` holds every service's job | [#120](https://github.com/squeezy102/SqueezySurvival/issues/120) |
