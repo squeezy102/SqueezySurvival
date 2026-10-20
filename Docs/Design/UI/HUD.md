@@ -11,7 +11,7 @@ Always-visible status shown on every gameplay screen. Follows [Pillar 4: clarity
 | Body temperature | "Thermometer and body" icon | The survivor's own temperature. Shown separately from the survival stat bars because both extremes are bad. See [Body temperature icon](#body-temperature-icon). |
 | Outside temperature | Number with unit, for example `84°F` | Ambient air temperature. Unit is a player setting: Fahrenheit (default) or Celsius. |
 | Weather | Icon | Current weather state. |
-| Game clock | Day, time and day phase, for example `Day 3 - 7:45 AM - Morning` | See [Time](../Systems/Time.md). |
+| Game clock | Day, time and day phase, for example `Day 3`, `7:45:20 AM` and `Morning`, one per row | See [Time](../Systems/Time.md). |
 | Real-world clock | The player's local time | Optional; player setting, off by default. |
 | Idle research | Atom with "zzz" icon | Shown only while nothing is researching. See [Research: idle research](../Systems/Research.md#idle-research). |
 

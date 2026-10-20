@@ -97,7 +97,7 @@ namespace SqueezySurvival.Presentation.Game
 
         private void ShowEntry(EventLogEntry entry)
         {
-            string time = GameClockFormatter.FormatTimeOfDay(entry.Time.MinuteOfDay);
+            string time = GameClockFormatter.FormatTimeOfDay(entry.Time);
             var line = new Label($"Day {entry.Time.Day}, {time}: {entry.Text}");
             line.AddToClassList("event-log-entry");
             VisualElement shown = line;
