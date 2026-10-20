@@ -7,6 +7,8 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 ## [Unreleased]
 
 ### Added
+- Unread warnings in the event log: a pulsing red border and a red "!" by its heading, with a count when several are unread. Clicking the "!" goes to the oldest unread warning (#101).
+- Hovering the bottom of the event log shows a down arrow that jumps to the newest entry. The log follows new entries only while scrolled to the bottom (#101).
 - Design drafts from squeezy102's offline notes, for discussion: [Containers](Docs/Design/Systems/Containers.md), [Crafting](Docs/Design/Systems/Crafting.md), [Tutorial](Docs/Design/UI/Tutorial.md), [In-game Wiki](Docs/Design/UI/Wiki.md), [Beach Finds](Docs/Design/Content/BeachFinds.md), action pacing and research proposals. Open questions OQ-071 to OQ-083.
 - The calendar: 120-day years of four 30-day seasons. See [Time: calendar](Docs/Design/Systems/Time.md#calendar).
 

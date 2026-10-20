@@ -7,10 +7,11 @@ namespace SqueezySurvival.Core.Tests.PixelArt
     [TestFixture]
     public sealed class StatusIconCatalogTests
     {
-        [Test]
-        public void CreateIcon_Warning_IsAnIconSizedImageWithPaintedPixels()
+        [TestCase(StatusIconCatalog.Warning)]
+        [TestCase(StatusIconCatalog.JumpToNewest)]
+        public void CreateIcon_KnownId_IsAnIconSizedImageWithPaintedPixels(string iconId)
         {
-            PixelImage icon = StatusIconCatalog.CreateIcon(StatusIconCatalog.Warning);
+            PixelImage icon = StatusIconCatalog.CreateIcon(iconId);
 
             Assert.That(icon.Width, Is.EqualTo(PlaceholderIconCatalog.IconSize));
             Assert.That(icon.Height, Is.EqualTo(PlaceholderIconCatalog.IconSize));
