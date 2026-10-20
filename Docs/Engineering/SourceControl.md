@@ -45,7 +45,7 @@ Nobody pushes directly to `main`. Every change, including the owner's, goes thro
 `PjDev` is squeezy102's personal integration branch, created from `main`.
 
 1. squeezy102's feature branches (and Claude's) are created from `PjDev` and squash-merged back into it.
-   Claude never pushes to `PjDev` itself: it pushes a branch such as `docs/...`, opens a pull request into `PjDev`, and merges it once squeezy102 approves the change in chat.
+   Claude never pushes to `PjDev` itself: it pushes a branch such as `docs/...`, opens a pull request into `PjDev`, and merges it. squeezy102 has asked Claude to handle all git work unless their input is specifically required, such as merging into `main` or pushing what only their credentials can.
 2. When `PjDev` holds a set of changes ready for `main`, a pull request from `PjDev` into `main` brings them in. squeezy102 merges it with a **merge commit**, never a squash: a merge commit keeps `main` an ancestor of `PjDev`, so the two never drift apart and the next pull request shows only new work. Squash-merging `PjDev` into `main` gave `main` a copy of the same changes under a different history, so every later pull request conflicted until `main` was merged back into `PjDev` (2026-10-20).
 3. Claude handles git for squeezy102: it commits, pushes its branches, and keeps squeezy102's local repository in sync (checking out and pulling the branch to test) through the desktop app's link to their PC. squeezy102 runs git commands only for pushes that need their credentials, such as Git LFS files or `PjDev` after a merge from `main`. On that PC, Windows Git converts line endings (`core.autocrlf`), so git commands Claude runs there pass `-c core.autocrlf=true` to see the same state Windows does.
 
