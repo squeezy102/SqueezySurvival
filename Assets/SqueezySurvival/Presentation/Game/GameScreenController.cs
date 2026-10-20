@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using SqueezySurvival.Core.Controls;
 using SqueezySurvival.Core.DragAndDrop;
 using SqueezySurvival.Core.EventLog;
 using SqueezySurvival.Core.InventoryGrids;
@@ -55,6 +56,7 @@ namespace SqueezySurvival.Presentation.Game
         private Label _notBuiltNoticeText;
         private Button _notBuiltNoticeCloseButton;
         private Button _lastChosenNavButton;
+        private Label _loadLabel;
 
         /// <summary>Shows the run and connects the controls. Called once by the scene's composition root.</summary>
         /// <param name="session">The run.</param>
@@ -120,6 +122,14 @@ namespace SqueezySurvival.Presentation.Game
             VisualElement inventoryRow = handsGrid.parent;
             inventoryRow.RegisterCallback<GeometryChangedEvent>(changed => SizeHandsGrid(handsGrid, changed.newRect.height));
             SizeHandsGrid(handsGrid, inventoryRow.layout.height);
+
+            var itemMoves = new ItemPanelMoveCoordinator(session, new KeyboardMoveModifierReader(MoveModifierBindings.Default));
+            itemMoves.Register(ItemPanel.Ground, _groundPoolView);
+            itemMoves.Register(ItemPanel.Inventory, _inventoryView);
+            _loadLabel = root.Q<Label>("inventory-load");
+            session.Inventory.Changed += OnCarriedThingsChanged;
+            session.Hands.Changed += OnCarriedThingsChanged;
+            RefreshLoad();
 
             _groundOverflowPrompt = new GroundOverflowPromptController(
                 session, _groundPoolView, root.Q<VisualElement>("ground-overflow-prompt"), root.Q<Label>("ground-discard-hint"));
@@ -187,6 +197,8 @@ namespace SqueezySurvival.Presentation.Game
             {
                 _session.CurrentZone.ExplorationProgressChanged -= RefreshExplorationProgress;
                 _session.PendingGroundOverflowChanged -= RefreshTimeTakingActions;
+                _session.Inventory.Changed -= OnCarriedThingsChanged;
+                _session.Hands.Changed -= OnCarriedThingsChanged;
             }
 
             _eventLogView?.Dispose();
@@ -229,13 +241,25 @@ namespace SqueezySurvival.Presentation.Game
             }
         }
 
-        // Nothing that takes time can happen while a find waits for room on the ground.
+        // Nothing that takes time can happen while a find waits for room on the ground, and an immobile survivor
+        // can't explore (Docs/Design/Systems/Inventory.md, Load).
         private void RefreshTimeTakingActions()
         {
             bool available = !_session.HasPendingGroundOverflow;
-            _exploreButton.SetEnabled(available);
+            _exploreButton.SetEnabled(_session.CanExplore);
             _waitButton.SetEnabled(available);
             _restButton.SetEnabled(available);
+        }
+
+        private void OnCarriedThingsChanged()
+        {
+            RefreshLoad();
+            RefreshTimeTakingActions();
+        }
+
+        private void RefreshLoad()
+        {
+            _loadLabel.text = SurvivorLoadTextFormatter.Format(_session.Load);
         }
 
         private void ShowOptionsScreen(bool openedFromPauseMenu)

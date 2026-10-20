@@ -10,7 +10,7 @@ How the game screen shows items and zone features: fixed grids of slots, like Di
 |---|---|---|---|
 | Ground | On the ground | 12 x 3 (36 slots) | The zone's [ground pool](../Systems/Zones.md#ground-pool) |
 | Zone features | Zone features | 12 x 3 (36 slots) | The zone's features |
-| Inventory | Inventory | 8 slots in one row | What the survivor carries ([Inventory](../Systems/Inventory.md#slots)) |
+| Inventory | Inventory | 8 slots in one row | What the survivor carries ([Inventory](../Systems/Inventory.md#slots)). The panel's header shows the load as text ("Load: 34 / 100 lb (34%), Normal") until the load gauge replaces it ([#104](https://github.com/squeezy102/SqueezySurvival/issues/104)). |
 | Hands | Inventory, far left, set apart | 2 slots | The left hand, then the right hand; the dominant one is the tool hand ([Equipment: handedness](../Systems/Equipment.md#handedness)) |
 
 Sizes are placeholders, to be tuned in play. The ground and features grids were 16 x 4; squeezy102 cut them to 12 x 3 to try (2026-10-19): the survivor doesn't need that many slots there, and fewer slots make bigger, more readable icons.
@@ -60,7 +60,7 @@ Hovering over a cell shows a tooltip beside it ([#43](https://github.com/squeezy
 | Weight of one (items) | Weight: 1 lb each |
 | Weight of the stack (items) | Stack of 3: 3 lb |
 
-Weights are in pounds ([Inventory](../Systems/Inventory.md)). Descriptions and weights are placeholders until content and weights are designed ([OQ-056](../OpenQuestions.md)).
+Weights are in pounds ([Inventory](../Systems/Inventory.md)). Descriptions and weights are placeholders until content and weights are designed ([OQ-087](../OpenQuestions.md)).
 
 ## Implementation notes
 

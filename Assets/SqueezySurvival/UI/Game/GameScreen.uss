@@ -77,6 +77,15 @@
     margin-bottom: 0;
 }
 
+/* The load as text, until the load gauge replaces it (Docs/Design/UI/InventoryGrids.md, The grids). */
+.inventory-load-text {
+    flex-grow: 1;
+    flex-shrink: 1;
+    margin-left: 16px;
+    font-size: 22px;
+    color: rgb(190, 200, 225);
+}
+
 .inventory-grid {
     flex-grow: 1;
     flex-basis: 0;

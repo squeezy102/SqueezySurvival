@@ -62,6 +62,7 @@
             <ui:VisualElement class="panel inventory-panel">
                 <ui:VisualElement class="panel-header">
                     <ui:Label text="Inventory" class="panel-heading display-text" />
+                    <ui:Label name="inventory-load" class="inventory-load-text" />
                     <ui:VisualElement class="sort-controls">
                         <ui:Button name="inventory-sort-button" class="sort-button" />
                         <ui:Button name="inventory-sort-menu-button" class="sort-menu-button" />

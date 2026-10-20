@@ -56,6 +56,94 @@ namespace SqueezySurvival.Core.Items
         }
 
         /// <summary>
+        /// The slot <paramref name="definition"/> would go to if added here: its own stack when the kind is present
+        /// (auto-stack); otherwise <paramref name="preferredSlot"/> when that slot is empty; otherwise the first empty
+        /// slot. -1 when there is no room. Pass -1 as <paramref name="preferredSlot"/> for no preference
+        /// (Docs/Design/UI/DragAndDrop.md, Between panels).
+        /// </summary>
+        public int SlotToReceive(TDefinition definition, int preferredSlot)
+        {
+            int kindIndex = IndexOfKind(definition);
+            if (kindIndex >= 0)
+            {
+                return _entries[kindIndex].Slot;
+            }
+
+            if (preferredSlot != -1)
+            {
+                RequireSlot(preferredSlot, nameof(preferredSlot));
+                if (IndexOfSlot(preferredSlot) < 0)
+                {
+                    return preferredSlot;
+                }
+            }
+
+            return IsFull ? -1 : FirstEmptySlot();
+        }
+
+        /// <summary>
+        /// Adds <paramref name="count"/> of a kind in the slot <see cref="SlotToReceive"/> names. Throws when there is no
+        /// room. Raises <see cref="Changed"/>.
+        /// </summary>
+        public void Receive(TDefinition definition, int count, int preferredSlot)
+        {
+            if (count < 1)
+            {
+                throw new ArgumentOutOfRangeException(nameof(count), count, "Must receive at least one.");
+            }
+
+            int slot = SlotToReceive(definition, preferredSlot);
+            if (slot < 0)
+            {
+                throw new InvalidOperationException("There is no room for that kind.");
+            }
+
+            int index = IndexOfSlot(slot);
+            if (index >= 0)
+            {
+                _entries[index] = new CountedEntry<TDefinition>(definition, _entries[index].Count + count, slot);
+            }
+            else
+            {
+                Insert(new CountedEntry<TDefinition>(definition, count, slot));
+            }
+
+            Changed?.Invoke();
+        }
+
+        /// <summary>
+        /// Takes <paramref name="count"/> things from a slot; the slot empties when none are left. Raises
+        /// <see cref="Changed"/>. Returns what was taken.
+        /// </summary>
+        public CountedThing<TDefinition> Take(int slot, int count)
+        {
+            RequireSlot(slot, nameof(slot));
+            int index = IndexOfSlot(slot);
+            if (index < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(slot), slot, "Nothing is in that slot.");
+            }
+
+            CountedEntry<TDefinition> entry = _entries[index];
+            if (count < 1 || count > entry.Count)
+            {
+                throw new ArgumentOutOfRangeException(nameof(count), count, "Must take between one and all of the stack.");
+            }
+
+            if (count == entry.Count)
+            {
+                _entries.RemoveAt(index);
+            }
+            else
+            {
+                _entries[index] = new CountedEntry<TDefinition>(entry.Definition, entry.Count - count, slot);
+            }
+
+            Changed?.Invoke();
+            return new CountedThing<TDefinition>(entry.Definition, count);
+        }
+
+        /// <summary>
         /// Adds things one at a time: a kind already present adds to its count in place; a new kind takes the first
         /// empty slot. Things of a new kind that do not fit are returned, grouped by kind in the order they arrived,
         /// and are not added. Raises <see cref="Changed"/> once if anything was added.

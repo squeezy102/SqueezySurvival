@@ -4,6 +4,7 @@ using SqueezySurvival.Core.EventLog;
 using SqueezySurvival.Core.Exploration;
 using SqueezySurvival.Core.InventoryGrids;
 using SqueezySurvival.Core.Items;
+using SqueezySurvival.Core.Survivor;
 using SqueezySurvival.Core.Time;
 using SqueezySurvival.Core.Zones;
 
@@ -63,6 +64,18 @@ namespace SqueezySurvival.Core.Runs
         public CountedCollection<ItemDefinition> Hands { get; } =
             new CountedCollection<ItemDefinition>(InventoryGridShapes.Hands.SlotCount);
 
+        /// <summary>
+        /// What the survivor carries, the inventory and both hands, against their weight limit
+        /// (Docs/Design/Systems/Inventory.md, Load).
+        /// </summary>
+        public SurvivorLoad Load => new SurvivorLoad(WeightOf(Inventory) + WeightOf(Hands), SurvivorLoad.PlaceholderLimitPounds);
+
+        /// <summary>
+        /// Whether the survivor can explore: not while a find waits for room on the ground, and not while immobile
+        /// (Docs/Design/Systems/Inventory.md, Load).
+        /// </summary>
+        public bool CanExplore => !HasPendingGroundOverflow && Load.State != SurvivorLoadState.Immobile;
+
         /// <summary>How long one explore takes, in minutes.</summary>
         public int ExploreMinutes => _zoneExplorer.Rules.ExploreMinutes;
 
@@ -98,6 +111,11 @@ namespace SqueezySurvival.Core.Runs
         public ExplorationOutcome Explore()
         {
             RequireNoPendingGroundOverflow();
+            if (Load.State == SurvivorLoadState.Immobile)
+            {
+                throw new InvalidOperationException("The survivor carries too much to move.");
+            }
+
             Clock = Clock.AdvanceMinutes(ExploreMinutes);
             ExplorationOutcome outcome = _zoneExplorer.Explore(CurrentZone);
             foreach (EventLogMessage message in ExplorationLogTextFormatter.Format(CurrentZone.Name, outcome))
@@ -135,6 +153,64 @@ namespace SqueezySurvival.Core.Runs
             _pendingGroundOverflow.RemoveAt(0);
             EventLog.Add(Clock, GroundOverflowTextFormatter.FormatDiscardedLog(discarded, incoming));
             PendingGroundOverflowChanged?.Invoke();
+        }
+
+        /// <summary>The slots of a panel things move between (Docs/Design/UI/DragAndDrop.md, Between panels).</summary>
+        public CountedCollection<ItemDefinition> ContentsOf(ItemPanel panel) =>
+            panel == ItemPanel.Inventory ? Inventory : CurrentZone.GroundPool;
+
+        /// <summary>
+        /// What moving <paramref name="quantity"/> of the stack in <paramref name="fromSlot"/> to the other panel would
+        /// do, letting go over <paramref name="targetSlot"/> (-1 for no particular slot). Changes nothing.
+        /// </summary>
+        public ItemMovePreview PreviewItemMove(ItemPanel from, int fromSlot, int targetSlot, ItemTransferQuantity quantity)
+        {
+            ItemPanel to = Other(from);
+            CountedEntry<ItemDefinition> stack = ContentsOf(from).EntryAtSlot(fromSlot)
+                ?? throw new ArgumentOutOfRangeException(nameof(fromSlot), fromSlot, "Nothing is in that slot.");
+            CountedCollection<ItemDefinition> destination = ContentsOf(to);
+            int count = ItemTransferQuantityCalculator.CountToMove(stack.Count, quantity);
+            return new ItemMovePreview(
+                stack.Definition,
+                count,
+                from,
+                to,
+                destination.SlotToReceive(stack.Definition, targetSlot),
+                destination.CountOf(stack.Definition),
+                ItemMoveTimeRules.SecondsToMove(stack.Definition.WeightPounds * count));
+        }
+
+        /// <summary>
+        /// Moves things to the other panel as <see cref="PreviewItemMove"/> describes: takes its seconds and logs it.
+        /// There is no weight cap. Not available while a find waits for room on the ground, or when there is no room.
+        /// </summary>
+        public void MoveItems(ItemPanel from, int fromSlot, int targetSlot, ItemTransferQuantity quantity)
+        {
+            RequireNoPendingGroundOverflow();
+            ItemMovePreview preview = PreviewItemMove(from, fromSlot, targetSlot, quantity);
+            if (!preview.CanMove)
+            {
+                throw new InvalidOperationException("There is no room there.");
+            }
+
+            ContentsOf(from).Take(fromSlot, preview.Count);
+            ContentsOf(preview.To).Receive(preview.Definition, preview.Count, preview.DestinationSlot);
+            Clock = Clock.AdvanceSeconds(preview.Seconds);
+            EventLog.Add(Clock, ItemMoveTextFormatter.FormatLog(preview));
+            ClockAdvanced?.Invoke(Clock);
+        }
+
+        private static ItemPanel Other(ItemPanel panel) => panel == ItemPanel.Inventory ? ItemPanel.Ground : ItemPanel.Inventory;
+
+        private static decimal WeightOf(CountedCollection<ItemDefinition> collection)
+        {
+            decimal pounds = 0m;
+            foreach (CountedEntry<ItemDefinition> entry in collection.Entries)
+            {
+                pounds += entry.Definition.WeightPounds * entry.Count;
+            }
+
+            return pounds;
         }
 
         private CountedThing<ItemDefinition> FirstPendingGroundOverflow() =>

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using SqueezySurvival.Core.DragAndDrop;
 using SqueezySurvival.Core.InventoryGrids;
 using SqueezySurvival.Core.Items;
 using SqueezySurvival.Core.PixelArt;
@@ -32,6 +33,8 @@ namespace SqueezySurvival.Presentation.Game
         private int _dropTargetSlot = -1;
         private SlotChoice _slotChoice;
         private int _selectedSlot = -1;
+        private ItemPanelMoveCoordinator _itemMoves;
+        private ItemPanel _panel;
 
         /// <summary>Binds the grid area to its contents.</summary>
         /// <param name="shape">The grid's columns and rows.</param>
@@ -135,6 +138,31 @@ namespace SqueezySurvival.Presentation.Game
             _slotChoice = null;
             GridArea.RemoveFromClassList("inventory-grid--choosing");
             _tooltip.Hide();
+        }
+
+        /// <summary>
+        /// Lets this grid's things be dragged or modifier-clicked to the other panel (Docs/Design/UI/DragAndDrop.md,
+        /// Between panels). Called once, by <see cref="ItemPanelMoveCoordinator.Register"/>.
+        /// </summary>
+        public void EnableMovesBetweenPanels(ItemPanel panel, ItemPanelMoveCoordinator itemMoves)
+        {
+            _itemMoves = itemMoves ?? throw new ArgumentNullException(nameof(itemMoves));
+            _panel = panel;
+            _dragController.EnableMovesBetweenPanels(panel, itemMoves);
+        }
+
+        /// <summary>Shows an outcome's message by a slot for a moment, as when a move has no room.</summary>
+        public void ShowBriefMessage(GridDropOutcome outcome, int slot)
+        {
+            if (outcome == null)
+            {
+                throw new ArgumentNullException(nameof(outcome));
+            }
+
+            _tooltip.ShowBriefly(
+                new ThingTooltipContent(outcome.Title, string.Empty, outcome.Description, Array.Empty<string>()),
+                SlotWorldBound(slot),
+                GridCellDragController.BriefMessageMilliseconds);
         }
 
         /// <summary>Outlines the slot a drop would go to. No cell moves until the drop happens (Docs/Design/UI/DragAndDrop.md).</summary>
@@ -254,6 +282,10 @@ namespace SqueezySurvival.Presentation.Game
                 if (_slotChoice != null)
                 {
                     _slotChoice.Chosen(slot);
+                }
+                else if (_itemMoves != null && _itemMoves.TrySendToOtherPanel(_panel, slot))
+                {
+                    // A modified click sent things to the other panel instead of selecting.
                 }
                 else
                 {
