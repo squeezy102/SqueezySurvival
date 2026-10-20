@@ -67,10 +67,15 @@ Scenes are pixel art too, drawn at a quarter of the reference resolution (**480 
 
 ## Font
 
-All interface text is set in **Press Start 2P** ([#60](https://github.com/squeezy102/SqueezySurvival/issues/60)), the classic 8-bit arcade font, chosen by squeezy102. It replaced Pixelify Sans, whose 5 and S, 2 and Z, and 8 and B were too hard to tell apart. It is licensed under the SIL Open Font License, which allows shipping it with the game ([Asset Credits](../Engineering/AssetCredits.md)). It is set once on each screen's root element and inherited by everything on it.
+Two pixel fonts, as most pixel-art games pair a display font with a body font ([#60](https://github.com/squeezy102/SqueezySurvival/issues/60)), both chosen by squeezy102 and licensed under the SIL Open Font License, which allows shipping them ([Asset Credits](../Engineering/AssetCredits.md)):
 
-- The font is drawn on an 8-pixel grid, so text sizes are whole multiples of 8 px at the reference resolution and stay crisp: **16 px** for body text, **24 px** for headings and the time, **32 px** for screen titles, **64 px** for the game's title.
-- It is wide, so long lines wrap rather than shrink.
+| Font | Used for | Sizes |
+|---|---|---|
+| **Press Start 2P**, the classic 8-bit arcade font | Display text: buttons, the game's title, screen and panel headings, the zone's name, the time, tooltip titles | Multiples of 8 px, since it is drawn on an 8-pixel grid: 16, 24, 32, 64 |
+| **Jersey 15**, a compact pixel font | Everything else: the event log, tooltips, descriptions, settings, notices | 20 to 28 px |
+
+- Pixelify Sans, the first choice, was replaced because its 5 and S, 2 and Z, and 8 and B were too hard to tell apart. Press Start 2P alone was too wide for dense text such as the New Game options.
+- Both are set once in the runtime theme: Jersey 15 on the panel root, inherited by everything, and Press Start 2P on buttons and on anything marked as display text. No screen sets its own font.
 
 ## Not yet decided
 
@@ -79,5 +84,5 @@ All interface text is set in **Press Start 2P** ([#60](https://github.com/squeez
 ## Implementation notes
 
 - Icons and frames are drawn as pixel images in Core (`PixelImage`, `PixelIconCanvas`, `PixelIconStylizer`, `PixelFrameImageFactory`) and unit tested; the presentation layer turns each into a texture with no smoothing and caches it (`PixelArtTextureCache`). No image files are needed.
-- The font is set with USS `-unity-font-definition` pointing at the font file, as Unity's App UI package does ([App UI: custom typography](https://docs.unity3d.com/Packages/com.unity.dt.app-ui@2.0/manual/custom-typography.html)); it takes precedence over `-unity-font` ([Unity Manual: USS text properties](https://docs.unity3d.com/Manual/UIE-USS-SupportedProperties.html)).
+- Fonts are set with USS `-unity-font-definition` pointing at the font file, as Unity's App UI package does ([App UI: custom typography](https://docs.unity3d.com/Packages/com.unity.dt.app-ui@2.0/manual/custom-typography.html)); it takes precedence over `-unity-font` ([Unity Manual: USS text properties](https://docs.unity3d.com/Manual/UIE-USS-SupportedProperties.html)).
 - Frames are nine-sliced, so they stretch to any size without distorting their borders ([Unity Manual: 9-slice](https://docs.unity3d.com/Manual/UIB-styling-ui-backgrounds.html)).

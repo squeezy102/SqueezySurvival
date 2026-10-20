@@ -8,3 +8,16 @@
 .unity-text-element {
     white-space: normal;
 }
+
+/*
+ * Two fonts (Docs/Design/ArtDirection.md, Font): Jersey 15 for all text, inherited from the panel root, and
+ * Press Start 2P for display text: buttons, titles, headings and the time.
+ */
+:root {
+    -unity-font-definition: url("../../Art/Fonts/Jersey15-Regular.ttf");
+}
+
+.unity-button,
+.display-text {
+    -unity-font-definition: url("../../Art/Fonts/PressStart2P-Regular.ttf");
+}

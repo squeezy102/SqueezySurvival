@@ -6,8 +6,6 @@
     padding-left: 16px;
     padding-right: 16px;
     -unity-background-scale-mode: scale-and-crop;
-    /* Press Start 2P, a pixel font (Docs/Design/ArtDirection.md, Font). Text properties are inherited by every child. */
-    -unity-font-definition: url("../../Art/Fonts/PressStart2P-Regular.ttf");
 }
 
 
@@ -28,7 +26,7 @@
 }
 
 .hud-clock-day {
-    font-size: 16px;
+    font-size: 24px;
     color: rgb(250, 222, 130);
 }
 
@@ -39,7 +37,7 @@
 }
 
 .hud-clock-phase {
-    font-size: 16px;
+    font-size: 24px;
     color: rgb(190, 200, 225);
 }
 
@@ -63,7 +61,7 @@
 
 .zone-exploration-progress {
     margin-left: 16px;
-    font-size: 16px;
+    font-size: 22px;
     color: rgb(190, 200, 225);
 }
 
@@ -152,13 +150,13 @@
     display: none;
     flex-grow: 1;
     margin-left: 12px;
-    font-size: 16px;
+    font-size: 22px;
     -unity-font-style: italic;
     color: rgb(255, 160, 140);
 }
 
 .ground-overflow-question {
-    font-size: 24px;
+    font-size: 28px;
     color: rgb(240, 242, 250);
 }
 
@@ -184,7 +182,7 @@
 }
 
 .grid-tooltip-subtitle {
-    font-size: 16px;
+    font-size: 20px;
     -unity-font-style: italic;
     color: rgb(80, 90, 130);
 }
@@ -241,13 +239,13 @@
 .grid-tooltip-description {
     margin-top: 4px;
     margin-bottom: 6px;
-    font-size: 16px;
+    font-size: 22px;
     white-space: normal;
     color: rgb(30, 34, 60);
 }
 
 .grid-tooltip-detail {
-    font-size: 16px;
+    font-size: 22px;
     color: rgb(50, 58, 90);
 }
 
@@ -256,7 +254,7 @@
     right: 6px;
     bottom: 2px;
     padding: 0;
-    font-size: 16px;
+    font-size: 24px;
     -unity-font-style: bold;
     -unity-text-align: lower-right;
     color: rgb(240, 242, 250);
@@ -273,7 +271,7 @@
 
 .event-log-entry {
     margin-bottom: 4px;
-    font-size: 16px;
+    font-size: 22px;
     color: rgb(240, 242, 250);
     white-space: normal;
 }
@@ -287,7 +285,7 @@
 }
 
 .placeholder-text {
-    font-size: 16px;
+    font-size: 22px;
     -unity-font-style: italic;
     color: rgb(190, 200, 225);
     white-space: normal;
@@ -334,7 +332,7 @@
 .pause-warning {
     margin-top: 8px;
     margin-bottom: 16px;
-    font-size: 16px;
+    font-size: 22px;
     color: rgb(250, 222, 130);
     white-space: normal;
     -unity-text-align: middle-center;

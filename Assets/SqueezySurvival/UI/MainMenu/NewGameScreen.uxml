@@ -1,8 +1,8 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements">
     <ui:VisualElement name="new-game-panel" class="menu-options pixel-window new-game-panel">
-        <ui:Label text="New Game" class="screen-heading" />
+        <ui:Label text="New Game" class="screen-heading display-text" />
         <ui:RadioButtonGroup name="dominant-hand-choice" label="Dominant hand" choices="Left,Right" value="-1" class="setting-row" />
-        <ui:Label text="Run options (optional)" class="setting-heading" />
+        <ui:Label text="Run options (optional)" class="setting-heading display-text" />
         <ui:Label text="Leave these unticked to play the game in its default, intended mode." class="setting-hint" />
         <ui:VisualElement class="option-table-row option-table-header">
             <ui:Label text="Option" class="option-table-name option-table-heading" />
@@ -24,7 +24,7 @@
             <ui:Label name="hard-mode-gameplay" class="option-table-gameplay" />
             <ui:Label name="hard-mode-effect" class="option-table-effect" />
         </ui:VisualElement>
-        <ui:Label text="This run earns" class="setting-heading" />
+        <ui:Label text="This run earns" class="setting-heading display-text" />
         <ui:Label name="run-points-summary" class="run-points-summary" />
         <ui:VisualElement class="screen-buttons">
             <ui:Button name="new-game-back-button" text="Back" class="menu-button screen-button" />
