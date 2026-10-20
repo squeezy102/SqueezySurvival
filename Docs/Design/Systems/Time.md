@@ -7,8 +7,8 @@ Time is the game's core currency ([Pillar 1](../GameDesignDocument.md#pillars)).
 ## Rules
 
 1. **Time advances only through player actions.** Nothing happens between actions. There is no real-time clock.
-2. **The time unit (TU) is 1 minute of game time.** It is the smallest unit of time; no duration is fractional. Minute resolution lets quick actions (drinking, eating, breaking a rock) cost realistically little without being free.
-3. **Every action costs at least 1 TU** ([Pillar 2](../GameDesignDocument.md#pillars)).
+2. **The clock keeps time to the second, and shows it** (squeezy102, 2026-10-20, [#107](https://github.com/squeezy102/SqueezySurvival/issues/107)). Actions are authored in **time units (TU) of 1 minute**, which lets quick actions (drinking, eating, breaking a rock) cost realistically little without being free. A few tiny actions last whole seconds instead, such as moving things between the ground and the inventory ([Inventory: moving things](Inventory.md#moving-things)). No time is ever hidden: the clock always shows exactly where the run stands.
+3. **Every action costs time** ([Pillar 2](../GameDesignDocument.md#pillars)): at least 1 TU, or at least 1 second for the tiny actions in rule 2.
 4. **A day is 1,440 TU** (24 hours x 60 minutes).
 5. **When an action resolves, all time-dependent systems advance by its full duration** (stat changes, research progress, weather).
 
@@ -82,14 +82,14 @@ A year is **120 days**: four seasons of **30 days** each, in the order Temperate
 
 ## Display
 
-- Clock in 12-hour format with AM/PM (for example `7:45 AM`).
+- Clock in 12-hour format with AM/PM and seconds (for example `7:45:20 AM`), in the HUD and in the event log.
 - Day counter starting at Day 1.
 - In the HUD, the day, the time and the day phase each have their own row, with no separators.
-- Every action shows its duration before the player commits, as hours and minutes (for example `1 hr 30 min`).
+- Every action shows its duration before the player commits, as hours and minutes (for example `1 hr 30 min`), or as seconds for the tiny actions (`10 sec`).
 - A **day and night dial** beside the clock ([#52](https://github.com/squeezy102/SqueezySurvival/issues/52)): a disc split in half, one half a bright day sky with the sun, the other a dim night sky with the moon and stars, seen through a half-circle window. The disc turns once a day with the clock: the sun is at the top at noon, the moon at midnight; at 6:00 AM the sun is rising on the left, and at 6:00 PM it is setting on the right. The disc is redrawn pixel by pixel at each angle, so it stays crisp pixel art as it turns ([Art Direction](../ArtDirection.md)).
 
 ## Implementation notes
 
-- Game time is stored as a whole number of TU elapsed since the start of the run. Clock and day are derived from it, never stored separately.
+- Game time is stored as a whole number of seconds elapsed since the start of the run. Clock and day are derived from it, never stored separately.
 - Time advances only through one simulation entry point, so every time-dependent system sees the same duration in the same order. This keeps the simulation deterministic and unit testable.
 

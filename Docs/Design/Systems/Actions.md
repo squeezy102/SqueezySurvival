@@ -8,7 +8,7 @@ Everything the survivor does is an action. This document defines what every acti
 
 | Part | Description |
 |---|---|
-| Duration | Whole minutes (TU), at least 1. See [Time](Time.md). |
+| Duration | Whole minutes (TU), at least 1; a few tiny actions last whole seconds instead. See [Time](Time.md#rules). |
 | Costs | Anything consumed besides time: materials, stats, tool durability. |
 | Requirements | Conditions that must hold to attempt it: tools, materials, location, light level, survivor condition. |
 | Outcomes | What happens on success, and on failure where failure is possible. |
