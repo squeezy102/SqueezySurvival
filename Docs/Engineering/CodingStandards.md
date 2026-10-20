@@ -33,6 +33,10 @@ Code is split into assembly definitions (`.asmdef`) so that dependencies are exp
 - Inline comments explain why, never what.
 - No commented-out code. No TODO, FIXME or HACK comments; open work is tracked in documentation or issues.
 
+## UI styling
+
+- Text never leaves its container: wrapping is the default in the runtime theme, and elements that hold text get a `min-height`, never a fixed `height` ([Screen Layout: text containment](../Design/UI/ScreenLayout.md#text-containment)).
+
 ## Testing
 
 Unity Test Framework, Edit Mode tests for simulation logic. How tests are designed, what each must prove, and what "done" means: [Testing and Quality Standards](TestingStandards.md).

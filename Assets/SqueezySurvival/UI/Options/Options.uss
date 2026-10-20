@@ -27,13 +27,13 @@
 
 .options-scope-note {
     margin-bottom: 12px;
-    font-size: 16px;
+    font-size: 22px;
     white-space: normal;
     color: rgb(190, 200, 225);
 }
 
 .options-button {
-    height: 48px;
+    min-height: 48px;
     margin-top: 16px;
     margin-left: 0;
     margin-right: 0;

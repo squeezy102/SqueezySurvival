@@ -58,6 +58,14 @@ The first playable wireframe of this screen. Regions whose systems are not built
 
 Spacing is uniform: every panel is inset 16 px from the screen edge and separated from its neighbors by 16 px (at the 1920 x 1080 reference resolution). Panels stretch to fill the space between them, so there are no empty gaps. Panel sizes come from the screen, never from their content: a panel's content scrolls inside it rather than resizing the layout.
 
+### Text containment
+
+**Text never leaves its container** ([#67](https://github.com/squeezy102/SqueezySurvival/issues/67)). Every label and button wraps its text inside its own width and grows taller to fit it; a container either fits its text or grows with it. Text running past a container's edge and into the scene is a bug, never a style choice.
+
+- Wrapping is the default for every screen, set once in the runtime theme, not opted into element by element.
+- An element that holds text never has a fixed height, only a minimum height. Fixed sizes are for regions, such as panels and grids, whose contents are laid out to fit them.
+- Every screen is checked with its longest text, such as an unavailable option's reason in place of its label.
+
 | Region | Built | Placeholder |
 |---|---|---|
 | Scene | Placeholder beach art. | - |
