@@ -6,6 +6,14 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 
 ## [Unreleased]
 
+### Added
+- Design drafts from squeezy102's offline notes, for discussion: [Containers](Docs/Design/Systems/Containers.md), [Crafting](Docs/Design/Systems/Crafting.md), [Tutorial](Docs/Design/UI/Tutorial.md), [In-game Wiki](Docs/Design/UI/Wiki.md), [Beach Finds](Docs/Design/Content/BeachFinds.md), action pacing and research proposals. Open questions OQ-071 to OQ-083.
+- The calendar: 120-day years of four 30-day seasons. See [Time: calendar](Docs/Design/Systems/Time.md#calendar).
+
+### Changed
+- Answers to OQ-025 (exploring in poor light), OQ-032 (control principles), OQ-033 (click to pick up and place), OQ-058 (run perks direction) and OQ-064 (day summary).
+- The ground and zone features grids are 12 x 3 instead of 16 x 4 (design; build tracked separately).
+
 ## [0.1.1] - 2026-10-20
 
 ### Fixed

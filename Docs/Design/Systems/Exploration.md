@@ -79,6 +79,16 @@ Random features stand in for [milestones](#milestones) until zone content is des
 - Randomness comes from an injected `IRandomNumberSource`, so tests supply a fixed sequence ([Coding Standards: architecture](../../Engineering/CodingStandards.md#architecture)).
 - Progress is stored as explores completed; the percentage is derived from it.
 
-## Open questions
+## Light and visibility
 
-[OQ-025](../OpenQuestions.md).
+Exploring in poor light takes longer and is riskier (resolves OQ-025).
+
+| Conditions | Explore takes | Shown on the Explore button |
+|---|---|---|
+| Bright ([light level](Actions.md#light-level)) | 15 min | A sun |
+| Dim: Dawn or Dusk | 20 min | A half sun |
+| Dark: Night, or a storm or fog at any hour | 25 min | A moon, storm cloud or fog |
+
+- Energy costs rise a little with them.
+- **Missteps.** In dim or dark conditions, exploring has a higher chance of an encounter where the survivor trips over, walks into or steps on something ([Encounters](Encounters.md)). On the Beach, the survivor might step on a sea urchin or a cone snail. A cone snail sting is nearly always fatal, but it takes two rare rolls: the encounter itself, and then the sting. Any footwear prevents it entirely. It exists to tell the player that the island can kill them, so play carefully.
+- The chances are set in the balancing pass with the other encounter chances ([OQ-036](../OpenQuestions.md)).

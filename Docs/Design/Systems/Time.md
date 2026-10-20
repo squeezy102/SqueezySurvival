@@ -76,6 +76,10 @@ Direction of effect only. Each owning system specifies its own values.
 
 Crepuscular animals are active at dawn and dusk.
 
+## Calendar
+
+A year is **120 days**: four seasons of **30 days** each, in the order Temperate, Dry, Rainy, Stormy ([Weather: seasons](Weather.md#seasons)). A run starts on the first day of Temperate. (squeezy102, 2026-10-19.)
+
 ## Display
 
 - Clock in 12-hour format with AM/PM (for example `7:45 AM`).
