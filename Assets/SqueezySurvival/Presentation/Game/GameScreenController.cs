@@ -5,6 +5,7 @@ using SqueezySurvival.Core.EventLog;
 using SqueezySurvival.Core.InventoryGrids;
 using SqueezySurvival.Core.Items;
 using SqueezySurvival.Core.Navigation;
+using SqueezySurvival.Core.PixelArt;
 using SqueezySurvival.Core.Runs;
 using SqueezySurvival.Core.Survivor;
 using SqueezySurvival.Core.Time;
@@ -274,7 +275,22 @@ namespace SqueezySurvival.Presentation.Game
             string time = GameClockFormatter.FormatTimeOfDay(entry.Time.MinuteOfDay);
             var line = new Label($"Day {entry.Time.Day}, {time}: {entry.Text}");
             line.AddToClassList("event-log-entry");
-            _eventLogEntries.Add(line);
+            if (entry.Severity != EventLogSeverity.Warning)
+            {
+                _eventLogEntries.Add(line);
+                return;
+            }
+
+            // Warnings are red and carry a warning icon, so color is never the only signal (Docs/Design/UI/HUD.md).
+            var row = new VisualElement();
+            row.AddToClassList("event-log-warning-row");
+            var icon = new PixelIconElement(_pixelArtTextures.StatusIcon(StatusIconCatalog.Warning), fitsParent: false);
+            icon.AddToClassList("event-log-warning-icon");
+            icon.style.position = Position.Relative;
+            line.AddToClassList("event-log-entry--warning");
+            row.Add(icon);
+            row.Add(line);
+            _eventLogEntries.Add(row);
         }
 
         private void ScrollEventLogToNewest()

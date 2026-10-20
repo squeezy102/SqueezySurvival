@@ -49,7 +49,7 @@ You pulled a muscle!
 
 - Every game event that changes state is logged: discoveries, item movements, actions and their outcomes, stat warnings, injuries, weather changes.
 - **Every sound cue has a matching log entry**, so sound is never the only signal ([Pillar 4](../GameDesignDocument.md#pillars)).
-- Warnings and serious events are marked with an icon as well as color.
+- Warnings and serious events are marked with an icon as well as color: a warning entry is red, starts with a red warning triangle, and says in words why it is a warning (for example, a cone snail find adds "You've heard cone snails are very, very dangerous. Best to leave them alone.").
 - Positioned lower left.
 - Hides automatically when idle and reappears when a new event arrives. Auto-hide is a player setting, on by default.
 - **Important events are highlighted** for a couple of seconds, both the entry and the log window: bad (red), good (green), notification (yellow). Each also carries an icon, so color is never the only signal. The MVP uses a static highlight (colored border, icon and bold text for a few seconds); pulsing and glowing arrive with animation, together with a reduce-motion setting (resolves OQ-034).

@@ -16,9 +16,9 @@ namespace SqueezySurvival.Core.EventLog
         public IReadOnlyList<EventLogEntry> Entries => _entries;
 
         /// <summary>Adds an entry at the given time.</summary>
-        public void Add(GameClock time, string text)
+        public void Add(GameClock time, string text, EventLogSeverity severity = EventLogSeverity.Normal)
         {
-            var entry = new EventLogEntry(time, text);
+            var entry = new EventLogEntry(time, text, severity);
             _entries.Add(entry);
             EntryAdded?.Invoke(entry);
         }

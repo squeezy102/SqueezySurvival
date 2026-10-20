@@ -57,6 +57,18 @@ namespace SqueezySurvival.Presentation.PixelArt
             return texture;
         }
 
+        /// <summary>A status icon, by its id in <see cref="StatusIconCatalog"/>.</summary>
+        public Texture2D StatusIcon(string iconId)
+        {
+            if (!_navigationIconTextures.TryGetValue(iconId, out Texture2D texture))
+            {
+                texture = ToTexture(StatusIconCatalog.CreateIcon(iconId), iconId);
+                _navigationIconTextures.Add(iconId, texture);
+            }
+
+            return texture;
+        }
+
         /// <summary>The nine-slice frame image for a style.</summary>
         public Texture2D Frame(PixelFrameStyle style)
         {
