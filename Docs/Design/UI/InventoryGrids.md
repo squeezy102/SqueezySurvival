@@ -17,7 +17,7 @@ Sizes are placeholders, to be tuned in play. The ground and features grids were 
 
 The hands must never be mistaken for inventory slots ([#57](https://github.com/squeezy102/SqueezySurvival/issues/57)): a bold gold rule with a wide gap on each side separates them, and an empty hand slot shows a faint hand, the left hand's on the left, seen from behind with fingers up.
 
-- Each slot holds one kind of thing, with its count in the bottom-right corner when there are 2 or more. A grid of 36 slots holds 36 different kinds; a kind's count has no limit.
+- Each slot holds one kind of thing, with its count in the bottom-right corner when there are 2 or more. A grid of 36 slots holds 36 different kinds; a kind's count has no limit. The player can split a kind across several slots ([Drag and Drop: splitting and merging](DragAndDrop.md#splitting-and-merging)); things that arrive join the kind's first stack.
 - Every slot is drawn, empty ones as faint squares. The cells are square and as large as the panel allows; the grid is centered in its panel. **The panel never resizes.**
 - Cells are 8 px apart (at the 1920 x 1080 reference resolution), and the panel's header sits the same 8 px above the grid.
 - Things stay in their slots until the player moves them ([Drag and Drop](DragAndDrop.md)); slots may be left empty on purpose. A newly arriving kind takes the first empty slot.
@@ -38,7 +38,7 @@ Zone features beyond their grid's slots are not revealed.
 
 ## Sorting
 
-The ground and inventory panels have a **Sort** button in their header, labeled with the panel's sort order ("Sort: By type"). It packs everything into the first slots, closing gaps, in that order.
+The ground and inventory panels have a **Sort** button in their header, labeled with the panel's sort order ("Sort: By type"). It packs everything into the first slots, closing gaps, in that order, and joins split stacks of the same kind back together.
 
 - The default order is **by type**: grouped by [item category](../Systems/Inventory.md#item-categories) in the order listed there, then by name.
 - The arrow beside Sort opens the other orders: **alphabetical**, **by quantity** (most first) and **by weight** (heaviest stack first). Choosing one sorts at once and becomes that panel's order for the Sort button.

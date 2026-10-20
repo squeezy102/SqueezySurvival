@@ -143,16 +143,18 @@ namespace SqueezySurvival.Presentation.Game
             int hoveredSlot = -1;
             InventoryGridView otherView = _itemMoves == null ? null : _itemMoves.OtherPanelUnder(_panel, _pointerPosition, out hoveredSlot);
             _shownHoveredSlot = hoveredSlot;
+
+            // Grids that don't take part in moves between panels (zone features, hands) always move whole stacks.
+            _shownQuantity = _itemMoves == null ? ItemTransferQuantity.All : _itemMoves.QuantityForDrag();
             GridDropOutcome outcome;
             if (otherView != null)
             {
                 _combineHoldTimer.Reset();
-                _shownQuantity = _itemMoves.QuantityForDrag();
                 outcome = _itemMoves.Resolve(_panel, _pressedSlot, _shownHoveredSlot, _shownQuantity);
             }
             else
             {
-                outcome = _contents.ResolveDrop(_pressedSlot, TargetAt(_pointerPosition));
+                outcome = _contents.ResolveDrop(_pressedSlot, TargetAt(_pointerPosition), _shownQuantity);
             }
 
             InventoryGridView targetView = otherView ?? _view;

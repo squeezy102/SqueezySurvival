@@ -22,7 +22,8 @@ Grids work like Diablo's inventory ([#49](https://github.com/squeezy102/SqueezyS
 
 | Let go over | What happens | Tooltip |
 |---|---|---|
-| An empty slot | The thing moves into it; its old slot is left empty. | "Move. Put the lizard here." |
+| An empty slot | The thing moves into it; its old slot is left empty. With Ctrl or Alt, part of the stack moves instead ([splitting](#splitting-and-merging)). | "Move. Put the lizard here." |
+| Another stack of the same kind | The stacks **merge** into the one let go over. | "Stack. Add the 3 stones to the stack of 5 here." |
 | Another thing | The two **swap** slots. Nothing else moves. | "Swap. The lizard and the paper trade places." |
 | Another thing, after holding over it for **1 second** | They **combine**, if they can (see below). | What the combination makes, or "Can't combine. The lizard and the paper can't be combined." |
 | Itself | Nothing. | "No change. It stays where it is." |
@@ -34,13 +35,26 @@ Grids work like Diablo's inventory ([#49](https://github.com/squeezy102/SqueezyS
 - **A combine that can't happen changes nothing:** on release the thing goes back to its slot, and a message by that slot says so ("The lizard and the paper can't be combined.") for 2 seconds. Nothing is logged.
 - While dragging, an outline marks the slot the thing will go to or combine with. Nothing in the grid moves until release.
 
+### Splitting and merging
+
+Modifiers work inside a panel too ([#112](https://github.com/squeezy102/SqueezySurvival/issues/112)), with the same keys as [between panels](#between-panels): **Ctrl** moves half (rounded up), **Alt** moves one, and a plain or Shift drag moves the whole stack.
+
+| Let go over (same panel) | With Ctrl or Alt | Tooltip |
+|---|---|---|
+| An empty slot | That many split off into a new stack there. | "Split. Put 4 of the 7 stones here." |
+| A stack of the same kind | That many join it. | "Stack. Add one of the 7 stones to the stack of 5 here." |
+| Another kind | Nothing: only a whole stack swaps. | "No change. Split onto an empty slot or another stack of stones." |
+| Itself | Nothing. | "No change. It stays where it is." |
+
+Splitting always works; auto-stack only decides where things arriving from elsewhere go. Holding over a stack of the same kind for **1 second** still turns the drop into an attempt to combine, as above.
+
 ## Between panels
 
 Things move between the **ground** and the **inventory** ([#86](https://github.com/squeezy102/SqueezySurvival/issues/86)). Zone features are not things to carry and stay in their own grid; the hands are filled through [Equipment](../Systems/Equipment.md), later.
 
 - **A plain drag moves the whole stack.** Holding a modifier while letting go moves part of it: **Ctrl moves half** (rounded up: half of 7 is 4) and **Alt moves one**. Shift also moves the whole stack. Players can remap which key does which ([Controls: accessibility](Controls.md#accessibility)).
-- **A modified click sends things straight to the other panel**, ground to inventory or inventory to ground, with no drag: **Shift + click** sends the whole stack, **Ctrl + click** half, **Alt + click** one (resolves OQ-085). Where modified clicks send things once containers exist: [OQ-086](../OpenQuestions.md).
-- **Things join their own kind (auto-stack).** When the other panel already holds that kind, what moves joins that stack, wherever it is let go. Otherwise it takes the empty slot it was let go over, or, over another thing, the first empty slot; nothing is swapped between panels. Auto-stacking can be turned off in a later option ([#106](https://github.com/squeezy102/SqueezySurvival/issues/106)).
+- **A modified click sends things straight to the other panel**, ground to inventory or inventory to ground, with no drag: **Shift + click** sends the whole stack, **Ctrl + click** half, **Alt + click** one (resolves OQ-085). **An open container comes first** (resolves OQ-086): while a container (a chest, a cupboard) is open in the top panel, a modified click on the ground or in the inventory sends things into the container instead. Where a modified click in the container itself sends things: [OQ-088](../OpenQuestions.md).
+- **Things join their own kind (auto-stack).** When the other panel already holds that kind, what moves joins the stack let go over, or else the kind's first stack. Otherwise it takes the empty slot it was let go over, or, over another thing, the first empty slot; nothing is swapped between panels. Auto-stacking can be turned off in a later option ([#106](https://github.com/squeezy102/SqueezySurvival/issues/106)).
 - **When the other panel has no room** (every slot taken by other kinds), nothing moves and the tooltip says so: "No room. There's no free slot in your inventory." A drop onto a full ground does not ask what to discard; that question is only for finds.
 - **There is no weight cap** ([Inventory: weight](../Systems/Inventory.md#weight)): anything can be picked up, and the load shows what it costs.
 - **Moving between panels takes a few seconds**, and the tooltip says how long before letting go ([Inventory: moving things](../Systems/Inventory.md#moving-things)).

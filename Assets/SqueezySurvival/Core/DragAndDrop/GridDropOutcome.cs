@@ -13,8 +13,10 @@ namespace SqueezySurvival.Core.DragAndDrop
         /// <param name="anchorSlot">The slot the marker and tooltip are shown against, or -1 for none.</param>
         /// <param name="description">The preview text.</param>
         /// <param name="title">The preview's heading, or null for the kind's usual one.</param>
-        public GridDropOutcome(GridDropOutcomeKind kind, int targetSlot, int anchorSlot, string description, string title = null)
+        /// <param name="count">For a split or merge, how many move; otherwise 0.</param>
+        public GridDropOutcome(GridDropOutcomeKind kind, int targetSlot, int anchorSlot, string description, string title = null, int count = 0)
         {
+            Count = count;
             Kind = kind;
             TargetSlot = targetSlot;
             AnchorSlot = anchorSlot;
@@ -26,6 +28,9 @@ namespace SqueezySurvival.Core.DragAndDrop
 
         /// <summary>What happens on release.</summary>
         public GridDropOutcomeKind Kind { get; }
+
+        /// <summary>For a split or merge, how many things move; otherwise 0.</summary>
+        public int Count { get; }
 
         /// <summary>For a move or swap, the slot the dragged thing lands in; for a swap, what was there takes the dragged thing's old slot.</summary>
         public int TargetSlot { get; }
@@ -41,7 +46,9 @@ namespace SqueezySurvival.Core.DragAndDrop
             Kind == GridDropOutcomeKind.Move
             || Kind == GridDropOutcomeKind.Swap
             || Kind == GridDropOutcomeKind.Combine
-            || Kind == GridDropOutcomeKind.Transfer;
+            || Kind == GridDropOutcomeKind.Transfer
+            || Kind == GridDropOutcomeKind.Split
+            || Kind == GridDropOutcomeKind.Merge;
 
         /// <summary>The preview's heading.</summary>
         public string Title
@@ -67,6 +74,10 @@ namespace SqueezySurvival.Core.DragAndDrop
                         return "No change";
                     case GridDropOutcomeKind.Transfer:
                         return "Move";
+                    case GridDropOutcomeKind.Split:
+                        return "Split";
+                    case GridDropOutcomeKind.Merge:
+                        return "Stack";
                     case GridDropOutcomeKind.NoRoom:
                         return "No room";
                     default:

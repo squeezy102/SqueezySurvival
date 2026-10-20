@@ -6,7 +6,7 @@ What the survivor carries. Weights are in pounds (lb).
 
 ## Slots
 
-The survivor's inventory has **8 slots**, plus the tool hand and offhand ([Equipment](Equipment.md)). Each slot holds one kind of item, any number of it. Slots limit how many kinds the survivor carries at once; weight limits how much ([#49](https://github.com/squeezy102/SqueezySurvival/issues/49)). Shown as the inventory's [grid](../UI/InventoryGrids.md#the-grids).
+The survivor's inventory has **8 slots**, plus the tool hand and offhand ([Equipment](Equipment.md)). Each slot holds one kind of item, any number of it; the player can split a kind across several slots. Slots limit how many kinds the survivor carries at once; weight limits how much ([#49](https://github.com/squeezy102/SqueezySurvival/issues/49)). Shown as the inventory's [grid](../UI/InventoryGrids.md#the-grids).
 
 ## Item categories
 

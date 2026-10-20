@@ -21,7 +21,7 @@ Design questions still waiting for an answer. The full history of every question
 | OQ-082 | Content | Messages in bottles from contributors and backers: who can submit, what review keeps them appropriate, and how are names and consent handled? | Content/BeachFinds |
 | OQ-083 | Crafting | Crafting stations (a forge with fuel and ore): are they worked from the crafting window or from their own window? | Systems/Crafting |
 | OQ-084 | Inventory | Haulers and carrying help: when are the sled and the cart available, and how much of the load in a carrier (a hand basket, a backpack) or a hauler counts toward what the survivor carries? Today's rule says none of a carrier's load counts for movement; squeezy102 describes the hand basket as a slight help. (The rest of OQ-078.) | Systems/Inventory |
-| OQ-086 | Controls | Modified clicks with containers: when a container is open, where does a Shift, Ctrl or Alt click send things: between the inventory and the container, between the container and the ground it stands on, or somewhere the player chooses? (The rest of OQ-085.) | UI/Controls |
+| OQ-088 | Controls | Modified clicks in an open container: does a Shift, Ctrl or Alt click on something in the container send it to the inventory or to the ground? (The rest of OQ-086.) | UI/Controls |
 
 ## Deferred to the balancing pass
 
