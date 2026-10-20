@@ -9,6 +9,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 ## [0.1.1] - 2026-10-20
 
 ### Fixed
+- Text could run past its container, as "No game in progress" did on the main menu. Text now wraps everywhere and buttons grow to fit it (#67). See [Screen Layout: text containment](Docs/Design/UI/ScreenLayout.md#text-containment).
 - Text is set in Press Start 2P instead of Pixelify Sans, whose 5 and S, 2 and Z, and 8 and B were hard to tell apart (#60). Text sizes are multiples of 8 px so the font stays crisp. See [Art Direction: font](Docs/Design/ArtDirection.md#font).
 
 ### Changed

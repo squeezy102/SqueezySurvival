@@ -23,7 +23,7 @@
 }
 
 .menu-button {
-    height: 64px;
+    min-height: 64px;
     margin-top: 6px;
     margin-bottom: 6px;
     padding-left: 20px;

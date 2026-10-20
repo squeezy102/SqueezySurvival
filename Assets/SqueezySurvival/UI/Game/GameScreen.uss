@@ -123,7 +123,7 @@
 }
 
 .sort-button {
-    height: 32px;
+    min-height: 32px;
     margin-left: 0;
     margin-right: 0;
     margin-top: 0;
@@ -294,7 +294,7 @@
 }
 
 .game-button {
-    height: 48px;
+    min-height: 48px;
     min-width: 200px;
     margin-left: 0;
     margin-right: 0;

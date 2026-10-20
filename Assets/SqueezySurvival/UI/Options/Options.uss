@@ -33,7 +33,7 @@
 }
 
 .options-button {
-    height: 48px;
+    min-height: 48px;
     margin-top: 16px;
     margin-left: 0;
     margin-right: 0;
