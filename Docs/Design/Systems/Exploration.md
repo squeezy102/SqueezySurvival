@@ -59,17 +59,19 @@ The first playable version of exploring, built as the real system with placehold
 |---|---|
 | Duration | 15 TU |
 | Progress | The Beach takes 24 explores to map, so each explore adds about 4%. Shown rounded down, so 100% appears only when the zone is fully mapped. |
-| Scripted explores | The Beach's first 4: 2 stones and a stick; 2 sticks and a strand of seaweed; a strand of seaweed and a seashell; a stone and a coconut. No features. |
+| Scripted explores | The Beach's first 4: 2 stones and a small stick; 2 small sticks and some seaweed; some seaweed and a seashell; a stone and a coconut. No features. |
 | Random finds | 1 to 3 loose items per explore, drawn from the zone's find pool by weight. Continues forever, also after the zone is fully explored. |
 | Features | Each random explore has a 25% chance to reveal one feature, drawn from the zone's feature pool by weight, also after the zone is fully explored. |
 | Full ground | A new kind of item that does not fit the ground's slots is asked about: leave it behind or discard something to make room, either gone for good ([Inventory Grids: when the ground is full](../UI/InventoryGrids.md#when-the-ground-is-full)). A feature that does not fit its grid is not revealed. |
 | Event log | "You explored the Beach and found 2 stones and a stick." A revealed feature adds "You came across a tide pool." Mapping the zone fully adds a line saying so. |
 
-Placeholder Beach content, partly from the examples above and partly arbitrary beach finds added so the grids fill up for testing; weights are placeholders:
+The Beach's finds are the items in [Beach Finds](../Content/BeachFinds.md) ([#95](https://github.com/squeezy102/SqueezySurvival/issues/95)); the features are placeholders. How often each is found is a placeholder too:
 
 | Find pool (weight) | Feature pool (weight) |
 |---|---|
-| Stone (3), Stick (3), Seaweed strand (2), Seashell (2), Conch (1), Coconut (1), Driftwood chunk (2), Palm frond (2), and 1 each of Feather, Crab shell, Sea glass, Sand dollar, Starfish, Pumice, Coral fragment, Sea sponge, Cuttlebone, Rope scrap, Glass float, Bamboo segment | Small palm tree (3), Medium palm tree (2), Large palm tree (1), Bush (2), Rock outcrop (1), Tide pool (1), Driftwood pile (2, semi-permanent), Puddle (2, semi-permanent) |
+| Stone (30), Small stick (30), Seaweed (15), Seashell (15), Big stick (12), Palm frond (12), Coconut (10), Driftwood (8), Feather (8), Big rock (6), Crab (6), Clam (6), Coral (6), Conch (5), Oyster (5), Sand dollar (5), Bone (4), Sea sponge (3), Lobster (2), Log (1), Gooseneck barnacle (1), Cone snail (1) | Small palm tree (3), Medium palm tree (2), Large palm tree (1), Bush (2), Rock outcrop (1), Tide pool (1), Driftwood pile (2, semi-permanent), Puddle (2, semi-permanent) |
+
+Not found yet: **flotsam**, until it can be opened, and **hermit crabs**, until catching them exists ([Encounters](Encounters.md)).
 
 Random features stand in for [milestones](#milestones) until zone content is designed. Found items and features can't be used yet: picking up, harvesting and zone connections come later.
 

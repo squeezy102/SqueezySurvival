@@ -117,8 +117,8 @@ namespace SqueezySurvival.Core.Tests.Runs
 
             Zone beach = session.CurrentZone;
             Assert.That(beach.GroundPool.CountOf(PlaceholderBeachZoneContent.Stone), Is.GreaterThan(0));
-            Assert.That(beach.GroundPool.CountOf(PlaceholderBeachZoneContent.Stick), Is.GreaterThan(0));
-            Assert.That(beach.GroundPool.CountOf(PlaceholderBeachZoneContent.SeaweedStrand), Is.GreaterThan(0));
+            Assert.That(beach.GroundPool.CountOf(PlaceholderBeachZoneContent.SmallStick), Is.GreaterThan(0));
+            Assert.That(beach.GroundPool.CountOf(PlaceholderBeachZoneContent.Seaweed), Is.GreaterThan(0));
         }
 
         // One find, a pebble, and no feature.
