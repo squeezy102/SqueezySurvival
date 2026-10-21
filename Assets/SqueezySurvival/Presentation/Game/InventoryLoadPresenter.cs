@@ -8,34 +8,34 @@ namespace SqueezySurvival.Presentation.Game
     /// <summary>Shows how much the survivor carries in the inventory header (Docs/Design/Systems/Inventory.md, Load).</summary>
     public sealed class InventoryLoadPresenter : IDisposable
     {
-        private readonly RunSession _session;
+        private readonly SurvivorInventoryService _survivorInventory;
         private readonly Label _loadLabel;
 
         /// <summary>Binds the load label in <paramref name="root"/> to what the survivor carries.</summary>
-        public InventoryLoadPresenter(VisualElement root, RunSession session)
+        public InventoryLoadPresenter(VisualElement root, SurvivorInventoryService survivorInventory)
         {
             if (root == null)
             {
                 throw new ArgumentNullException(nameof(root));
             }
 
-            _session = session ?? throw new ArgumentNullException(nameof(session));
+            _survivorInventory = survivorInventory ?? throw new ArgumentNullException(nameof(survivorInventory));
             _loadLabel = root.Q<Label>("inventory-load");
-            _session.Inventory.Changed += Refresh;
-            _session.Hands.Changed += Refresh;
+            _survivorInventory.Inventory.Changed += Refresh;
+            _survivorInventory.Hands.Changed += Refresh;
             Refresh();
         }
 
         /// <inheritdoc />
         public void Dispose()
         {
-            _session.Inventory.Changed -= Refresh;
-            _session.Hands.Changed -= Refresh;
+            _survivorInventory.Inventory.Changed -= Refresh;
+            _survivorInventory.Hands.Changed -= Refresh;
         }
 
         private void Refresh()
         {
-            _loadLabel.text = SurvivorLoadTextFormatter.Format(_session.Load);
+            _loadLabel.text = SurvivorLoadTextFormatter.Format(_survivorInventory.Load);
         }
     }
 }

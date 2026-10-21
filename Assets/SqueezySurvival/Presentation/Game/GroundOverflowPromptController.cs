@@ -14,7 +14,7 @@ namespace SqueezySurvival.Presentation.Game
     {
         private const string DiscardTooltipTitle = "Discard";
 
-        private readonly RunSession _session;
+        private readonly GroundInventoryService _groundInventory;
         private readonly InventoryGridView _groundView;
         private readonly VisualElement _prompt;
         private readonly Label _question;
@@ -25,9 +25,9 @@ namespace SqueezySurvival.Presentation.Game
         private readonly Label _discardHint;
 
         /// <summary>Binds the prompt to the run and the ground's grid. Shows itself whenever a find is waiting.</summary>
-        public GroundOverflowPromptController(RunSession session, InventoryGridView groundView, VisualElement prompt, Label discardHint)
+        public GroundOverflowPromptController(GroundInventoryService groundInventory, InventoryGridView groundView, VisualElement prompt, Label discardHint)
         {
-            _session = session ?? throw new ArgumentNullException(nameof(session));
+            _groundInventory = groundInventory ?? throw new ArgumentNullException(nameof(groundInventory));
             _groundView = groundView ?? throw new ArgumentNullException(nameof(groundView));
             _prompt = prompt ?? throw new ArgumentNullException(nameof(prompt));
             _discardHint = discardHint ?? throw new ArgumentNullException(nameof(discardHint));
@@ -37,9 +37,9 @@ namespace SqueezySurvival.Presentation.Game
             _chooseDiscardButton = prompt.Q<Button>("ground-overflow-discard-button");
             _chooseDiscardWarning = prompt.Q<Label>("ground-overflow-discard-warning");
 
-            _leaveBehindButton.clicked += () => _session.LeavePendingGroundOverflowBehind();
+            _leaveBehindButton.clicked += () => _groundInventory.LeavePendingOverflowBehind();
             _chooseDiscardButton.clicked += BeginChoosingDiscard;
-            _session.PendingGroundOverflowChanged += Refresh;
+            _groundInventory.PendingOverflowChanged += Refresh;
             Refresh();
         }
 
@@ -60,14 +60,14 @@ namespace SqueezySurvival.Presentation.Game
         /// <inheritdoc />
         public void Dispose()
         {
-            _session.PendingGroundOverflowChanged -= Refresh;
+            _groundInventory.PendingOverflowChanged -= Refresh;
         }
 
-        private CountedThing<ItemDefinition> Incoming => _session.PendingGroundOverflow[0];
+        private CountedThing<ItemDefinition> Incoming => _groundInventory.PendingOverflow[0];
 
         private void Refresh()
         {
-            if (!_session.HasPendingGroundOverflow)
+            if (!_groundInventory.HasPendingOverflow)
             {
                 _groundView.EndSlotChoice();
                 _discardHint.style.display = DisplayStyle.None;
@@ -102,7 +102,7 @@ namespace SqueezySurvival.Presentation.Game
 
         private ThingTooltipContent PreviewDiscard(int slot)
         {
-            CountedEntry<ItemDefinition> discarded = _session.CurrentZone.GroundPool.EntryAtSlot(slot);
+            CountedEntry<ItemDefinition> discarded = _groundInventory.Ground.EntryAtSlot(slot);
             return new ThingTooltipContent(
                 DiscardTooltipTitle,
                 string.Empty,
@@ -114,7 +114,7 @@ namespace SqueezySurvival.Presentation.Game
         {
             _groundView.EndSlotChoice();
             _discardHint.style.display = DisplayStyle.None;
-            _session.DiscardToMakeRoomForPendingGroundOverflow(slot);
+            _groundInventory.DiscardToMakeRoomForPendingOverflow(slot);
         }
     }
 }

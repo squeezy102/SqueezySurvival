@@ -33,7 +33,7 @@ The seven testing principles of CTFL v4.0, and what each means here:
 | Level | Here | Who | How |
 |---|---|---|---|
 | Component | One Core class | Author | Edit Mode unit tests |
-| Component integration | Core systems working together, such as `RunSession` exploring a zone | Author | Edit Mode unit tests |
+| Component integration | Core systems working together, such as `ZoneExplorationService` exploring a zone through a run built by `RunSessionFactory` | Author | Edit Mode unit tests |
 | System | A build or Play mode session | squeezy102, contributors | Playtests, logged in the [Playtest Log](PlaytestLog.md) |
 | Acceptance | An issue's acceptance criteria | squeezy102 | Checked before the pull request into `main` is merged |
 

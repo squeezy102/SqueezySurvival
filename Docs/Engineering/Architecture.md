@@ -25,16 +25,21 @@ Code that does not yet match this document is listed in [Known gaps](#known-gaps
 
 ### The run
 
-A run is a small object that owns a set of focused services and wires them together. Each service has one job, its own tests, and receives its collaborators through its constructor as interfaces ([Coding Standards: architecture](CodingStandards.md#architecture)).
+A run (`RunSession`) holds a set of focused services and nothing else. `RunSessionFactory` builds the services and wires them together, so the game and its tests build a run the same way. Each service has one job, its own tests, and receives its collaborators through its constructor ([Coding Standards: architecture](CodingStandards.md#architecture)). Presentation sends each command to the service that owns it, never to the run.
 
 | Service | Owns | Examples of what it does |
 |---|---|---|
-| Game time | The clock and the one path that advances it | Advance by an action's duration; tell every time-dependent system |
-| Survivor's belongings | Inventory, hands, and the load they make | Report load and its state; refuse nothing on weight ([Inventory](../Design/Systems/Inventory.md#weight)) |
-| Item moves | Moving things between panels | Preview a move; carry it out; edge holds |
-| Exploration | Exploring zones | One explore: finds, features, ground overflow |
-| Zones | Each zone's state | Ground pool, features, exploration progress |
-| Event log | What happened, in order | Add entries; unread warnings |
+| `GameTimeAdvancer` | The clock and the one path that advances it | Advance by an action's duration; tell every time-dependent system |
+| `SurvivorInventoryService` | The inventory, both hands, and the load they make | Report load and whether the survivor can move; refuse nothing on weight ([Inventory](../Design/Systems/Inventory.md#weight)) |
+| `GroundInventoryService` | The current zone's ground and the finds waiting for room on it | Queue overflow; leave a find behind; discard to make room |
+| `InventoryTransferService` | Moving things between the inventory and the ground | Preview a transfer; carry it out |
+| `ZoneExplorationService` | Exploring the current zone | One explore: finds, features, ground overflow |
+| `TimePassingService` | Wait and Rest | Pass time deliberately |
+| `SurvivorActionCompletionService` | What every time-taking action shares | Refuse to start while a find waits; log, then advance time |
+| `Zone` | Each zone's state | Ground pool, features, exploration progress |
+| `RunEventLog` | What happened, in order | Add entries |
+
+`SurvivorActionCompletionService` completes actions; it never holds them. A new action belongs to the service for its system and finishes through this one.
 
 Services are added the same way as systems are designed: survival stats, weather and research each become a service with its own rules, not more methods on the run.
 
@@ -108,7 +113,6 @@ Found in the architecture review of 2026-10-20 ([Architecture pass milestone](ht
 
 | Gap | Issue |
 |---|---|
-| `RunSession` holds every service's job | [#120](https://github.com/squeezy102/SqueezySurvival/issues/120) |
 | Change events don't say what changed | [#121](https://github.com/squeezy102/SqueezySurvival/issues/121) |
 | The tooltip recreates its elements on every show | [#122](https://github.com/squeezy102/SqueezySurvival/issues/122) |
 | Capacities come from grid layouts | [#123](https://github.com/squeezy102/SqueezySurvival/issues/123) |

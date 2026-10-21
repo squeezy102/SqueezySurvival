@@ -10,18 +10,18 @@ namespace SqueezySurvival.Presentation.Game
     /// <summary>
     /// Connects the ground's and the inventory's grids so things can be dragged or modifier-clicked from one to the
     /// other (Docs/Design/UI/DragAndDrop.md, Between panels). What a move does, and its wording, come from Core's
-    /// <see cref="RunSession"/>; this only finds which grid the pointer is over and passes the request on.
+    /// <see cref="InventoryTransferService"/>; this only finds which grid the pointer is over and passes the request on.
     /// </summary>
     public sealed class ItemPanelMoveCoordinator
     {
-        private readonly RunSession _session;
+        private readonly InventoryTransferService _inventoryTransfers;
         private readonly KeyboardMoveModifierReader _modifiers;
         private readonly Dictionary<ItemPanel, InventoryGridView> _views = new Dictionary<ItemPanel, InventoryGridView>();
 
-        /// <summary>Moves things within <paramref name="session"/>, reading modifiers with <paramref name="modifiers"/>.</summary>
-        public ItemPanelMoveCoordinator(RunSession session, KeyboardMoveModifierReader modifiers)
+        /// <summary>Moves things through <paramref name="inventoryTransfers"/>, reading modifiers with <paramref name="modifiers"/>.</summary>
+        public ItemPanelMoveCoordinator(InventoryTransferService inventoryTransfers, KeyboardMoveModifierReader modifiers)
         {
-            _session = session ?? throw new ArgumentNullException(nameof(session));
+            _inventoryTransfers = inventoryTransfers ?? throw new ArgumentNullException(nameof(inventoryTransfers));
             _modifiers = modifiers ?? throw new ArgumentNullException(nameof(modifiers));
         }
 
@@ -62,18 +62,18 @@ namespace SqueezySurvival.Presentation.Game
         /// </summary>
         public GridDropOutcome Resolve(ItemPanel from, int fromSlot, int hoveredSlot, ItemTransferQuantity quantity)
         {
-            if (_session.HasPendingGroundOverflow)
+            if (!_inventoryTransfers.CanTransfer)
             {
                 return GridDropOutcome.ReturnToPlace;
             }
 
-            return ItemMoveDropOutcomeFactory.Create(_session.PreviewItemMove(from, fromSlot, hoveredSlot, quantity), hoveredSlot);
+            return ItemMoveDropOutcomeFactory.Create(_inventoryTransfers.PreviewTransfer(from, fromSlot, hoveredSlot, quantity), hoveredSlot);
         }
 
         /// <summary>Carries out a move <see cref="Resolve"/> previewed as possible.</summary>
         public void Apply(ItemPanel from, int fromSlot, int hoveredSlot, ItemTransferQuantity quantity)
         {
-            _session.MoveItems(from, fromSlot, hoveredSlot, quantity);
+            _inventoryTransfers.Transfer(from, fromSlot, hoveredSlot, quantity);
         }
 
         /// <summary>

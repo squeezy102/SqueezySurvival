@@ -17,6 +17,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 - The calendar: 120-day years of four 30-day seasons. See [Time: calendar](Docs/Design/Systems/Time.md#calendar).
 
 ### Changed
+- `RunSession` is split into focused services, built by `RunSessionFactory`: survivor inventory, ground inventory, inventory transfers, zone exploration, time passing and action completion. Gameplay is unchanged (#120). See [Architecture: the run](Docs/Engineering/Architecture.md#the-run).
 - The game screen is built by its composition root and run by one small presenter per panel instead of one controller doing everything. Escape's order is written down in [Controls: Escape](Docs/Design/UI/Controls.md#escape) and decided by Core. Rerun **SqueezySurvival > Setup > Configure Game Screen** once after updating (#119).
 - The event log reuses a handful of rows as it scrolls instead of keeping every entry on screen, so long runs stay fast. Following new entries, unread warnings and jump to newest work as before (#118).
 - Game time advances through one path, `GameTimeAdvancer`, which tells time-dependent systems in a fixed order and raises one event; exploring, waiting, resting and moving things no longer set the clock themselves (#117). See [Architecture: time](Docs/Engineering/Architecture.md#time-one-path).
