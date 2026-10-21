@@ -12,34 +12,37 @@ namespace SqueezySurvival.Core.Runs
 {
     /// <summary>
     /// The state of a run being played: its fixed configuration, the game clock, where the survivor is, what they
-    /// carry, and the event log. Time advances only through actions (Docs/Design/Systems/Time.md, Rules).
+    /// carry, and the event log. Every action advances time through the injected <see cref="IGameTimeAdvancer"/>
+    /// (Docs/Engineering/Architecture.md, Time: one path).
     /// </summary>
     public sealed class RunSession
     {
         /// <summary>The first event log entry of every run.</summary>
         public const string WakeUpText = "You wake up on a beach. You have no idea how you got here.";
 
+        private readonly IGameTimeAdvancer _gameTimeAdvancer;
         private readonly ZoneExplorer _zoneExplorer;
         private readonly List<CountedThing<ItemDefinition>> _pendingGroundOverflow = new List<CountedThing<ItemDefinition>>();
 
-        /// <summary>Starts a run from its configuration: Day 1, 6:00 AM, in the starting zone.</summary>
+        /// <summary>
+        /// Starts a run from its configuration, in the starting zone, at the game time's current clock
+        /// (<see cref="GameClock.RunStart"/> for a new run).
+        /// </summary>
         public RunSession(
             NewRunConfiguration configuration,
             DayPhaseSchedule dayPhaseSchedule,
+            IGameTimeAdvancer gameTimeAdvancer,
             ZoneDefinition startingZone,
             ZoneExplorer zoneExplorer)
         {
             Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             DayPhaseSchedule = dayPhaseSchedule ?? throw new ArgumentNullException(nameof(dayPhaseSchedule));
+            _gameTimeAdvancer = gameTimeAdvancer ?? throw new ArgumentNullException(nameof(gameTimeAdvancer));
             _zoneExplorer = zoneExplorer ?? throw new ArgumentNullException(nameof(zoneExplorer));
-            Clock = GameClock.RunStart;
             CurrentZone = new Zone(startingZone ?? throw new ArgumentNullException(nameof(startingZone)));
             EventLog = new RunEventLog();
             EventLog.Add(Clock, WakeUpText);
         }
-
-        /// <summary>Raised after the clock advances.</summary>
-        public event Action<GameClock> ClockAdvanced;
 
         /// <summary>Raised after finds are queued for, or removed from, <see cref="PendingGroundOverflow"/>.</summary>
         public event Action PendingGroundOverflowChanged;
@@ -50,8 +53,11 @@ namespace SqueezySurvival.Core.Runs
         /// <summary>Phase boundaries used to name the time of day.</summary>
         public DayPhaseSchedule DayPhaseSchedule { get; }
 
+        /// <summary>The run's game time, for reading the clock and hearing when it advances.</summary>
+        public IGameTime GameTime => _gameTimeAdvancer;
+
         /// <summary>The current game time.</summary>
-        public GameClock Clock { get; private set; }
+        public GameClock Clock => _gameTimeAdvancer.Clock;
 
         /// <summary>The zone the survivor is in.</summary>
         public Zone CurrentZone { get; }
@@ -98,9 +104,9 @@ namespace SqueezySurvival.Core.Runs
         public void PassTime(TimePassingAction action)
         {
             RequireNoPendingGroundOverflow();
-            Clock = Clock.AdvanceMinutes(TimePassingActions.DurationMinutes(action));
-            EventLog.Add(Clock, TimePassingActions.LogText(action));
-            ClockAdvanced?.Invoke(Clock);
+            CompleteAction(
+                ActionDuration.FromMinutes(TimePassingActions.DurationMinutes(action)),
+                new[] { new EventLogMessage(TimePassingActions.LogText(action)) });
         }
 
         /// <summary>
@@ -116,15 +122,11 @@ namespace SqueezySurvival.Core.Runs
                 throw new InvalidOperationException("The survivor carries too much to move.");
             }
 
-            Clock = Clock.AdvanceMinutes(ExploreMinutes);
             ExplorationOutcome outcome = _zoneExplorer.Explore(CurrentZone);
-            foreach (EventLogMessage message in ExplorationLogTextFormatter.Format(CurrentZone.Name, outcome))
-            {
-                EventLog.Add(Clock, message.Text, message.Severity);
-            }
-
             _pendingGroundOverflow.AddRange(outcome.GroundOverflow);
-            ClockAdvanced?.Invoke(Clock);
+            CompleteAction(
+                ActionDuration.FromMinutes(ExploreMinutes),
+                ExplorationLogTextFormatter.Format(CurrentZone.Name, outcome));
             if (outcome.GroundOverflow.Count > 0)
             {
                 PendingGroundOverflowChanged?.Invoke();
@@ -195,9 +197,9 @@ namespace SqueezySurvival.Core.Runs
 
             ContentsOf(from).Take(fromSlot, preview.Count);
             ContentsOf(preview.To).Receive(preview.Definition, preview.Count, preview.DestinationSlot);
-            Clock = Clock.AdvanceSeconds(preview.Seconds);
-            EventLog.Add(Clock, ItemMoveTextFormatter.FormatLog(preview));
-            ClockAdvanced?.Invoke(Clock);
+            CompleteAction(
+                ActionDuration.FromSeconds(preview.Seconds),
+                new[] { new EventLogMessage(ItemMoveTextFormatter.FormatLog(preview)) });
         }
 
         private static ItemPanel Other(ItemPanel panel) => panel == ItemPanel.Inventory ? ItemPanel.Ground : ItemPanel.Inventory;
@@ -211,6 +213,22 @@ namespace SqueezySurvival.Core.Runs
             }
 
             return pounds;
+        }
+
+        /// <summary>
+        /// Finishes an action whose effects are applied: logs what happened, stamped with the time the action ends,
+        /// then advances time. Logging first keeps the action's own entries ahead of anything time-dependent systems
+        /// log about the time that passed.
+        /// </summary>
+        private void CompleteAction(ActionDuration duration, IEnumerable<EventLogMessage> messages)
+        {
+            GameClock endsAt = Clock.Advance(duration);
+            foreach (EventLogMessage message in messages)
+            {
+                EventLog.Add(endsAt, message.Text, message.Severity);
+            }
+
+            _gameTimeAdvancer.Advance(duration);
         }
 
         private CountedThing<ItemDefinition> FirstPendingGroundOverflow() =>
