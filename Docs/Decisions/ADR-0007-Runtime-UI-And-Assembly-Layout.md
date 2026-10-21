@@ -27,7 +27,9 @@ Runtime UI is built with UI Toolkit: layout in UXML, styling in USS, behavior in
 | `SqueezySurvival.Presentation` | `Assets/SqueezySurvival/Presentation/` | Core, Unity | MonoBehaviours, UI Toolkit binding, composition roots. Kept thin. |
 | `SqueezySurvival.Editor` | `Assets/SqueezySurvival/Editor/` | Core, Presentation | Editor tooling: release build, project setup commands. |
 | `SqueezySurvival.Core.Tests` | `Assets/SqueezySurvival/Tests/Core/` | Core | Edit Mode tests for Core. |
-| `SqueezySurvival.Editor.Tests` | `Assets/SqueezySurvival/Tests/Editor/` | Editor | Edit Mode tests for editor tooling. |
+| `SqueezySurvival.Editor.Diagnostics` | `Assets/SqueezySurvival/Editor/Diagnostics/` | Test Framework | Writes compile and test results to `Diagnostics/` ([Testing Standards](../Engineering/TestingStandards.md#reading-results-without-unity)). |
+| `SqueezySurvival.Editor.Tests` | `Assets/SqueezySurvival/Tests/Editor/` | Editor, Editor.Diagnostics | Edit Mode tests for editor tooling. |
+| `SqueezySurvival.Presentation.Tests` | `Assets/SqueezySurvival/Tests/Presentation/` | Core, Core.Tests, Presentation, Editor | Edit Mode tests for Presentation ([ADR-0008](ADR-0008-Presentation-Testing.md)). |
 
 Core cannot reference Unity at all; the compiler enforces the simulation and presentation split ([Coding Standards: architecture](../Engineering/CodingStandards.md#architecture)). The launcher follows the same Core and App split ([ADR-0005](ADR-0005-Launcher-Technology.md)).
 

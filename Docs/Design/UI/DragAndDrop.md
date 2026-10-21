@@ -87,5 +87,5 @@ Every drag needs an alternative that needs neither a drag nor a held button ([Co
 
 - The hold, outcomes and their wording are decided in Core (`CombineHoldTimer`, `GridDropOutcomeResolver`) and unit tested; the presentation layer reports where the pointer is and how much time has passed, and carries out the outcome Core returns.
 - Slots live in Core: `CountedCollection.MoveToSlot` moves a thing into an empty slot or swaps it with the thing there.
-- Moves between panels are decided in Core: `RunSession.PreviewItemMove` and `MoveItems` (with `CountedCollection.SlotToReceive`, `Receive` and `Take`), worded by `ItemMoveTextFormatter`; which modifier means which amount is `MoveModifierBindings`. The presentation layer (`ItemPanelMoveCoordinator`) only finds the grid under the pointer and reads the keyboard.
+- Moves between panels are decided in Core: `InventoryTransferService.PreviewTransfer` and `Transfer` (with `CountedCollection.SlotToReceive`, `Receive` and `Take`), worded by `ItemMoveTextFormatter`; which modifier means which amount is `MoveModifierBindings`. The presentation layer (`ItemPanelMoveCoordinator`) only finds the grid under the pointer and reads the keyboard.
 - Which things combine is asked of an `IThingCombinationRules`; the wireframe's rules combine nothing.

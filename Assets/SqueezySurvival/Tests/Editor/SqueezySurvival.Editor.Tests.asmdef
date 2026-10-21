@@ -3,6 +3,7 @@
     "rootNamespace": "SqueezySurvival.Editor.Tests",
     "references": [
         "SqueezySurvival.Editor",
+        "SqueezySurvival.Editor.Diagnostics",
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner"
     ],

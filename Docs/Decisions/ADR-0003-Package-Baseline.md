@@ -17,6 +17,7 @@ Keep only packages the MVP needs or that the architecture expects soon.
 | uGUI (includes TextMeshPro), UI Toolkit module | Windows, text, progress bars |
 | Input System | Player input |
 | Test Framework | Unit testing |
+| UI Test Framework | Presentation tests: simulated clicks and keys on UI Toolkit panels ([ADR-0008](ADR-0008-Presentation-Testing.md)) |
 | Visual Studio integration | IDE support |
 | Audio and Animation modules | Planned features; kept to avoid later rework |
 

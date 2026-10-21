@@ -54,20 +54,16 @@ namespace SqueezySurvival.Presentation.Game
             _ownedInCreationOrder.Clear();
         }
 
-        private static RunSession CreateSession(NewRunConfiguration configuration)
-        {
-            // A new seed each run. Saving the generator's state with the run belongs to saving (#2).
-            var randomNumberSource = new SystemRandomNumberSource(Environment.TickCount);
-
-            // Time-dependent systems in the order Architecture.md documents (Time: one path). None exist yet.
-            var gameTimeAdvancer = new GameTimeAdvancer(GameClock.RunStart, Array.Empty<ITimeDependentSystem>());
-            return new RunSession(
+        // A new seed each run. Saving the generator's state with the run belongs to saving (#2). Time-dependent
+        // systems go in the order Architecture.md documents (Time: one path); none exist yet.
+        private static RunSession CreateSession(NewRunConfiguration configuration) =>
+            RunSessionFactory.StartNewRun(
                 configuration,
                 DayPhaseSchedule.Default,
-                gameTimeAdvancer,
                 PlaceholderBeachZoneContent.Beach,
-                new ZoneExplorer(ExplorationRules.Wireframe, randomNumberSource));
-        }
+                ExplorationRules.Wireframe,
+                new SystemRandomNumberSource(Environment.TickCount),
+                Array.Empty<ITimeDependentSystem>());
 
         private void Compose(RunSession session, VisualElement root)
         {
@@ -86,8 +82,8 @@ namespace SqueezySurvival.Presentation.Game
                 Func<int, Texture2D> emptySlotGhost = null) =>
                 Own(new InventoryGridView(shape, alignment, contents, root.Q<VisualElement>(gridName), tooltip, dragLayer, skin, emptySlotGhost));
 
-            var groundContents = new CountedCollectionInventoryGridContents<ItemDefinition>(zone.GroundPool, dropOutcomeResolver);
-            var inventoryContents = new CountedCollectionInventoryGridContents<ItemDefinition>(session.Inventory, dropOutcomeResolver);
+            var groundContents = new CountedCollectionInventoryGridContents<ItemDefinition>(session.GroundInventory.Ground, dropOutcomeResolver);
+            var inventoryContents = new CountedCollectionInventoryGridContents<ItemDefinition>(session.SurvivorInventory.Inventory, dropOutcomeResolver);
             InventoryGridView zoneFeaturesView = CreateGrid(
                 InventoryGridShapes.ZoneFeatures,
                 FixedGridHorizontalAlignment.Center,
@@ -98,23 +94,24 @@ namespace SqueezySurvival.Presentation.Game
             InventoryGridView handsView = CreateGrid(
                 InventoryGridShapes.Hands,
                 FixedGridHorizontalAlignment.Left,
-                new CountedCollectionInventoryGridContents<ItemDefinition>(session.Hands, dropOutcomeResolver),
+                new CountedCollectionInventoryGridContents<ItemDefinition>(session.SurvivorInventory.Hands, dropOutcomeResolver),
                 "hands-grid",
                 slot => textures.HandGhost(HandSlots.HandAt(slot)));
             new HandsGridSizer(root.Q<VisualElement>("hands-grid"));
             new InventoryGridSortController(groundContents, root.Q<Button>("ground-pool-sort-button"), root.Q<Button>("ground-pool-sort-menu-button"));
             new InventoryGridSortController(inventoryContents, root.Q<Button>("inventory-sort-button"), root.Q<Button>("inventory-sort-menu-button"));
 
-            var itemMoves = new ItemPanelMoveCoordinator(session, new KeyboardMoveModifierReader(MoveModifierBindings.Default));
+            var itemMoves = new ItemPanelMoveCoordinator(session.InventoryTransfers, new KeyboardMoveModifierReader(MoveModifierBindings.Default));
             itemMoves.Register(ItemPanel.Ground, groundView);
             itemMoves.Register(ItemPanel.Inventory, inventoryView);
             GroundOverflowPromptController groundOverflowPrompt = Own(new GroundOverflowPromptController(
-                session, groundView, root.Q<VisualElement>("ground-overflow-prompt"), root.Q<Label>("ground-discard-hint")));
+                session.GroundInventory, groundView, root.Q<VisualElement>("ground-overflow-prompt"), root.Q<Label>("ground-discard-hint")));
 
-            TimeTakingActionsPresenter timeTakingActions = Own(new TimeTakingActionsPresenter(root, session));
+            TimeTakingActionsPresenter timeTakingActions = Own(new TimeTakingActionsPresenter(
+                root, session.ZoneExploration, session.TimePassing, session.SurvivorInventory, session.GroundInventory));
             Own(new HudClockPresenter(root, session.GameTime, session.DayPhaseSchedule));
             Own(new ZoneBarPresenter(root, zone));
-            Own(new InventoryLoadPresenter(root, session));
+            Own(new InventoryLoadPresenter(root, session.SurvivorInventory));
             Own(new EventLogView(root.Q<VisualElement>("event-log-panel"), session.EventLog, textures, new UnreadWarningTracker()));
 
             var overlays = new GameScreenOverlayStack();

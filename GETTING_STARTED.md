@@ -94,7 +94,7 @@ All of this happens in GitHub Desktop ([GitHub Docs](https://docs.github.com/en/
 6. **Open a pull request.** Click **Preview Pull Request**, then **Create Pull Request**. GitHub opens in your browser: fill in the template, including `Closes #N` for the issue you finished, and click **Create pull request**.
 7. **Review.** squeezy102 reviews it and may ask for changes. Make them on the same branch, commit and push again; the pull request updates by itself. When approved, squeezy102 merges it.
 
-Before you open the pull request, run the tests in Unity (**Window > General > Test Runner > EditMode > Run All**) and make sure they all pass.
+Before you open the pull request, run the tests in Unity (**Window > General > Test Runner > EditMode > Run All**) and make sure they all pass. If anything fails, or the tests will not run, ask your assistant to read `Diagnostics/latest-compilation.md` and `Diagnostics/latest-test-summary.md`: Unity writes what went wrong there after every compile and test run, so you never need to copy errors by hand.
 
 ## Reporting a problem
 

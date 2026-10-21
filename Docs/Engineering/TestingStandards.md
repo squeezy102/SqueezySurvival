@@ -33,7 +33,7 @@ The seven testing principles of CTFL v4.0, and what each means here:
 | Level | Here | Who | How |
 |---|---|---|---|
 | Component | One Core class | Author | Edit Mode unit tests |
-| Component integration | Core systems working together, such as `RunSession` exploring a zone | Author | Edit Mode unit tests |
+| Component integration | Core systems working together, such as `ZoneExplorationService` exploring a zone through a run built by `RunSessionFactory` | Author | Edit Mode unit tests |
 | System | A build or Play mode session | squeezy102, contributors | Playtests, logged in the [Playtest Log](PlaytestLog.md) |
 | Acceptance | An issue's acceptance criteria | squeezy102 | Checked before the pull request into `main` is merged |
 
@@ -66,6 +66,20 @@ Test cases are derived with CTFL techniques, so each one has a reason to exist:
 - **Confirmation testing:** every fixed bug gets a test that fails without the fix, where the defect is in testable code; otherwise its issue records how the fix was checked.
 - **Regression testing:** the full test suite runs before every commit and in Unity before every pull request. Every changed system is replayed in the next playtest.
 
+## Reading results without Unity
+
+Many contributors work through an AI assistant and cannot read Unity's windows for it. So after every compile and every test run, the editor writes what happened to the `Diagnostics/` folder at the project root (git-ignored), and assistants read it from there:
+
+| File | Written | Holds |
+|---|---|---|
+| `Diagnostics/latest-compilation.md` | After every script compile | Succeeded or failed; every error and warning with its file, line and assembly |
+| `Diagnostics/latest-test-summary.md` | After every test run, from the Test Runner window or anywhere else | Passed or failed; counts; every test that did not pass, with its message, stack trace and output. If tests could not start, for example because scripts do not compile, it says so and why |
+| `Diagnostics/latest-test-results.xml` | After every test run | The full results in NUnit XML |
+
+- Check the timestamp in each file: it is the last compile or run, not necessarily the one just asked for.
+- Compile errors stop tests from running, so read `latest-compilation.md` first.
+- Written by `SqueezySurvival.Editor.Diagnostics`, using the Test Framework's run callbacks and `TestRunnerApi.SaveResultToFile` ([Unity Manual: retrieve test results](https://docs.unity3d.com/Manual/test-framework/extension-get-test-results.html), [TestRunnerApi](https://docs.unity3d.com/Packages/com.unity.test-framework@1.6/api/UnityEditor.TestTools.TestRunner.Api.TestRunnerApi.html)) and Unity's `CompilationPipeline` events ([Unity Scripting API: CompilationPipeline.assemblyCompilationFinished](https://docs.unity3d.com/6000.4/Documentation/ScriptReference/Compilation.CompilationPipeline-assemblyCompilationFinished.html)).
+
 ## Static testing
 
 Reviews find defects before they are built: design documents are reviewed through pull requests before code is written, and every code change is reviewed by squeezy102 before it reaches `main` ([Source Control](SourceControl.md)).
@@ -97,7 +111,7 @@ Every defect is filed as an issue before it is worked on ([Work Tracking: lifecy
 A change is done when:
 
 1. Its acceptance criteria are met.
-2. Core logic has tests designed as above, and every test passes in Unity's Test Runner.
+2. Core logic has tests designed as above, Presentation code has Presentation tests ([ADR-0008](../Decisions/ADR-0008-Presentation-Testing.md)), and every test passes in Unity's Test Runner.
 3. There are zero compiler and Console warnings.
 4. Every affected document is updated in the same pull request.
 5. It has been played in the editor or a build, and new findings are filed as issues.

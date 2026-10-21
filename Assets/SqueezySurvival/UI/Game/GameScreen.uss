@@ -386,7 +386,9 @@
     margin-right: 8px;
 }
 
+/* Overlays start hidden; their presenters show them when needed, so the screen's resting state is uncovered. */
 .pause-overlay {
+    display: none;
     position: absolute;
     left: 0;
     top: 0;
