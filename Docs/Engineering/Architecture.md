@@ -119,6 +119,6 @@ Found in the architecture review of 2026-10-20 ([Architecture pass milestone](ht
 | Capacities come from grid layouts | [#123](https://github.com/squeezy102/SqueezySurvival/issues/123) |
 | Content is hard-coded | [#124](https://github.com/squeezy102/SqueezySurvival/issues/124) |
 | The game scene's collaborators aren't injected | [#125](https://github.com/squeezy102/SqueezySurvival/issues/125) |
-| Screen-side logic isn't tested | [#126](https://github.com/squeezy102/SqueezySurvival/issues/126) |
+| Presentation tests cover the HUD clock, zone bar, load label, actions and overlays so far; the rest of Presentation is untested | [#126](https://github.com/squeezy102/SqueezySurvival/issues/126) |
 | Moves assume two panels | [#127](https://github.com/squeezy102/SqueezySurvival/issues/127) |
 | Smaller cleanups | [#128](https://github.com/squeezy102/SqueezySurvival/issues/128) |

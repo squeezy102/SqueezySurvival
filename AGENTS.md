@@ -39,7 +39,7 @@ Then read the design document for the system you are touching (`Docs/Design/Syst
 |---|---|---|
 | `SqueezySurvival.Core` | `Assets/SqueezySurvival/Core/` | Plain C#, **no Unity references** (compiler-enforced). All game and screen logic lives here. |
 | `SqueezySurvival.Presentation` | `Assets/SqueezySurvival/Presentation/` | Thin MonoBehaviours that bind UI to Core. No game rules. |
-| `SqueezySurvival.Editor` | `Assets/SqueezySurvival/Editor/` | Build and setup commands. |
+| `SqueezySurvival.Editor` | `Assets/SqueezySurvival/Editor/` | Build and setup commands; `Editor/Diagnostics/` writes compile and test results to `Diagnostics/`. |
 | `*.Tests` | `Assets/SqueezySurvival/Tests/` | Edit Mode tests (NUnit). |
 
 - **UI:** UI Toolkit. Layout in UXML, style in USS, behavior in C# ([ADR-0007](Docs/Decisions/ADR-0007-Runtime-UI-And-Assembly-Layout.md)).

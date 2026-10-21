@@ -7,7 +7,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 ## [Unreleased]
 
 ### Added
-- Compile and test results are written to `Diagnostics/` after every compile and test run, so contributors' AI assistants can read what failed and why without opening Unity. See [Testing Standards: reading results without Unity](Docs/Engineering/TestingStandards.md#reading-results-without-unity) (#126).
+- Compile and test results are written to `Diagnostics/` after every compile and test run, so contributors' AI assistants can read what failed and why without opening Unity. See [Testing Standards: reading results without Unity](Docs/Engineering/TestingStandards.md#reading-results-without-unity) (#137).
 - Presentation tests: a new Edit Mode test assembly drives presenters against the real game screen with Unity's UI Test Framework ([ADR-0008](Docs/Decisions/ADR-0008-Presentation-Testing.md)). First covered: the HUD clock, zone bar, load label, Explore, Wait and Rest, and the event log's items source (#126).
 - [Architecture](Docs/Engineering/Architecture.md): how the runtime is organized, and the gaps found in the 2026-10-20 review (#116).
 - Split a stack inside a panel: Ctrl-drag half or Alt-drag one onto an empty slot; drop a stack on its own kind to merge them. Sorting joins split stacks back together. An open container will take modified clicks before the inventory (#112). See [Drag and Drop: splitting and merging](Docs/Design/UI/DragAndDrop.md#splitting-and-merging).
@@ -31,8 +31,8 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 - The ground and zone features grids are 12 x 3 instead of 16 x 4, so their icons are bigger (#73).
 
 ### Fixed
-- The game screen's overlays (pause menu, Options, the find-with-no-room question, the not-built notice) start hidden in the layout instead of covering the screen until the game hides them (#126).
-- Textures made at runtime are freed correctly outside Play Mode too, so disposing the HUD dial or the texture cache in the editor no longer logs an error (#126).
+- The game screen's overlays (pause menu, Options, the find-with-no-room question, the not-built notice) start hidden in the layout instead of covering the screen until the game hides them (#136).
+- Textures made at runtime are freed correctly outside Play Mode too, so disposing the HUD dial or the texture cache in the editor no longer logs an error (#135).
 - Finding a cone snail now logs a red warning, with a warning icon, that says cone snails are dangerous (#99). See [HUD: event log](Docs/Design/UI/HUD.md#event-log).
 
 ## [0.1.1] - 2026-10-20
