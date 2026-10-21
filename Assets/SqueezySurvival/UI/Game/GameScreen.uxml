@@ -119,6 +119,6 @@
             <ui:Label name="grid-tooltip-description" class="grid-tooltip-description" />
             <ui:VisualElement name="grid-tooltip-details" />
         </ui:VisualElement>
-        <ui:Instance template="OptionsScreen" name="options-screen" />
+        <ui:Instance template="OptionsScreen" name="options-screen" style="display: none;" />
     </ui:VisualElement>
 </ui:UXML>

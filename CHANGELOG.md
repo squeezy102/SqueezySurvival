@@ -30,6 +30,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 - The ground and zone features grids are 12 x 3 instead of 16 x 4, so their icons are bigger (#73).
 
 ### Fixed
+- The game screen's overlays (pause menu, Options, the find-with-no-room question, the not-built notice) start hidden in the layout instead of covering the screen until the game hides them (#126).
 - Finding a cone snail now logs a red warning, with a warning icon, that says cone snails are dangerous (#99). See [HUD: event log](Docs/Design/UI/HUD.md#event-log).
 
 ## [0.1.1] - 2026-10-20
