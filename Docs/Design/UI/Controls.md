@@ -42,6 +42,20 @@ Every drag has a click alternative (resolves OQ-033): **clicking a thing picks i
 - **Every hotkey is shown where it is used:** the Crafting button's tooltip says it opens with C.
 - The full list grows as windows are designed.
 
+## Escape
+
+Escape always backs out of the most immediate thing, so the player can press it repeatedly to get back to the game. On the game screen it does the **first** of these that applies:
+
+1. During a drag: cancel the drag ([Drag and Drop](DragAndDrop.md)).
+2. With something selected: clear the selection.
+3. While choosing what to discard for a find with no room: return to the question ([Inventory Grids: when the ground is full](InventoryGrids.md#when-the-ground-is-full)).
+4. While that question is showing: nothing. It must be answered.
+5. With a "not built yet" notice open: close it.
+6. With [Options](Options.md) open: close it and return to where it was opened.
+7. Otherwise: open the pause menu, or close it if it is open ([Screen Layout](ScreenLayout.md)).
+
+Other documents say what Escape does in their own context; this list is the one home for the order.
+
 ## Accessibility
 
 Baseline: [Game Accessibility Guidelines](https://gameaccessibilityguidelines.com/full-list/), Basic tier ([GDD](../GameDesignDocument.md#pillars)).
