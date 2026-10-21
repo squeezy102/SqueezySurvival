@@ -26,7 +26,6 @@ namespace SqueezySurvival.Editor.Setup
                 UiSceneBuilder.GameScenePath,
                 GameLayoutPath,
                 "Game Screen",
-                typeof(GameScreenController),
                 typeof(GameCompositionRoot));
             UiSceneBuilder.ApplyBuildSceneList();
 
