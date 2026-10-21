@@ -25,7 +25,7 @@
                             <ui:Label text="Event log" class="panel-heading display-text" />
                             <ui:Button name="event-log-unread-button" class="event-log-unread-button display-text" />
                         </ui:VisualElement>
-                        <ui:ScrollView name="event-log-entries" class="event-log-entries" />
+                        <ui:ListView name="event-log-entries" class="event-log-entries" virtualization-method="DynamicHeight" fixed-item-height="30" selection-type="None" focusable="false" />
                         <ui:VisualElement name="event-log-jump-area" class="event-log-jump-area">
                             <ui:Button name="event-log-jump-button" class="event-log-jump-button" />
                         </ui:VisualElement>

@@ -285,21 +285,30 @@
     white-space: normal;
 }
 
-/* A warning entry: red, beside a warning icon, and worded as a warning (Docs/Design/UI/HUD.md, Event log). */
-.event-log-warning-row {
+/* Rows are reused for any entry; the warning class shows the icon and reddens the text. */
+.event-log-entry-row {
     flex-direction: row;
     align-items: flex-start;
 }
 
+.event-log-entry-row > .event-log-entry {
+    flex-shrink: 1;
+}
+
+/* A warning entry: red, beside a warning icon, and worded as a warning (Docs/Design/UI/HUD.md, Event log). */
 .event-log-warning-icon {
+    display: none;
     width: 32px;
     height: 32px;
     flex-shrink: 0;
     margin-right: 6px;
 }
 
-.event-log-entry--warning {
-    flex-shrink: 1;
+.event-log-entry-row--warning > .event-log-warning-icon {
+    display: flex;
+}
+
+.event-log-entry-row--warning > .event-log-entry {
     color: rgb(255, 120, 110);
 }
 

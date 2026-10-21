@@ -87,7 +87,7 @@ Cross-scene services live in `GameSessionHost`, the one static access point in t
 Creating elements and adding them to the hierarchy is slow; Unity advises building elements once and reusing them rather than creating and discarding them ([Unity Manual: best practices for managing elements](https://docs.unity3d.com/2022.1/Documentation/Manual/UIE-best-practices-for-managing-elements.html), [Unity 6: optimizing UI performance](https://docs.unity.com/en-us/engine/6000.3/manual/best-practice-guides/bpg-uiad-index/optimizing-performance)).
 
 - **Fixed-size things are built once** and updated in place: grid cells ([#114](https://github.com/squeezy102/SqueezySurvival/issues/114)), tooltips ([#122](https://github.com/squeezy102/SqueezySurvival/issues/122)), HUD fields.
-- **Long or growing lists are virtualized** with `ListView`, which pools and recycles elements as the player scrolls (same sources). The event log is the first ([#118](https://github.com/squeezy102/SqueezySurvival/issues/118)).
+- **Long or growing lists are virtualized** with `ListView`, which pools and recycles elements as the player scrolls (same sources). The event log is the first: a `ListView` with dynamic row heights (entries wrap), bound to the log's entries through a read-only items source, so the view never copies or changes Core's list. Whether the log follows new entries (`EventLogFollowState`) and when a warning counts as in view (`ScrolledIntoViewCalculator`) are Core logic.
 - **A change updates only what changed**, using the detail in Core's change events.
 - **Textures are cached**, made once per icon and destroyed with their cache (`PixelArtTextureCache`).
 
@@ -108,7 +108,6 @@ Found in the architecture review of 2026-10-20 ([Architecture pass milestone](ht
 
 | Gap | Issue |
 |---|---|
-| The event log keeps every entry as a live element | [#118](https://github.com/squeezy102/SqueezySurvival/issues/118) |
 | `GameScreenController` composes the scene and presents everything | [#119](https://github.com/squeezy102/SqueezySurvival/issues/119) |
 | `RunSession` holds every service's job | [#120](https://github.com/squeezy102/SqueezySurvival/issues/120) |
 | Change events don't say what changed | [#121](https://github.com/squeezy102/SqueezySurvival/issues/121) |
