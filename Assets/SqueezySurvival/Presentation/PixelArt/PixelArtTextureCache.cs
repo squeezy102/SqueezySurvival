@@ -13,6 +13,7 @@ namespace SqueezySurvival.Presentation.PixelArt
     public sealed class PixelArtTextureCache : IDisposable
     {
         private readonly Dictionary<string, Texture2D> _iconTextures = new Dictionary<string, Texture2D>();
+        private Texture2D _emptyIcon;
         private readonly Dictionary<string, Texture2D> _navigationIconTextures = new Dictionary<string, Texture2D>();
         private readonly Dictionary<PixelFrameStyle, Texture2D> _frameTextures = new Dictionary<PixelFrameStyle, Texture2D>();
         private Texture2D _beachBackdrop;
@@ -45,12 +46,38 @@ namespace SqueezySurvival.Presentation.PixelArt
             return texture;
         }
 
+        /// <summary>A fully transparent icon, for a cell that is empty.</summary>
+        public Texture2D EmptyIcon
+        {
+            get
+            {
+                if (_emptyIcon == null)
+                {
+                    _emptyIcon = ToTexture(new PixelImage(PlaceholderIconCatalog.IconSize, PlaceholderIconCatalog.IconSize), "empty-icon");
+                }
+
+                return _emptyIcon;
+            }
+        }
+
         /// <summary>The icon of a nav bar button, by its id in <see cref="NavigationIconCatalog"/>.</summary>
         public Texture2D NavigationIcon(string iconId)
         {
             if (!_navigationIconTextures.TryGetValue(iconId, out Texture2D texture))
             {
                 texture = ToTexture(NavigationIconCatalog.CreateIcon(iconId), iconId);
+                _navigationIconTextures.Add(iconId, texture);
+            }
+
+            return texture;
+        }
+
+        /// <summary>A status icon, by its id in <see cref="StatusIconCatalog"/>.</summary>
+        public Texture2D StatusIcon(string iconId)
+        {
+            if (!_navigationIconTextures.TryGetValue(iconId, out Texture2D texture))
+            {
+                texture = ToTexture(StatusIconCatalog.CreateIcon(iconId), iconId);
                 _navigationIconTextures.Add(iconId, texture);
             }
 
@@ -79,28 +106,34 @@ namespace SqueezySurvival.Presentation.PixelArt
         {
             foreach (Texture2D texture in _iconTextures.Values)
             {
-                UnityEngine.Object.Destroy(texture);
+                UnityObjectDestroyer.Destroy(texture);
             }
 
             foreach (Texture2D texture in _handGhostTextures.Values)
             {
-                UnityEngine.Object.Destroy(texture);
+                UnityObjectDestroyer.Destroy(texture);
             }
 
             _handGhostTextures.Clear();
             foreach (Texture2D texture in _navigationIconTextures.Values)
             {
-                UnityEngine.Object.Destroy(texture);
+                UnityObjectDestroyer.Destroy(texture);
             }
 
             foreach (Texture2D texture in _frameTextures.Values)
             {
-                UnityEngine.Object.Destroy(texture);
+                UnityObjectDestroyer.Destroy(texture);
+            }
+
+            if (_emptyIcon != null)
+            {
+                UnityObjectDestroyer.Destroy(_emptyIcon);
+                _emptyIcon = null;
             }
 
             if (_beachBackdrop != null)
             {
-                UnityEngine.Object.Destroy(_beachBackdrop);
+                UnityObjectDestroyer.Destroy(_beachBackdrop);
                 _beachBackdrop = null;
             }
 

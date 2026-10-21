@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using SqueezySurvival.Core.DragAndDrop;
 using SqueezySurvival.Core.InventoryGrids;
 using SqueezySurvival.Core.Items;
 using SqueezySurvival.Core.PixelArt;
@@ -27,11 +28,14 @@ namespace SqueezySurvival.Presentation.Game
         private readonly List<VisualElement> _slotBackgrounds = new List<VisualElement>();
         private readonly Dictionary<int, VisualElement> _slotGhosts = new Dictionary<int, VisualElement>();
         private readonly Func<int, Texture2D> _emptySlotGhost;
-        private readonly Dictionary<int, VisualElement> _itemCells = new Dictionary<int, VisualElement>();
+        private readonly List<InventoryGridCell> _cells = new List<InventoryGridCell>();
+        private int _tooltipSlot = -1;
         private readonly VisualElement _dropTargetOutline;
         private int _dropTargetSlot = -1;
         private SlotChoice _slotChoice;
         private int _selectedSlot = -1;
+        private ItemPanelMoveCoordinator _itemMoves;
+        private ItemPanel _panel;
 
         /// <summary>Binds the grid area to its contents.</summary>
         /// <param name="shape">The grid's columns and rows.</param>
@@ -75,8 +79,9 @@ namespace SqueezySurvival.Presentation.Game
             // Any press outside the selected cell ends the selection, wherever on the screen it lands. Listening as
             // the event trickles down sees it before the element pressed handles it.
             dragLayer.RegisterCallback<PointerDownEvent>(OnAnyPointerDown, TrickleDown.TrickleDown);
-            _contents.Changed += Rebuild;
-            Rebuild();
+            CreateCells();
+            _contents.Changed += Refresh;
+            Refresh();
         }
 
         /// <summary>The element the cells are drawn in.</summary>
@@ -102,10 +107,7 @@ namespace SqueezySurvival.Presentation.Game
                 return;
             }
 
-            if (_itemCells.TryGetValue(_selectedSlot, out VisualElement cell))
-            {
-                cell.RemoveFromClassList("grid-cell--selected");
-            }
+            _cells[_selectedSlot].Element.RemoveFromClassList("grid-cell--selected");
 
             _selectedSlot = -1;
             if (_tooltip.IsPinned)
@@ -135,6 +137,31 @@ namespace SqueezySurvival.Presentation.Game
             _slotChoice = null;
             GridArea.RemoveFromClassList("inventory-grid--choosing");
             _tooltip.Hide();
+        }
+
+        /// <summary>
+        /// Lets this grid's things be dragged or modifier-clicked to the other panel (Docs/Design/UI/DragAndDrop.md,
+        /// Between panels). Called once, by <see cref="ItemPanelMoveCoordinator.Register"/>.
+        /// </summary>
+        public void EnableMovesBetweenPanels(ItemPanel panel, ItemPanelMoveCoordinator itemMoves)
+        {
+            _itemMoves = itemMoves ?? throw new ArgumentNullException(nameof(itemMoves));
+            _panel = panel;
+            _dragController.EnableMovesBetweenPanels(panel, itemMoves);
+        }
+
+        /// <summary>Shows an outcome's message by a slot for a moment, as when a move has no room.</summary>
+        public void ShowBriefMessage(GridDropOutcome outcome, int slot)
+        {
+            if (outcome == null)
+            {
+                throw new ArgumentNullException(nameof(outcome));
+            }
+
+            _tooltip.ShowBriefly(
+                new ThingTooltipContent(outcome.Title, string.Empty, outcome.Description, Array.Empty<string>()),
+                SlotWorldBound(slot),
+                GridCellDragController.BriefMessageMilliseconds);
         }
 
         /// <summary>Outlines the slot a drop would go to. No cell moves until the drop happens (Docs/Design/UI/DragAndDrop.md).</summary>
@@ -175,58 +202,73 @@ namespace SqueezySurvival.Presentation.Game
         /// <inheritdoc />
         public void Dispose()
         {
-            _contents.Changed -= Rebuild;
+            _contents.Changed -= Refresh;
         }
 
-        private void Rebuild()
+        // Brings each cell up to date with its slot. Only cells whose contents changed are touched: a selection or drag
+        // on a changed slot ends, since what it was about has moved, and its tooltip follows. Nothing else is disturbed (#114).
+        private void Refresh()
         {
-            ClearSelection();
-            _dragController.Cancel();
-            _tooltip.Hide();
-            foreach (VisualElement cell in _itemCells.Values)
+            foreach (InventoryGridCell cell in _cells)
             {
-                cell.RemoveFromHierarchy();
-            }
-
-            _itemCells.Clear();
-            HideDropTarget();
-            for (int slot = 0; slot < _contents.SlotCapacity; slot++)
-            {
-                if (_contents.IsOccupied(slot))
+                int slot = cell.Slot;
+                bool occupied = _contents.IsOccupied(slot);
+                bool changed = cell.Show(occupied ? _contents.DefinitionIdAt(slot) : null, occupied ? _contents.CountBadgeAt(slot) : string.Empty);
+                if (_slotGhosts.TryGetValue(slot, out VisualElement ghost))
                 {
-                    VisualElement cell = CreateItemCell(slot);
-                    _itemCells.Add(slot, cell);
-                    GridArea.Add(cell);
+                    ghost.style.display = occupied ? DisplayStyle.None : DisplayStyle.Flex;
+                }
+
+                if (!changed)
+                {
+                    continue;
+                }
+
+                if (slot == _selectedSlot)
+                {
+                    ClearSelection();
+                }
+
+                if (slot == _dragController.PressedSlot)
+                {
+                    _dragController.Cancel();
+                }
+
+                // A hovered slot's tooltip follows its contents, so a count shrinking under the pointer stays true.
+                if (slot == _tooltipSlot && !_tooltip.IsShowingBriefMessage && !_tooltip.IsPinned)
+                {
+                    if (occupied && _slotChoice == null && !_dragController.IsDragging)
+                    {
+                        _tooltip.Show(_contents.TooltipAt(slot), cell.Element.worldBound);
+                    }
+                    else
+                    {
+                        _tooltip.Hide();
+                        _tooltipSlot = -1;
+                    }
                 }
             }
-
-            foreach (KeyValuePair<int, VisualElement> ghost in _slotGhosts)
-            {
-                ghost.Value.style.display = _contents.IsOccupied(ghost.Key) ? DisplayStyle.None : DisplayStyle.Flex;
-            }
-
-            Relayout();
         }
 
-        private VisualElement CreateItemCell(int slot)
+        // One cell per slot, made once; the grid's size never changes (Docs/Design/UI/InventoryGrids.md).
+        private void CreateCells()
         {
-            var cell = new VisualElement();
-            cell.AddToClassList("grid-cell");
-            cell.style.position = Position.Absolute;
-
-            cell.Add(new PixelIconElement(_skin.Textures.Icon(_contents.DefinitionIdAt(slot))));
-
-            string countBadge = _contents.CountBadgeAt(slot);
-            if (countBadge.Length > 0)
+            for (int slot = 0; slot < _shape.SlotCount; slot++)
             {
-                var count = new Label(countBadge) { pickingMode = PickingMode.Ignore };
-                count.AddToClassList("grid-cell-count");
-                cell.Add(count);
+                var cell = new InventoryGridCell(slot, _skin.Textures);
+                RegisterCellEvents(cell);
+                _cells.Add(cell);
+                GridArea.Add(cell.Element);
             }
+        }
 
+        private void RegisterCellEvents(InventoryGridCell gridCell)
+        {
+            VisualElement cell = gridCell.Element;
+            int slot = gridCell.Slot;
             cell.RegisterCallback<PointerEnterEvent>(_ =>
             {
-                if (_tooltip.IsShowingBriefMessage || _tooltip.IsPinned)
+                if (!gridCell.IsOccupied || _tooltip.IsShowingBriefMessage || _tooltip.IsPinned)
                 {
                     return;
                 }
@@ -234,10 +276,12 @@ namespace SqueezySurvival.Presentation.Game
                 if (_slotChoice != null)
                 {
                     _tooltip.Show(_slotChoice.Preview(slot), cell.worldBound);
+                    _tooltipSlot = slot;
                 }
                 else if (!_dragController.IsDragging)
                 {
                     _tooltip.Show(_contents.TooltipAt(slot), cell.worldBound);
+                    _tooltipSlot = slot;
                 }
             });
             cell.RegisterCallback<PointerLeaveEvent>(_ =>
@@ -246,22 +290,35 @@ namespace SqueezySurvival.Presentation.Game
                 {
                     _tooltip.Hide();
                 }
+
+                if (_tooltipSlot == slot)
+                {
+                    _tooltipSlot = -1;
+                }
             });
 
             // While choosing a slot, a click chooses; the drag controller ignores presses then. Otherwise a click selects.
             cell.RegisterCallback<ClickEvent>(_ =>
             {
+                if (!gridCell.IsOccupied)
+                {
+                    return;
+                }
+
                 if (_slotChoice != null)
                 {
                     _slotChoice.Chosen(slot);
+                }
+                else if (_itemMoves != null && _itemMoves.TrySendToOtherPanel(_panel, slot))
+                {
+                    // A modified click sent things to the other panel instead of selecting.
                 }
                 else
                 {
                     Select(slot, cell);
                 }
             });
-            _dragController.RegisterCell(cell, slot, () => _slotChoice == null);
-            return cell;
+            _dragController.RegisterCell(cell, slot, () => _slotChoice == null && gridCell.IsOccupied);
         }
 
         private void Select(int slot, VisualElement cell)
@@ -279,8 +336,8 @@ namespace SqueezySurvival.Presentation.Game
                 return;
             }
 
-            bool onSelectedCell = _itemCells.TryGetValue(_selectedSlot, out VisualElement cell)
-                && down.target is VisualElement pressed
+            VisualElement cell = _cells[_selectedSlot].Element;
+            bool onSelectedCell = down.target is VisualElement pressed
                 && (pressed == cell || cell.Contains(pressed));
             if (!onSelectedCell)
             {
@@ -320,9 +377,9 @@ namespace SqueezySurvival.Presentation.Game
                 Place(_slotBackgrounds[slot], slot);
             }
 
-            foreach (KeyValuePair<int, VisualElement> item in _itemCells)
+            foreach (InventoryGridCell cell in _cells)
             {
-                Place(item.Value, item.Key);
+                Place(cell.Element, cell.Slot);
             }
 
             if (_dropTargetSlot >= 0)

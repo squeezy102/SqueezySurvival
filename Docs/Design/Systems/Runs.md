@@ -23,7 +23,11 @@ When a run ends, it awards two currencies, based on how long the survivor lived.
 | Survival points | 1 per day survived | Perks and boosts that make the game easier or change how it plays. Ideas: character unlocks, cosmetics, theme packs. |
 | Challenge points | 1 per month survived (30 days) | Unlocks that make the game harder. |
 
-What points can buy: [OQ-058](../OpenQuestions.md). Detailed design is deferred.
+What points can buy (direction set by OQ-058; the list and prices: [OQ-074](../OpenQuestions.md)):
+
+- **It serves both kinds of player.** Choices that make a run easier carry a cost, and choices that make it harder carry a reward, so a balanced run is always possible.
+- **Survival points buy small things; challenge points buy meaningful ones.**
+- **No free head start.** A survivor fully geared on Day 1 with no downside is never on offer. Candidates are traits (resistance to sunburn, slower hunger) more than gear (a hand axe, rations, shoes, a canteen), and a starting penalty such as higher stress may offset them.
 
 Run options change what a run earns ([Run options](#run-options)).
 

@@ -11,11 +11,17 @@ Design questions still waiting for an answer. The full history of every question
 
 | ID | Area | Question | Owner doc |
 |---|---|---|---|
-| OQ-025 | Exploration | How does exploring work at Dawn, Dusk and Night (light level penalties, hazard and injury chances)? | Systems/Exploration |
-| OQ-032 | Controls | What does each mouse button and modifier combination do (for example Shift + left click to move a whole stack, Ctrl + left click to move one)? Defined per screen as screens are designed. | UI/Controls |
-| OQ-033 | Controls | Should every drag have a click alternative (click an item to pick it up, click a destination to place it)? The Intermediate tier of the Game Accessibility Guidelines asks that "multiple simultaneous actions (eg. click/drag or swipe) are not required". Proposal: yes. | UI/Controls |
-| OQ-058 | Runs | What perks, boosts and challenge unlocks can survival and challenge points buy, and at what prices? Deferred to a dedicated session. | Systems/Runs |
-| OQ-064 | UI | Day summary: when exactly does it appear (at midnight, or when the survivor next wakes), and what does it show? Proposal in Design/UI/DaySummary. | UI/DaySummary |
+| OQ-071 | Controls | Click to pick up and place: what puts a picked-up thing back (Escape, right click, clicking outside any grid), how combining works without a drag (the same one-second hover over a thing?), and can a picked-up thing be carried to another panel or a container? | UI/Controls |
+| OQ-074 | Runs | Run perks: which traits, items and challenges can survival and challenge points buy, at what prices, and what penalty offsets each easier choice? (The rest of OQ-058.) | Systems/Runs |
+| OQ-075 | Actions | Pacing: should long actions be capped in real time? At 15 game minutes per second, a 1-hour Rest takes 4 seconds and an 8-hour sleep 32. Proposal: scale at that rate up to a cap of about 3 seconds. | Systems/Actions |
+| OQ-076 | Research | Is research done per single thing (a stone axe, a campfire) or per field (stone tools, firemaking)? | Systems/Research |
+| OQ-079 | Equipment | Durability: how forgiving is it, what wears things out (use, taking and dealing damage, rain and storms), how is it shown (a bar on the item, uses left in the tooltip, a broken-equipment icon), and what happens to broken equipment (keeps its slot, gives no benefit until repaired, can break mid-fight)? squeezy102 wants a dedicated session. | Systems/Equipment |
+| OQ-080 | Content | Chase items and quests: which hard-won items are worth working toward (a turtle shell shield, a legendary pirate cutlass), and which quests exist (a talking seagull, a pirate ghost, a plane overhead after day 50 prompting a smoke signal)? Backlog, for a dedicated session. | GameDesignDocument |
+| OQ-081 | Runs | Endings: should a run have story goals, such as bosses, key places, a final boss and a final scene (escape, or embracing life in the wild)? An ending never ends the run: the player is told and keeps playing. | Systems/Runs |
+| OQ-082 | Content | Messages in bottles from contributors and backers: who can submit, what review keeps them appropriate, and how are names and consent handled? | Content/BeachFinds |
+| OQ-083 | Crafting | Crafting stations (a forge with fuel and ore): are they worked from the crafting window or from their own window? | Systems/Crafting |
+| OQ-084 | Inventory | Haulers and carrying help: when are the sled and the cart available, and how much of the load in a carrier (a hand basket, a backpack) or a hauler counts toward what the survivor carries? Today's rule says none of a carrier's load counts for movement; squeezy102 describes the hand basket as a slight help. (The rest of OQ-078.) | Systems/Inventory |
+| OQ-088 | Controls | Modified clicks in an open container: does a Shift, Ctrl or Alt click on something in the container send it to the inventory or to the ground? (The rest of OQ-086.) | UI/Controls |
 
 ## Deferred to the balancing pass
 
@@ -25,7 +31,7 @@ Answered together in a dedicated mathematical balancing pass.
 |---|---|---|---|
 | OQ-004 | Stats | Stat ranges, decay rates per time unit, thresholds and their effects. | Systems/SurvivalStats |
 | OQ-036 | Encounters | Encounter chance per minute of action, and per zone, phase and weather. | Systems/Encounters |
-| OQ-056 | Inventory | Weight balancing: the personal weight limit, carrier capacities, item weights, and whether load can exceed 100%. Weight is a delicate balancing lever affecting carrying, exploration, exertion, food logistics and crafting. **Deferred to a dedicated weight balancing session.** | Systems/Inventory |
+| OQ-087 | Inventory | Weight balancing: the personal weight limit (100 lb placeholder), carrier capacities, item weights, and the time it takes to move things between panels (2 seconds per lb placeholder). Weight is a delicate balancing lever affecting carrying, exploration, exertion, food logistics and crafting. (The rest of OQ-056.) | Systems/Inventory |
 | OQ-057 | Combat | Damage values for weapons and animals, animal health, and which injuries each animal inflicts. | Systems/Combat |
 | OQ-059 | Runs | Easy and hard mode: how much lower (easy) or higher (hard) are penalties, decay and stat depletion? | Systems/Runs |
 | OQ-061 | Weather | Wildfire tuning: the chance an unattended fire starts one, how long the zone burns, how much is turned to charcoal, destroyed or damaged and how fast, the exact escape window, and how fast harm escalates for a survivor who stays past it. | Systems/Weather |

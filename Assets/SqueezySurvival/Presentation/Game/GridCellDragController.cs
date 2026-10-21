@@ -21,8 +21,8 @@ namespace SqueezySurvival.Presentation.Game
         // How often a held drag is re-checked, so the combine hold completes even while the pointer is still.
         private const long HoldCheckIntervalMilliseconds = 50;
 
-        // How long the message for a combine that can't happen stays up (Docs/Design/UI/DragAndDrop.md).
-        private const long CannotCombineMessageMilliseconds = 2000;
+        /// <summary>How long a brief message by a slot stays up, such as a combine that can't happen (Docs/Design/UI/DragAndDrop.md).</summary>
+        public const long BriefMessageMilliseconds = 2000;
 
         private readonly InventoryGridView _view;
         private readonly IInventoryGridContents _contents;
@@ -40,6 +40,11 @@ namespace SqueezySurvival.Presentation.Game
         private readonly CombineHoldTimer _combineHoldTimer = new CombineHoldTimer();
         private Vector2 _pointerPosition;
         private IVisualElementScheduledItem _holdCheck;
+        private ItemPanelMoveCoordinator _itemMoves;
+        private ItemPanel _panel;
+        private InventoryGridView _shownTargetView;
+        private int _shownHoveredSlot = -1;
+        private ItemTransferQuantity _shownQuantity = ItemTransferQuantity.All;
 
         /// <summary>Creates the controller for one grid.</summary>
         public GridCellDragController(
@@ -55,6 +60,16 @@ namespace SqueezySurvival.Presentation.Game
             _dragLayer = dragLayer ?? throw new ArgumentNullException(nameof(dragLayer));
             _textures = textures ?? throw new ArgumentNullException(nameof(textures));
         }
+
+        /// <summary>Lets drags carry this grid's things to the other panel (Docs/Design/UI/DragAndDrop.md, Between panels).</summary>
+        public void EnableMovesBetweenPanels(ItemPanel panel, ItemPanelMoveCoordinator itemMoves)
+        {
+            _itemMoves = itemMoves ?? throw new ArgumentNullException(nameof(itemMoves));
+            _panel = panel;
+        }
+
+        /// <summary>The slot pressed or being dragged, or -1.</summary>
+        public int PressedSlot => _pressedSlot;
 
         /// <summary>Whether a drag is in progress.</summary>
         public bool IsDragging => _draggedIcon != null;
@@ -128,9 +143,28 @@ namespace SqueezySurvival.Presentation.Game
 
         private void RefreshOutcome()
         {
-            GridDropOutcome outcome = _contents.ResolveDrop(_pressedSlot, TargetAt(_pointerPosition));
-            if (!SameOutcome(outcome, _shownOutcome))
+            int hoveredSlot = -1;
+            InventoryGridView otherView = _itemMoves == null ? null : _itemMoves.OtherPanelUnder(_panel, _pointerPosition, out hoveredSlot);
+            _shownHoveredSlot = hoveredSlot;
+
+            // Grids that don't take part in moves between panels (zone features, hands) always move whole stacks.
+            _shownQuantity = _itemMoves == null ? ItemTransferQuantity.All : _itemMoves.QuantityForDrag();
+            GridDropOutcome outcome;
+            if (otherView != null)
             {
+                _combineHoldTimer.Reset();
+                outcome = _itemMoves.Resolve(_panel, _pressedSlot, _shownHoveredSlot, _shownQuantity);
+            }
+            else
+            {
+                outcome = _contents.ResolveDrop(_pressedSlot, TargetAt(_pointerPosition), _shownQuantity);
+            }
+
+            InventoryGridView targetView = otherView ?? _view;
+            if (targetView != _shownTargetView || !SameOutcome(outcome, _shownOutcome))
+            {
+                _shownTargetView?.HideDropTarget();
+                _shownTargetView = targetView;
                 Show(outcome);
             }
         }
@@ -144,19 +178,23 @@ namespace SqueezySurvival.Presentation.Game
 
             // Releasing carries out exactly what was being shown.
             GridDropOutcome outcome = IsDragging ? _shownOutcome : GridDropOutcome.ReturnToPlace;
+            InventoryGridView targetView = _shownTargetView ?? _view;
             int sourceSlot = _pressedSlot;
+            int hoveredSlot = _shownHoveredSlot;
+            ItemTransferQuantity quantity = _shownQuantity;
             EndDrag();
-            if (outcome.ChangesSomething)
+            if (outcome.Kind == GridDropOutcomeKind.Transfer)
+            {
+                _itemMoves.Apply(_panel, sourceSlot, hoveredSlot, quantity);
+            }
+            else if (outcome.ChangesSomething)
             {
                 _contents.ApplyDrop(sourceSlot, outcome);
             }
-            else if (outcome.Kind == GridDropOutcomeKind.CannotCombine)
+            else if ((outcome.Kind == GridDropOutcomeKind.CannotCombine || outcome.Kind == GridDropOutcomeKind.NoRoom) && outcome.AnchorSlot >= 0)
             {
                 // The thing goes back, and the player is told why by the slot it was held over.
-                _tooltip.ShowBriefly(
-                    new ThingTooltipContent(outcome.Title, string.Empty, outcome.Description, Array.Empty<string>()),
-                    _view.SlotWorldBound(outcome.AnchorSlot),
-                    CannotCombineMessageMilliseconds);
+                targetView.ShowBriefMessage(outcome, outcome.AnchorSlot);
             }
 
             up.StopPropagation();
@@ -205,13 +243,14 @@ namespace SqueezySurvival.Presentation.Game
         private void Show(GridDropOutcome outcome)
         {
             _shownOutcome = outcome;
+            InventoryGridView targetView = _shownTargetView ?? _view;
             if (outcome.ChangesSomething)
             {
-                _view.ShowDropTarget(outcome.AnchorSlot);
+                targetView.ShowDropTarget(outcome.AnchorSlot);
             }
             else
             {
-                _view.HideDropTarget();
+                targetView.HideDropTarget();
             }
 
             if (outcome.Kind == GridDropOutcomeKind.ReturnToPlace)
@@ -220,7 +259,7 @@ namespace SqueezySurvival.Presentation.Game
                 return;
             }
 
-            Rect anchor = outcome.AnchorSlot >= 0 ? _view.SlotWorldBound(outcome.AnchorSlot) : _draggedIcon.worldBound;
+            Rect anchor = outcome.AnchorSlot >= 0 ? targetView.SlotWorldBound(outcome.AnchorSlot) : _draggedIcon.worldBound;
             _tooltip.Show(new ThingTooltipContent(outcome.Title, string.Empty, outcome.Description, Array.Empty<string>()), anchor);
         }
 
@@ -236,6 +275,10 @@ namespace SqueezySurvival.Presentation.Game
             _holdCheck = null;
             _combineHoldTimer.Reset();
             _view.HideDropTarget();
+            _shownTargetView?.HideDropTarget();
+            _shownTargetView = null;
+            _shownHoveredSlot = -1;
+            _shownQuantity = ItemTransferQuantity.All;
 
             _tooltip.Hide();
             _draggedIcon?.RemoveFromHierarchy();

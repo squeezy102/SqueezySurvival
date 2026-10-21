@@ -72,6 +72,7 @@ Every warning in a release log is either fixed or listed here with the reason it
 |---|---|---|
 | `No signing parameters provided, N file(s) will not be signed.` | `vpk pack` | Signing requires a paid code-signing certificate. Consequence documented in [ADR-0004](../Decisions/ADR-0004-Distribution-And-Self-Update.md#consequences). |
 | `No releases found` / `No full / applicable release was found to download.` | `vpk download` | Expected only for the first release, which has no predecessor for delta generation. |
+| `File '...-full.nupkg' already exists on disk. Verifying checksum...` | `vpk download` | The previous release's package is already in `Builds/Releases` from an earlier run; `vpk` checks it matches instead of downloading it again. |
 
 ## Open issues
 

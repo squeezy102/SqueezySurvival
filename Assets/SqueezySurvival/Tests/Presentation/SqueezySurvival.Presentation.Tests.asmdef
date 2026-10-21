@@ -1,0 +1,28 @@
+{
+    "name": "SqueezySurvival.Presentation.Tests",
+    "rootNamespace": "SqueezySurvival.Presentation.Tests",
+    "references": [
+        "SqueezySurvival.Core",
+        "SqueezySurvival.Core.Tests",
+        "SqueezySurvival.Presentation",
+        "SqueezySurvival.Editor",
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner",
+        "Unity.UI.TestFramework.Runtime"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

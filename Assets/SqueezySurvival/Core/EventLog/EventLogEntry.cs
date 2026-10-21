@@ -7,7 +7,7 @@ namespace SqueezySurvival.Core.EventLog
     public sealed class EventLogEntry
     {
         /// <summary>Creates an entry.</summary>
-        public EventLogEntry(GameClock time, string text)
+        public EventLogEntry(GameClock time, string text, EventLogSeverity severity = EventLogSeverity.Normal)
         {
             Time = time ?? throw new ArgumentNullException(nameof(time));
             if (string.IsNullOrWhiteSpace(text))
@@ -16,6 +16,7 @@ namespace SqueezySurvival.Core.EventLog
             }
 
             Text = text;
+            Severity = severity;
         }
 
         /// <summary>Game time when the event happened.</summary>
@@ -23,5 +24,8 @@ namespace SqueezySurvival.Core.EventLog
 
         /// <summary>What happened, in plain language.</summary>
         public string Text { get; }
+
+        /// <summary>How the entry is marked.</summary>
+        public EventLogSeverity Severity { get; }
     }
 }

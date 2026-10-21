@@ -46,7 +46,7 @@ namespace SqueezySurvival.Presentation.Game
         /// <inheritdoc />
         public void Dispose()
         {
-            UnityEngine.Object.Destroy(_texture);
+            UnityObjectDestroyer.Destroy(_texture);
         }
     }
 }

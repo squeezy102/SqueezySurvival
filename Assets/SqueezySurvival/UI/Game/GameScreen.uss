@@ -77,6 +77,15 @@
     margin-bottom: 0;
 }
 
+/* The load as text, until the load gauge replaces it (Docs/Design/UI/InventoryGrids.md, The grids). */
+.inventory-load-text {
+    flex-grow: 1;
+    flex-shrink: 1;
+    margin-left: 16px;
+    font-size: 22px;
+    color: rgb(190, 200, 225);
+}
+
 .inventory-grid {
     flex-grow: 1;
     flex-basis: 0;
@@ -276,6 +285,80 @@
     white-space: normal;
 }
 
+/* Rows are reused for any entry; the warning class shows the icon and reddens the text. */
+.event-log-entry-row {
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.event-log-entry-row > .event-log-entry {
+    flex-shrink: 1;
+}
+
+/* A warning entry: red, beside a warning icon, and worded as a warning (Docs/Design/UI/HUD.md, Event log). */
+.event-log-warning-icon {
+    display: none;
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    margin-right: 6px;
+}
+
+.event-log-entry-row--warning > .event-log-warning-icon {
+    display: flex;
+}
+
+.event-log-entry-row--warning > .event-log-entry {
+    color: rgb(255, 120, 110);
+}
+
+/* Unread warnings: a red "!" by the heading and a pulsing red border (Docs/Design/UI/HUD.md, Event log). */
+.event-log-unread-button {
+    min-height: 32px;
+    padding: 4px 10px;
+    font-size: 16px;
+    color: rgb(255, 96, 84);
+}
+
+.event-log-alert-outline {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border-width: 4px;
+    border-color: rgb(232, 72, 60);
+    opacity: 0.25;
+    transition-property: opacity;
+    transition-duration: 0.6s;
+}
+
+.event-log-alert-outline--bright {
+    opacity: 1;
+}
+
+/* Jump to newest: a strip along the bottom of the log that shows a down arrow while hovered. */
+.event-log-jump-area {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+}
+
+.event-log-jump-button {
+    width: 56px;
+    height: 36px;
+    padding: 0;
+    visibility: hidden;
+}
+
+.event-log-jump-area:hover > .event-log-jump-button {
+    visibility: visible;
+}
+
 
 .panel-heading {
     margin-bottom: 6px;
@@ -303,7 +386,9 @@
     margin-right: 8px;
 }
 
+/* Overlays start hidden; their presenters show them when needed, so the screen's resting state is uncovered. */
 .pause-overlay {
+    display: none;
     position: absolute;
     left: 0;
     top: 0;

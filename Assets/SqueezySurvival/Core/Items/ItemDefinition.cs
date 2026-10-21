@@ -13,7 +13,8 @@ namespace SqueezySurvival.Core.Items
         /// <param name="description">A sentence or two for its tooltip.</param>
         /// <param name="category">What kind of thing it is (Docs/Design/Systems/Inventory.md, Item categories).</param>
         /// <param name="weightPounds">How much one weighs, in pounds (Docs/Design/Systems/Inventory.md). Must be more than 0.</param>
-        public ItemDefinition(string id, string name, string singularPhrase, string pluralName, string description, ItemCategory category, decimal weightPounds)
+        /// <param name="foundWarning">A warning added to the event log whenever one is found, or empty for none.</param>
+        public ItemDefinition(string id, string name, string singularPhrase, string pluralName, string description, ItemCategory category, decimal weightPounds, string foundWarning = "")
         {
             Id = CountableThingDefinitionText.Require(id, nameof(id));
             Name = CountableThingDefinitionText.Require(name, nameof(name));
@@ -32,6 +33,7 @@ namespace SqueezySurvival.Core.Items
             }
 
             WeightPounds = weightPounds;
+            FoundWarning = foundWarning ?? throw new ArgumentNullException(nameof(foundWarning));
         }
 
         /// <inheritdoc />
@@ -54,5 +56,11 @@ namespace SqueezySurvival.Core.Items
 
         /// <summary>How much one weighs, in pounds.</summary>
         public decimal WeightPounds { get; }
+
+        /// <summary>
+        /// A warning added to the event log whenever one is found, such as that cone snails are deadly
+        /// (Docs/Design/Content/BeachFinds.md), or empty for none.
+        /// </summary>
+        public string FoundWarning { get; }
     }
 }

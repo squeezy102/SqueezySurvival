@@ -29,6 +29,7 @@ Package choices and rationale: [ADR-0003](../Decisions/ADR-0003-Package-Baseline
 | `Tools/Output/` | Script logs, local only | No |
 | `Library/`, `Temp/`, `Logs/`, `UserSettings/` | Generated locally by Unity | No |
 | `*.sln`, `*.csproj` | Generated IDE files | No |
+| `Diagnostics/` | The last compile's and test run's results, written by the editor ([Testing Standards: reading results without Unity](TestingStandards.md#reading-results-without-unity)) | No |
 
 ### Inside `Assets/`
 
@@ -37,8 +38,10 @@ Package choices and rationale: [ADR-0003](../Decisions/ADR-0003-Package-Baseline
 | `Assets/SqueezySurvival/Core/` | Game and screen logic, no Unity references | `SqueezySurvival.Core` |
 | `Assets/SqueezySurvival/Presentation/` | MonoBehaviours and UI binding | `SqueezySurvival.Presentation` |
 | `Assets/SqueezySurvival/Editor/` | Editor-only tooling: release build, setup commands | `SqueezySurvival.Editor` |
+| `Assets/SqueezySurvival/Editor/Diagnostics/` | Writes compile and test results to `Diagnostics/` | `SqueezySurvival.Editor.Diagnostics` |
 | `Assets/SqueezySurvival/Tests/Core/` | Edit Mode tests for Core | `SqueezySurvival.Core.Tests` |
 | `Assets/SqueezySurvival/Tests/Editor/` | Edit Mode tests for editor tooling | `SqueezySurvival.Editor.Tests` |
+| `Assets/SqueezySurvival/Tests/Presentation/` | Edit Mode tests for Presentation, against the real UI layouts ([ADR-0008](../Decisions/ADR-0008-Presentation-Testing.md)) | `SqueezySurvival.Presentation.Tests` |
 | `Assets/SqueezySurvival/UI/` | UXML layouts, USS styles, theme and panel settings | - |
 | `Assets/SqueezySurvival/Art/` | Sprites and textures ([Asset Credits](AssetCredits.md)) | - |
 | `Assets/SqueezySurvival/Scenes/` | Scenes | - |

@@ -6,6 +6,35 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 
 ## [Unreleased]
 
+### Added
+- Compile and test results are written to `Diagnostics/` after every compile and test run, so contributors' AI assistants can read what failed and why without opening Unity. See [Testing Standards: reading results without Unity](Docs/Engineering/TestingStandards.md#reading-results-without-unity) (#137).
+- Presentation tests: a new Edit Mode test assembly drives presenters against the real game screen with Unity's UI Test Framework ([ADR-0008](Docs/Decisions/ADR-0008-Presentation-Testing.md)). First covered: the HUD clock, zone bar, load label, Explore, Wait and Rest, and the event log's items source (#126).
+- [Architecture](Docs/Engineering/Architecture.md): how the runtime is organized, and the gaps found in the 2026-10-20 review (#116).
+- Split a stack inside a panel: Ctrl-drag half or Alt-drag one onto an empty slot; drop a stack on its own kind to merge them. Sorting joins split stacks back together. An open container will take modified clicks before the inventory (#112). See [Drag and Drop: splitting and merging](Docs/Design/UI/DragAndDrop.md#splitting-and-merging).
+- Things move between the ground and the inventory: drag them (Ctrl moves half, Alt moves one), or Shift, Ctrl or Alt + click to send all, half or one straight across. Like kinds stack automatically. Each move takes a few seconds by weight and is logged (#86). See [Drag and Drop: between panels](Docs/Design/UI/DragAndDrop.md#between-panels).
+- A 100 lb weight limit with no cap: the inventory header shows the load, and an immobile survivor (100% or more) can't explore (#86). See [Inventory: weight](Docs/Design/Systems/Inventory.md#weight).
+- Unread warnings in the event log: a pulsing red border and a red "!" by its heading, with a count when several are unread. Clicking the "!" goes to the oldest unread warning (#101).
+- Hovering the bottom of the event log shows a down arrow that jumps to the newest entry. The log follows new entries only while scrolled to the bottom (#101).
+- Design drafts from squeezy102's offline notes, for discussion: [Containers](Docs/Design/Systems/Containers.md), [Crafting](Docs/Design/Systems/Crafting.md), [Tutorial](Docs/Design/UI/Tutorial.md), [In-game Wiki](Docs/Design/UI/Wiki.md), [Beach Finds](Docs/Design/Content/BeachFinds.md), action pacing and research proposals. Open questions OQ-071 to OQ-083.
+- The calendar: 120-day years of four 30-day seasons. See [Time: calendar](Docs/Design/Systems/Time.md#calendar).
+
+### Changed
+- `RunSession` is split into focused services, built by `RunSessionFactory`: survivor inventory, ground inventory, inventory transfers, zone exploration, time passing and action completion. Gameplay is unchanged (#120). See [Architecture: the run](Docs/Engineering/Architecture.md#the-run).
+- The game screen is built by its composition root and run by one small presenter per panel instead of one controller doing everything. Escape's order is written down in [Controls: Escape](Docs/Design/UI/Controls.md#escape) and decided by Core. Rerun **SqueezySurvival > Setup > Configure Game Screen** once after updating (#119).
+- The event log reuses a handful of rows as it scrolls instead of keeping every entry on screen, so long runs stay fast. Following new entries, unread warnings and jump to newest work as before (#118).
+- Game time advances through one path, `GameTimeAdvancer`, which tells time-dependent systems in a fixed order and raises one event; exploring, waiting, resting and moving things no longer set the clock themselves (#117). See [Architecture: time](Docs/Engineering/Architecture.md#time-one-path).
+- Inventory grids keep one cell per slot and update it in place instead of rebuilding every cell on each change, so hovering, selecting and dragging are no longer interrupted when something else moves (#114).
+- The clock keeps and shows seconds ("6:04:20 AM"), in the HUD and the event log, so tiny actions can cost seconds without hiding any time (#107). See [Time: rules](Docs/Design/Systems/Time.md#rules).
+- The Beach's finds are the items in [Beach Finds](Docs/Design/Content/BeachFinds.md), each with a pixel-art icon: big rocks, small and big sticks, logs, crabs (now with legs), lobsters, clams, oysters, gooseneck barnacles, bones and cone snails join the familiar finds. Sea glass, starfish, pumice, cuttlebone, rope scraps, glass floats and bamboo are gone (#95).
+- The ghost hands' fingers are straight, so they no longer look broken (#64).
+- Answers to OQ-025 (exploring in poor light), OQ-032 (control principles), OQ-033 (click to pick up and place), OQ-058 (run perks direction) and OQ-064 (day summary).
+- The ground and zone features grids are 12 x 3 instead of 16 x 4, so their icons are bigger (#73).
+
+### Fixed
+- The game screen's overlays (pause menu, Options, the find-with-no-room question, the not-built notice) start hidden in the layout instead of covering the screen until the game hides them (#136).
+- Textures made at runtime are freed correctly outside Play Mode too, so disposing the HUD dial or the texture cache in the editor no longer logs an error (#135).
+- Finding a cone snail now logs a red warning, with a warning icon, that says cone snails are dangerous (#99). See [HUD: event log](Docs/Design/UI/HUD.md#event-log).
+
 ## [0.1.1] - 2026-10-20
 
 ### Fixed

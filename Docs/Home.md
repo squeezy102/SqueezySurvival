@@ -27,13 +27,15 @@ The single source of truth for the design, engineering and decisions behind Sque
 | | [Resource Nodes](Design/Systems/ResourceNodes.md) | Renewable and destructive harvesting, replenishment. |
 | | [Encounters](Design/Systems/Encounters.md) | Wildlife encounters, fight or flight, ambushes. |
 | | [Combat](Design/Systems/Combat.md) | Animal decks, duds, weapons, tells. |
+| | [Crafting](Design/Systems/Crafting.md) | Crafting by hand and in the window, works in progress (concept). |
 | | [Research](Design/Systems/Research.md) | Passive research, queue, material-discovery unlocks, idle warning. |
 | | [Weather](Design/Systems/Weather.md) | Weather states, seasons, wildfire. |
 | Items | [Inventory](Design/Systems/Inventory.md) | Personal weight limit, load, carriers. |
 | | [Equipment](Design/Systems/Equipment.md) | Slots, loadouts, treatment conflicts. |
 | | [Decay](Design/Systems/Decay.md) | Item deterioration and storage. |
+| | [Containers](Design/Systems/Containers.md) | Containers, affinities, sleds and carts (concept). |
 
-Planned: Crafting, Buildings, Light Sources, Illness.
+Planned: Buildings, Light Sources, Illness.
 
 ### UI
 
@@ -44,7 +46,10 @@ Planned: Crafting, Buildings, Light Sources, Illness.
 - [Inventory Grids](Design/UI/InventoryGrids.md) - fixed grids of slots for the ground, zone features, inventory and hands; sorting; the ground-full prompt.
 - [Drag and Drop](Design/UI/DragAndDrop.md) - moving, reordering and combining things by dragging.
 - [Options](Design/UI/Options.md) - the Options screen and where it opens from.
-- [Day Summary](Design/UI/DaySummary.md) - the screen that marks the end of each day (concept).
+- [Beach Finds](Design/Content/BeachFinds.md) - what can be found on the Beach (concept).
+- [Day Summary](Design/UI/DaySummary.md) - the screen that marks the end of each day.
+- [Tutorial](Design/UI/Tutorial.md) - guidance through the first hours (concept).
+- [In-game Wiki](Design/UI/Wiki.md) - everything the survivor has learned, in the game (concept).
 - [Launcher](Design/Launcher.md) - launcher layout, behavior and states.
 
 ## Project
@@ -60,8 +65,9 @@ Files at the repository root:
 
 ## Engineering
 
+- [Architecture](Engineering/Architecture.md) - how the runtime is organized: the run's services, the one time path, change events, scene composition, element lifetime.
 - [Coding Standards](Engineering/CodingStandards.md) - testability, naming, architecture, warnings policy.
-- [Testing and Quality Standards](Engineering/TestingStandards.md) - ISTQB-based test design, game testing, defect reports, definition of done.
+- [Testing and Quality Standards](Engineering/TestingStandards.md) - ISTQB-based test design, game testing, reading compile and test results without Unity, defect reports, definition of done.
 - [Project Setup](Engineering/ProjectSetup.md) - editor version, packages, folder layout.
 - [Source Control](Engineering/SourceControl.md) - branching, commits, Git LFS.
 - [Release Pipeline](Engineering/ReleasePipeline.md) - building, packaging and publishing player builds.
@@ -93,6 +99,7 @@ Files at the repository root:
 | `Docs/Design/` | The GDD, open questions, question log, and the launcher design. |
 | `Docs/Design/Systems/` | One document per game system. New systems are added here as they move from `Concept` to `Draft`. |
 | `Docs/Design/UI/` | Screens, HUD and controls. |
+| `Docs/Design/Content/` | Content lists, such as what each zone holds. |
 | `Docs/Engineering/` | Standards, setup, source control, release pipeline. Spikes in `Spikes/SPIKE-NNN-*.md`. |
 | `Docs/Decisions/` | ADRs as `ADR-NNNN-*.md`, indexed in `README.md`. |
 

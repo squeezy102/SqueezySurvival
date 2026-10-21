@@ -73,7 +73,7 @@ Each state includes everything in the state before it, more strongly.
 
 ## Seasons
 
-Seasons follow a fixed order every year (resolves OQ-053, lengths to be tuned):
+Seasons follow a fixed order every year (resolves OQ-053), 30 days each ([Time: calendar](Time.md#calendar)):
 
 | Season | Character |
 |---|---|
@@ -82,7 +82,7 @@ Seasons follow a fixed order every year (resolves OQ-053, lengths to be tuned):
 | Rainy | Frequent rain, building toward storms. |
 | Stormy | Cold and stormy; when severe storms and hurricanes are most likely. |
 
-Then Temperate again, and the cycle repeats. The wet and stormy part of the year arrives around day 30 (draft). A season sets which weather is likely; it never forces a state.
+Then Temperate again, and the cycle repeats. The Rainy season starts on day 61. A season sets which weather is likely; it never forces a state.
 
 ## How weather changes
 

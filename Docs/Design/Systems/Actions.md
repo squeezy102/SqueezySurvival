@@ -8,7 +8,7 @@ Everything the survivor does is an action. This document defines what every acti
 
 | Part | Description |
 |---|---|
-| Duration | Whole minutes (TU), at least 1. See [Time](Time.md). |
+| Duration | Whole minutes (TU), at least 1; a few tiny actions last whole seconds instead. See [Time](Time.md#rules). |
 | Costs | Anything consumed besides time: materials, stats, tool durability. |
 | Requirements | Conditions that must hold to attempt it: tools, materials, location, light level, survivor condition. |
 | Outcomes | What happens on success, and on failure where failure is possible. |
@@ -25,6 +25,14 @@ Every action is in one of three states. The UI always shows the state and the re
 | Available | Can be performed normally. | Drink from a coconut in daylight. |
 | Available with penalties | Can be performed, but with added time, failure chance or risk. The penalties are shown. | Forage in the dark: injury risk. |
 | Unavailable | Cannot be performed. The blocking requirement is named. | Sleep while dangerously thirsty. |
+
+## Pacing
+
+**Proposal from squeezy102's notes (2026-10-19), not approved.** Every action should carry weight: today, clicking Explore over and over maps the Beach and fills the ground in seconds, and waiting doesn't feel like waiting.
+
+- **An action takes real time.** While it runs, a small window in the middle of the screen names it ("Exploring the Beach") with a progress bar, and nothing else can be started.
+- **Standard: 15 minutes of game time takes 1 second.** Other durations scale from it, tuned as needed; uniform scaling is preferred where reasonable, but the player must never sit watching a bar for long (an 8-hour sleep would take 32 seconds). How long actions are handled: [OQ-075](../OpenQuestions.md), for discussion.
+- **Later, small animations** replace the bar: dashed lines appearing one by one to an X for exploring, a bed giving off Zs for sleeping, a clock turning for waiting, a hammer striking an anvil for crafting. Never the survivor. Out of scope for the MVP ([GDD: presentation](../GameDesignDocument.md#presentation)); sound comes later too.
 
 ## Light level
 

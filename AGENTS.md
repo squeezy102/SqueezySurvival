@@ -15,6 +15,7 @@ The owner, **squeezy102** (Pj), has the final say on every change.
 | [Docs/Home.md](Docs/Home.md) | Index of all documentation and the documentation policy |
 | [Docs/Design/GameDesignDocument.md](Docs/Design/GameDesignDocument.md) | Vision, pillars, design principles |
 | [Docs/Engineering/CodingStandards.md](Docs/Engineering/CodingStandards.md) | Code rules |
+| [Docs/Engineering/Architecture.md](Docs/Engineering/Architecture.md) | How the runtime is organized: services, time, events, composition, element lifetime |
 | [Docs/Engineering/TestingStandards.md](Docs/Engineering/TestingStandards.md) | Test design (ISTQB), game testing, definition of done |
 | [Docs/Engineering/WorkTracking.md](Docs/Engineering/WorkTracking.md) | Issues, labels, lifecycle |
 | [Docs/Engineering/SourceControl.md](Docs/Engineering/SourceControl.md) | Branches, commits, protected branches |
@@ -38,7 +39,7 @@ Then read the design document for the system you are touching (`Docs/Design/Syst
 |---|---|---|
 | `SqueezySurvival.Core` | `Assets/SqueezySurvival/Core/` | Plain C#, **no Unity references** (compiler-enforced). All game and screen logic lives here. |
 | `SqueezySurvival.Presentation` | `Assets/SqueezySurvival/Presentation/` | Thin MonoBehaviours that bind UI to Core. No game rules. |
-| `SqueezySurvival.Editor` | `Assets/SqueezySurvival/Editor/` | Build and setup commands. |
+| `SqueezySurvival.Editor` | `Assets/SqueezySurvival/Editor/` | Build and setup commands; `Editor/Diagnostics/` writes compile and test results to `Diagnostics/`. |
 | `*.Tests` | `Assets/SqueezySurvival/Tests/` | Edit Mode tests (NUnit). |
 
 - **UI:** UI Toolkit. Layout in UXML, style in USS, behavior in C# ([ADR-0007](Docs/Decisions/ADR-0007-Runtime-UI-And-Assembly-Layout.md)).
@@ -90,5 +91,6 @@ Applies to docs, UI text, commit messages and issues.
 
 - Claude Code reads this file through [CLAUDE.md](CLAUDE.md). For other tools, point the tool's project instructions at `AGENTS.md`.
 - Before proposing anything, read the design document involved and the open questions for that area ([Open Questions](Docs/Design/OpenQuestions.md)). Do not answer an open question yourself; propose options and let squeezy102 decide.
+- **Read results from files, not screenshots.** After every compile and test run, Unity writes `Diagnostics/latest-compilation.md`, `Diagnostics/latest-test-summary.md` and `Diagnostics/latest-test-results.xml` at the project root. Read them to see what failed and why; check their timestamps ([Testing and Quality Standards: reading results without Unity](Docs/Engineering/TestingStandards.md#reading-results-without-unity)).
 - State the source for every technical claim.
 - Keep responses concise and work one step at a time with the person you are helping.

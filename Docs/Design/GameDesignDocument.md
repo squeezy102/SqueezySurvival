@@ -26,6 +26,7 @@ Presentation is pictures, text, windows and progress bars. Depth comes from syst
 3. **Discovery drives progression.** Finding a resource for the first time unlocks research that uses it.
    - **You only know what you know.** The game never shows information about anything the survivor has not encountered: no hidden foods in lists, no undiscovered resources in tables, no unknown recipes. Knowledge is earned through play and appears as it is gained.
 4. **Clarity over clutter.** The UI must make state, costs and consequences obvious. This is the primary differentiator from our influences.
+   - **Information lives in the game** (proposed by squeezy102, 2026-10-19). The player never needs a website to learn the game: an [in-game wiki](UI/Wiki.md) holds everything the survivor has learned.
    - **The game tells you how it works.** Every rule that affects the player is stated in the game where it applies: how settings are chosen, what a drop will do, what an action costs. Nothing is hidden or left to guesswork. ("You only know what you know" limits what the survivor has discovered, never how the game's rules work.)
    - Bars and meters always read "higher is better".
    - Iconography shows meaning everywhere, for example end-cap icons on every bar showing what empty and full mean. The player should never have to wonder what is good and what is bad.

@@ -20,9 +20,16 @@
                         </ui:VisualElement>
                         <ui:Label text="Survival stats, temperature and weather: not built yet" class="placeholder-text" />
                     </ui:VisualElement>
-                    <ui:VisualElement class="panel event-log-panel">
-                        <ui:Label text="Event log" class="panel-heading display-text" />
-                        <ui:ScrollView name="event-log-entries" class="event-log-entries" />
+                    <ui:VisualElement name="event-log-panel" class="panel event-log-panel">
+                        <ui:VisualElement class="panel-header">
+                            <ui:Label text="Event log" class="panel-heading display-text" />
+                            <ui:Button name="event-log-unread-button" class="event-log-unread-button display-text" />
+                        </ui:VisualElement>
+                        <ui:ListView name="event-log-entries" class="event-log-entries" virtualization-method="DynamicHeight" fixed-item-height="30" selection-type="None" focusable="false" />
+                        <ui:VisualElement name="event-log-jump-area" class="event-log-jump-area">
+                            <ui:Button name="event-log-jump-button" class="event-log-jump-button" />
+                        </ui:VisualElement>
+                        <ui:VisualElement name="event-log-alert-outline" class="event-log-alert-outline" picking-mode="Ignore" />
                     </ui:VisualElement>
                 </ui:VisualElement>
                 <ui:VisualElement class="center-column">
@@ -55,6 +62,7 @@
             <ui:VisualElement class="panel inventory-panel">
                 <ui:VisualElement class="panel-header">
                     <ui:Label text="Inventory" class="panel-heading display-text" />
+                    <ui:Label name="inventory-load" class="inventory-load-text" />
                     <ui:VisualElement class="sort-controls">
                         <ui:Button name="inventory-sort-button" class="sort-button" />
                         <ui:Button name="inventory-sort-menu-button" class="sort-menu-button" />
@@ -111,6 +119,6 @@
             <ui:Label name="grid-tooltip-description" class="grid-tooltip-description" />
             <ui:VisualElement name="grid-tooltip-details" />
         </ui:VisualElement>
-        <ui:Instance template="OptionsScreen" name="options-screen" />
+        <ui:Instance template="OptionsScreen" name="options-screen" style="display: none;" />
     </ui:VisualElement>
 </ui:UXML>

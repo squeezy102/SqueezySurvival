@@ -11,7 +11,7 @@ Always-visible status shown on every gameplay screen. Follows [Pillar 4: clarity
 | Body temperature | "Thermometer and body" icon | The survivor's own temperature. Shown separately from the survival stat bars because both extremes are bad. See [Body temperature icon](#body-temperature-icon). |
 | Outside temperature | Number with unit, for example `84°F` | Ambient air temperature. Unit is a player setting: Fahrenheit (default) or Celsius. |
 | Weather | Icon | Current weather state. |
-| Game clock | Day, time and day phase, for example `Day 3 - 7:45 AM - Morning` | See [Time](../Systems/Time.md). |
+| Game clock | Day, time and day phase, for example `Day 3`, `7:45:20 AM` and `Morning`, one per row | See [Time](../Systems/Time.md). |
 | Real-world clock | The player's local time | Optional; player setting, off by default. |
 | Idle research | Atom with "zzz" icon | Shown only while nothing is researching. See [Research: idle research](../Systems/Research.md#idle-research). |
 
@@ -49,10 +49,15 @@ You pulled a muscle!
 
 - Every game event that changes state is logged: discoveries, item movements, actions and their outcomes, stat warnings, injuries, weather changes.
 - **Every sound cue has a matching log entry**, so sound is never the only signal ([Pillar 4](../GameDesignDocument.md#pillars)).
-- Warnings and serious events are marked with an icon as well as color.
+- Warnings and serious events are marked with an icon as well as color: a warning entry is red, starts with a red warning triangle, and says in words why it is a warning (for example, a cone snail find adds "You've heard cone snails are very, very dangerous. Best to leave them alone.").
 - Positioned lower left.
 - Hides automatically when idle and reappears when a new event arrives. Auto-hide is a player setting, on by default.
 - **Important events are highlighted** for a couple of seconds, both the entry and the log window: bad (red), good (green), notification (yellow). Each also carries an icon, so color is never the only signal. The MVP uses a static highlight (colored border, icon and bold text for a few seconds); pulsing and glowing arrive with animation, together with a reduce-motion setting (resolves OQ-034).
+- **Unread warnings:** every new warning starts unread. While any warning is unread, the log's border pulses red and a red **!** sits beside the log's heading, with the number unread beside it when there is more than one ("! 3"). The pulse is not a flash, so the reduced-flashing option does not change it.
+  - Clicking the **!** scrolls to the oldest unread warning and marks it read. Each click takes the player to the next one; when none are left, the **!** disappears and the pulse stops.
+  - A warning also counts as read once the player scrolls the log (mouse wheel, scroll bar or the jump-to-newest arrow) and the warning is fully in view. A warning that arrives on screen is still unread, so it always alerts.
+- **Following the newest entry:** while the log is scrolled to the bottom, new entries scroll into view as they arrive. Once the player scrolls up, the log stays where they left it.
+- **Jump to newest:** hovering the bottom edge of the log shows a down arrow; clicking it scrolls to the newest entry and follows new entries again.
 - **Header controls:** clicking the top of the log offers pin, hide, configure, and open the full history.
 - **Full history view:** the whole run, searchable and filterable by type (actions, finds, warnings) (resolves OQ-031).
 

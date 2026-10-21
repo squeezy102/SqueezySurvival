@@ -7,9 +7,10 @@ Research turns discovered knowledge into craftable recipes and other unlocks.
 ## Rules
 
 1. **Research is passive.** It progresses while the survivor does anything else and never blocks or interrupts an action (resolves OQ-005).
-2. **Its only cost is time.** Research progresses by the duration of every action ([Time](Time.md#rules)). The player's job is to keep something researching.
+2. **Its only cost is time, unless the player chooses to speed it up with materials.** Research progresses by the duration of every action ([Time](Time.md#rules)). The player's job is to keep something researching.
 3. **Completed research grants recipes**, including blueprints for structures, which become craftable.
 4. **Knowledge is never lost** within a run. Discoveries, topics and recipes stay known even if the items behind them are used up, [decay](Decay.md) or break: a survivor whose last crucible breaks still knows how to make one.
+5. **Speeding up with materials** (resolves OQ-077). Each topic lists materials (for example 5 stones, 5 sticks and 5 cords). Handing in the **full** list cuts the topic's **total** time in half, taken off what remains: with less than half left, the topic completes at once. A partial list gives nothing. It is always optional.
 
 ## Queue
 
@@ -37,3 +38,13 @@ Having nothing researching wastes time, so the game says so:
 - **Nav bar:** the research icon is highlighted while nothing is researching or queued. The MVP uses a static highlight (icon and border, never color alone); a bounce or pulse arrives with animation, together with the reduce-motion setting ([HUD: event log](../UI/HUD.md#event-log)).
 - **Idle icon:** an atom with "zzz" in the [HUD](../UI/HUD.md) static status area while nothing is researching. Hovering explains it: "No research queued."
 - **Event log:** "Your research is complete. Your mind is idle." when the last topic finishes.
+
+## Proposals (not approved)
+
+From squeezy102's notes (2026-10-19), for discussion.
+
+- **What is researched:** single things (a stone axe, a campfire, a clay vessel) or whole fields (stone tools, clay forming, firemaking)? [OQ-076](../OpenQuestions.md).
+- **Finding things in the window.** Sort alphabetically, by time, or by materials on hand, ascending or descending. Topics are grouped by category, each opening a list beside it, like the old Windows Start menu. There will be many recipes; the window does the organizing, never the player.
+- **New topics are announced** in the HUD, in the research window, in the event log ("New research unlocked: Ceramics"), perhaps with a pop-up, and the player can always see where in the window a new topic is.
+- **Layout.** The research window covers the zone features panel, like the other windows from the nav bar, and leaves the ground and inventory usable. To be designed in a dedicated session.
+

@@ -18,10 +18,15 @@ namespace SqueezySurvival.Core.DragAndDrop
         }
 
         /// <summary>
-        /// The outcome of releasing the thing in <paramref name="sourceSlot"/> over <paramref name="target"/>: into an
-        /// empty slot; swapped with another thing; or combined with it, once held over it long enough.
+        /// The outcome of releasing <paramref name="quantity"/> of the stack in <paramref name="sourceSlot"/> over
+        /// <paramref name="target"/>: into an empty slot, whole or split; merged with a stack of the same kind; swapped
+        /// with another thing; or combined with it, once held over it long enough.
         /// </summary>
-        public GridDropOutcome Resolve<TDefinition>(CountedCollection<TDefinition> collection, int sourceSlot, GridDropTarget target)
+        public GridDropOutcome Resolve<TDefinition>(
+            CountedCollection<TDefinition> collection,
+            int sourceSlot,
+            GridDropTarget target,
+            ItemTransferQuantity quantity = ItemTransferQuantity.All)
             where TDefinition : class, ICountableThingDefinition
         {
             if (collection == null)
@@ -37,13 +42,17 @@ namespace SqueezySurvival.Core.DragAndDrop
             CountedEntry<TDefinition> dragged = collection.EntryAtSlot(sourceSlot)
                 ?? throw new ArgumentOutOfRangeException(nameof(sourceSlot), sourceSlot, "Nothing is in that slot.");
 
+            int count = ItemTransferQuantityCalculator.CountToMove(dragged.Count, quantity);
             switch (target.Kind)
             {
                 case GridDropTargetKind.EmptySlot:
-                    return new GridDropOutcome(
-                        GridDropOutcomeKind.Move, target.Slot, target.Slot, $"Put the {Lower(dragged.Definition)} here.");
+                    return count < dragged.Count
+                        ? new GridDropOutcome(
+                            GridDropOutcomeKind.Split, target.Slot, target.Slot, $"Put {PartOf(dragged, count)} here.", count: count)
+                        : new GridDropOutcome(
+                            GridDropOutcomeKind.Move, target.Slot, target.Slot, $"Put the {Lower(dragged.Definition)} here.");
                 case GridDropTargetKind.OccupiedSlot:
-                    return ResolveOverOccupiedSlot(collection.EntryAtSlot(target.Slot), dragged, target.AttemptsCombine);
+                    return ResolveOverOccupiedSlot(collection.EntryAtSlot(target.Slot), dragged, target.AttemptsCombine, count);
                 default:
                     return GridDropOutcome.ReturnToPlace;
             }
@@ -52,7 +61,8 @@ namespace SqueezySurvival.Core.DragAndDrop
         private GridDropOutcome ResolveOverOccupiedSlot<TDefinition>(
             CountedEntry<TDefinition> hovered,
             CountedEntry<TDefinition> dragged,
-            bool attemptsCombine)
+            bool attemptsCombine,
+            int count)
             where TDefinition : class, ICountableThingDefinition
         {
             if (hovered.Slot == dragged.Slot && !attemptsCombine)
@@ -81,11 +91,43 @@ namespace SqueezySurvival.Core.DragAndDrop
                         $"The {Lower(dragged.Definition)} and the {Lower(hovered.Definition)} can't be combined.");
             }
 
+            if (hovered.Definition.Id == dragged.Definition.Id)
+            {
+                return new GridDropOutcome(
+                    GridDropOutcomeKind.Merge,
+                    hovered.Slot,
+                    hovered.Slot,
+                    $"Add {PartOf(dragged, count)} to the stack of {hovered.Count} here.",
+                    count: count);
+            }
+
+            if (count < dragged.Count)
+            {
+                return new GridDropOutcome(
+                    GridDropOutcomeKind.NoChange,
+                    -1,
+                    hovered.Slot,
+                    $"Split onto an empty slot or another stack of {dragged.Definition.PluralName}.");
+            }
+
             return new GridDropOutcome(
                 GridDropOutcomeKind.Swap,
                 hovered.Slot,
                 hovered.Slot,
                 $"The {Lower(dragged.Definition)} and the {Lower(hovered.Definition)} trade places.");
+        }
+
+        // "the stone", "the 3 stones", "one of the 7 stones", "4 of the 7 stones".
+        private static string PartOf<TDefinition>(CountedEntry<TDefinition> stack, int count)
+            where TDefinition : class, ICountableThingDefinition
+        {
+            string whole = stack.Count == 1 ? $"the {Lower(stack.Definition)}" : $"the {stack.Count} {stack.Definition.PluralName}";
+            if (count == stack.Count)
+            {
+                return whole;
+            }
+
+            return count == 1 ? $"one of {whole}" : $"{count} of {whole}";
         }
 
         private static GridDropOutcome NoChange(int anchorSlot) =>
