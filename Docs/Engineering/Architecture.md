@@ -104,7 +104,8 @@ Creating elements and adding them to the hierarchy is slow; Unity advises buildi
 ## Testing
 
 - **Core** is covered by Edit Mode unit tests designed to the [Testing and Quality Standards](TestingStandards.md). Every rule, command and formatter.
-- **Presentation** holds no decisions that can live in Core. What must stay (binding, element updates, input routing) is covered by a Presentation Edit Mode test assembly ([#126](https://github.com/squeezy102/SqueezySurvival/issues/126)).
+- **Presentation** holds no decisions that can live in Core. What must stay (binding, element updates, input routing) is covered by `SqueezySurvival.Presentation.Tests`: each presenter is built against the real `GameScreen.uxml` in a UI Test Framework panel and driven with simulated clicks and keys ([ADR-0008](../Decisions/ADR-0008-Presentation-Testing.md)).
+- Runtime objects such as textures are freed through `UnityObjectDestroyer`, which works in both Play Mode and Edit Mode, so presenters can be disposed in tests.
 - A design document change that alters a rule changes its rules class and that class's tests in the same pull request.
 
 ## Known gaps

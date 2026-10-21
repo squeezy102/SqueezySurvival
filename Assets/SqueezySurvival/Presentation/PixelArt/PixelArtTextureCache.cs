@@ -106,34 +106,34 @@ namespace SqueezySurvival.Presentation.PixelArt
         {
             foreach (Texture2D texture in _iconTextures.Values)
             {
-                UnityEngine.Object.Destroy(texture);
+                UnityObjectDestroyer.Destroy(texture);
             }
 
             foreach (Texture2D texture in _handGhostTextures.Values)
             {
-                UnityEngine.Object.Destroy(texture);
+                UnityObjectDestroyer.Destroy(texture);
             }
 
             _handGhostTextures.Clear();
             foreach (Texture2D texture in _navigationIconTextures.Values)
             {
-                UnityEngine.Object.Destroy(texture);
+                UnityObjectDestroyer.Destroy(texture);
             }
 
             foreach (Texture2D texture in _frameTextures.Values)
             {
-                UnityEngine.Object.Destroy(texture);
+                UnityObjectDestroyer.Destroy(texture);
             }
 
             if (_emptyIcon != null)
             {
-                UnityEngine.Object.Destroy(_emptyIcon);
+                UnityObjectDestroyer.Destroy(_emptyIcon);
                 _emptyIcon = null;
             }
 
             if (_beachBackdrop != null)
             {
-                UnityEngine.Object.Destroy(_beachBackdrop);
+                UnityObjectDestroyer.Destroy(_beachBackdrop);
                 _beachBackdrop = null;
             }
 

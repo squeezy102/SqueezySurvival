@@ -111,7 +111,7 @@ Every defect is filed as an issue before it is worked on ([Work Tracking: lifecy
 A change is done when:
 
 1. Its acceptance criteria are met.
-2. Core logic has tests designed as above, and every test passes in Unity's Test Runner.
+2. Core logic has tests designed as above, Presentation code has Presentation tests ([ADR-0008](../Decisions/ADR-0008-Presentation-Testing.md)), and every test passes in Unity's Test Runner.
 3. There are zero compiler and Console warnings.
 4. Every affected document is updated in the same pull request.
 5. It has been played in the editor or a build, and new findings are filed as issues.
