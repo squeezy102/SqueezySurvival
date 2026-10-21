@@ -7,6 +7,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 ## [Unreleased]
 
 ### Added
+- Compile and test results are written to `Diagnostics/` after every compile and test run, so contributors' AI assistants can read what failed and why without opening Unity. See [Testing Standards: reading results without Unity](Docs/Engineering/TestingStandards.md#reading-results-without-unity) (#126).
 - [Architecture](Docs/Engineering/Architecture.md): how the runtime is organized, and the gaps found in the 2026-10-20 review (#116).
 - Split a stack inside a panel: Ctrl-drag half or Alt-drag one onto an empty slot; drop a stack on its own kind to merge them. Sorting joins split stacks back together. An open container will take modified clicks before the inventory (#112). See [Drag and Drop: splitting and merging](Docs/Design/UI/DragAndDrop.md#splitting-and-merging).
 - Things move between the ground and the inventory: drag them (Ctrl moves half, Alt moves one), or Shift, Ctrl or Alt + click to send all, half or one straight across. Like kinds stack automatically. Each move takes a few seconds by weight and is logged (#86). See [Drag and Drop: between panels](Docs/Design/UI/DragAndDrop.md#between-panels).

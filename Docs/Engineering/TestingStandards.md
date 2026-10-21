@@ -66,6 +66,20 @@ Test cases are derived with CTFL techniques, so each one has a reason to exist:
 - **Confirmation testing:** every fixed bug gets a test that fails without the fix, where the defect is in testable code; otherwise its issue records how the fix was checked.
 - **Regression testing:** the full test suite runs before every commit and in Unity before every pull request. Every changed system is replayed in the next playtest.
 
+## Reading results without Unity
+
+Many contributors work through an AI assistant and cannot read Unity's windows for it. So after every compile and every test run, the editor writes what happened to the `Diagnostics/` folder at the project root (git-ignored), and assistants read it from there:
+
+| File | Written | Holds |
+|---|---|---|
+| `Diagnostics/latest-compilation.md` | After every script compile | Succeeded or failed; every error and warning with its file, line and assembly |
+| `Diagnostics/latest-test-summary.md` | After every test run, from the Test Runner window or anywhere else | Passed or failed; counts; every test that did not pass, with its message, stack trace and output. If tests could not start, for example because scripts do not compile, it says so and why |
+| `Diagnostics/latest-test-results.xml` | After every test run | The full results in NUnit XML |
+
+- Check the timestamp in each file: it is the last compile or run, not necessarily the one just asked for.
+- Compile errors stop tests from running, so read `latest-compilation.md` first.
+- Written by `SqueezySurvival.Editor.Diagnostics`, using the Test Framework's run callbacks and `TestRunnerApi.SaveResultToFile` ([Unity Manual: retrieve test results](https://docs.unity3d.com/Manual/test-framework/extension-get-test-results.html), [TestRunnerApi](https://docs.unity3d.com/Packages/com.unity.test-framework@1.6/api/UnityEditor.TestTools.TestRunner.Api.TestRunnerApi.html)) and Unity's `CompilationPipeline` events ([Unity Scripting API: CompilationPipeline.assemblyCompilationFinished](https://docs.unity3d.com/6000.4/Documentation/ScriptReference/Compilation.CompilationPipeline-assemblyCompilationFinished.html)).
+
 ## Static testing
 
 Reviews find defects before they are built: design documents are reviewed through pull requests before code is written, and every code change is reviewed by squeezy102 before it reaches `main` ([Source Control](SourceControl.md)).
