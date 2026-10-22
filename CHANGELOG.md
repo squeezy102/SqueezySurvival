@@ -19,6 +19,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 - The calendar: 120-day years of four 30-day seasons. See [Time: calendar](Docs/Design/Systems/Time.md#calendar).
 
 ### Changed
+- The grid tooltip keeps its icon and detail lines and updates them in place instead of rebuilding them on every hover; it has Presentation tests (#122). See [Architecture: element lifetime](Docs/Engineering/Architecture.md#element-lifetime).
 - Inventory and ground changes name the slots that changed, so a grid redraws only those cells instead of checking every one; a change that leaves every slot as it was, such as sorting an already sorted grid, is not reported. See [Architecture: commands, state and change events](Docs/Engineering/Architecture.md#commands-state-and-change-events) (#121).
 - `RunSession` is split into focused services, built by `RunSessionFactory`: survivor inventory, ground inventory, inventory transfers, zone exploration, time passing and action completion. Gameplay is unchanged (#120). See [Architecture: the run](Docs/Engineering/Architecture.md#the-run).
 - The game screen is built by its composition root and run by one small presenter per panel instead of one controller doing everything. Escape's order is written down in [Controls: Escape](Docs/Design/UI/Controls.md#escape) and decided by Core. Rerun **SqueezySurvival > Setup > Configure Game Screen** once after updating (#119).

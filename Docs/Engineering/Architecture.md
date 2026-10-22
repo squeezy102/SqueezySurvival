@@ -93,6 +93,7 @@ Cross-scene services live in `GameSessionHost`, the one static access point in t
 Creating elements and adding them to the hierarchy is slow; Unity advises building elements once and reusing them rather than creating and discarding them ([Unity Manual: best practices for managing elements](https://docs.unity3d.com/2022.1/Documentation/Manual/UIE-best-practices-for-managing-elements.html), [Unity 6: optimizing UI performance](https://docs.unity.com/en-us/engine/6000.3/manual/best-practice-guides/bpg-uiad-index/optimizing-performance)).
 
 - **Fixed-size things are built once** and updated in place: grid cells ([#114](https://github.com/squeezy102/SqueezySurvival/issues/114)), tooltips ([#122](https://github.com/squeezy102/SqueezySurvival/issues/122)), HUD fields.
+- **A short list that varies in length keeps its rows.** A row is added only the first time the list is longer than it has ever been; rows not needed are hidden, not removed. The tooltip's detail lines work this way, so after a few hovers it creates nothing.
 - **Long or growing lists are virtualized** with `ListView`, which pools and recycles elements as the player scrolls (same sources). The event log is the first: a `ListView` with dynamic row heights (entries wrap), bound to the log's entries through a read-only items source, so the view never copies or changes Core's list. Whether the log follows new entries (`EventLogFollowState`) and when a warning counts as in view (`ScrolledIntoViewCalculator`) are Core logic.
 - **A change updates only what changed**, using the detail in Core's change events.
 - **Textures are cached**, made once per icon and destroyed with their cache (`PixelArtTextureCache`).
@@ -115,10 +116,9 @@ Found in the architecture review of 2026-10-20 ([Architecture pass milestone](ht
 
 | Gap | Issue |
 |---|---|
-| The tooltip recreates its elements on every show | [#122](https://github.com/squeezy102/SqueezySurvival/issues/122) |
 | Capacities come from grid layouts | [#123](https://github.com/squeezy102/SqueezySurvival/issues/123) |
 | Content is hard-coded | [#124](https://github.com/squeezy102/SqueezySurvival/issues/124) |
 | The game scene's collaborators aren't injected | [#125](https://github.com/squeezy102/SqueezySurvival/issues/125) |
-| Presentation tests cover the HUD clock, zone bar, load label, actions and overlays so far; the rest of Presentation is untested | [#126](https://github.com/squeezy102/SqueezySurvival/issues/126) |
+| Presentation tests cover the HUD clock, zone bar, load label, actions, overlays and the grid tooltip so far; the rest of Presentation is untested | [#126](https://github.com/squeezy102/SqueezySurvival/issues/126) |
 | Moves assume two panels | [#127](https://github.com/squeezy102/SqueezySurvival/issues/127) |
 | Smaller cleanups | [#128](https://github.com/squeezy102/SqueezySurvival/issues/128) |
