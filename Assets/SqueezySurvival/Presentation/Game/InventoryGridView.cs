@@ -80,8 +80,11 @@ namespace SqueezySurvival.Presentation.Game
             // the event trickles down sees it before the element pressed handles it.
             dragLayer.RegisterCallback<PointerDownEvent>(OnAnyPointerDown, TrickleDown.TrickleDown);
             CreateCells();
-            _contents.Changed += Refresh;
-            Refresh();
+            _contents.Changed += OnContentsChanged;
+            foreach (InventoryGridCell cell in _cells)
+            {
+                RefreshCell(cell);
+            }
         }
 
         /// <summary>The element the cells are drawn in.</summary>
@@ -202,50 +205,56 @@ namespace SqueezySurvival.Presentation.Game
         /// <inheritdoc />
         public void Dispose()
         {
-            _contents.Changed -= Refresh;
+            _contents.Changed -= OnContentsChanged;
         }
 
-        // Brings each cell up to date with its slot. Only cells whose contents changed are touched: a selection or drag
-        // on a changed slot ends, since what it was about has moved, and its tooltip follows. Nothing else is disturbed (#114).
-        private void Refresh()
+        // Only the slots Core names are touched (#121); every other cell, selection, drag and tooltip is left alone (#114).
+        private void OnContentsChanged(object sender, CountedCollectionChange change)
         {
-            foreach (InventoryGridCell cell in _cells)
+            foreach (int slot in change.ChangedSlots)
             {
-                int slot = cell.Slot;
-                bool occupied = _contents.IsOccupied(slot);
-                bool changed = cell.Show(occupied ? _contents.DefinitionIdAt(slot) : null, occupied ? _contents.CountBadgeAt(slot) : string.Empty);
-                if (_slotGhosts.TryGetValue(slot, out VisualElement ghost))
-                {
-                    ghost.style.display = occupied ? DisplayStyle.None : DisplayStyle.Flex;
-                }
+                RefreshCell(_cells[slot]);
+            }
+        }
 
-                if (!changed)
-                {
-                    continue;
-                }
+        // Brings a cell up to date with its slot. A selection or drag on it ends, since what it was about has moved, and
+        // its tooltip follows.
+        private void RefreshCell(InventoryGridCell cell)
+        {
+            int slot = cell.Slot;
+            bool occupied = _contents.IsOccupied(slot);
+            bool changed = cell.Show(occupied ? _contents.DefinitionIdAt(slot) : null, occupied ? _contents.CountBadgeAt(slot) : string.Empty);
+            if (_slotGhosts.TryGetValue(slot, out VisualElement ghost))
+            {
+                ghost.style.display = occupied ? DisplayStyle.None : DisplayStyle.Flex;
+            }
 
-                if (slot == _selectedSlot)
-                {
-                    ClearSelection();
-                }
+            if (!changed)
+            {
+                return;
+            }
 
-                if (slot == _dragController.PressedSlot)
-                {
-                    _dragController.Cancel();
-                }
+            if (slot == _selectedSlot)
+            {
+                ClearSelection();
+            }
 
-                // A hovered slot's tooltip follows its contents, so a count shrinking under the pointer stays true.
-                if (slot == _tooltipSlot && !_tooltip.IsShowingBriefMessage && !_tooltip.IsPinned)
+            if (slot == _dragController.PressedSlot)
+            {
+                _dragController.Cancel();
+            }
+
+            // A hovered slot's tooltip follows its contents, so a count shrinking under the pointer stays true.
+            if (slot == _tooltipSlot && !_tooltip.IsShowingBriefMessage && !_tooltip.IsPinned)
+            {
+                if (occupied && _slotChoice == null && !_dragController.IsDragging)
                 {
-                    if (occupied && _slotChoice == null && !_dragController.IsDragging)
-                    {
-                        _tooltip.Show(_contents.TooltipAt(slot), cell.Element.worldBound);
-                    }
-                    else
-                    {
-                        _tooltip.Hide();
-                        _tooltipSlot = -1;
-                    }
+                    _tooltip.Show(_contents.TooltipAt(slot), cell.Element.worldBound);
+                }
+                else
+                {
+                    _tooltip.Hide();
+                    _tooltipSlot = -1;
                 }
             }
         }

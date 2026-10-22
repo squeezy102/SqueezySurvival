@@ -64,6 +64,7 @@ Every action advances time through **one entry point**, as [Time: implementation
 
 - **Commands** are ordinary methods on services (`MoveItems`, `Explore`, `PassTime`). A command checks it is allowed, changes state, and raises events. A command that is not allowed throws; Presentation asks first (`CanExplore`, `PreviewItemMove`) so the player is told why before acting.
 - **Change events say what changed**: which slots of a collection, which entry was added, which stat moved. A listener never has to compare the whole state to find out ([#121](https://github.com/squeezy102/SqueezySurvival/issues/121)).
+- **A collection reports slots, not kinds of change.** `CountedCollection` raises `Changed` with a `CountedCollectionChange` listing each slot whose contents (kind or count) differ after the command, once each, in slot order. A swap reports both slots; a sort reports only the slots it actually changed; a command that changes nothing raises nothing. The event does not say how a slot changed (added, emptied, recounted): listeners re-read the slots they are told about. Reporting how is out of scope until a listener needs it ([decision, 2026-10-21](https://github.com/squeezy102/SqueezySurvival/issues/121#issuecomment-6329884580)).
 - Events are raised **after** state is consistent, synchronously, on the thread that issued the command. A handler must not issue a command from inside an event; if a reaction needs one, Core does it as part of the original command.
 - Events follow .NET's event pattern: a typed payload describing the change ([Microsoft: handling and raising events](https://learn.microsoft.com/en-us/dotnet/standard/events/)).
 
@@ -114,7 +115,6 @@ Found in the architecture review of 2026-10-20 ([Architecture pass milestone](ht
 
 | Gap | Issue |
 |---|---|
-| Change events don't say what changed | [#121](https://github.com/squeezy102/SqueezySurvival/issues/121) |
 | The tooltip recreates its elements on every show | [#122](https://github.com/squeezy102/SqueezySurvival/issues/122) |
 | Capacities come from grid layouts | [#123](https://github.com/squeezy102/SqueezySurvival/issues/123) |
 | Content is hard-coded | [#124](https://github.com/squeezy102/SqueezySurvival/issues/124) |

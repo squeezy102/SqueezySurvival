@@ -25,8 +25,11 @@ namespace SqueezySurvival.Core.Items
             SlotCapacity = slotCapacity;
         }
 
-        /// <summary>Raised after the contents or their slots change.</summary>
-        public event Action Changed;
+        /// <summary>
+        /// Raised after a command changes the contents, naming the slots whose kind or count changed. Not raised when a
+        /// command leaves every slot as it was (Docs/Engineering/Architecture.md, Commands, state and change events).
+        /// </summary>
+        public event EventHandler<CountedCollectionChange> Changed;
 
         /// <summary>How many slots there are.</summary>
         public int SlotCapacity { get; }
@@ -118,6 +121,7 @@ namespace SqueezySurvival.Core.Items
                 throw new InvalidOperationException("There is no room for that kind.");
             }
 
+            CountedEntry<TDefinition>[] before = SnapshotSlots();
             int index = IndexOfSlot(slot);
             if (index >= 0)
             {
@@ -128,7 +132,7 @@ namespace SqueezySurvival.Core.Items
                 Insert(new CountedEntry<TDefinition>(definition, count, slot));
             }
 
-            Changed?.Invoke();
+            RaiseChangedSince(before);
         }
 
         /// <summary>
@@ -150,6 +154,7 @@ namespace SqueezySurvival.Core.Items
                 throw new ArgumentOutOfRangeException(nameof(count), count, "Must take between one and all of the stack.");
             }
 
+            CountedEntry<TDefinition>[] before = SnapshotSlots();
             if (count == entry.Count)
             {
                 _entries.RemoveAt(index);
@@ -159,7 +164,7 @@ namespace SqueezySurvival.Core.Items
                 _entries[index] = new CountedEntry<TDefinition>(entry.Definition, entry.Count - count, slot);
             }
 
-            Changed?.Invoke();
+            RaiseChangedSince(before);
             return new CountedThing<TDefinition>(entry.Definition, count);
         }
 
@@ -182,9 +187,10 @@ namespace SqueezySurvival.Core.Items
                 return;
             }
 
+            CountedEntry<TDefinition>[] before = SnapshotSlots();
             _entries[IndexOfSlot(fromSlot)] = new CountedEntry<TDefinition>(source.Definition, source.Count - count, fromSlot);
             Insert(new CountedEntry<TDefinition>(source.Definition, count, toSlot));
-            Changed?.Invoke();
+            RaiseChangedSince(before);
         }
 
         /// <summary>
@@ -200,6 +206,7 @@ namespace SqueezySurvival.Core.Items
                 throw new InvalidOperationException("Stacks only merge with the same kind.");
             }
 
+            CountedEntry<TDefinition>[] before = SnapshotSlots();
             CountedEntry<TDefinition> target = _entries[toIndex];
             _entries[toIndex] = new CountedEntry<TDefinition>(target.Definition, target.Count + count, toSlot);
             int fromIndex = IndexOfSlot(fromSlot);
@@ -212,13 +219,13 @@ namespace SqueezySurvival.Core.Items
                 _entries[fromIndex] = new CountedEntry<TDefinition>(source.Definition, source.Count - count, fromSlot);
             }
 
-            Changed?.Invoke();
+            RaiseChangedSince(before);
         }
 
         /// <summary>
         /// Adds things one at a time: a kind already present adds to its count in place; a new kind takes the first
         /// empty slot. Things of a new kind that do not fit are returned, grouped by kind in the order they arrived,
-        /// and are not added. Raises <see cref="Changed"/> once if anything was added.
+        /// and are not added. Raises <see cref="Changed"/> once, if anything was added.
         /// </summary>
         public IReadOnlyList<CountedThing<TDefinition>> AddRange(IEnumerable<TDefinition> definitions)
         {
@@ -227,7 +234,7 @@ namespace SqueezySurvival.Core.Items
                 throw new ArgumentNullException(nameof(definitions));
             }
 
-            bool changed = false;
+            CountedEntry<TDefinition>[] before = SnapshotSlots();
             var overflowKinds = new List<TDefinition>();
             var overflowCounts = new Dictionary<string, int>();
             foreach (TDefinition definition in definitions)
@@ -239,9 +246,10 @@ namespace SqueezySurvival.Core.Items
 
                 if (TryAddOne(definition))
                 {
-                    changed = true;
+                    continue;
                 }
-                else if (overflowCounts.TryGetValue(definition.Id, out int count))
+
+                if (overflowCounts.TryGetValue(definition.Id, out int count))
                 {
                     overflowCounts[definition.Id] = count + 1;
                 }
@@ -252,11 +260,7 @@ namespace SqueezySurvival.Core.Items
                 }
             }
 
-            if (changed)
-            {
-                Changed?.Invoke();
-            }
-
+            RaiseChangedSince(before);
             var overflow = new List<CountedThing<TDefinition>>(overflowKinds.Count);
             foreach (TDefinition kind in overflowKinds)
             {
@@ -285,6 +289,7 @@ namespace SqueezySurvival.Core.Items
                 return;
             }
 
+            CountedEntry<TDefinition>[] before = SnapshotSlots();
             CountedEntry<TDefinition> moving = _entries[fromIndex];
             int toIndex = IndexOfSlot(toSlot);
             CountedEntry<TDefinition> displaced = toIndex < 0 ? null : _entries[toIndex];
@@ -296,7 +301,7 @@ namespace SqueezySurvival.Core.Items
             }
 
             Insert(new CountedEntry<TDefinition>(moving.Definition, moving.Count, toSlot));
-            Changed?.Invoke();
+            RaiseChangedSince(before);
         }
 
         /// <summary>
@@ -322,15 +327,16 @@ namespace SqueezySurvival.Core.Items
                 throw new InvalidOperationException("That kind is already present; add to it instead.");
             }
 
+            CountedEntry<TDefinition>[] before = SnapshotSlots();
             CountedEntry<TDefinition> discarded = _entries[index];
             _entries[index] = new CountedEntry<TDefinition>(incoming.Definition, incoming.Count, slot);
-            Changed?.Invoke();
+            RaiseChangedSince(before);
             return discarded;
         }
 
         /// <summary>
         /// Packs everything into the first slots, closing gaps, in the order <paramref name="order"/> gives
-        /// (Docs/Design/UI/InventoryGrids.md, Sorting). Raises <see cref="Changed"/>.
+        /// (Docs/Design/UI/InventoryGrids.md, Sorting). Raises <see cref="Changed"/> unless everything was already in place.
         /// </summary>
         public void Sort(IComparer<CountedEntry<TDefinition>> order)
         {
@@ -338,6 +344,8 @@ namespace SqueezySurvival.Core.Items
             {
                 throw new ArgumentNullException(nameof(order));
             }
+
+            CountedEntry<TDefinition>[] before = SnapshotSlots();
 
             // Split stacks of a kind join back together, in the slot of the kind's first stack.
             var sorted = new List<CountedEntry<TDefinition>>();
@@ -367,7 +375,48 @@ namespace SqueezySurvival.Core.Items
                 _entries.Add(new CountedEntry<TDefinition>(sorted[slot].Definition, sorted[slot].Count, slot));
             }
 
-            Changed?.Invoke();
+            RaiseChangedSince(before);
+        }
+
+        // Commands compare every slot before and after rather than naming slots themselves, so a command whose result
+        // looks the same (two equal stacks swapped, an already sorted grid sorted) reports nothing.
+        private CountedEntry<TDefinition>[] SnapshotSlots()
+        {
+            var slots = new CountedEntry<TDefinition>[SlotCapacity];
+            foreach (CountedEntry<TDefinition> entry in _entries)
+            {
+                slots[entry.Slot] = entry;
+            }
+
+            return slots;
+        }
+
+        private void RaiseChangedSince(CountedEntry<TDefinition>[] before)
+        {
+            CountedEntry<TDefinition>[] after = SnapshotSlots();
+            var changedSlots = new List<int>();
+            for (int slot = 0; slot < SlotCapacity; slot++)
+            {
+                if (!HoldSameContents(before[slot], after[slot]))
+                {
+                    changedSlots.Add(slot);
+                }
+            }
+
+            if (changedSlots.Count > 0)
+            {
+                Changed?.Invoke(this, new CountedCollectionChange(changedSlots));
+            }
+        }
+
+        private static bool HoldSameContents(CountedEntry<TDefinition> first, CountedEntry<TDefinition> second)
+        {
+            if (first == null || second == null)
+            {
+                return first == second;
+            }
+
+            return first.Definition.Id == second.Definition.Id && first.Count == second.Count;
         }
 
         private bool TryAddOne(TDefinition definition)

@@ -1,4 +1,5 @@
 using System;
+using SqueezySurvival.Core.Items;
 using SqueezySurvival.Core.Runs;
 using SqueezySurvival.Core.Survivor;
 using UnityEngine.UIElements;
@@ -21,17 +22,20 @@ namespace SqueezySurvival.Presentation.Game
 
             _survivorInventory = survivorInventory ?? throw new ArgumentNullException(nameof(survivorInventory));
             _loadLabel = root.Q<Label>("inventory-load");
-            _survivorInventory.Inventory.Changed += Refresh;
-            _survivorInventory.Hands.Changed += Refresh;
+            _survivorInventory.Inventory.Changed += OnCarriedThingsChanged;
+            _survivorInventory.Hands.Changed += OnCarriedThingsChanged;
             Refresh();
         }
 
         /// <inheritdoc />
         public void Dispose()
         {
-            _survivorInventory.Inventory.Changed -= Refresh;
-            _survivorInventory.Hands.Changed -= Refresh;
+            _survivorInventory.Inventory.Changed -= OnCarriedThingsChanged;
+            _survivorInventory.Hands.Changed -= OnCarriedThingsChanged;
         }
+
+        // The load is a total of everything carried, so any change recomputes it whatever slots changed.
+        private void OnCarriedThingsChanged(object sender, CountedCollectionChange change) => Refresh();
 
         private void Refresh()
         {

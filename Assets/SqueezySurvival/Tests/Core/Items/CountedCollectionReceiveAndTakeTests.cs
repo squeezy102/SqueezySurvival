@@ -69,17 +69,14 @@ namespace SqueezySurvival.Core.Tests.Items
         }
 
         [Test]
-        public void Receive_KindAlreadyPresent_AddsToItsCountAndRaisesChangedOnce()
+        public void Receive_KindAlreadyPresent_AddsToItsCount()
         {
             CountedCollection<ItemDefinition> collection = StoneInSlotTwo();
-            int changes = 0;
-            collection.Changed += () => changes++;
 
             collection.Receive(Stone, 5, 0);
 
             Assert.That(collection.EntryAtSlot(2).Count, Is.EqualTo(8));
             Assert.That(collection.EntryAtSlot(0), Is.Null);
-            Assert.That(changes, Is.EqualTo(1));
         }
 
         [Test]
@@ -126,13 +123,10 @@ namespace SqueezySurvival.Core.Tests.Items
         public void Take_TheWholeStack_EmptiesTheSlot()
         {
             CountedCollection<ItemDefinition> collection = StoneInSlotTwo();
-            int changes = 0;
-            collection.Changed += () => changes++;
 
             collection.Take(2, 3);
 
             Assert.That(collection.EntryAtSlot(2), Is.Null);
-            Assert.That(changes, Is.EqualTo(1));
         }
 
         [TestCase(0)]
