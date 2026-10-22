@@ -117,8 +117,8 @@ namespace SqueezySurvival.Core.Tests.Exploration
             var zone = new Zone(TestZoneDefinitions.Create(4));
             int progressChanges = 0, groundPoolChanges = 0, featureChanges = 0;
             zone.ExplorationProgressChanged += _ => progressChanges++;
-            zone.GroundPool.Changed += () => groundPoolChanges++;
-            zone.Features.Changed += () => featureChanges++;
+            zone.GroundPool.Changed += (_, _) => groundPoolChanges++;
+            zone.Features.Changed += (_, _) => featureChanges++;
 
             ExploreOnce(zone, 1, 0, 0, 0);
 

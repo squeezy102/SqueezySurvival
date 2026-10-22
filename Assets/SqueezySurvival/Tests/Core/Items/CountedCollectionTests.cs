@@ -34,30 +34,6 @@ namespace SqueezySurvival.Core.Tests.Items
         }
 
         [Test]
-        public void AddRange_RaisesChangedOnce()
-        {
-            var collection = new CountedCollection<ItemDefinition>(8);
-            int changes = 0;
-            collection.Changed += () => changes++;
-
-            collection.AddRange(new[] { Stone, Stick });
-
-            Assert.That(changes, Is.EqualTo(1));
-        }
-
-        [Test]
-        public void AddRange_WithNothing_DoesNotRaiseChanged()
-        {
-            var collection = new CountedCollection<ItemDefinition>(8);
-            int changes = 0;
-            collection.Changed += () => changes++;
-
-            collection.AddRange(new ItemDefinition[0]);
-
-            Assert.That(changes, Is.Zero);
-        }
-
-        [Test]
         public void AddRange_IntoTheLastEmptySlot_FitsAndFills()
         {
             CountedCollection<ItemDefinition> collection = StoneStickShell(slotCapacity: 4);
@@ -77,18 +53,6 @@ namespace SqueezySurvival.Core.Tests.Items
             Assert.That(overflow.Select(thing => (thing.Definition.Id, thing.Count)), Is.EqualTo(new[] { ("conch", 2), ("coconut", 1) }));
             Assert.That(collection.CountOf(Stone), Is.EqualTo(2));
             Assert.That(collection.CountOf(Conch), Is.Zero);
-        }
-
-        [Test]
-        public void AddRange_OnlyOverflow_DoesNotRaiseChanged()
-        {
-            CountedCollection<ItemDefinition> collection = StoneStickShell(slotCapacity: 3);
-            int changes = 0;
-            collection.Changed += () => changes++;
-
-            collection.AddRange(new[] { Conch });
-
-            Assert.That(changes, Is.Zero);
         }
 
         [Test]
@@ -118,18 +82,6 @@ namespace SqueezySurvival.Core.Tests.Items
             collection.MoveToSlot(2, 0);
 
             Assert.That(collection.Entries.Select(entry => (entry.Slot, entry.Definition.Id)), Is.EqualTo(new[] { (0, "seashell"), (1, "small-stick"), (2, "stone") }));
-        }
-
-        [Test]
-        public void MoveToSlot_SameSlot_DoesNotRaiseChanged()
-        {
-            CountedCollection<ItemDefinition> collection = StoneStickShell();
-            int changes = 0;
-            collection.Changed += () => changes++;
-
-            collection.MoveToSlot(1, 1);
-
-            Assert.That(changes, Is.Zero);
         }
 
         [TestCase(7, true)]

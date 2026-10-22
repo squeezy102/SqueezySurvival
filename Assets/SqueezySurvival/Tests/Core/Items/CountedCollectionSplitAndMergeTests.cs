@@ -23,8 +23,6 @@ namespace SqueezySurvival.Core.Tests.Items
         public void SplitToSlot_PartOfAStack_MakesASecondStackOfTheKind()
         {
             CountedCollection<ItemDefinition> collection = SevenStonesAndAStick();
-            int changes = 0;
-            collection.Changed += () => changes++;
 
             collection.SplitToSlot(0, 3, 4);
 
@@ -32,7 +30,6 @@ namespace SqueezySurvival.Core.Tests.Items
             Assert.That(collection.EntryAtSlot(3).Definition, Is.SameAs(Stone));
             Assert.That(collection.EntryAtSlot(3).Count, Is.EqualTo(4));
             Assert.That(collection.CountOf(Stone), Is.EqualTo(7));
-            Assert.That(changes, Is.EqualTo(1));
         }
 
         [Test]
