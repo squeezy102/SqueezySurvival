@@ -39,7 +39,7 @@ The seven testing principles of CTFL v4.0, and what each means here:
 
 ## The test pyramid
 
-Most tests are fast Edit Mode unit tests of Core, which has no Unity references ([ADR-0007](../Decisions/ADR-0007-Runtime-UI-And-Assembly-Layout.md)). Fewer tests cover systems together. Manual playtesting sits on top. Play Mode tests are written only where Unity runtime behavior itself is under test. Presentation code is kept thin so little of it needs testing.
+Most tests are fast Edit Mode unit tests of Core, which has no Unity references ([ADR-0007](../Decisions/ADR-0007-Runtime-UI-And-Assembly-Layout.md)). Fewer tests cover systems together. Manual playtesting sits on top. Play Mode tests are written only where Unity runtime behavior itself is under test. Presentation code is kept thin, and what remains has Presentation tests ([ADR-0008](../Decisions/ADR-0008-Presentation-Testing.md)).
 
 ## Designing test cases
 

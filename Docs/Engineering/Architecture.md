@@ -1,6 +1,6 @@
 # Architecture
 
-**Status:** Draft, for squeezy102's approval ([#116](https://github.com/squeezy102/SqueezySurvival/issues/116))
+**Status:** Approved ([#116](https://github.com/squeezy102/SqueezySurvival/issues/116))
 
 How the game's runtime code is organized: what owns what, how time and changes flow, how a scene is put together, and how each part is tested. The [Coding Standards](CodingStandards.md) state the principles; this document is how they apply to this codebase. The assembly layout is defined in [ADR-0007](../Decisions/ADR-0007-Runtime-UI-And-Assembly-Layout.md).
 
@@ -25,7 +25,7 @@ Code that does not yet match this document is listed in [Known gaps](#known-gaps
 
 ### The run
 
-A run (`RunSession`) holds a set of focused services and nothing else. `RunSessionFactory` builds the services and wires them together, so the game and its tests build a run the same way. Each service has one job, its own tests, and receives its collaborators through its constructor ([Coding Standards: architecture](CodingStandards.md#architecture)). Presentation sends each command to the service that owns it, never to the run.
+A run (`RunSession`) holds a set of focused services, plus the run's configuration, its day-phase schedule and a read-only view of the clock (`IGameTime`); it has no commands of its own. `RunSessionFactory` builds the services and wires them together, so the game and its tests build a run the same way. Each service has one job, its own tests, and receives its collaborators through its constructor ([Coding Standards: architecture](CodingStandards.md#architecture)). Presentation sends each command to the service that owns it, never to the run.
 
 | Service | Owns | Examples of what it does |
 |---|---|---|
@@ -39,7 +39,7 @@ A run (`RunSession`) holds a set of focused services and nothing else. `RunSessi
 | `Zone` | Each zone's state | Ground pool, features, exploration progress |
 | `RunEventLog` | What happened, in order | Add entries |
 
-`SurvivorActionCompletionService` completes actions; it never holds them. A new action belongs to the service for its system and finishes through this one.
+`SurvivorActionCompletionService` completes actions; it never holds them. The other services share it, and the run does not expose it. A new action belongs to the service for its system and finishes through this one.
 
 Services are added the same way as systems are designed: survival stats, weather and research each become a service with its own rules, not more methods on the run.
 
@@ -52,7 +52,7 @@ Every action advances time through **one entry point**, as [Time: implementation
 3. `GameTimeAdvancer.Advance` moves the clock by the duration and tells each **time-dependent system** (`ITimeDependentSystem`) in a fixed order. Each receives a `GameTimeAdvance`: the clock before, the clock after and the exact duration.
 4. `TimeAdvanced` is raised for Presentation, carrying the same `GameTimeAdvance`.
 
-**Order of time-dependent systems.** The game scene's composition root passes them to `GameTimeAdvancer`'s constructor as an ordered list, so the order is set in one place and changed only deliberately. Order, as they arrive: survival stats, then weather, then research. None exist yet.
+**Order of time-dependent systems.** The game scene's composition root passes them as an ordered list to `RunSessionFactory.StartNewRun`, which hands them to `GameTimeAdvancer`'s constructor, so the order is set in one place and changed only deliberately. Order, as they arrive: survival stats, then weather, then research. None exist yet.
 
 **Rules.**
 
@@ -62,7 +62,7 @@ Every action advances time through **one entry point**, as [Time: implementation
 
 ### Commands, state and change events
 
-- **Commands** are ordinary methods on services (`MoveItems`, `Explore`, `PassTime`). A command checks it is allowed, changes state, and raises events. A command that is not allowed throws; Presentation asks first (`CanExplore`, `PreviewItemMove`) so the player is told why before acting.
+- **Commands** are ordinary methods on services (`Transfer`, `Explore`, `PassTime`). A command checks it is allowed, changes state, and raises events. A command that is not allowed throws; Presentation asks first (`CanExplore`, `PreviewTransfer`) so the player is told why before acting.
 - **Change events say what changed**: which slots of a collection, which entry was added, which stat moved. A listener never has to compare the whole state to find out ([#121](https://github.com/squeezy102/SqueezySurvival/issues/121)).
 - **A collection reports slots, not kinds of change.** `CountedCollection` raises `Changed` with a `CountedCollectionChange` listing each slot whose contents (kind or count) differ after the command, once each, in slot order. A swap reports both slots; a sort reports only the slots it actually changed; a command that changes nothing raises nothing. The event does not say how a slot changed (added, emptied, recounted): listeners re-read the slots they are told about. Reporting how is out of scope until a listener needs it ([decision, 2026-10-21](https://github.com/squeezy102/SqueezySurvival/issues/121#issuecomment-6329884580)).
 - Events are raised **after** state is consistent, synchronously, on the thread that issued the command. A handler must not issue a command from inside an event; if a reaction needs one, Core does it as part of the original command.
@@ -78,7 +78,9 @@ Every action advances time through **one entry point**, as [Time: implementation
 
 ### One composition root per scene
 
-Each scene has one composition root (a MonoBehaviour) that builds everything the scene needs, Core services and views alike, and hands each its collaborators. Nothing else in the scene creates services. The root presents nothing itself; it owns what it builds and disposes it, newest first, when the scene ends. `GameCompositionRoot` and `MainMenuCompositionRoot` are the two roots.
+Each scene has one composition root (a MonoBehaviour) that builds everything the scene needs, Core services and views alike, and hands each its collaborators. Nothing else in the scene creates services. The root presents nothing itself. It owns everything it builds that listens to Core or holds Unity objects, and disposes it, newest first, when the scene ends; objects that listen only to the scene's own elements go with the scene. `GameCompositionRoot` and `MainMenuCompositionRoot` are the two roots.
+
+A MonoBehaviour has no constructor, so the one MonoBehaviour that presents, the main menu's `MainMenuScreenController`, receives its collaborators from its root through a `Bind` method instead. Presenters in the game scene are plain C# classes and take theirs through their constructors.
 
 Cross-scene services live in `GameSessionHost`, the one static access point in the game, kept only because Unity scenes cannot pass objects to each other directly. It holds hand-offs between scenes, never game state.
 

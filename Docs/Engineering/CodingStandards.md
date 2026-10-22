@@ -12,7 +12,7 @@
 
 - **Simulation and presentation are separate.** The simulation (time, stats, inventory, recipes) never references UI or Unity components. The presentation layer observes simulation state and sends player commands. This is what allows animation to be added later without changing game rules.
 - **Dependency injection.** Classes receive their dependencies through constructors, typed as interfaces. Composition happens at a single composition root per scene.
-- **Data-driven content.** Items, resources, recipes and biomes are defined as data (ScriptableObjects), not hard-coded.
+- **Data-driven content.** Items, resources, recipes and biomes are defined as data, not hard-coded. The format and how it reaches Core are decided in an ADR ([#124](https://github.com/squeezy102/SqueezySurvival/issues/124)).
 - **Deterministic simulation.** Randomness and time come from injected interfaces (for example `IRandomNumberSource`, `IGameTime`) so tests are repeatable.
 - **How these apply to this codebase**, and where it falls short today: [Architecture](Architecture.md).
 - **Patterns are tools, not goals.** Use factories, builders, strategies, observers and similar patterns where they reduce coupling or simplify testing. Avoid global singletons for game state.
@@ -40,4 +40,4 @@ Code is split into assembly definitions (`.asmdef`) so that dependencies are exp
 
 ## Testing
 
-Unity Test Framework, Edit Mode tests for simulation logic. How tests are designed, what each must prove, and what "done" means: [Testing and Quality Standards](TestingStandards.md).
+Unity Test Framework, Edit Mode tests: unit tests for Core, and Presentation tests for the code that binds the screen to it ([ADR-0008](../Decisions/ADR-0008-Presentation-Testing.md)). How tests are designed, what each must prove, and what "done" means: [Testing and Quality Standards](TestingStandards.md).
