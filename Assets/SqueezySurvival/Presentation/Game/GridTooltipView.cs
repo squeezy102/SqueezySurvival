@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using SqueezySurvival.Core.Items;
 using SqueezySurvival.Presentation.Icons;
 using SqueezySurvival.Presentation.PixelArt;
@@ -9,7 +10,9 @@ namespace SqueezySurvival.Presentation.Game
 {
     /// <summary>
     /// The tooltip shown while the pointer is over a grid cell (Docs/Design/UI/InventoryGrids.md, Tooltips). UI Toolkit's
-    /// built-in tooltip property only works in the Unity Editor, so the game draws its own.
+    /// built-in tooltip property only works in the Unity Editor, so the game draws its own. Its elements are made once and
+    /// updated in place; a detail line is added only when a tooltip has more lines than any before it
+    /// (Docs/Engineering/Architecture.md, Element lifetime).
     /// </summary>
     public sealed class GridTooltipView
     {
@@ -18,6 +21,8 @@ namespace SqueezySurvival.Presentation.Game
         private readonly VisualElement _tooltip;
         private readonly PixelArtTextureCache _textures;
         private readonly VisualElement _iconHolder;
+        private readonly PixelIconElement _icon;
+        private readonly List<Label> _detailLines = new List<Label>();
         private readonly Label _title;
         private readonly Label _subtitle;
         private readonly Label _description;
@@ -36,6 +41,9 @@ namespace SqueezySurvival.Presentation.Game
             _subtitle = tooltip.Q<Label>("grid-tooltip-subtitle");
             _description = tooltip.Q<Label>("grid-tooltip-description");
             _details = tooltip.Q<VisualElement>("grid-tooltip-details");
+            _icon = new PixelIconElement(_textures.EmptyIcon, fitsParent: false);
+            _icon.style.position = Position.Relative;
+            _iconHolder.Add(_icon);
             _tooltip.pickingMode = PickingMode.Ignore;
             _tooltip.style.position = Position.Absolute;
 
@@ -54,13 +62,7 @@ namespace SqueezySurvival.Presentation.Game
             _subtitle.text = content.Subtitle;
             _subtitle.style.display = content.Subtitle.Length > 0 ? DisplayStyle.Flex : DisplayStyle.None;
             _description.text = content.Description;
-            _details.Clear();
-            foreach (string line in content.DetailLines)
-            {
-                var detail = new Label(line);
-                detail.AddToClassList("grid-tooltip-detail");
-                _details.Add(detail);
-            }
+            ShowDetailLines(content.DetailLines);
 
             _anchorCellWorldBound = cellWorldBound;
             _tooltip.style.display = DisplayStyle.Flex;
@@ -98,7 +100,6 @@ namespace SqueezySurvival.Presentation.Game
         // The icon is one whole-pixel step larger than in its slot, so its art pixels stay square (#55).
         private void ShowIcon(string iconId, float cellSize)
         {
-            _iconHolder.Clear();
             if (iconId.Length == 0)
             {
                 _iconHolder.style.display = DisplayStyle.None;
@@ -106,12 +107,28 @@ namespace SqueezySurvival.Presentation.Game
             }
 
             float size = PixelIconElement.WholePixelSize(cellSize) + Core.PixelArt.PlaceholderIconCatalog.IconSize;
-            var icon = new PixelIconElement(_textures.Icon(iconId), fitsParent: false);
-            icon.style.position = Position.Relative;
-            icon.style.width = size;
-            icon.style.height = size;
-            _iconHolder.Add(icon);
+            _icon.SetIcon(_textures.Icon(iconId));
+            _icon.style.width = size;
+            _icon.style.height = size;
             _iconHolder.style.display = DisplayStyle.Flex;
+        }
+
+        private void ShowDetailLines(IReadOnlyList<string> lines)
+        {
+            while (_detailLines.Count < lines.Count)
+            {
+                var detail = new Label();
+                detail.AddToClassList("grid-tooltip-detail");
+                _detailLines.Add(detail);
+                _details.Add(detail);
+            }
+
+            for (int index = 0; index < _detailLines.Count; index++)
+            {
+                bool used = index < lines.Count;
+                _detailLines[index].text = used ? lines[index] : string.Empty;
+                _detailLines[index].style.display = used ? DisplayStyle.Flex : DisplayStyle.None;
+            }
         }
 
         private void CancelScheduledHide()
