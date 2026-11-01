@@ -11,7 +11,7 @@
 ## Architecture
 
 - **Simulation and presentation are separate.** The simulation (time, stats, inventory, recipes) never references UI or Unity components. The presentation layer observes simulation state and sends player commands. This is what allows animation to be added later without changing game rules.
-- **Dependency injection.** Classes receive their dependencies through constructors, typed as interfaces. Composition happens at a single composition root per scene.
+- **Dependency injection.** Classes receive their dependencies through constructors. Services and volatile dependencies (time, randomness, files, anything with behavior a test would replace) are typed as interfaces; stable dependencies (immutable rules classes, definitions, value objects such as `GameClock`) are passed as plain instances, because a test gains nothing by replacing them ([Seemann and van Deursen, *Dependency Injection Principles, Practices, and Patterns*, 1.3: stable and volatile dependencies](https://www.manning.com/books/dependency-injection-principles-practices-patterns)). Composition happens at a single composition root per scene.
 - **Data-driven content.** Items, resources, recipes and biomes are defined as data, not hard-coded. The format and how it reaches Core are decided in an ADR ([#124](https://github.com/squeezy102/SqueezySurvival/issues/124)).
 - **Deterministic simulation.** Randomness and time come from injected interfaces (for example `IRandomNumberSource`, `IGameTime`) so tests are repeatable.
 - **How these apply to this codebase**, and where it falls short today: [Architecture](Architecture.md).

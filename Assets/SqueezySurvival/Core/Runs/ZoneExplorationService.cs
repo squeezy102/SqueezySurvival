@@ -5,25 +5,22 @@ using SqueezySurvival.Core.Zones;
 
 namespace SqueezySurvival.Core.Runs
 {
-    /// <summary>
-    /// Exploring the zone the survivor is in: one explore takes its time, adds what was found and logs it
-    /// (Docs/Design/Systems/Exploration.md).
-    /// </summary>
-    public sealed class ZoneExplorationService
+    /// <summary>Explores the current zone with an explorer, then completes the explore as a time-taking action.</summary>
+    public sealed class ZoneExplorationService : IZoneExplorationService
     {
         private readonly Zone _currentZone;
-        private readonly ZoneExplorer _zoneExplorer;
-        private readonly SurvivorInventoryService _survivorInventory;
-        private readonly GroundInventoryService _groundInventory;
-        private readonly SurvivorActionCompletionService _actionCompletion;
+        private readonly IZoneExplorer _zoneExplorer;
+        private readonly ISurvivorInventoryService _survivorInventory;
+        private readonly IGroundInventoryService _groundInventory;
+        private readonly ISurvivorActionCompletionService _actionCompletion;
 
         /// <summary>Explores <paramref name="currentZone"/> with <paramref name="zoneExplorer"/>.</summary>
         public ZoneExplorationService(
             Zone currentZone,
-            ZoneExplorer zoneExplorer,
-            SurvivorInventoryService survivorInventory,
-            GroundInventoryService groundInventory,
-            SurvivorActionCompletionService actionCompletion)
+            IZoneExplorer zoneExplorer,
+            ISurvivorInventoryService survivorInventory,
+            IGroundInventoryService groundInventory,
+            ISurvivorActionCompletionService actionCompletion)
         {
             _currentZone = currentZone ?? throw new ArgumentNullException(nameof(currentZone));
             _zoneExplorer = zoneExplorer ?? throw new ArgumentNullException(nameof(zoneExplorer));
@@ -32,19 +29,13 @@ namespace SqueezySurvival.Core.Runs
             _actionCompletion = actionCompletion ?? throw new ArgumentNullException(nameof(actionCompletion));
         }
 
-        /// <summary>How long one explore takes, in minutes.</summary>
+        /// <inheritdoc />
         public int ExploreMinutes => _zoneExplorer.Rules.ExploreMinutes;
 
-        /// <summary>
-        /// Whether the survivor can explore: not while a find waits for room on the ground, and not while immobile
-        /// (Docs/Design/Systems/Inventory.md, Load).
-        /// </summary>
+        /// <inheritdoc />
         public bool CanExplore => _actionCompletion.CanStartAction && _survivorInventory.CanMove;
 
-        /// <summary>
-        /// Explores the current zone once. Finds with no room on the ground wait in
-        /// <see cref="GroundInventoryService.PendingOverflow"/>.
-        /// </summary>
+        /// <inheritdoc />
         public ExplorationOutcome Explore()
         {
             _actionCompletion.RequireCanStartAction();

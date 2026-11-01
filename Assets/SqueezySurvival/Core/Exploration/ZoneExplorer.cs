@@ -6,11 +6,8 @@ using SqueezySurvival.Core.Zones;
 
 namespace SqueezySurvival.Core.Exploration
 {
-    /// <summary>
-    /// Resolves one explore of a zone: advances its progress, draws loose items into its ground pool and sometimes
-    /// reveals a feature (Docs/Design/Systems/Exploration.md). Time is the caller's concern.
-    /// </summary>
-    public sealed class ZoneExplorer
+    /// <summary>Explores a zone by its definition's scripted finds, then by drawing from its pools at random.</summary>
+    public sealed class ZoneExplorer : IZoneExplorer
     {
         private readonly ExplorationRules _rules;
         private readonly IRandomNumberSource _randomNumberSource;
@@ -22,14 +19,10 @@ namespace SqueezySurvival.Core.Exploration
             _randomNumberSource = randomNumberSource ?? throw new ArgumentNullException(nameof(randomNumberSource));
         }
 
-        /// <summary>The rules this explorer follows.</summary>
+        /// <inheritdoc />
         public ExplorationRules Rules => _rules;
 
-        /// <summary>
-        /// Explores the zone once. The zone's first explores give its scripted finds and never a feature; after them,
-        /// finds are drawn from its find pool and may come with a new feature. Neither ever runs out, even in a fully
-        /// explored zone.
-        /// </summary>
+        /// <inheritdoc />
         public ExplorationOutcome Explore(Zone zone)
         {
             if (zone == null)

@@ -4,21 +4,21 @@ using SqueezySurvival.Core.Time;
 
 namespace SqueezySurvival.Core.Runs
 {
-    /// <summary>Wait and Rest: actions whose only purpose is to pass time (Docs/Design/Systems/Time.md, Passing time deliberately).</summary>
-    public sealed class TimePassingService
+    /// <summary>Passes time for Wait and Rest, each completed as a time-taking action.</summary>
+    public sealed class TimePassingService : ITimePassingService
     {
-        private readonly SurvivorActionCompletionService _actionCompletion;
+        private readonly ISurvivorActionCompletionService _actionCompletion;
 
         /// <summary>Completes each time-passing action through <paramref name="actionCompletion"/>.</summary>
-        public TimePassingService(SurvivorActionCompletionService actionCompletion)
+        public TimePassingService(ISurvivorActionCompletionService actionCompletion)
         {
             _actionCompletion = actionCompletion ?? throw new ArgumentNullException(nameof(actionCompletion));
         }
 
-        /// <summary>Whether time can be passed now.</summary>
+        /// <inheritdoc />
         public bool CanPassTime => _actionCompletion.CanStartAction;
 
-        /// <summary>Performs a time-passing action and logs it.</summary>
+        /// <inheritdoc />
         public void PassTime(TimePassingAction action)
         {
             _actionCompletion.RequireCanStartAction();

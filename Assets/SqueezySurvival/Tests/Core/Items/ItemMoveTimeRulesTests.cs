@@ -13,15 +13,30 @@ namespace SqueezySurvival.Core.Tests.Items
         [TestCase(0.51, 2)]
         [TestCase(1, 2)]
         [TestCase(5, 10)]
-        public void SecondsToMove_IsTwoSecondsAPoundRoundedUpAndAtLeastOne(decimal pounds, int expected)
+        public void SecondsToMove_Wireframe_IsTwoSecondsAPoundRoundedUpAndAtLeastOne(decimal pounds, int expected)
         {
-            Assert.That(ItemMoveTimeRules.SecondsToMove(pounds), Is.EqualTo(expected));
+            Assert.That(ItemMoveTimeRules.Wireframe.SecondsToMove(pounds), Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void SecondsToMove_UsesTheRulesRate()
+        {
+            var rules = new ItemMoveTimeRules(secondsPerPound: 3m);
+
+            Assert.That(rules.SecondsToMove(5m), Is.EqualTo(15));
         }
 
         [Test]
         public void SecondsToMove_NegativeWeight_IsRefused()
         {
-            Assert.That(() => ItemMoveTimeRules.SecondsToMove(-1m), Throws.TypeOf<ArgumentOutOfRangeException>());
+            Assert.That(() => ItemMoveTimeRules.Wireframe.SecondsToMove(-1m), Throws.TypeOf<ArgumentOutOfRangeException>());
+        }
+
+        [TestCase(0)]
+        [TestCase(-1)]
+        public void Constructor_RateOfZeroOrLess_IsRefused(decimal secondsPerPound)
+        {
+            Assert.That(() => new ItemMoveTimeRules(secondsPerPound), Throws.TypeOf<ArgumentOutOfRangeException>());
         }
     }
 }

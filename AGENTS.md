@@ -43,7 +43,7 @@ Then read the design document for the system you are touching (`Docs/Design/Syst
 | `*.Tests` | `Assets/SqueezySurvival/Tests/` | Edit Mode tests (NUnit). |
 
 - **UI:** UI Toolkit. Layout in UXML, style in USS, behavior in C# ([ADR-0007](Docs/Decisions/ADR-0007-Runtime-UI-And-Assembly-Layout.md)).
-- **Dependency injection:** constructor injection of interfaces; one composition root per scene. No global singletons for game state.
+- **Dependency injection:** constructor injection; services and volatile dependencies as interfaces, rules and data as plain instances ([Coding Standards: architecture](Docs/Engineering/CodingStandards.md#architecture)); one composition root per scene. No global singletons for game state.
 - **Scenes are generated:** scenes and UI assets are created by commands under the **SqueezySurvival > Setup** menu, never edited by hand ([Project Setup](Docs/Engineering/ProjectSetup.md#setup-commands)).
 - **Launcher:** a separate .NET solution in `Launcher/` with the same Core and App split ([ADR-0005](Docs/Decisions/ADR-0005-Launcher-Technology.md)).
 

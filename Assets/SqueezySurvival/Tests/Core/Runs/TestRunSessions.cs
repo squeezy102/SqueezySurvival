@@ -25,6 +25,7 @@ namespace SqueezySurvival.Core.Tests.Runs
                 startingZone,
                 ExplorationRules.Wireframe,
                 SlotCapacityRules.Wireframe,
+                ItemMoveTimeRules.Wireframe,
                 new QueuedRandomNumberSource(randomNumbers),
                 timeDependentSystems);
 

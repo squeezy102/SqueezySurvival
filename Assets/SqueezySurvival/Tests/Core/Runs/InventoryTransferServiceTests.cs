@@ -1,9 +1,10 @@
 using System;
 using NUnit.Framework;
+using SqueezySurvival.Core.EventLog;
 using SqueezySurvival.Core.Items;
 using SqueezySurvival.Core.Runs;
 using SqueezySurvival.Core.Survivor;
-using SqueezySurvival.Core.Tests.Time;
+using SqueezySurvival.Core.Tests.Zones;
 using SqueezySurvival.Core.Time;
 using SqueezySurvival.Core.Zones;
 
@@ -30,15 +31,20 @@ namespace SqueezySurvival.Core.Tests.Runs
         }
 
         [Test]
-        public void Transfer_TellsTimeDependentSystemsTheMovesSeconds()
+        public void Transfer_TakesTheSecondsItsMoveTimeRulesGive()
         {
-            var system = new RecordingTimeDependentSystem();
-            RunSession session = TestRunSessions.WithOnTheGround(Stone, 5, system);
+            var completion = new RecordingSurvivorActionCompletionService();
+            var survivorInventory = new SurvivorInventoryService(SlotCapacityRules.Wireframe);
+            var zone = new Zone(TestZoneDefinitions.Create(4), SlotCapacityRules.Wireframe);
+            var groundInventory = new GroundInventoryService(zone, new GameTimeAdvancer(GameClock.RunStart, Array.Empty<ITimeDependentSystem>()), new RunEventLog());
+            var transfers = new InventoryTransferService(survivorInventory, groundInventory, completion, new ItemMoveTimeRules(secondsPerPound: 3m));
+            groundInventory.Ground.Receive(Stone, 5, -1);
 
-            session.InventoryTransfers.Transfer(ItemPanel.Ground, TestRunSessions.SlotOf(session.GroundInventory.Ground, Stone), -1, ItemTransferQuantity.All);
+            transfers.Transfer(ItemPanel.Ground, TestRunSessions.SlotOf(groundInventory.Ground, Stone), -1, ItemTransferQuantity.All);
 
-            Assert.That(system.Advances, Has.Count.EqualTo(1));
-            Assert.That(system.Advances[0].Duration, Is.EqualTo(ActionDuration.FromSeconds(10)));
+            int expectedSeconds = new ItemMoveTimeRules(secondsPerPound: 3m).SecondsToMove(Stone.WeightPounds * 5);
+            Assert.That(completion.Completed[0].Duration, Is.EqualTo(ActionDuration.FromSeconds(expectedSeconds)));
+            Assert.That(completion.Completed[0].MessageTexts, Is.EqualTo(new[] { "You picked up 5 stones." }));
         }
 
         [TestCase(ItemTransferQuantity.Half, 4, 3)]
