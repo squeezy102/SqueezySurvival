@@ -13,7 +13,7 @@ How the game screen shows items and zone features: fixed grids of slots, like Di
 | Inventory | Inventory | 8 slots in one row | What the survivor carries ([Inventory](../Systems/Inventory.md#slots)). The panel's header shows the load as text ("Load: 34 / 100 lb (34%), Normal") until the load gauge replaces it ([#104](https://github.com/squeezy102/SqueezySurvival/issues/104)). |
 | Hands | Inventory, far left, set apart | 2 slots | The left hand, then the right hand; the dominant one is the tool hand ([Equipment: handedness](../Systems/Equipment.md#handedness)) |
 
-Sizes are placeholders, to be tuned in play. The ground and features grids were 16 x 4; squeezy102 cut them to 12 x 3 to try (2026-10-19): the survivor doesn't need that many slots there, and fewer slots make bigger, more readable icons.
+Sizes are placeholders, to be tuned in play. The slot counts are rules (`SlotCapacityRules`); the layout only chooses how many columns each grid has, and the rows follow ([Architecture: rules, content and layout](../../Engineering/Architecture.md#rules-content-and-layout)). The ground and features grids were 16 x 4; squeezy102 cut them to 12 x 3 to try (2026-10-19): the survivor doesn't need that many slots there, and fewer slots make bigger, more readable icons.
 
 The hands must never be mistaken for inventory slots ([#57](https://github.com/squeezy102/SqueezySurvival/issues/57)): a bold gold rule with a wide gap on each side separates them, and an empty hand slot shows a faint hand, the left hand's on the left, seen from behind with fingers up.
 

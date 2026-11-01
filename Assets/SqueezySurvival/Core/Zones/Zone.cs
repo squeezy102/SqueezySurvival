@@ -1,5 +1,4 @@
 using System;
-using SqueezySurvival.Core.InventoryGrids;
 using SqueezySurvival.Core.Items;
 
 namespace SqueezySurvival.Core.Zones
@@ -10,11 +9,18 @@ namespace SqueezySurvival.Core.Zones
     /// </summary>
     public sealed class Zone
     {
-        /// <summary>Creates an unexplored zone with nothing on the ground.</summary>
-        public Zone(ZoneDefinition definition)
+        /// <summary>Creates an unexplored zone with nothing on the ground, its collections sized by <paramref name="slotCapacityRules"/>.</summary>
+        public Zone(ZoneDefinition definition, SlotCapacityRules slotCapacityRules)
         {
             Definition = definition ?? throw new ArgumentNullException(nameof(definition));
+            if (slotCapacityRules == null)
+            {
+                throw new ArgumentNullException(nameof(slotCapacityRules));
+            }
+
             ExplorationProgress = new ExplorationProgress(0, definition.ExploresToMap);
+            GroundPool = new CountedCollection<ItemDefinition>(slotCapacityRules.GroundSlots);
+            Features = new CountedCollection<ZoneFeatureDefinition>(slotCapacityRules.ZoneFeatureSlots);
         }
 
         /// <summary>Raised after the exploration progress changes.</summary>
@@ -30,10 +36,10 @@ namespace SqueezySurvival.Core.Zones
         public ExplorationProgress ExplorationProgress { get; private set; }
 
         /// <summary>Items lying on the ground here (Docs/Design/Systems/Zones.md, Ground pool).</summary>
-        public CountedCollection<ItemDefinition> GroundPool { get; } = new CountedCollection<ItemDefinition>(InventoryGridShapes.Ground.SlotCount);
+        public CountedCollection<ItemDefinition> GroundPool { get; }
 
         /// <summary>Features found here: resource nodes and other permanent or semi-permanent fixtures.</summary>
-        public CountedCollection<ZoneFeatureDefinition> Features { get; } = new CountedCollection<ZoneFeatureDefinition>(InventoryGridShapes.ZoneFeatures.SlotCount);
+        public CountedCollection<ZoneFeatureDefinition> Features { get; }
 
         /// <summary>Counts one more explore of the zone.</summary>
         public void RecordExplore()

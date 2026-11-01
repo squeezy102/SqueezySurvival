@@ -24,6 +24,7 @@ namespace SqueezySurvival.Core.Tests.Runs
                 DayPhaseSchedule.Default,
                 startingZone,
                 ExplorationRules.Wireframe,
+                SlotCapacityRules.Wireframe,
                 new QueuedRandomNumberSource(randomNumbers),
                 timeDependentSystems);
 

@@ -7,6 +7,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 ## [Unreleased]
 
 ### Added
+- How an assistant in a sandbox without Unity checks that Core and its tests compile: [Testing Standards: checking Core without Unity](Docs/Engineering/TestingStandards.md#checking-core-without-unity), pointed to from `AGENTS.md`.
 - Compile and test results are written to `Diagnostics/` after every compile and test run, so contributors' AI assistants can read what failed and why without opening Unity. See [Testing Standards: reading results without Unity](Docs/Engineering/TestingStandards.md#reading-results-without-unity) (#137).
 - Presentation tests: a new Edit Mode test assembly drives presenters against the real game screen with Unity's UI Test Framework ([ADR-0008](Docs/Decisions/ADR-0008-Presentation-Testing.md)). First covered: the HUD clock, zone bar, load label, Explore, Wait and Rest, and the event log's items source (#126).
 - [Architecture](Docs/Engineering/Architecture.md): how the runtime is organized, and the gaps found in the 2026-10-20 review (#116).
@@ -19,6 +20,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 - The calendar: 120-day years of four 30-day seasons. See [Time: calendar](Docs/Design/Systems/Time.md#calendar).
 
 ### Changed
+- Slot counts (inventory, hands, ground, zone features) belong to a rules class, `SlotCapacityRules`, instead of being read from the screen's grid sizes; the grid shapes are derived from it. Gameplay is unchanged (#123). See [Architecture: rules, content and layout](Docs/Engineering/Architecture.md#rules-content-and-layout).
 - The grid tooltip keeps its icon and detail lines and updates them in place instead of rebuilding them on every hover; it has Presentation tests (#122). See [Architecture: element lifetime](Docs/Engineering/Architecture.md#element-lifetime).
 - Inventory and ground changes name the slots that changed, so a grid redraws only those cells instead of checking every one; a change that leaves every slot as it was, such as sorting an already sorted grid, is not reported. See [Architecture: commands, state and change events](Docs/Engineering/Architecture.md#commands-state-and-change-events) (#121).
 - The architecture documents match the code: [Architecture](Docs/Engineering/Architecture.md) is approved, and it, the Coding Standards, the Testing Standards and `AGENTS.md` are corrected where they had drifted (#142).

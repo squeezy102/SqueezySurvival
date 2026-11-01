@@ -1,4 +1,4 @@
-using SqueezySurvival.Core.InventoryGrids;
+using System;
 using SqueezySurvival.Core.Items;
 using SqueezySurvival.Core.Survivor;
 
@@ -10,11 +10,16 @@ namespace SqueezySurvival.Core.Runs
     /// </summary>
     public sealed class SurvivorInventoryService
     {
-        /// <summary>Starts with an empty inventory and empty hands.</summary>
-        public SurvivorInventoryService()
+        /// <summary>Starts with an empty inventory and empty hands, sized by <paramref name="slotCapacityRules"/>.</summary>
+        public SurvivorInventoryService(SlotCapacityRules slotCapacityRules)
         {
-            Inventory = new CountedCollection<ItemDefinition>(InventoryGridShapes.Inventory.SlotCount);
-            Hands = new CountedCollection<ItemDefinition>(InventoryGridShapes.Hands.SlotCount);
+            if (slotCapacityRules == null)
+            {
+                throw new ArgumentNullException(nameof(slotCapacityRules));
+            }
+
+            Inventory = new CountedCollection<ItemDefinition>(slotCapacityRules.SurvivorInventorySlots);
+            Hands = new CountedCollection<ItemDefinition>(slotCapacityRules.HandSlots);
         }
 
         /// <summary>The survivor's inventory slots (Docs/Design/Systems/Inventory.md, Slots).</summary>

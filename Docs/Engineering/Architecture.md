@@ -70,7 +70,7 @@ Every action advances time through **one entry point**, as [Time: implementation
 
 ### Rules, content and layout
 
-- **Rules** are numbers and decisions the design documents own: inventory slots, durations, weight limits, hold timings. Each lives in one Core rules class that names the document it comes from. Rules never depend on screen layout; grid shapes are derived from rules, not the other way round ([#123](https://github.com/squeezy102/SqueezySurvival/issues/123)).
+- **Rules** are numbers and decisions the design documents own: inventory slots, durations, weight limits, hold timings. Each lives in one Core rules class that names the document it comes from (`ExplorationRules`, `SlotCapacityRules`, `ItemMoveTimeRules`). Rules never depend on screen layout; grid shapes are derived from rules, not the other way round: `InventoryGridShapes` takes its slot counts from `SlotCapacityRules` and chooses only the columns, and a capacity that does not fill whole rows is rejected. A rules class is handed to the services that need it through their constructors, so tests can use small capacities.
 - **Content** (items, zones, find pools, features) is data, not code ([Coding Standards](CodingStandards.md#architecture)). Its format and how it reaches Core are decided in an ADR ([#124](https://github.com/squeezy102/SqueezySurvival/issues/124)). Core sees content only as definitions it is given.
 - **Words** shown to the player come from Core formatters next to the rules they describe, so wording is tested with the rules.
 
@@ -118,7 +118,6 @@ Found in the architecture review of 2026-10-20 ([Architecture pass milestone](ht
 
 | Gap | Issue |
 |---|---|
-| Capacities come from grid layouts | [#123](https://github.com/squeezy102/SqueezySurvival/issues/123) |
 | Content is hard-coded | [#124](https://github.com/squeezy102/SqueezySurvival/issues/124) |
 | The game scene's collaborators aren't injected | [#125](https://github.com/squeezy102/SqueezySurvival/issues/125) |
 | Presentation tests cover the HUD clock, zone bar, load label, actions, overlays and the grid tooltip so far; the rest of Presentation is untested | [#126](https://github.com/squeezy102/SqueezySurvival/issues/126) |

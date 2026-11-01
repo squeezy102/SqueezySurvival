@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using SqueezySurvival.Core.Exploration;
+using SqueezySurvival.Core.Items;
 using SqueezySurvival.Core.Tests.Randomness;
 using SqueezySurvival.Core.Tests.Zones;
 using SqueezySurvival.Core.Zones;
@@ -24,7 +25,7 @@ namespace SqueezySurvival.Core.Tests.Exploration
         [Test]
         public void Explore_RaisesProgressByOneExplore()
         {
-            var zone = new Zone(TestZoneDefinitions.Create(4));
+            var zone = new Zone(TestZoneDefinitions.Create(4), SlotCapacityRules.Wireframe);
 
             ExploreOnce(zone, 1, 0, 99);
 
@@ -35,7 +36,7 @@ namespace SqueezySurvival.Core.Tests.Exploration
         [Test]
         public void Explore_DrawsRandomNumberOfFindsIntoGroundPool()
         {
-            var zone = new Zone(TestZoneDefinitions.Create(4));
+            var zone = new Zone(TestZoneDefinitions.Create(4), SlotCapacityRules.Wireframe);
 
             ExplorationOutcome outcome = ExploreOnce(zone, 3, 0, 1, 0, 99);
 
@@ -47,7 +48,7 @@ namespace SqueezySurvival.Core.Tests.Exploration
         [Test]
         public void Explore_FeatureRollUnderChance_RevealsFeature()
         {
-            var zone = new Zone(TestZoneDefinitions.Create(4));
+            var zone = new Zone(TestZoneDefinitions.Create(4), SlotCapacityRules.Wireframe);
 
             ExplorationOutcome outcome = ExploreOnce(zone, 1, 0, 24, 1);
 
@@ -58,7 +59,7 @@ namespace SqueezySurvival.Core.Tests.Exploration
         [Test]
         public void Explore_FeatureRollAtChance_RevealsNothing()
         {
-            var zone = new Zone(TestZoneDefinitions.Create(4));
+            var zone = new Zone(TestZoneDefinitions.Create(4), SlotCapacityRules.Wireframe);
 
             ExplorationOutcome outcome = ExploreOnce(zone, 1, 0, 25);
 
@@ -69,7 +70,7 @@ namespace SqueezySurvival.Core.Tests.Exploration
         [Test]
         public void Explore_ScriptedExplore_GivesScriptedFindsWithoutRandomness()
         {
-            var zone = new Zone(TestZoneDefinitions.Create(4, new[] { TestZoneDefinitions.Twig, TestZoneDefinitions.Twig }));
+            var zone = new Zone(TestZoneDefinitions.Create(4, new[] { TestZoneDefinitions.Twig, TestZoneDefinitions.Twig }), SlotCapacityRules.Wireframe);
 
             ExplorationOutcome outcome = ExploreOnce(zone);
 
@@ -80,7 +81,7 @@ namespace SqueezySurvival.Core.Tests.Exploration
         [Test]
         public void Explore_AfterScriptedExplores_DrawsRandomly()
         {
-            var zone = new Zone(TestZoneDefinitions.Create(4, new[] { TestZoneDefinitions.Twig }));
+            var zone = new Zone(TestZoneDefinitions.Create(4, new[] { TestZoneDefinitions.Twig }), SlotCapacityRules.Wireframe);
             ExploreOnce(zone);
 
             ExplorationOutcome outcome = ExploreOnce(zone, 1, 0, 99);
@@ -91,7 +92,7 @@ namespace SqueezySurvival.Core.Tests.Exploration
         [Test]
         public void Explore_FullyExploredZone_StillFindsItemsAndFeatures()
         {
-            var zone = new Zone(TestZoneDefinitions.Create(1));
+            var zone = new Zone(TestZoneDefinitions.Create(1), SlotCapacityRules.Wireframe);
             ExploreOnce(zone, 1, 0, 99);
 
             ExplorationOutcome outcome = ExploreOnce(zone, 2, 1, 1, 0, 0);
@@ -104,7 +105,7 @@ namespace SqueezySurvival.Core.Tests.Exploration
         [Test]
         public void Explore_ThatMapsZoneFully_ReportsCompletion()
         {
-            var zone = new Zone(TestZoneDefinitions.Create(2));
+            var zone = new Zone(TestZoneDefinitions.Create(2), SlotCapacityRules.Wireframe);
             Assert.That(ExploreOnce(zone, 1, 0, 99).CompletedTheZone, Is.False);
 
             Assert.That(ExploreOnce(zone, 1, 0, 99).CompletedTheZone, Is.True);
@@ -114,7 +115,7 @@ namespace SqueezySurvival.Core.Tests.Exploration
         [Test]
         public void Explore_RaisesZoneChangeEvents()
         {
-            var zone = new Zone(TestZoneDefinitions.Create(4));
+            var zone = new Zone(TestZoneDefinitions.Create(4), SlotCapacityRules.Wireframe);
             int progressChanges = 0, groundPoolChanges = 0, featureChanges = 0;
             zone.ExplorationProgressChanged += _ => progressChanges++;
             zone.GroundPool.Changed += (_, _) => groundPoolChanges++;
@@ -128,7 +129,7 @@ namespace SqueezySurvival.Core.Tests.Exploration
         [Test]
         public void Explore_GroundFull_NewKindIsReturnedAsOverflowNotAdded()
         {
-            var zone = new Zone(TestZoneDefinitions.Create(4));
+            var zone = new Zone(TestZoneDefinitions.Create(4), SlotCapacityRules.Wireframe);
             zone.GroundPool.AddRange(TestZoneDefinitions.DistinctItems(zone.GroundPool.SlotCapacity));
 
             ExplorationOutcome outcome = ExploreOnce(zone, 2, 0, 0, 99);
@@ -141,7 +142,7 @@ namespace SqueezySurvival.Core.Tests.Exploration
         [Test]
         public void Explore_FeaturesFull_NewKindIsNotRevealed()
         {
-            var zone = new Zone(TestZoneDefinitions.Create(4));
+            var zone = new Zone(TestZoneDefinitions.Create(4), SlotCapacityRules.Wireframe);
             zone.Features.AddRange(TestZoneDefinitions.DistinctFeatures(zone.Features.SlotCapacity));
 
             ExplorationOutcome outcome = ExploreOnce(zone, 1, 0, 0, 0);

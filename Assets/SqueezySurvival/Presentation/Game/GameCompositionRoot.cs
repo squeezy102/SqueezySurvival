@@ -54,6 +54,8 @@ namespace SqueezySurvival.Presentation.Game
             _ownedInCreationOrder.Clear();
         }
 
+        private static readonly SlotCapacityRules SlotCapacities = SlotCapacityRules.Wireframe;
+
         // A new seed each run. Saving the generator's state with the run belongs to saving (#2). Time-dependent
         // systems go in the order Architecture.md documents (Time: one path); none exist yet.
         private static RunSession CreateSession(NewRunConfiguration configuration) =>
@@ -62,6 +64,7 @@ namespace SqueezySurvival.Presentation.Game
                 DayPhaseSchedule.Default,
                 PlaceholderBeachZoneContent.Beach,
                 ExplorationRules.Wireframe,
+                SlotCapacities,
                 new SystemRandomNumberSource(Environment.TickCount),
                 Array.Empty<ITimeDependentSystem>());
 
@@ -73,6 +76,7 @@ namespace SqueezySurvival.Presentation.Game
             var dropOutcomeResolver = new GridDropOutcomeResolver(new NoThingCombinations());
             VisualElement dragLayer = root.Q<VisualElement>("game-screen-root");
             Zone zone = session.CurrentZone;
+            var gridShapes = new InventoryGridShapes(SlotCapacities);
 
             InventoryGridView CreateGrid(
                 FixedGridShape shape,
@@ -85,19 +89,19 @@ namespace SqueezySurvival.Presentation.Game
             var groundContents = new CountedCollectionInventoryGridContents<ItemDefinition>(session.GroundInventory.Ground, dropOutcomeResolver);
             var inventoryContents = new CountedCollectionInventoryGridContents<ItemDefinition>(session.SurvivorInventory.Inventory, dropOutcomeResolver);
             InventoryGridView zoneFeaturesView = CreateGrid(
-                InventoryGridShapes.ZoneFeatures,
+                gridShapes.ZoneFeatures,
                 FixedGridHorizontalAlignment.Center,
                 new CountedCollectionInventoryGridContents<ZoneFeatureDefinition>(zone.Features, dropOutcomeResolver),
                 "zone-features-grid");
-            InventoryGridView groundView = CreateGrid(InventoryGridShapes.Ground, FixedGridHorizontalAlignment.Center, groundContents, "ground-pool-grid");
-            InventoryGridView inventoryView = CreateGrid(InventoryGridShapes.Inventory, FixedGridHorizontalAlignment.Left, inventoryContents, "inventory-grid");
+            InventoryGridView groundView = CreateGrid(gridShapes.Ground, FixedGridHorizontalAlignment.Center, groundContents, "ground-pool-grid");
+            InventoryGridView inventoryView = CreateGrid(gridShapes.Inventory, FixedGridHorizontalAlignment.Left, inventoryContents, "inventory-grid");
             InventoryGridView handsView = CreateGrid(
-                InventoryGridShapes.Hands,
+                gridShapes.Hands,
                 FixedGridHorizontalAlignment.Left,
                 new CountedCollectionInventoryGridContents<ItemDefinition>(session.SurvivorInventory.Hands, dropOutcomeResolver),
                 "hands-grid",
                 slot => textures.HandGhost(HandSlots.HandAt(slot)));
-            new HandsGridSizer(root.Q<VisualElement>("hands-grid"));
+            new HandsGridSizer(root.Q<VisualElement>("hands-grid"), gridShapes.Hands);
             new InventoryGridSortController(groundContents, root.Q<Button>("ground-pool-sort-button"), root.Q<Button>("ground-pool-sort-menu-button"));
             new InventoryGridSortController(inventoryContents, root.Q<Button>("inventory-sort-button"), root.Q<Button>("inventory-sort-menu-button"));
 

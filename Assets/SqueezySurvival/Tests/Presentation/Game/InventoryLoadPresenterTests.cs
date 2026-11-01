@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using SqueezySurvival.Core.Items;
 using SqueezySurvival.Core.Runs;
 using SqueezySurvival.Core.Zones;
 using SqueezySurvival.Presentation.Game;
@@ -15,7 +16,7 @@ namespace SqueezySurvival.Presentation.Tests.Game
         [SetUp]
         public void CreatePresenter()
         {
-            _survivorInventory = new SurvivorInventoryService();
+            _survivorInventory = new SurvivorInventoryService(SlotCapacityRules.Wireframe);
             _presenter = new InventoryLoadPresenter(rootVisualElement, _survivorInventory);
         }
 

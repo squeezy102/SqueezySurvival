@@ -22,7 +22,7 @@ namespace SqueezySurvival.Core.Tests.Runs
         {
             eventLog = new RunEventLog();
             gameTimeAdvancer = new GameTimeAdvancer(GameClock.RunStart, systems);
-            groundInventory = new GroundInventoryService(new Zone(TestZoneDefinitions.Create(4)), gameTimeAdvancer, eventLog);
+            groundInventory = new GroundInventoryService(new Zone(TestZoneDefinitions.Create(4), SlotCapacityRules.Wireframe), gameTimeAdvancer, eventLog);
             return new SurvivorActionCompletionService(gameTimeAdvancer, eventLog, groundInventory);
         }
 

@@ -80,6 +80,15 @@ Many contributors work through an AI assistant and cannot read Unity's windows f
 - Compile errors stop tests from running, so read `latest-compilation.md` first.
 - Written by `SqueezySurvival.Editor.Diagnostics`, using the Test Framework's run callbacks and `TestRunnerApi.SaveResultToFile` ([Unity Manual: retrieve test results](https://docs.unity3d.com/Manual/test-framework/extension-get-test-results.html), [TestRunnerApi](https://docs.unity3d.com/Packages/com.unity.test-framework@1.6/api/UnityEditor.TestTools.TestRunner.Api.TestRunnerApi.html)) and Unity's `CompilationPipeline` events ([Unity Scripting API: CompilationPipeline.assemblyCompilationFinished](https://docs.unity3d.com/6000.4/Documentation/ScriptReference/Compilation.CompilationPipeline-assemblyCompilationFinished.html)).
 
+## Checking Core without Unity
+
+An assistant in a sandbox without Unity (a cloud workspace, for example) can still check that Core and its tests compile, because Core has no Unity references ([ADR-0007](../Decisions/ADR-0007-Runtime-UI-And-Assembly-Layout.md)). The sandbox starts without the .NET SDK each session, so install it first. Unity remains the authority: this is a compile check before the person opens the editor, not a substitute for the Test Runner, and it cannot check Presentation.
+
+1. Install the SDK from the operating system's package mirror (NuGet and Microsoft's download hosts may be blocked): `apt-get install -y dotnet-sdk-8.0 libnunit-cil-dev` ([Microsoft: install .NET on Ubuntu](https://learn.microsoft.com/en-us/dotnet/core/install/linux-ubuntu-install)).
+2. Copy `Assets/SqueezySurvival/Core` and `Assets/SqueezySurvival/Tests/Core` to the sandbox.
+3. Compile Core with Roslyn directly, so no package restore is needed: `dotnet /usr/lib/dotnet/sdk/<version>/Roslyn/bincore/csc.dll -noconfig -nostdlib -target:library -langversion:9 -out:Core.dll` with every `Core` source file and a `-r:` for each reference assembly in `/usr/lib/dotnet/packs/Microsoft.NETCore.App.Ref/<version>/ref/net8.0/` ([C# compiler options](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/compiler-options/)). Core must compile with no errors and no warnings.
+4. Compile the Core tests the same way, adding `-r:Core.dll -r:/usr/lib/cli/nunit.framework-2.6.3/nunit.framework.dll`. The package manager only carries NUnit 2.6, so `Is.Zero` and `Throws.ArgumentNullException` fail to resolve; any other error is real.
+
 ## Static testing
 
 Reviews find defects before they are built: design documents are reviewed through pull requests before code is written, and every code change is reviewed by squeezy102 before it reaches `main` ([Source Control](SourceControl.md)).
