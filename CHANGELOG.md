@@ -7,6 +7,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 ## [Unreleased]
 
 ### Added
+- How an assistant in a sandbox commits and pushes without GitHub credentials: [Source Control: committing from a sandbox](Docs/Engineering/SourceControl.md#committing-from-a-sandbox), pointed to from `AGENTS.md`, with a preflight check for issue access (#144).
 - How an assistant in a sandbox without Unity checks that Core and its tests compile: [Testing Standards: checking Core without Unity](Docs/Engineering/TestingStandards.md#checking-core-without-unity), pointed to from `AGENTS.md`.
 - Compile and test results are written to `Diagnostics/` after every compile and test run, so contributors' AI assistants can read what failed and why without opening Unity. See [Testing Standards: reading results without Unity](Docs/Engineering/TestingStandards.md#reading-results-without-unity) (#137).
 - Presentation tests: a new Edit Mode test assembly drives presenters against the real game screen with Unity's UI Test Framework ([ADR-0008](Docs/Decisions/ADR-0008-Presentation-Testing.md)). First covered: the HUD clock, zone bar, load label, Explore, Wait and Rest, and the event log's items source (#126).

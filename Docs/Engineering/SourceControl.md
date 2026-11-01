@@ -18,6 +18,17 @@ Binary assets (images, audio, fonts, models) are stored with Git LFS. Rules are 
 
 The cloud session that Claude works in cannot upload Git LFS objects. A commit that adds or changes a binary file is pushed from squeezy102's PC (`git push`); commits with only text files are pushed by Claude, to a feature branch.
 
+## Committing from a sandbox
+
+An assistant that works in a sandbox, such as Claude's desktop link to squeezy102's PC, has a git with no GitHub credentials and no Git LFS, so it can commit but not push or fetch LFS files. Text-only commits still reach GitHub without squeezy102 running anything:
+
+1. Commit in the checkout, staging only the files changed. Pass `-c core.autocrlf=true` and `-c filter.lfs.process= -c filter.lfs.smudge=cat -c filter.lfs.clean=cat -c filter.lfs.required=false`, so the sandbox sees the same state Windows does and does not stop on the missing `git-lfs`. Binary files (fonts, images) show as modified under those settings; never stage them.
+2. Bundle the new commits: `git bundle create Temp/<name>.bundle origin/<branch>..<branch>` ([git-bundle](https://git-scm.com/docs/git-bundle)). `Temp/` is git-ignored.
+3. Copy the bundle to an environment that is signed in to GitHub (Claude's cloud workspace has the repository attached with push access), fetch from it and push the branch there: the same commits, with the same ids, so squeezy102's `git pull` is a plain fast-forward.
+4. Delete the bundle.
+
+Commits that add or change binary files still need squeezy102's `git push` from the PC.
+
 ## Ignored files
 
 `.gitignore` follows the [GitHub Unity template](https://github.com/github/gitignore/blob/main/Unity.gitignore). Generated folders and IDE files are never committed.
