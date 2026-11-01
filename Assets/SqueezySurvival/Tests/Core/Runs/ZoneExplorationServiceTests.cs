@@ -1,9 +1,11 @@
 using System.Linq;
 using NUnit.Framework;
+using SqueezySurvival.Core.EventLog;
+using SqueezySurvival.Core.Exploration;
 using SqueezySurvival.Core.Items;
 using SqueezySurvival.Core.Runs;
 using SqueezySurvival.Core.Survivor;
-using SqueezySurvival.Core.Tests.Time;
+using SqueezySurvival.Core.Tests.Randomness;
 using SqueezySurvival.Core.Tests.Zones;
 using SqueezySurvival.Core.Time;
 using SqueezySurvival.Core.Zones;
@@ -38,14 +40,41 @@ namespace SqueezySurvival.Core.Tests.Runs
         }
 
         [Test]
-        public void Explore_TellsTimeDependentSystemsTheExploreMinutes()
+        public void Explore_CompletesWithTheExplorersMinutesAndLogsTheFinds()
         {
-            var system = new RecordingTimeDependentSystem();
-            RunSession session = TestRunSessions.Start(TestZoneDefinitions.Create(4), new ITimeDependentSystem[] { system }, 1, 0, 99);
+            var rules = new ExplorationRules(exploreMinutes: 25, minimumFindsPerExplore: 1, maximumFindsPerExplore: 1, featureChancePercent: 0);
+            var completion = new RecordingSurvivorActionCompletionService();
+            var zone = new Zone(TestZoneDefinitions.Create(4), SlotCapacityRules.Wireframe);
+            var groundInventory = new GroundInventoryService(zone, new GameTimeAdvancer(GameClock.RunStart, System.Array.Empty<ITimeDependentSystem>()), new RunEventLog());
+            var exploration = new ZoneExplorationService(
+                zone,
+                new ZoneExplorer(rules, new QueuedRandomNumberSource(1, 0, 99)),
+                new SurvivorInventoryService(SlotCapacityRules.Wireframe),
+                groundInventory,
+                completion);
 
-            session.ZoneExploration.Explore();
+            exploration.Explore();
 
-            Assert.That(system.Advances[0].Duration, Is.EqualTo(ActionDuration.FromMinutes(session.ZoneExploration.ExploreMinutes)));
+            Assert.That(completion.Completed[0].Duration, Is.EqualTo(ActionDuration.FromMinutes(25)));
+            Assert.That(completion.Completed[0].MessageTexts, Is.EqualTo(new[] { "You explored the Cove and found a pebble." }));
+        }
+
+        [Test]
+        public void Explore_WhenActionsCannotStart_ExploresNothing()
+        {
+            var completion = new RecordingSurvivorActionCompletionService { CanStartAction = false };
+            var zone = new Zone(TestZoneDefinitions.Create(4), SlotCapacityRules.Wireframe);
+            var groundInventory = new GroundInventoryService(zone, new GameTimeAdvancer(GameClock.RunStart, System.Array.Empty<ITimeDependentSystem>()), new RunEventLog());
+            var exploration = new ZoneExplorationService(
+                zone,
+                new ZoneExplorer(ExplorationRules.Wireframe, new QueuedRandomNumberSource(1, 0, 99)),
+                new SurvivorInventoryService(SlotCapacityRules.Wireframe),
+                groundInventory,
+                completion);
+
+            Assert.That(exploration.CanExplore, Is.False);
+            Assert.That(() => exploration.Explore(), Throws.InvalidOperationException);
+            Assert.That(zone.ExplorationProgress.ExploresCompleted, Is.Zero);
         }
 
         [Test]

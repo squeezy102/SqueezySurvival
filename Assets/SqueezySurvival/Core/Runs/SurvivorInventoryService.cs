@@ -4,11 +4,8 @@ using SqueezySurvival.Core.Survivor;
 
 namespace SqueezySurvival.Core.Runs
 {
-    /// <summary>
-    /// What the survivor carries: the inventory, both hands, and the load they make together
-    /// (Docs/Design/Systems/Inventory.md, Load; Docs/Design/Systems/Equipment.md).
-    /// </summary>
-    public sealed class SurvivorInventoryService
+    /// <summary>What the survivor carries, kept in slot collections sized by the slot capacity rules.</summary>
+    public sealed class SurvivorInventoryService : ISurvivorInventoryService
     {
         /// <summary>Starts with an empty inventory and empty hands, sized by <paramref name="slotCapacityRules"/>.</summary>
         public SurvivorInventoryService(SlotCapacityRules slotCapacityRules)
@@ -22,16 +19,16 @@ namespace SqueezySurvival.Core.Runs
             Hands = new CountedCollection<ItemDefinition>(slotCapacityRules.HandSlots);
         }
 
-        /// <summary>The survivor's inventory slots (Docs/Design/Systems/Inventory.md, Slots).</summary>
+        /// <inheritdoc />
         public CountedCollection<ItemDefinition> Inventory { get; }
 
-        /// <summary>The tool hand and offhand (Docs/Design/Systems/Equipment.md).</summary>
+        /// <inheritdoc />
         public CountedCollection<ItemDefinition> Hands { get; }
 
-        /// <summary>The inventory and both hands against the weight limit. There is no cap; carrying too much slows and then stops the survivor.</summary>
+        /// <inheritdoc />
         public SurvivorLoad Load => new SurvivorLoad(WeightOf(Inventory) + WeightOf(Hands), SurvivorLoad.PlaceholderLimitPounds);
 
-        /// <summary>Whether the survivor can move: not at or past the weight limit (Docs/Design/Systems/Inventory.md, Load).</summary>
+        /// <inheritdoc />
         public bool CanMove => Load.State != SurvivorLoadState.Immobile;
 
         private static decimal WeightOf(CountedCollection<ItemDefinition> collection)

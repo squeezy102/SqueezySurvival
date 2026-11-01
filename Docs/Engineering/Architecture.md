@@ -27,6 +27,8 @@ Code that does not yet match this document is listed in [Known gaps](#known-gaps
 
 A run (`RunSession`) holds a set of focused services, plus the run's configuration, its day-phase schedule and a read-only view of the clock (`IGameTime`); it has no commands of its own. `RunSessionFactory` builds the services and wires them together, so the game and its tests build a run the same way. Each service has one job, its own tests, and receives its collaborators through its constructor ([Coding Standards: architecture](CodingStandards.md#architecture)). Presentation sends each command to the service that owns it, never to the run.
 
+Every service is reached through its interface, named for the class (`IGroundInventoryService` for `GroundInventoryService`): other services, `RunSession` and presenters depend on the interface, never on another service's class. `Zone`, rules classes and definitions are passed as plain instances ([Coding Standards: architecture](CodingStandards.md#architecture)). `RunSessionFactory` is the only Core code that names the service classes.
+
 | Service | Owns | Examples of what it does |
 |---|---|---|
 | `GameTimeAdvancer` | The clock and the one path that advances it | Advance by an action's duration; tell every time-dependent system |
@@ -108,6 +110,7 @@ Creating elements and adding them to the hierarchy is slow; Unity advises buildi
 ## Testing
 
 - **Core** is covered by Edit Mode unit tests designed to the [Testing and Quality Standards](TestingStandards.md). Every rule, command and formatter.
+- **A service is tested on its own**, with hand-written test doubles standing in for its collaborators' interfaces (for example `RecordingSurvivorActionCompletionService`, which records each completed action instead of advancing time); no mocking package is used ([ADR-0003](../Decisions/ADR-0003-Package-Baseline.md)). How the services work together, such as an action reaching the clock and the time-dependent systems, is tested once, through `RunSessionFactory`.
 - **Presentation** holds no decisions that can live in Core. What must stay (binding, element updates, input routing) is covered by `SqueezySurvival.Presentation.Tests`: each presenter is built against the real `GameScreen.uxml` in a UI Test Framework panel and driven with simulated clicks and keys ([ADR-0008](../Decisions/ADR-0008-Presentation-Testing.md)).
 - Runtime objects such as textures are freed through `UnityObjectDestroyer`, which works in both Play Mode and Edit Mode, so presenters can be disposed in tests.
 - A design document change that alters a rule changes its rules class and that class's tests in the same pull request.
@@ -119,7 +122,6 @@ Found in the architecture review of 2026-10-20 ([Architecture pass milestone](ht
 | Gap | Issue |
 |---|---|
 | Content is hard-coded | [#124](https://github.com/squeezy102/SqueezySurvival/issues/124) |
-| The game scene's collaborators aren't injected | [#125](https://github.com/squeezy102/SqueezySurvival/issues/125) |
 | Presentation tests cover the HUD clock, zone bar, load label, actions, overlays and the grid tooltip so far; the rest of Presentation is untested | [#126](https://github.com/squeezy102/SqueezySurvival/issues/126) |
 | Moves assume two panels | [#127](https://github.com/squeezy102/SqueezySurvival/issues/127) |
 | Smaller cleanups | [#128](https://github.com/squeezy102/SqueezySurvival/issues/128) |

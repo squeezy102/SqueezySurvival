@@ -12,10 +12,10 @@ namespace SqueezySurvival.Presentation.Game
     /// </summary>
     public sealed class TimeTakingActionsPresenter : IDisposable
     {
-        private readonly ZoneExplorationService _zoneExploration;
-        private readonly TimePassingService _timePassing;
-        private readonly SurvivorInventoryService _survivorInventory;
-        private readonly GroundInventoryService _groundInventory;
+        private readonly IZoneExplorationService _zoneExploration;
+        private readonly ITimePassingService _timePassing;
+        private readonly ISurvivorInventoryService _survivorInventory;
+        private readonly IGroundInventoryService _groundInventory;
         private readonly Button _exploreButton;
         private readonly Button _waitButton;
         private readonly Button _restButton;
@@ -26,10 +26,10 @@ namespace SqueezySurvival.Presentation.Game
         /// </summary>
         public TimeTakingActionsPresenter(
             VisualElement root,
-            ZoneExplorationService zoneExploration,
-            TimePassingService timePassing,
-            SurvivorInventoryService survivorInventory,
-            GroundInventoryService groundInventory)
+            IZoneExplorationService zoneExploration,
+            ITimePassingService timePassing,
+            ISurvivorInventoryService survivorInventory,
+            IGroundInventoryService groundInventory)
         {
             if (root == null)
             {

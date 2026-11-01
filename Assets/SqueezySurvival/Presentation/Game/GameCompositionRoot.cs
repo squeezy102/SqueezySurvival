@@ -65,6 +65,7 @@ namespace SqueezySurvival.Presentation.Game
                 PlaceholderBeachZoneContent.Beach,
                 ExplorationRules.Wireframe,
                 SlotCapacities,
+                ItemMoveTimeRules.Wireframe,
                 new SystemRandomNumberSource(Environment.TickCount),
                 Array.Empty<ITimeDependentSystem>());
 

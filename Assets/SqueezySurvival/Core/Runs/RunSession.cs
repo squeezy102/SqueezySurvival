@@ -19,13 +19,13 @@ namespace SqueezySurvival.Core.Runs
             NewRunConfiguration configuration,
             DayPhaseSchedule dayPhaseSchedule,
             IGameTimeAdvancer gameTimeAdvancer,
-            RunEventLog eventLog,
+            IRunEventLog eventLog,
             Zone currentZone,
-            SurvivorInventoryService survivorInventory,
-            GroundInventoryService groundInventory,
-            InventoryTransferService inventoryTransfers,
-            ZoneExplorationService zoneExploration,
-            TimePassingService timePassing)
+            ISurvivorInventoryService survivorInventory,
+            IGroundInventoryService groundInventory,
+            IInventoryTransferService inventoryTransfers,
+            IZoneExplorationService zoneExploration,
+            ITimePassingService timePassing)
         {
             Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             DayPhaseSchedule = dayPhaseSchedule ?? throw new ArgumentNullException(nameof(dayPhaseSchedule));
@@ -55,24 +55,24 @@ namespace SqueezySurvival.Core.Runs
         public DayPhase CurrentDayPhase => DayPhaseSchedule.PhaseAt(Clock.MinuteOfDay);
 
         /// <summary>Everything that has happened this run.</summary>
-        public RunEventLog EventLog { get; }
+        public IRunEventLog EventLog { get; }
 
         /// <summary>The zone the survivor is in.</summary>
         public Zone CurrentZone { get; }
 
         /// <summary>What the survivor carries.</summary>
-        public SurvivorInventoryService SurvivorInventory { get; }
+        public ISurvivorInventoryService SurvivorInventory { get; }
 
         /// <summary>The current zone's ground and the finds waiting for room on it.</summary>
-        public GroundInventoryService GroundInventory { get; }
+        public IGroundInventoryService GroundInventory { get; }
 
         /// <summary>Moving things between the survivor's inventory and the ground.</summary>
-        public InventoryTransferService InventoryTransfers { get; }
+        public IInventoryTransferService InventoryTransfers { get; }
 
         /// <summary>Exploring the current zone.</summary>
-        public ZoneExplorationService ZoneExploration { get; }
+        public IZoneExplorationService ZoneExploration { get; }
 
         /// <summary>Wait and Rest.</summary>
-        public TimePassingService TimePassing { get; }
+        public ITimePassingService TimePassing { get; }
     }
 }

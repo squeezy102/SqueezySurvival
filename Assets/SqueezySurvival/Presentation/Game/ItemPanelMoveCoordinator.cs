@@ -10,16 +10,16 @@ namespace SqueezySurvival.Presentation.Game
     /// <summary>
     /// Connects the ground's and the inventory's grids so things can be dragged or modifier-clicked from one to the
     /// other (Docs/Design/UI/DragAndDrop.md, Between panels). What a move does, and its wording, come from Core's
-    /// <see cref="InventoryTransferService"/>; this only finds which grid the pointer is over and passes the request on.
+    /// <see cref="IInventoryTransferService"/>; this only finds which grid the pointer is over and passes the request on.
     /// </summary>
     public sealed class ItemPanelMoveCoordinator
     {
-        private readonly InventoryTransferService _inventoryTransfers;
+        private readonly IInventoryTransferService _inventoryTransfers;
         private readonly KeyboardMoveModifierReader _modifiers;
         private readonly Dictionary<ItemPanel, InventoryGridView> _views = new Dictionary<ItemPanel, InventoryGridView>();
 
         /// <summary>Moves things through <paramref name="inventoryTransfers"/>, reading modifiers with <paramref name="modifiers"/>.</summary>
-        public ItemPanelMoveCoordinator(InventoryTransferService inventoryTransfers, KeyboardMoveModifierReader modifiers)
+        public ItemPanelMoveCoordinator(IInventoryTransferService inventoryTransfers, KeyboardMoveModifierReader modifiers)
         {
             _inventoryTransfers = inventoryTransfers ?? throw new ArgumentNullException(nameof(inventoryTransfers));
             _modifiers = modifiers ?? throw new ArgumentNullException(nameof(modifiers));

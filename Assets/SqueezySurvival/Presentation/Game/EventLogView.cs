@@ -20,7 +20,7 @@ namespace SqueezySurvival.Presentation.Game
         private const int NewestItemIndex = -1;
         private const string PulseBrightClass = "event-log-alert-outline--bright";
 
-        private readonly RunEventLog _eventLog;
+        private readonly IRunEventLog _eventLog;
         private readonly UnreadWarningTracker _unreadWarnings;
         private readonly EventLogFollowState _followState = new EventLogFollowState();
         private readonly ReadOnlyListViewItemsSource<EventLogEntry> _itemsSource;
@@ -32,7 +32,7 @@ namespace SqueezySurvival.Presentation.Game
         private int? _olderItemToScrollTo;
 
         /// <summary>Shows <paramref name="eventLog"/> in the event log panel and keeps it current.</summary>
-        public EventLogView(VisualElement panel, RunEventLog eventLog, PixelArtTextureCache textures, UnreadWarningTracker unreadWarnings)
+        public EventLogView(VisualElement panel, IRunEventLog eventLog, PixelArtTextureCache textures, UnreadWarningTracker unreadWarnings)
         {
             if (panel == null)
             {
