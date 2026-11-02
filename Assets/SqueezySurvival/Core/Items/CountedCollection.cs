@@ -34,6 +34,12 @@ namespace SqueezySurvival.Core.Items
         /// <summary>How many slots there are.</summary>
         public int SlotCapacity { get; }
 
+        /// <summary>
+        /// Counts the changes reported through <see cref="Changed"/>, so a caller can tell the contents are as they were
+        /// by comparing two readings instead of subscribing.
+        /// </summary>
+        public long Revision { get; private set; }
+
         /// <summary>One entry per kind, in slot order.</summary>
         public IReadOnlyList<CountedEntry<TDefinition>> Entries => _entries;
 
@@ -438,6 +444,7 @@ namespace SqueezySurvival.Core.Items
 
             if (changedSlots.Count > 0)
             {
+                Revision++;
                 Changed?.Invoke(this, new CountedCollectionChange(changedSlots));
             }
         }

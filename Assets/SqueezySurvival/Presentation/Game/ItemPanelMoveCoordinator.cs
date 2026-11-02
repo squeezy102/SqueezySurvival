@@ -53,6 +53,13 @@ namespace SqueezySurvival.Presentation.Game
             return other;
         }
 
+        /// <summary>Whether things can be moved between panels now.</summary>
+        public bool CanTransfer => _inventoryTransfers.CanTransfer;
+
+        /// <summary>Changes whenever either panel's contents change, so a held drag can tell its preview is still right.</summary>
+        public long PanelContentsRevision =>
+            _inventoryTransfers.ContentsOf(ItemPanel.Inventory).Revision + _inventoryTransfers.ContentsOf(ItemPanel.Ground).Revision;
+
         /// <summary>How much a drag released now would move: the held modifier's role, or the whole stack.</summary>
         public ItemTransferQuantity QuantityForDrag() => _modifiers.HeldQuantity() ?? ItemTransferQuantity.All;
 

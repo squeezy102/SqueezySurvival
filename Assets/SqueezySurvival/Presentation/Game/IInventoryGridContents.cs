@@ -13,6 +13,9 @@ namespace SqueezySurvival.Presentation.Game
         /// <summary>Raised after the contents change, naming the slots that changed.</summary>
         event EventHandler<CountedCollectionChange> Changed;
 
+        /// <summary>Counts the changes made to the contents; unchanged while nothing about them has changed.</summary>
+        long Revision { get; }
+
         /// <summary>How many slots there are.</summary>
         int SlotCapacity { get; }
 
