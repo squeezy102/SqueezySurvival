@@ -37,7 +37,7 @@ namespace SqueezySurvival.Core.Tests.Runs
             var survivorInventory = new SurvivorInventoryService(SlotCapacityRules.Wireframe);
             var zone = new Zone(TestZoneDefinitions.Create(4), SlotCapacityRules.Wireframe);
             var groundInventory = new GroundInventoryService(zone, new GameTimeAdvancer(GameClock.RunStart, Array.Empty<ITimeDependentSystem>()), new RunEventLog());
-            var transfers = new InventoryTransferService(survivorInventory, groundInventory, completion, new ItemMoveTimeRules(secondsPerPound: 3m));
+            var transfers = new InventoryTransferService(survivorInventory, groundInventory, completion, new ItemMoveTimeRules(secondsPerPound: 3m), new ItemArrivalStackingSetting());
             groundInventory.Ground.Receive(Stone, 5, -1);
 
             transfers.Transfer(ItemPanel.Ground, TestRunSessions.SlotOf(groundInventory.Ground, Stone), -1, ItemTransferQuantity.All);
@@ -132,6 +132,128 @@ namespace SqueezySurvival.Core.Tests.Runs
             Assert.That(session.InventoryTransfers.CanTransfer, Is.False);
             Assert.That(() => session.InventoryTransfers.Transfer(ItemPanel.Ground, 0, -1, ItemTransferQuantity.All), Throws.InvalidOperationException);
             Assert.That(session.Clock.ElapsedSeconds, Is.EqualTo(secondsBefore));
+        }
+
+        private static InventoryTransferService CreateTransfersWithStoneOnGroundAndInInventorySlotFive(
+            IItemArrivalStackingSetting setting,
+            out ISurvivorInventoryService survivorInventory,
+            out IGroundInventoryService groundInventory)
+        {
+            var zone = new Zone(TestZoneDefinitions.Create(4), SlotCapacityRules.Wireframe);
+            survivorInventory = new SurvivorInventoryService(SlotCapacityRules.Wireframe);
+            groundInventory = new GroundInventoryService(zone, new GameTimeAdvancer(GameClock.RunStart, Array.Empty<ITimeDependentSystem>()), new RunEventLog());
+            survivorInventory.Inventory.Receive(Stone, 12, 5);
+            groundInventory.Ground.Receive(Stone, 5, 0);
+            return new InventoryTransferService(
+                survivorInventory,
+                groundInventory,
+                new RecordingSurvivorActionCompletionService(),
+                ItemMoveTimeRules.Wireframe,
+                setting);
+        }
+
+        [Test]
+        public void Transfer_AutoStackOverAnEmptySlot_JoinsTheKindsStack()
+        {
+            InventoryTransferService transfers = CreateTransfersWithStoneOnGroundAndInInventorySlotFive(
+                new ItemArrivalStackingSetting(), out ISurvivorInventoryService inventory, out _);
+
+            transfers.Transfer(ItemPanel.Ground, 0, 1, ItemTransferQuantity.All);
+
+            Assert.That(inventory.Inventory.EntryAtSlot(5).Count, Is.EqualTo(17));
+            Assert.That(inventory.Inventory.EntryAtSlot(1), Is.Null);
+        }
+
+        [Test]
+        public void Transfer_StartOwnStackOverAnEmptySlot_TakesThatSlotAndLeavesTheKindsStackAlone()
+        {
+            var setting = new ItemArrivalStackingSetting { Stacking = ItemArrivalStacking.StartOwnStack };
+            InventoryTransferService transfers = CreateTransfersWithStoneOnGroundAndInInventorySlotFive(
+                setting, out ISurvivorInventoryService inventory, out _);
+
+            transfers.Transfer(ItemPanel.Ground, 0, 1, ItemTransferQuantity.All);
+
+            Assert.That(inventory.Inventory.EntryAtSlot(1).Count, Is.EqualTo(5));
+            Assert.That(inventory.Inventory.EntryAtSlot(5).Count, Is.EqualTo(12));
+        }
+
+        [Test]
+        public void Transfer_StartOwnStackOverTheKindsStack_StillJoinsIt()
+        {
+            var setting = new ItemArrivalStackingSetting { Stacking = ItemArrivalStacking.StartOwnStack };
+            InventoryTransferService transfers = CreateTransfersWithStoneOnGroundAndInInventorySlotFive(
+                setting, out ISurvivorInventoryService inventory, out _);
+
+            transfers.Transfer(ItemPanel.Ground, 0, 5, ItemTransferQuantity.All);
+
+            Assert.That(inventory.Inventory.EntryAtSlot(5).Count, Is.EqualTo(17));
+        }
+
+        [Test]
+        public void Transfer_StartOwnStackWithNoSlotChosen_TakesTheFirstEmptySlot()
+        {
+            var setting = new ItemArrivalStackingSetting { Stacking = ItemArrivalStacking.StartOwnStack };
+            InventoryTransferService transfers = CreateTransfersWithStoneOnGroundAndInInventorySlotFive(
+                setting, out ISurvivorInventoryService inventory, out _);
+
+            transfers.Transfer(ItemPanel.Ground, 0, -1, ItemTransferQuantity.One);
+
+            Assert.That(inventory.Inventory.EntryAtSlot(0).Count, Is.EqualTo(1));
+            Assert.That(inventory.Inventory.EntryAtSlot(5).Count, Is.EqualTo(12));
+        }
+
+        [Test]
+        public void PreviewTransfer_StartOwnStackOverAnEmptySlot_IsANewStackNotAStack()
+        {
+            var setting = new ItemArrivalStackingSetting { Stacking = ItemArrivalStacking.StartOwnStack };
+            InventoryTransferService transfers = CreateTransfersWithStoneOnGroundAndInInventorySlotFive(setting, out _, out _);
+
+            ItemMovePreview preview = transfers.PreviewTransfer(ItemPanel.Ground, 0, 1, ItemTransferQuantity.All);
+
+            Assert.That(preview.DestinationSlot, Is.EqualTo(1));
+            Assert.That(preview.JoinsStack, Is.False);
+            Assert.That(ItemMoveTextFormatter.FormatTitle(preview), Is.EqualTo("Pick up"));
+        }
+
+        [Test]
+        public void PreviewTransfer_StartOwnStackOverTheKindsStack_JoinsItAndNamesItsCount()
+        {
+            var setting = new ItemArrivalStackingSetting { Stacking = ItemArrivalStacking.StartOwnStack };
+            InventoryTransferService transfers = CreateTransfersWithStoneOnGroundAndInInventorySlotFive(setting, out _, out _);
+
+            ItemMovePreview preview = transfers.PreviewTransfer(ItemPanel.Ground, 0, 5, ItemTransferQuantity.All);
+
+            Assert.That(preview.JoinsStack, Is.True);
+            Assert.That(preview.AlreadyThereCount, Is.EqualTo(12));
+        }
+
+        [Test]
+        public void Transfer_ReadsTheSettingAtEachMove()
+        {
+            var setting = new ItemArrivalStackingSetting { Stacking = ItemArrivalStacking.StartOwnStack };
+            InventoryTransferService transfers = CreateTransfersWithStoneOnGroundAndInInventorySlotFive(
+                setting, out ISurvivorInventoryService inventory, out _);
+            transfers.Transfer(ItemPanel.Ground, 0, 1, ItemTransferQuantity.One);
+
+            setting.Stacking = ItemArrivalStacking.AutoStack;
+            transfers.Transfer(ItemPanel.Ground, 0, 2, ItemTransferQuantity.One);
+
+            Assert.That(inventory.Inventory.EntryAtSlot(1).Count, Is.EqualTo(2));
+            Assert.That(inventory.Inventory.EntryAtSlot(2), Is.Null);
+            Assert.That(inventory.Inventory.EntryAtSlot(5).Count, Is.EqualTo(12));
+        }
+
+        [Test]
+        public void PreviewTransfer_KindSplitAcrossStacks_NamesTheCountOfTheStackItJoins()
+        {
+            InventoryTransferService transfers = CreateTransfersWithStoneOnGroundAndInInventorySlotFive(
+                new ItemArrivalStackingSetting(), out ISurvivorInventoryService inventory, out _);
+            inventory.Inventory.SplitToSlot(5, 3, 4);
+
+            ItemMovePreview preview = transfers.PreviewTransfer(ItemPanel.Ground, 0, -1, ItemTransferQuantity.One);
+
+            Assert.That(preview.DestinationSlot, Is.EqualTo(3));
+            Assert.That(preview.AlreadyThereCount, Is.EqualTo(4));
         }
     }
 }

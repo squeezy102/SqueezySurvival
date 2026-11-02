@@ -7,6 +7,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 ## [Unreleased]
 
 ### Added
+- Auto-stacking can be turned off in the game rules: things moved between panels then take the slot they are let go over (or the first empty one) instead of joining the kind's stack elsewhere; letting go over a stack of the same kind still joins it. The Options toggle arrives with the settings system (#46). See [Drag and Drop: between panels](Docs/Design/UI/DragAndDrop.md#between-panels) (#106).
 - How an assistant runs git on squeezy102's PC so he never has to: delete permission at session start, the settings every command needs, pulling, pushing through the cloud workspace, syncing the PC and clearing stale locks. See [Source Control: working on the owner's PC](Docs/Engineering/SourceControl.md#working-on-the-owners-pc), pointed to from `AGENTS.md` (#147).
 - How an assistant in a sandbox commits and pushes without GitHub credentials: [Source Control: committing from a sandbox](Docs/Engineering/SourceControl.md#committing-from-a-sandbox), pointed to from `AGENTS.md`, with a preflight check for issue access (#144).
 - How an assistant in a sandbox without Unity checks that Core and its tests compile: [Testing Standards: checking Core without Unity](Docs/Engineering/TestingStandards.md#checking-core-without-unity), pointed to from `AGENTS.md`.
@@ -39,6 +40,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 - The ground and zone features grids are 12 x 3 instead of 16 x 4, so their icons are bigger (#73).
 
 ### Fixed
+- A move onto one of several stacks of the same kind names that stack's count in its tooltip ("Add 2 stones to the 5 here") instead of the kind's total in the panel (#106).
 - The game screen's overlays (pause menu, Options, the find-with-no-room question, the not-built notice) start hidden in the layout instead of covering the screen until the game hides them (#136).
 - Textures made at runtime are freed correctly outside Play Mode too, so disposing the HUD dial or the texture cache in the editor no longer logs an error (#135).
 - Finding a cone snail now logs a red warning, with a warning icon, that says cone snails are dangerous (#99). See [HUD: event log](Docs/Design/UI/HUD.md#event-log).

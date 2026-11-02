@@ -30,6 +30,7 @@ namespace SqueezySurvival.Core.Runs
             ExplorationRules explorationRules,
             SlotCapacityRules slotCapacityRules,
             ItemMoveTimeRules itemMoveTimeRules,
+            IItemArrivalStackingSetting arrivalStacking,
             IRandomNumberSource randomNumberSource,
             IReadOnlyList<ITimeDependentSystem> timeDependentSystemsInOrder)
         {
@@ -60,7 +61,7 @@ namespace SqueezySurvival.Core.Runs
                 currentZone,
                 survivorInventory,
                 groundInventory,
-                new InventoryTransferService(survivorInventory, groundInventory, actionCompletion, itemMoveTimeRules),
+                new InventoryTransferService(survivorInventory, groundInventory, actionCompletion, itemMoveTimeRules, arrivalStacking),
                 zoneExploration,
                 new TimePassingService(actionCompletion));
         }

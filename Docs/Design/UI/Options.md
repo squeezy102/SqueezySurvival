@@ -52,5 +52,5 @@ The Options screen opens from the main menu, the pause menu and the nav bar, wit
 | Section | Settings | Status |
 |---|---|---|
 | Display | Temperature unit, real-world clock, event log auto-hide ([HUD](HUD.md)). | Planned ([#7](https://github.com/squeezy102/SqueezySurvival/issues/7)) |
-| Gameplay | End of day summary ([Day Summary](DaySummary.md)). | Planned (#7) |
+| Gameplay | End of day summary ([Day Summary](DaySummary.md)), auto-stack ([Drag and Drop](DragAndDrop.md#between-panels)). | Planned (#7) |
 | Controls | Key remapping ([Controls](Controls.md)). | Planned (#7) |

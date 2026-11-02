@@ -26,6 +26,7 @@ namespace SqueezySurvival.Core.Tests.Runs
                 ExplorationRules.Wireframe,
                 SlotCapacityRules.Wireframe,
                 ItemMoveTimeRules.Wireframe,
+                new ItemArrivalStackingSetting(),
                 new QueuedRandomNumberSource(randomNumbers),
                 timeDependentSystems);
 

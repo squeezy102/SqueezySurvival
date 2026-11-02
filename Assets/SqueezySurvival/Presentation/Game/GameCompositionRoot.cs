@@ -66,6 +66,7 @@ namespace SqueezySurvival.Presentation.Game
                 ExplorationRules.Wireframe,
                 SlotCapacities,
                 ItemMoveTimeRules.Wireframe,
+                new ItemArrivalStackingSetting(),
                 new SystemRandomNumberSource(Environment.TickCount),
                 Array.Empty<ITimeDependentSystem>());
 
