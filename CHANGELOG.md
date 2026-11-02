@@ -7,6 +7,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 ## [Unreleased]
 
 ### Added
+- How an assistant runs git on squeezy102's PC so he never has to: delete permission at session start, the settings every command needs, pulling, pushing through the cloud workspace, syncing the PC and clearing stale locks. See [Source Control: working on the owner's PC](Docs/Engineering/SourceControl.md#working-on-the-owners-pc), pointed to from `AGENTS.md` (#147).
 - How an assistant in a sandbox commits and pushes without GitHub credentials: [Source Control: committing from a sandbox](Docs/Engineering/SourceControl.md#committing-from-a-sandbox), pointed to from `AGENTS.md`, with a preflight check for issue access (#144).
 - How an assistant in a sandbox without Unity checks that Core and its tests compile: [Testing Standards: checking Core without Unity](Docs/Engineering/TestingStandards.md#checking-core-without-unity), pointed to from `AGENTS.md`.
 - Compile and test results are written to `Diagnostics/` after every compile and test run, so contributors' AI assistants can read what failed and why without opening Unity. See [Testing Standards: reading results without Unity](Docs/Engineering/TestingStandards.md#reading-results-without-unity) (#137).

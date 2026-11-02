@@ -18,11 +18,42 @@ Binary assets (images, audio, fonts, models) are stored with Git LFS. Rules are 
 
 The cloud session that Claude works in cannot upload Git LFS objects. A commit that adds or changes a binary file is pushed from squeezy102's PC (`git push`); commits with only text files are pushed by Claude, to a feature branch.
 
+## Working on the owner's PC
+
+squeezy102 never runs git. When the conversation is linked to his PC, Claude runs git there through the PC-side shell (`device_bash`, in the connected repository folder) and does the pushing from the cloud workspace, where the repository is attached with push access.
+
+At the start of a session:
+
+1. Ask for delete permission once, for the repository folder (`device_request_delete_permission`). Without it git cannot remove its own `.lock` files or replace files, so `commit`, `pull`, `checkout` and `merge` fail or leave locks behind.
+2. Run every git command there with the settings below.
+3. Check the branch and `git status` before changing anything.
+
+Settings, passed to every git command (`G` here stands for the whole prefix):
+
+```
+G='git -c core.autocrlf=true -c filter.lfs.process= -c filter.lfs.smudge=cat -c filter.lfs.clean=cat -c filter.lfs.required=false'
+```
+
+- `core.autocrlf=true`: Windows checks files out with CRLF while the shell sees LF, so without it unchanged files look modified ([git-config: core.autocrlf](https://git-scm.com/docs/git-config#Documentation/git-config.txt-coreautocrlf)).
+- The four `filter.lfs.*` settings: the shell has no `git-lfs`, so without them git stops on the missing filter ([git-config: filter](https://git-scm.com/docs/gitattributes#_filter)). Binary files (fonts, images) still show as modified under these settings; never stage them, and never commit a change to one from here.
+- The `git-lfs` hook warnings that `checkout`, `merge` and `commit` print can be ignored.
+
+| Task | How |
+|---|---|
+| Pull a branch | `$G fetch origin <branch>`, `$G checkout <branch>`, `$G merge --ff-only FETCH_HEAD`. Fast-forward only: if it cannot, stop and tell squeezy102. |
+| Start a branch | `$G checkout -b <branch> PjDev` on the PC and in the cloud workspace, from the same commit. |
+| Commit and push | Make the change in the cloud workspace, commit and push it there. Then copy the changed files to the PC (text files with Windows line endings, `.meta` files as they are), run `$G fetch origin <branch>` and `$G reset --mixed FETCH_HEAD`, so the PC's branch is the pushed commit and `git status` shows nothing of it. |
+| After a merge | Pull `PjDev` as above, then `$G branch -d <merged branch>`. |
+
+The shell has no GitHub credentials, which is why pushes go through the cloud workspace. When the change cannot be made there (it needs the PC's files and tools), commit on the PC and push through a bundle ([committing from a sandbox](#committing-from-a-sandbox)).
+
+A `.lock` file under `.git` is removed only when an earlier command of this session left it, never one that a running git, squeezy102's included, may hold. With delete permission, `rm` it. Without it, `mv` it to a new name directly under `.git` (never under `.git/refs`).
+
 ## Committing from a sandbox
 
 An assistant that works in a sandbox, such as Claude's desktop link to squeezy102's PC, has a git with no GitHub credentials and no Git LFS, so it can commit but not push or fetch LFS files. Text-only commits still reach GitHub without squeezy102 running anything:
 
-1. Commit in the checkout, staging only the files changed. Pass `-c core.autocrlf=true` and `-c filter.lfs.process= -c filter.lfs.smudge=cat -c filter.lfs.clean=cat -c filter.lfs.required=false`, so the sandbox sees the same state Windows does and does not stop on the missing `git-lfs`. Binary files (fonts, images) show as modified under those settings; never stage them.
+1. Commit in the checkout, staging only the files changed. Use the [settings for the owner's PC](#working-on-the-owners-pc), so the sandbox sees the same state Windows does and does not stop on the missing `git-lfs`; never stage binary files.
 2. Bundle the new commits: `git bundle create Temp/<name>.bundle origin/<branch>..<branch>` ([git-bundle](https://git-scm.com/docs/git-bundle)). `Temp/` is git-ignored.
 3. Copy the bundle to an environment that is signed in to GitHub (Claude's cloud workspace has the repository attached with push access), fetch from it and push the branch there: the same commits, with the same ids, so squeezy102's `git pull` is a plain fast-forward.
 4. Delete the bundle.
