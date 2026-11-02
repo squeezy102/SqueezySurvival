@@ -12,21 +12,25 @@ namespace SqueezySurvival.Core.Runs
         private readonly IGroundInventoryService _groundInventory;
         private readonly ISurvivorActionCompletionService _actionCompletion;
         private readonly ItemMoveTimeRules _itemMoveTimeRules;
+        private readonly IItemArrivalStackingSetting _arrivalStacking;
 
         /// <summary>
         /// Moves things between <paramref name="survivorInventory"/> and <paramref name="groundInventory"/>, each move
-        /// taking the time <paramref name="itemMoveTimeRules"/> gives it.
+        /// taking the time <paramref name="itemMoveTimeRules"/> gives it and landing as <paramref name="arrivalStacking"/>
+        /// says.
         /// </summary>
         public InventoryTransferService(
             ISurvivorInventoryService survivorInventory,
             IGroundInventoryService groundInventory,
             ISurvivorActionCompletionService actionCompletion,
-            ItemMoveTimeRules itemMoveTimeRules)
+            ItemMoveTimeRules itemMoveTimeRules,
+            IItemArrivalStackingSetting arrivalStacking)
         {
             _survivorInventory = survivorInventory ?? throw new ArgumentNullException(nameof(survivorInventory));
             _groundInventory = groundInventory ?? throw new ArgumentNullException(nameof(groundInventory));
             _actionCompletion = actionCompletion ?? throw new ArgumentNullException(nameof(actionCompletion));
             _itemMoveTimeRules = itemMoveTimeRules ?? throw new ArgumentNullException(nameof(itemMoveTimeRules));
+            _arrivalStacking = arrivalStacking ?? throw new ArgumentNullException(nameof(arrivalStacking));
         }
 
         /// <inheritdoc />
@@ -44,13 +48,14 @@ namespace SqueezySurvival.Core.Runs
                 ?? throw new ArgumentOutOfRangeException(nameof(fromSlot), fromSlot, "Nothing is in that slot.");
             CountedCollection<ItemDefinition> destination = ContentsOf(to);
             int count = ItemTransferQuantityCalculator.CountToMove(stack.Count, quantity);
+            int destinationSlot = destination.SlotToReceive(stack.Definition, targetSlot, _arrivalStacking.Stacking);
             return new ItemMovePreview(
                 stack.Definition,
                 count,
                 from,
                 to,
-                destination.SlotToReceive(stack.Definition, targetSlot),
-                destination.CountOf(stack.Definition),
+                destinationSlot,
+                destination.CountInSlot(stack.Definition, destinationSlot),
                 _itemMoveTimeRules.SecondsToMove(stack.Definition.WeightPounds * count));
         }
 
@@ -65,7 +70,7 @@ namespace SqueezySurvival.Core.Runs
             }
 
             ContentsOf(from).Take(fromSlot, preview.Count);
-            ContentsOf(preview.To).Receive(preview.Definition, preview.Count, preview.DestinationSlot);
+            ContentsOf(preview.To).Receive(preview.Definition, preview.Count, preview.DestinationSlot, _arrivalStacking.Stacking);
             _actionCompletion.Complete(
                 ActionDuration.FromSeconds(preview.Seconds),
                 new[] { new EventLogMessage(ItemMoveTextFormatter.FormatLog(preview)) });

@@ -54,7 +54,13 @@ Things move between the **ground** and the **inventory** ([#86](https://github.c
 
 - **A plain drag moves the whole stack.** Holding a modifier while letting go moves part of it: **Ctrl moves half** (rounded up: half of 7 is 4) and **Alt moves one**. Shift also moves the whole stack. Players can remap which key does which ([Controls: accessibility](Controls.md#accessibility)).
 - **A modified click sends things straight to the other panel**, ground to inventory or inventory to ground, with no drag: **Shift + click** sends the whole stack, **Ctrl + click** half, **Alt + click** one (resolves OQ-085). **An open container comes first** (resolves OQ-086): while a container (a chest, a cupboard) is open in the top panel, a modified click on the ground or in the inventory sends things into the container instead. Where a modified click in the container itself sends things: [OQ-088](../OpenQuestions.md).
-- **Things join their own kind (auto-stack).** When the other panel already holds that kind, what moves joins the stack let go over, or else the kind's first stack. Otherwise it takes the empty slot it was let go over, or, over another thing, the first empty slot; nothing is swapped between panels. Auto-stacking can be turned off in a later option ([#106](https://github.com/squeezy102/SqueezySurvival/issues/106)).
+- **Things join their own kind (auto-stack).** When the other panel already holds that kind, what moves joins the stack let go over, or else the kind's first stack. Otherwise it takes the empty slot it was let go over, or, over another thing, the first empty slot; nothing is swapped between panels. - **Auto-stack can be turned off** (Options, Gameplay: on by default; [#106](https://github.com/squeezy102/SqueezySurvival/issues/106)). With it off, what moves never goes to a stack the player did not point at:
+  - over a stack of the same kind it still joins that stack, because letting go over it is deliberate;
+  - over an empty slot it takes that slot, even when the kind is elsewhere in the panel;
+  - over another thing, or with no slot (a Shift, Ctrl or Alt + click), it takes the first empty slot;
+  - only when no slot is empty does it join the kind's first stack, rather than being refused.
+
+  The option covers things moved between panels. Finds from exploring are not moved, so it does not change where they land. The setting itself is built with the first settings ([Options](Options.md#wireframe-stage)); until then auto-stack is on.
 - **When the other panel has no room** (every slot taken by other kinds), nothing moves and the tooltip says so: "No room. There's no free slot in your inventory." A drop onto a full ground does not ask what to discard; that question is only for finds.
 - **There is no weight cap** ([Inventory: weight](../Systems/Inventory.md#weight)): anything can be picked up, and the load shows what it costs.
 - **Moving between panels takes a few seconds**, and the tooltip says how long before letting go ([Inventory: moving things](../Systems/Inventory.md#moving-things)).
@@ -65,6 +71,8 @@ Things move between the **ground** and the **inventory** ([#86](https://github.c
 | Anywhere in the panel, kind already there | "Stack. Add 5 stones to the 12 in your inventory. Takes 10 sec." / "Stack. Add 5 stones to the 12 on the ground. Takes 10 sec." |
 | Another thing, kind not there yet | As for an empty slot; the outline marks the first empty slot. |
 | No room | "No room. There's no free slot in your inventory." |
+
+With auto-stack off, "Stack" shows only when letting go over a stack of the same kind; anywhere else the tooltip is "Pick up" or "Put down" for a new stack, and the outline marks the slot it would take.
 
 ### Top and bottom edges: bulk moves (planned)
 

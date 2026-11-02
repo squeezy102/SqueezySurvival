@@ -72,12 +72,20 @@ namespace SqueezySurvival.Core.Items
         }
 
         /// <summary>
-        /// The slot <paramref name="definition"/> would go to if added here: <paramref name="preferredSlot"/> when it
-        /// holds the same kind; else the kind's first stack when present (auto-stack); otherwise <paramref name="preferredSlot"/> when that slot is empty; otherwise the first empty
-        /// slot. -1 when there is no room. Pass -1 as <paramref name="preferredSlot"/> for no preference
-        /// (Docs/Design/UI/DragAndDrop.md, Between panels).
+        /// The slot <paramref name="definition"/> would go to if added here with <see cref="ItemArrivalStacking.AutoStack"/>.
+        /// See <see cref="SlotToReceive(TDefinition, int, ItemArrivalStacking)"/>.
         /// </summary>
-        public int SlotToReceive(TDefinition definition, int preferredSlot)
+        public int SlotToReceive(TDefinition definition, int preferredSlot) =>
+            SlotToReceive(definition, preferredSlot, ItemArrivalStacking.AutoStack);
+
+        /// <summary>
+        /// The slot <paramref name="definition"/> would go to if added here: <paramref name="preferredSlot"/> when it
+        /// holds the same kind; else, with <see cref="ItemArrivalStacking.AutoStack"/>, the kind's first stack when
+        /// present; otherwise <paramref name="preferredSlot"/> when that slot is empty; otherwise the first empty slot;
+        /// otherwise, with <see cref="ItemArrivalStacking.StartOwnStack"/>, the kind's first stack. -1 when there is no
+        /// room. Pass -1 as <paramref name="preferredSlot"/> for no preference (Docs/Design/UI/DragAndDrop.md, Between panels).
+        /// </summary>
+        public int SlotToReceive(TDefinition definition, int preferredSlot, ItemArrivalStacking stacking)
         {
             int kindIndex = IndexOfKind(definition);
             int preferredIndex = -1;
@@ -91,7 +99,7 @@ namespace SqueezySurvival.Core.Items
                 }
             }
 
-            if (kindIndex >= 0)
+            if (kindIndex >= 0 && stacking == ItemArrivalStacking.AutoStack)
             {
                 return _entries[kindIndex].Slot;
             }
@@ -101,21 +109,46 @@ namespace SqueezySurvival.Core.Items
                 return preferredSlot;
             }
 
-            return IsFull ? -1 : FirstEmptySlot();
+            if (!IsFull)
+            {
+                return FirstEmptySlot();
+            }
+
+            return kindIndex >= 0 ? _entries[kindIndex].Slot : -1;
+        }
+
+        /// <summary>How many of <paramref name="definition"/> are in <paramref name="slot"/>; 0 when it holds another kind, nothing, or <paramref name="slot"/> is -1.</summary>
+        public int CountInSlot(TDefinition definition, int slot)
+        {
+            if (slot == -1)
+            {
+                return 0;
+            }
+
+            CountedEntry<TDefinition> entry = EntryAtSlot(slot);
+            return entry != null && entry.Definition.Id == definition.Id ? entry.Count : 0;
         }
 
         /// <summary>
-        /// Adds <paramref name="count"/> of a kind in the slot <see cref="SlotToReceive"/> names. Throws when there is no
-        /// room. Raises <see cref="Changed"/>.
+        /// Adds <paramref name="count"/> of a kind in the slot <see cref="SlotToReceive(TDefinition, int)"/> names. Throws
+        /// when there is no room. Raises <see cref="Changed"/>.
         /// </summary>
-        public void Receive(TDefinition definition, int count, int preferredSlot)
+        public void Receive(TDefinition definition, int count, int preferredSlot) =>
+            Receive(definition, count, preferredSlot, ItemArrivalStacking.AutoStack);
+
+        /// <summary>
+        /// Adds <paramref name="count"/> of a kind in the slot
+        /// <see cref="SlotToReceive(TDefinition, int, ItemArrivalStacking)"/> names. Throws when there is no room.
+        /// Raises <see cref="Changed"/>.
+        /// </summary>
+        public void Receive(TDefinition definition, int count, int preferredSlot, ItemArrivalStacking stacking)
         {
             if (count < 1)
             {
                 throw new ArgumentOutOfRangeException(nameof(count), count, "Must receive at least one.");
             }
 
-            int slot = SlotToReceive(definition, preferredSlot);
+            int slot = SlotToReceive(definition, preferredSlot, stacking);
             if (slot < 0)
             {
                 throw new InvalidOperationException("There is no room for that kind.");

@@ -141,5 +141,72 @@ namespace SqueezySurvival.Core.Tests.Items
         {
             Assert.That(() => StoneInSlotTwo().Take(0, 1), Throws.TypeOf<ArgumentOutOfRangeException>());
         }
+
+        [Test]
+        public void SlotToReceive_StartOwnStackOverAnEmptySlot_IsThatSlotEvenWithTheKindElsewhere()
+        {
+            Assert.That(StoneInSlotTwo().SlotToReceive(Stone, 3, ItemArrivalStacking.StartOwnStack), Is.EqualTo(3));
+        }
+
+        [Test]
+        public void SlotToReceive_StartOwnStackOverTheKindsStack_IsThatStack()
+        {
+            Assert.That(StoneInSlotTwo().SlotToReceive(Stone, 2, ItemArrivalStacking.StartOwnStack), Is.EqualTo(2));
+        }
+
+        [TestCase(1)]
+        [TestCase(-1)]
+        public void SlotToReceive_StartOwnStackWithNoSlotToTake_IsTheFirstEmptySlotNotTheKindsStack(int preferredSlot)
+        {
+            CountedCollection<ItemDefinition> collection = StoneInSlotTwo();
+            collection.Receive(Stick, 1, 1);
+
+            Assert.That(collection.SlotToReceive(Stone, preferredSlot, ItemArrivalStacking.StartOwnStack), Is.EqualTo(0));
+        }
+
+        [Test]
+        public void SlotToReceive_StartOwnStackWhenFullAndKindPresent_FallsBackToTheKindsStack()
+        {
+            var collection = new CountedCollection<ItemDefinition>(2);
+            collection.Receive(Stone, 1, 0);
+            collection.Receive(Stick, 1, 1);
+
+            Assert.That(collection.SlotToReceive(Stone, -1, ItemArrivalStacking.StartOwnStack), Is.EqualTo(0));
+        }
+
+        [Test]
+        public void SlotToReceive_StartOwnStackWhenFullAndKindAbsent_IsMinusOne()
+        {
+            var collection = new CountedCollection<ItemDefinition>(2);
+            collection.Receive(Stick, 1, 0);
+            collection.Receive(Shell, 1, 1);
+
+            Assert.That(collection.SlotToReceive(Stone, -1, ItemArrivalStacking.StartOwnStack), Is.EqualTo(-1));
+        }
+
+        [Test]
+        public void Receive_StartOwnStack_MakesASecondStackOfTheKind()
+        {
+            CountedCollection<ItemDefinition> collection = StoneInSlotTwo();
+
+            collection.Receive(Stone, 2, 3, ItemArrivalStacking.StartOwnStack);
+
+            Assert.That(collection.EntryAtSlot(2).Count, Is.EqualTo(3));
+            Assert.That(collection.EntryAtSlot(3).Count, Is.EqualTo(2));
+        }
+
+        [TestCase(2, 3)]
+        [TestCase(0, 0)]
+        [TestCase(-1, 0)]
+        public void CountInSlot_IsTheKindsCountInThatSlotOnly(int slot, int expected)
+        {
+            Assert.That(StoneInSlotTwo().CountInSlot(Stone, slot), Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void CountInSlot_SlotHoldingAnotherKind_IsZero()
+        {
+            Assert.That(StoneInSlotTwo().CountInSlot(Stick, 2), Is.Zero);
+        }
     }
 }
