@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using SqueezySurvival.Core.Items;
 using SqueezySurvival.Core.Runs;
-using SqueezySurvival.Core.Zones;
+using SqueezySurvival.Core.Tests.Items;
 using SqueezySurvival.Presentation.Game;
 using UnityEngine.UIElements;
 
@@ -32,7 +32,7 @@ namespace SqueezySurvival.Presentation.Tests.Game
         [Test]
         public void InventoryChanged_ShowsTheNewLoad()
         {
-            _survivorInventory.Inventory.Receive(PlaceholderBeachZoneContent.Log, 1, -1);
+            _survivorInventory.Inventory.Receive(TestItemDefinitions.Log, 1, -1);
 
             Assert.That(Element<Label>("inventory-load").text, Is.EqualTo("Load: 30 lb of 100 lb (30%), Normal"));
         }
@@ -40,7 +40,7 @@ namespace SqueezySurvival.Presentation.Tests.Game
         [Test]
         public void HandsChanged_ShowsTheNewLoad()
         {
-            _survivorInventory.Hands.Receive(PlaceholderBeachZoneContent.Log, 1, 0);
+            _survivorInventory.Hands.Receive(TestItemDefinitions.Log, 1, 0);
 
             Assert.That(Element<Label>("inventory-load").text, Is.EqualTo("Load: 30 lb of 100 lb (30%), Normal"));
         }
@@ -50,7 +50,7 @@ namespace SqueezySurvival.Presentation.Tests.Game
         {
             _presenter.Dispose();
 
-            _survivorInventory.Inventory.Receive(PlaceholderBeachZoneContent.Log, 1, -1);
+            _survivorInventory.Inventory.Receive(TestItemDefinitions.Log, 1, -1);
 
             Assert.That(Element<Label>("inventory-load").text, Is.EqualTo("Load: 0 lb of 100 lb (0%), Normal"));
         }

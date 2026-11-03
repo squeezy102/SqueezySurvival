@@ -4,6 +4,7 @@ using SqueezySurvival.Core.EventLog;
 using SqueezySurvival.Core.Items;
 using SqueezySurvival.Core.Runs;
 using SqueezySurvival.Core.Survivor;
+using SqueezySurvival.Core.Tests.Items;
 using SqueezySurvival.Core.Tests.Zones;
 using SqueezySurvival.Core.Time;
 using SqueezySurvival.Core.Zones;
@@ -13,8 +14,8 @@ namespace SqueezySurvival.Core.Tests.Runs
     [TestFixture]
     public sealed class InventoryTransferServiceTests
     {
-        private static readonly ItemDefinition Stone = PlaceholderBeachZoneContent.Stone;
-        private static readonly ItemDefinition Log = PlaceholderBeachZoneContent.Log;
+        private static readonly ItemDefinition Stone = TestItemDefinitions.Stone;
+        private static readonly ItemDefinition Log = TestItemDefinitions.Log;
 
         [Test]
         public void Transfer_WholeStackToTheInventory_MovesItTakesItsSecondsAndLogs()

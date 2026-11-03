@@ -1,15 +1,14 @@
 using System;
 using NUnit.Framework;
 using SqueezySurvival.Core.Items;
-using SqueezySurvival.Core.Zones;
 
 namespace SqueezySurvival.Core.Tests.Items
 {
     [TestFixture]
     public sealed class CountedCollectionSplitAndMergeTests
     {
-        private static readonly ItemDefinition Stone = PlaceholderBeachZoneContent.Stone;
-        private static readonly ItemDefinition Stick = PlaceholderBeachZoneContent.SmallStick;
+        private static readonly ItemDefinition Stone = TestItemDefinitions.Stone;
+        private static readonly ItemDefinition Stick = TestItemDefinitions.SmallStick;
 
         private static CountedCollection<ItemDefinition> SevenStonesAndAStick()
         {

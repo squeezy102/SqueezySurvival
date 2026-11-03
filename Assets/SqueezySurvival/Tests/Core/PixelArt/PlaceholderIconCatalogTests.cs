@@ -1,23 +1,12 @@
 using System.Linq;
 using NUnit.Framework;
 using SqueezySurvival.Core.PixelArt;
-using SqueezySurvival.Core.Zones;
 
 namespace SqueezySurvival.Core.Tests.PixelArt
 {
     [TestFixture]
     public sealed class PlaceholderIconCatalogTests
     {
-        [Test]
-        public void EveryBeachFindAndFeature_HasItsOwnIcon()
-        {
-            ZoneDefinition beach = PlaceholderBeachZoneContent.Beach;
-            var ids = beach.FindPool.Entries.Select(entry => entry.Outcome.Id)
-                .Concat(beach.FeaturePool.Entries.Select(entry => entry.Outcome.Id));
-
-            Assert.That(ids.Where(id => !PlaceholderIconCatalog.HasIcon(id)), Is.Empty);
-        }
-
         [Test]
         public void UnknownId_HasNoIcon()
         {

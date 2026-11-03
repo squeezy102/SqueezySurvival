@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using SqueezySurvival.Core.Runs;
+using SqueezySurvival.Core.Tests.Items;
 using SqueezySurvival.Core.Tests.Runs;
 using SqueezySurvival.Core.Tests.Zones;
 using SqueezySurvival.Core.Zones;
@@ -78,7 +79,7 @@ namespace SqueezySurvival.Presentation.Tests.Game
         {
             Bind(TestRunSessions.Start());
 
-            _session.SurvivorInventory.Inventory.Receive(PlaceholderBeachZoneContent.Log, 4, -1);
+            _session.SurvivorInventory.Inventory.Receive(TestItemDefinitions.Log, 4, -1);
 
             Assert.That(ExploreButton.enabledSelf, Is.False);
             Assert.That(WaitButton.enabledSelf, Is.True);
@@ -89,9 +90,9 @@ namespace SqueezySurvival.Presentation.Tests.Game
         public void ImmobileFromTheHands_DisablesExploreToo()
         {
             Bind(TestRunSessions.Start());
-            _session.SurvivorInventory.Inventory.Receive(PlaceholderBeachZoneContent.Log, 3, -1);
+            _session.SurvivorInventory.Inventory.Receive(TestItemDefinitions.Log, 3, -1);
 
-            _session.SurvivorInventory.Hands.Receive(PlaceholderBeachZoneContent.Log, 1, 0);
+            _session.SurvivorInventory.Hands.Receive(TestItemDefinitions.Log, 1, 0);
 
             Assert.That(ExploreButton.enabledSelf, Is.False);
         }
@@ -102,7 +103,7 @@ namespace SqueezySurvival.Presentation.Tests.Game
             Bind(TestRunSessions.Start());
             _presenter.Dispose();
 
-            _session.SurvivorInventory.Inventory.Receive(PlaceholderBeachZoneContent.Log, 4, -1);
+            _session.SurvivorInventory.Inventory.Receive(TestItemDefinitions.Log, 4, -1);
 
             Assert.That(ExploreButton.enabledSelf, Is.True);
         }

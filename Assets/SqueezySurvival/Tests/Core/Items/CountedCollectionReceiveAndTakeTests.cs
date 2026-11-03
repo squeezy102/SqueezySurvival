@@ -1,16 +1,15 @@
 using System;
 using NUnit.Framework;
 using SqueezySurvival.Core.Items;
-using SqueezySurvival.Core.Zones;
 
 namespace SqueezySurvival.Core.Tests.Items
 {
     [TestFixture]
     public sealed class CountedCollectionReceiveAndTakeTests
     {
-        private static readonly ItemDefinition Stone = PlaceholderBeachZoneContent.Stone;
-        private static readonly ItemDefinition Stick = PlaceholderBeachZoneContent.SmallStick;
-        private static readonly ItemDefinition Shell = PlaceholderBeachZoneContent.Seashell;
+        private static readonly ItemDefinition Stone = TestItemDefinitions.Stone;
+        private static readonly ItemDefinition Stick = TestItemDefinitions.SmallStick;
+        private static readonly ItemDefinition Shell = TestItemDefinitions.Seashell;
 
         private static CountedCollection<ItemDefinition> StoneInSlotTwo()
         {

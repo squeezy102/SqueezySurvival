@@ -4,6 +4,8 @@
 
 What the survivor can find lying around on the Beach, the first zone ([Exploration: wireframe stage](../Systems/Exploration.md#wireframe-stage)). Everything listed is found except flotsam, which needs a way to open it, and hermit crabs, which need catching.
 
+This page keeps what each find is for. The values the game uses (each item's name, description, category and weight, and how often the Beach turns it up) are content, kept in [`Items.json`](../../../Assets/SqueezySurvival/Content/Items.json) and [the Beach's file](../../../Assets/SqueezySurvival/Content/Zones/Beach.json) ([ADR-0009](../../Decisions/ADR-0009-Data-Driven-Content.md)). A find gets a placeholder icon entry when it is added ([Art Direction](../ArtDirection.md)).
+
 ## Finds
 
 | Find | Uses and notes |

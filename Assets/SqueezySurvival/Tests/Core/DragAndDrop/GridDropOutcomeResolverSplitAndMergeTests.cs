@@ -1,15 +1,15 @@
 using NUnit.Framework;
 using SqueezySurvival.Core.DragAndDrop;
 using SqueezySurvival.Core.Items;
-using SqueezySurvival.Core.Zones;
+using SqueezySurvival.Core.Tests.Items;
 
 namespace SqueezySurvival.Core.Tests.DragAndDrop
 {
     [TestFixture]
     public sealed class GridDropOutcomeResolverSplitAndMergeTests
     {
-        private static readonly ItemDefinition Stone = PlaceholderBeachZoneContent.Stone;
-        private static readonly ItemDefinition Stick = PlaceholderBeachZoneContent.SmallStick;
+        private static readonly ItemDefinition Stone = TestItemDefinitions.Stone;
+        private static readonly ItemDefinition Stick = TestItemDefinitions.SmallStick;
 
         // 7 stones in slot 0, 5 stones in slot 1, a stick in slot 2; slot 3 empty.
         private static CountedCollection<ItemDefinition> TwoStoneStacksAndAStick()

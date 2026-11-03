@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using SqueezySurvival.Core.DragAndDrop;
 using SqueezySurvival.Core.Items;
-using SqueezySurvival.Core.Zones;
+using SqueezySurvival.Core.Tests.Items;
 
 namespace SqueezySurvival.Core.Tests.DragAndDrop
 {
@@ -9,7 +9,7 @@ namespace SqueezySurvival.Core.Tests.DragAndDrop
     public sealed class ItemMoveDropOutcomeFactoryTests
     {
         private static ItemMovePreview Preview(int destinationSlot, int alreadyThere = 0) =>
-            new ItemMovePreview(PlaceholderBeachZoneContent.Stone, 5, ItemPanel.Ground, ItemPanel.Inventory, destinationSlot, alreadyThere, 10);
+            new ItemMovePreview(TestItemDefinitions.Stone, 5, ItemPanel.Ground, ItemPanel.Inventory, destinationSlot, alreadyThere, 10);
 
         [Test]
         public void Create_Room_IsATransferOutlinedWhereTheThingsLand()

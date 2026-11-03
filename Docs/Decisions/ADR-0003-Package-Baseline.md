@@ -16,6 +16,7 @@ Keep only packages the MVP needs or that the architecture expects soon.
 | Universal RP, 2D Sprite | Rendering |
 | uGUI (includes TextMeshPro), UI Toolkit module | Windows, text, progress bars |
 | Input System | Player input |
+| Newtonsoft Json (`com.unity.nuget.newtonsoft-json`) | Reads the content files in Presentation ([ADR-0009](ADR-0009-Data-Driven-Content.md)). Core does not reference it. |
 | Test Framework | Unit testing |
 | UI Test Framework | Presentation tests: simulated clicks and keys on UI Toolkit panels ([ADR-0008](ADR-0008-Presentation-Testing.md)) |
 | Visual Studio integration | IDE support |

@@ -73,7 +73,7 @@ Every action advances time through **one entry point**, as [Time: implementation
 ### Rules, content and layout
 
 - **Rules** are numbers and decisions the design documents own: inventory slots, durations, weight limits, hold timings. Each lives in one Core rules class that names the document it comes from (`ExplorationRules`, `SlotCapacityRules`, `ItemMoveTimeRules`). Rules never depend on screen layout; grid shapes are derived from rules, not the other way round: `InventoryGridShapes` takes its slot counts from `SlotCapacityRules` and chooses only the columns, and a capacity that does not fill whole rows is rejected. A rules class is handed to the services that need it through their constructors, so tests can use small capacities.
-- **Content** (items, zones, find pools, features) is data, not code ([Coding Standards](CodingStandards.md#architecture)). Its format and how it reaches Core are decided in an ADR ([#124](https://github.com/squeezy102/SqueezySurvival/issues/124)). Core sees content only as definitions it is given.
+- **Content** (items, zone features, zones with their find pools, feature pools and scripted explores) is data, not code ([Coding Standards](CodingStandards.md#architecture)): JSON files under `Assets/SqueezySurvival/Content/`, decided in [ADR-0009](../Decisions/ADR-0009-Data-Driven-Content.md). Reading them takes two steps, each in the layer that can do it. Presentation parses each file into a plain record (`GameContentJsonReader`, with Newtonsoft Json, strictly: an unknown key or an enum written as a number is an error). Core's `GameContentCatalogBuilder` checks the records, resolves every id a zone names, and returns a `GameContentCatalog` of the immutable definitions, reporting every problem in one `GameContentValidationException` that names each file and id. `GameContentCatalogLoader` joins the two. The game scene's composition root holds the files as serialized references, loads the catalog once, and passes definitions on; which zone a run starts in is a Core rule (`StartingZoneRules`). Core sees content only as definitions it is given, and the files are the one home of each content value (names, descriptions, weights, pool weights, explores to map).
 - **Words** shown to the player come from Core formatters next to the rules they describe, so wording is tested with the rules.
 
 ## Presentation
@@ -111,6 +111,7 @@ Creating elements and adding them to the hierarchy is slow; Unity advises buildi
 
 - **Core** is covered by Edit Mode unit tests designed to the [Testing and Quality Standards](TestingStandards.md). Every rule, command and formatter.
 - **A service is tested on its own**, with hand-written test doubles standing in for its collaborators' interfaces (for example `RecordingSurvivorActionCompletionService`, which records each completed action instead of advancing time); no mocking package is used ([ADR-0003](../Decisions/ADR-0003-Package-Baseline.md)). How the services work together, such as an action reaching the clock and the time-dependent systems, is tested once, through `RunSessionFactory`.
+- **Content** has two kinds of test. The Core builder is tested with small records the tests build themselves, so no Core test depends on shipped content; tests build their definitions with `TestItemDefinitions`. The reader is tested in Presentation with small JSON strings, and one Presentation test loads the shipped files and builds the catalog, so a content mistake fails a test before it reaches a build.
 - **Presentation** holds no decisions that can live in Core. What must stay (binding, element updates, input routing) is covered by `SqueezySurvival.Presentation.Tests`: each presenter is built against the real `GameScreen.uxml` in a UI Test Framework panel and driven with simulated clicks and keys ([ADR-0008](../Decisions/ADR-0008-Presentation-Testing.md)).
 - Runtime objects such as textures are freed through `UnityObjectDestroyer`, which works in both Play Mode and Edit Mode, so presenters can be disposed in tests.
 - A design document change that alters a rule changes its rules class and that class's tests in the same pull request.
@@ -121,6 +122,5 @@ Found in the architecture review of 2026-10-20 ([Architecture pass milestone](ht
 
 | Gap | Issue |
 |---|---|
-| Content is hard-coded | [#124](https://github.com/squeezy102/SqueezySurvival/issues/124) |
 | Presentation tests cover the HUD clock, zone bar, load label, actions, overlays and the grid tooltip so far; the rest of Presentation is untested | [#126](https://github.com/squeezy102/SqueezySurvival/issues/126) |
 | Moves assume two panels | [#127](https://github.com/squeezy102/SqueezySurvival/issues/127) |

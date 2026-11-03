@@ -1,6 +1,6 @@
 # ADR-0009: Data-driven content
 
-**Status:** Proposed
+**Status:** Accepted
 **Date:** 2026-11-03
 
 ## Context

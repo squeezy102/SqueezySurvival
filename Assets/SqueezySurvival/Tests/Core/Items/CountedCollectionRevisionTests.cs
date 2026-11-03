@@ -1,6 +1,5 @@
 using NUnit.Framework;
 using SqueezySurvival.Core.Items;
-using SqueezySurvival.Core.Zones;
 
 namespace SqueezySurvival.Core.Tests.Items
 {
@@ -8,7 +7,7 @@ namespace SqueezySurvival.Core.Tests.Items
     [TestFixture]
     public sealed class CountedCollectionRevisionTests
     {
-        private static readonly ItemDefinition Stone = PlaceholderBeachZoneContent.Stone;
+        private static readonly ItemDefinition Stone = TestItemDefinitions.Stone;
 
         [Test]
         public void Revision_NewCollection_IsZero()
