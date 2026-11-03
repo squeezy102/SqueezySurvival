@@ -43,6 +43,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 - The ground and zone features grids are 12 x 3 instead of 16 x 4, so their icons are bigger (#73).
 
 ### Fixed
+- Dragging a stack back onto its own slot with Ctrl or Alt held sent half or one of it to the other panel, as if it had been clicked. A click and a drag are separate behaviors now: a press is one or the other, so letting go over the slot a drag began on changes nothing (#151). See [Drag and Drop: dragging](Docs/Design/UI/DragAndDrop.md#dragging).
 - A move onto one of several stacks of the same kind names that stack's count in its tooltip ("Add 2 stones to the 5 here") instead of the kind's total in the panel (#106).
 - The game screen's overlays (pause menu, Options, the find-with-no-room question, the not-built notice) start hidden in the layout instead of covering the screen until the game hides them (#136).
 - Textures made at runtime are freed correctly outside Play Mode too, so disposing the HUD dial or the texture cache in the editor no longer logs an error (#135).

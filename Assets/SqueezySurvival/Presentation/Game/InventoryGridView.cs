@@ -306,28 +306,25 @@ namespace SqueezySurvival.Presentation.Game
                 }
             });
 
-            // While choosing a slot, a click chooses; the drag controller ignores presses then. Otherwise a click selects.
-            cell.RegisterCallback<ClickEvent>(_ =>
-            {
-                if (!gridCell.IsOccupied)
+            // While choosing a slot, a click chooses and nothing can be dragged. Otherwise a click selects, or with a
+            // modifier held sends things to the other panel. The drag controller decides what is a click and what is a
+            // drag, so the two are separate behaviors (Docs/Design/UI/DragAndDrop.md, Dragging).
+            _dragController.RegisterCell(
+                cell,
+                slot,
+                () => gridCell.IsOccupied,
+                () => _slotChoice == null,
+                () =>
                 {
-                    return;
-                }
-
-                if (_slotChoice != null)
-                {
-                    _slotChoice.Chosen(slot);
-                }
-                else if (_itemMoves != null && _itemMoves.TrySendToOtherPanel(_panel, slot))
-                {
-                    // A modified click sent things to the other panel instead of selecting.
-                }
-                else
-                {
-                    Select(slot, cell);
-                }
-            });
-            _dragController.RegisterCell(cell, slot, () => _slotChoice == null && gridCell.IsOccupied);
+                    if (_slotChoice != null)
+                    {
+                        _slotChoice.Chosen(slot);
+                    }
+                    else if (_itemMoves == null || !_itemMoves.TrySendToOtherPanel(_panel, slot))
+                    {
+                        Select(slot, cell);
+                    }
+                });
         }
 
         private void Select(int slot, VisualElement cell)
