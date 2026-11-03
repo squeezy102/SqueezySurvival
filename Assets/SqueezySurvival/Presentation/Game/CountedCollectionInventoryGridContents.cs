@@ -26,6 +26,9 @@ namespace SqueezySurvival.Presentation.Game
         }
 
         /// <inheritdoc />
+        public long Revision => _collection.Revision;
+
+        /// <inheritdoc />
         public int SlotCapacity => _collection.SlotCapacity;
 
         /// <inheritdoc />

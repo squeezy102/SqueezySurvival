@@ -104,8 +104,8 @@ namespace SqueezySurvival.Presentation.Game
                 "hands-grid",
                 slot => textures.HandGhost(HandSlots.HandAt(slot)));
             new HandsGridSizer(root.Q<VisualElement>("hands-grid"), gridShapes.Hands);
-            new InventoryGridSortController(groundContents, root.Q<Button>("ground-pool-sort-button"), root.Q<Button>("ground-pool-sort-menu-button"));
-            new InventoryGridSortController(inventoryContents, root.Q<Button>("inventory-sort-button"), root.Q<Button>("inventory-sort-menu-button"));
+            Own(new InventoryGridSortController(groundContents, root.Q<Button>("ground-pool-sort-button"), root.Q<Button>("ground-pool-sort-menu-button")));
+            Own(new InventoryGridSortController(inventoryContents, root.Q<Button>("inventory-sort-button"), root.Q<Button>("inventory-sort-menu-button")));
 
             var itemMoves = new ItemPanelMoveCoordinator(session.InventoryTransfers, new KeyboardMoveModifierReader(MoveModifierBindings.Default));
             itemMoves.Register(ItemPanel.Ground, groundView);

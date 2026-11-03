@@ -38,6 +38,7 @@ namespace SqueezySurvival.Presentation.Game
         private readonly PixelArtTextureCache _textures;
         private GridDropOutcome _shownOutcome = GridDropOutcome.ReturnToPlace;
         private readonly CombineHoldTimer _combineHoldTimer = new CombineHoldTimer();
+        private readonly DropOutcomeMemo _outcomeMemo = new DropOutcomeMemo();
         private Vector2 _pointerPosition;
         private IVisualElementScheduledItem _holdCheck;
         private ItemPanelMoveCoordinator _itemMoves;
@@ -153,11 +154,23 @@ namespace SqueezySurvival.Presentation.Game
             if (otherView != null)
             {
                 _combineHoldTimer.Reset();
-                outcome = _itemMoves.Resolve(_panel, _pressedSlot, _shownHoveredSlot, _shownQuantity);
+                DropOutcomeKey key = DropOutcomeKey.ForOtherPanel(
+                    _pressedSlot, _shownHoveredSlot, _shownQuantity, _itemMoves.CanTransfer, _itemMoves.PanelContentsRevision);
+                if (!_outcomeMemo.TryGet(key, out outcome))
+                {
+                    outcome = _itemMoves.Resolve(_panel, _pressedSlot, _shownHoveredSlot, _shownQuantity);
+                    _outcomeMemo.Store(key, outcome);
+                }
             }
             else
             {
-                outcome = _contents.ResolveDrop(_pressedSlot, TargetAt(_pointerPosition), _shownQuantity);
+                GridDropTarget target = TargetAt(_pointerPosition);
+                DropOutcomeKey key = DropOutcomeKey.ForOwnGrid(_pressedSlot, target, _shownQuantity, _contents.Revision);
+                if (!_outcomeMemo.TryGet(key, out outcome))
+                {
+                    outcome = _contents.ResolveDrop(_pressedSlot, target, _shownQuantity);
+                    _outcomeMemo.Store(key, outcome);
+                }
             }
 
             InventoryGridView targetView = otherView ?? _view;
@@ -274,6 +287,7 @@ namespace SqueezySurvival.Presentation.Game
             _holdCheck?.Pause();
             _holdCheck = null;
             _combineHoldTimer.Reset();
+            _outcomeMemo.Clear();
             _view.HideDropTarget();
             _shownTargetView?.HideDropTarget();
             _shownTargetView = null;

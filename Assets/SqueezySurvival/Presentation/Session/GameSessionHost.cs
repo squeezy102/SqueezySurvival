@@ -6,7 +6,8 @@ namespace SqueezySurvival.Presentation.Session
     /// <summary>
     /// Holds the services that outlive a single scene, such as the <see cref="RunLaunchHandoff"/> that carries a
     /// new run's configuration from the main menu into the game. Created once before the first scene loads and
-    /// kept across scene changes. Scene composition roots read their shared services from <see cref="Current"/>.
+    /// kept across scene changes. Scene composition roots read their shared services from <see cref="Current"/>, the one
+    /// static access point in the game (Docs/Engineering/Architecture.md, Presentation); game state is never reached this way.
     /// </summary>
     public sealed class GameSessionHost : MonoBehaviour
     {
