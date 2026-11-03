@@ -4,11 +4,13 @@ Thanks for helping build SqueezySurvival. New to git or coding? Read [Getting St
 
 ## How changes are made
 
-1. **Branch.** Create a branch from `main`, named for the change: `design/weather-effects`, `feature/time-system`, `fix/launcher-version-label`.
+0. **Stage branch, once.** Create your own stage branch from `main`, named as you like, and treat it as your main. It is the only branch you ever cut from `main`. Nobody works on `main` itself.
+1. **Branch.** Create a branch from your stage branch, named for the change: `design/weather-effects`, `feature/time-system`, `fix/launcher-version-label`.
 2. **Commit.** Follow [Source Control: commits](Docs/Engineering/SourceControl.md#commits).
-3. **Open a pull request** into `main` and fill in the template.
-4. **Review.** squeezy102 reviews every pull request. Nothing merges without that approval.
-5. **Merge.** Once approved, the pull request is squash-merged and the branch is deleted.
+3. **Bring it into your stage branch** when it is finished.
+4. **Open a pull request** from your stage branch into `main` when it holds work you are ready to share, and fill in the template.
+5. **Review.** squeezy102 reviews every pull request into `main`. Nothing merges without that approval.
+6. **Merge.** squeezy102 merges the approved pull request ([Source Control: branching](Docs/Engineering/SourceControl.md#branching)).
 
 Nobody pushes directly to `main`. A ruleset on GitHub enforces this ([Source Control: protecting main](Docs/Engineering/SourceControl.md#protecting-main)).
 

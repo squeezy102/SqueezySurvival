@@ -15,11 +15,11 @@ namespace SqueezySurvival.Presentation.Game
     public sealed class ItemPanelMoveCoordinator
     {
         private readonly IInventoryTransferService _inventoryTransfers;
-        private readonly KeyboardMoveModifierReader _modifiers;
+        private readonly IMoveModifierReader _modifiers;
         private readonly Dictionary<ItemPanel, InventoryGridView> _views = new Dictionary<ItemPanel, InventoryGridView>();
 
         /// <summary>Moves things through <paramref name="inventoryTransfers"/>, reading modifiers with <paramref name="modifiers"/>.</summary>
-        public ItemPanelMoveCoordinator(IInventoryTransferService inventoryTransfers, KeyboardMoveModifierReader modifiers)
+        public ItemPanelMoveCoordinator(IInventoryTransferService inventoryTransfers, IMoveModifierReader modifiers)
         {
             _inventoryTransfers = inventoryTransfers ?? throw new ArgumentNullException(nameof(inventoryTransfers));
             _modifiers = modifiers ?? throw new ArgumentNullException(nameof(modifiers));

@@ -9,7 +9,7 @@ namespace SqueezySurvival.Presentation.Game
     /// Reads which move modifier is held on the keyboard and turns it into a move role through the player's bindings
     /// (Docs/Design/UI/Controls.md). Which key does which role is decided in Core.
     /// </summary>
-    public sealed class KeyboardMoveModifierReader
+    public sealed class KeyboardMoveModifierReader : IMoveModifierReader
     {
         private readonly MoveModifierBindings _bindings;
 
@@ -19,7 +19,7 @@ namespace SqueezySurvival.Presentation.Game
             _bindings = bindings ?? throw new ArgumentNullException(nameof(bindings));
         }
 
-        /// <summary>The role of the modifier held right now, or null when none is held or there is no keyboard.</summary>
+        /// <inheritdoc />
         public ItemTransferQuantity? HeldQuantity()
         {
             Keyboard keyboard = Keyboard.current;

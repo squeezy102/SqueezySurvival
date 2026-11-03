@@ -67,10 +67,10 @@ Applies to docs, UI text, commit messages and issues.
 ## Workflow
 
 1. Find or file the issue ([Work Tracking](Docs/Engineering/WorkTracking.md)). Assign yourself and add `status: in progress`.
-2. Branch from `main` (squeezy102 branches from `PjDev`): `feature/3-explore-beach`, `fix/32-event-log-scroll`, `docs/...`.
+2. Branch from your stage branch, never from `main` (squeezy102's is `PjDev`; a contributor makes theirs from `main` once and names it as they like): `feature/3-explore-beach`, `fix/32-event-log-scroll`, `docs/...`. Nobody works on `main`.
 3. Commit with an imperative subject of 72 characters or fewer; reference the issue (`Refs #3`). Update `CHANGELOG.md` under Unreleased.
-4. Open a pull request with the template; list `Closes #N` for each finished issue.
-5. squeezy102 reviews and squash-merges.
+4. Bring finished work into your stage branch.
+5. When the stage branch holds work ready for `main`, open a pull request from it into `main` with the template, listing `Closes #N` for each finished issue. squeezy102 reviews, approves and merges it ([Source Control: branching](Docs/Engineering/SourceControl.md#branching)).
 
 ## Unity specifics
 
@@ -93,8 +93,8 @@ Applies to docs, UI text, commit messages and issues.
 - Claude Code reads this file through [CLAUDE.md](CLAUDE.md). For other tools, point the tool's project instructions at `AGENTS.md`.
 - Before proposing anything, read the design document involved and the open questions for that area ([Open Questions](Docs/Design/OpenQuestions.md)). Do not answer an open question yourself; propose options and let squeezy102 decide.
 - **Preflight, before any work.** A session must be able to read and write this repository's issues (create, assign, label, comment, close), because every change needs an issue ([rule 5](#non-negotiable-rules)) and its lifecycle is part of the work. Check with `gh api repos/squeezy102/SqueezySurvival/issues/1`, and confirm the .NET SDK if the sandbox has no Unity (below). If issue access is missing, stop and tell squeezy102 what to enable. Never skip the issue, the branch or the documentation because a change looks small.
-- **Linked to squeezy102's PC?** He never runs git: you do, there, including pulling. Follow [Source Control: working on the owner's PC](Docs/Engineering/SourceControl.md#working-on-the-owners-pc), starting by asking for delete permission for the repository folder.
-- **Sandbox git cannot push.** It has no GitHub credentials; push through a bundle as described in [Source Control: committing from a sandbox](Docs/Engineering/SourceControl.md#committing-from-a-sandbox).
+- **Work in squeezy102's local repository, never in a cloud copy.** He tests in Unity before anything is committed. If the conversation is not linked to the repository folder on his PC, say so and ask him to add it before changing any code. Edit the files there and leave them uncommitted until he has tested them and says to commit. He never runs git: you do, there, including pulling. Follow [Source Control: working on the owner's PC](Docs/Engineering/SourceControl.md#working-on-the-owners-pc), starting by asking for delete permission for the repository folder.
+- **Git on the PC cannot push.** It has no GitHub credentials; push a commit through a bundle as described in [Source Control: committing from a sandbox](Docs/Engineering/SourceControl.md#committing-from-a-sandbox).
 - **No Unity in your sandbox?** Install the .NET SDK at the start of every session and compile Core and its tests before handing work back ([Testing and Quality Standards: checking Core without Unity](Docs/Engineering/TestingStandards.md#checking-core-without-unity)).
 - **Read results from files, not screenshots.** After every compile and test run, Unity writes `Diagnostics/latest-compilation.md`, `Diagnostics/latest-test-summary.md` and `Diagnostics/latest-test-results.xml` at the project root. Read them to see what failed and why; check their timestamps ([Testing and Quality Standards: reading results without Unity](Docs/Engineering/TestingStandards.md#reading-results-without-unity)).
 - State the source for every technical claim.

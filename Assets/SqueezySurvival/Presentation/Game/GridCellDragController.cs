@@ -12,12 +12,11 @@ namespace SqueezySurvival.Presentation.Game
     /// Drags cells of one inventory grid. While dragging, nothing in the grid moves: a copy of the icon follows the
     /// pointer, a marker shows where it would go, and a tooltip says what releasing would do, as decided by Core.
     /// Releasing over the grid carries that out; releasing anywhere else changes nothing (Docs/Design/UI/DragAndDrop.md).
+    /// It also owns the click: every press of a cell ends as a drag or as a click, never both, as Core's
+    /// <see cref="PointerPressGesture"/> decides, so the grid does not listen for Unity's click event at all.
     /// </summary>
     public sealed class GridCellDragController
     {
-        // Movement before a press becomes a drag, so a plain click stays a click (Docs/Design/UI/DragAndDrop.md).
-        private const float DragStartDistance = 6f;
-
         // How often a held drag is re-checked, so the combine hold completes even while the pointer is still.
         private const long HoldCheckIntervalMilliseconds = 50;
 
@@ -31,8 +30,10 @@ namespace SqueezySurvival.Presentation.Game
 
         private VisualElement _pressedCell;
         private int _pressedSlot = -1;
+        private bool _pressCanDrag;
+        private Action _pressClickAction;
         private int _pointerId = -1;
-        private Vector2 _pressPosition;
+        private readonly PointerPressGesture _pressGesture = new PointerPressGesture();
         private VisualElement _draggedIcon;
         private float _draggedIconSize;
         private readonly PixelArtTextureCache _textures;
@@ -75,19 +76,33 @@ namespace SqueezySurvival.Presentation.Game
         /// <summary>Whether a drag is in progress.</summary>
         public bool IsDragging => _draggedIcon != null;
 
-        /// <summary>Makes the item cell in a slot draggable whenever <paramref name="canDrag"/> says so.</summary>
-        public void RegisterCell(VisualElement cell, int slot, Func<bool> canDrag)
+        /// <summary>
+        /// Makes the cell in a slot respond to presses whenever <paramref name="canPress"/> says so. A press that moves
+        /// far enough is a drag, when <paramref name="canDrag"/> says the cell may be dragged; one that does not, and is
+        /// let go over the cell, calls <paramref name="click"/>. It is never both.
+        /// </summary>
+        public void RegisterCell(VisualElement cell, int slot, Func<bool> canPress, Func<bool> canDrag, Action click)
         {
+            if (canPress == null)
+            {
+                throw new ArgumentNullException(nameof(canPress));
+            }
+
             if (canDrag == null)
             {
                 throw new ArgumentNullException(nameof(canDrag));
             }
 
+            if (click == null)
+            {
+                throw new ArgumentNullException(nameof(click));
+            }
+
             cell.RegisterCallback<PointerDownEvent>(down =>
             {
-                if (canDrag())
+                if (canPress())
                 {
-                    OnPointerDown(cell, slot, down);
+                    OnPointerDown(cell, slot, down, canDrag(), click);
                 }
             });
             cell.RegisterCallback<PointerMoveEvent>(OnPointerMove);
@@ -101,7 +116,7 @@ namespace SqueezySurvival.Presentation.Game
             EndDrag();
         }
 
-        private void OnPointerDown(VisualElement cell, int slot, PointerDownEvent down)
+        private void OnPointerDown(VisualElement cell, int slot, PointerDownEvent down, bool canDrag, Action click)
         {
             if (down.button != 0 || _pressedCell != null)
             {
@@ -110,8 +125,10 @@ namespace SqueezySurvival.Presentation.Game
 
             _pressedCell = cell;
             _pressedSlot = slot;
+            _pressCanDrag = canDrag;
+            _pressClickAction = click;
             _pointerId = down.pointerId;
-            _pressPosition = down.position;
+            _pressGesture.Press(down.position.x, down.position.y);
 
             // Capturing the pointer keeps move and release events coming to this cell wherever the pointer goes.
             cell.CapturePointer(down.pointerId);
@@ -126,13 +143,13 @@ namespace SqueezySurvival.Presentation.Game
             }
 
             Vector2 position = move.position;
+            if (!_pressGesture.Move(position.x, position.y) || !_pressCanDrag)
+            {
+                return;
+            }
+
             if (!IsDragging)
             {
-                if (Vector2.Distance(position, _pressPosition) < DragStartDistance)
-                {
-                    return;
-                }
-
                 StartDrag();
             }
 
@@ -195,8 +212,14 @@ namespace SqueezySurvival.Presentation.Game
             int sourceSlot = _pressedSlot;
             int hoveredSlot = _shownHoveredSlot;
             ItemTransferQuantity quantity = _shownQuantity;
+            Action click = _pressClickAction;
+            PointerPressEnding ending = _pressGesture.Release(_pressedCell.worldBound.Contains((Vector2)up.position));
             EndDrag();
-            if (outcome.Kind == GridDropOutcomeKind.Transfer)
+            if (ending == PointerPressEnding.Click)
+            {
+                click();
+            }
+            else if (outcome.Kind == GridDropOutcomeKind.Transfer)
             {
                 _itemMoves.Apply(_panel, sourceSlot, hoveredSlot, quantity);
             }
@@ -306,6 +329,8 @@ namespace SqueezySurvival.Presentation.Game
 
             _pressedCell = null;
             _pressedSlot = -1;
+            _pressCanDrag = false;
+            _pressClickAction = null;
             _pointerId = -1;
         }
     }
