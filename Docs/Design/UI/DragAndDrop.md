@@ -14,6 +14,7 @@ How the player moves things around in [inventory grids](InventoryGrids.md): to r
 - **While dragging, nothing in the grid moves** ([#47](https://github.com/squeezy102/SqueezySurvival/issues/47)). The thing stays in its slot; as far as the game is concerned it has not moved. The only changes are the copy on the pointer, an outline on the slot it would go to, and a tooltip saying what letting go would do.
 - **Letting go** puts the thing in the slot under the pointer, as the tooltip said. Letting go anywhere else changes nothing.
 - A drag starts once the pointer has moved 6 px with the button held, so a plain click stays a click.
+- **A click and a drag are separate behaviors** ([#151](https://github.com/squeezy102/SqueezySurvival/issues/151)). A press that moves 6 px is a drag and stays one, even if the pointer returns to where it began; one that does not, and is let go over the same cell, is a click. A press is never both. Letting go back over the cell a drag began on is only the end of the drag: it changes nothing, and does not select the cell or, with Ctrl, Alt or Shift held, send anything to the other panel as a modified click would. The game tells the two apart itself from the pointer's presses, moves and releases.
 - Escape cancels the drag.
 
 ## Moving, swapping and combining
