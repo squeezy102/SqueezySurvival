@@ -45,6 +45,7 @@ Then read the design document for the system you are touching (`Docs/Design/Syst
 - **UI:** UI Toolkit. Layout in UXML, style in USS, behavior in C# ([ADR-0007](Docs/Decisions/ADR-0007-Runtime-UI-And-Assembly-Layout.md)).
 - **Dependency injection:** constructor injection; services and volatile dependencies as interfaces, rules and data as plain instances ([Coding Standards: architecture](Docs/Engineering/CodingStandards.md#architecture)); one composition root per scene. No global singletons for game state.
 - **Scenes are generated:** scenes and UI assets are created by commands under the **SqueezySurvival > Setup** menu, never edited by hand ([Project Setup](Docs/Engineering/ProjectSetup.md#setup-commands)).
+- **Content is data:** items, zone features and zones are JSON files in `Assets/SqueezySurvival/Content/`, the one home of their values ([ADR-0009](Docs/Decisions/ADR-0009-Data-Driven-Content.md)). Adding one is a data change, plus a placeholder icon until real art exists; after adding a zone file, run **SqueezySurvival > Setup > Configure Game Screen** so the game scene references it. New record types go under `SqueezySurvival.Core.Content.Records`, which `link.xml` keeps in builds. Tests build their own definitions and do not depend on the shipped files.
 - **Launcher:** a separate .NET solution in `Launcher/` with the same Core and App split ([ADR-0005](Docs/Decisions/ADR-0005-Launcher-Technology.md)).
 
 ## Code conventions

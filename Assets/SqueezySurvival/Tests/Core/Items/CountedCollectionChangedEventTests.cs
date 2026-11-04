@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using SqueezySurvival.Core.Items;
-using SqueezySurvival.Core.Zones;
 
 namespace SqueezySurvival.Core.Tests.Items
 {
@@ -14,11 +13,11 @@ namespace SqueezySurvival.Core.Tests.Items
     [TestFixture]
     public sealed class CountedCollectionChangedEventTests
     {
-        private static readonly ItemDefinition Stone = PlaceholderBeachZoneContent.Stone;
-        private static readonly ItemDefinition Stick = PlaceholderBeachZoneContent.SmallStick;
-        private static readonly ItemDefinition Shell = PlaceholderBeachZoneContent.Seashell;
-        private static readonly ItemDefinition Conch = PlaceholderBeachZoneContent.Conch;
-        private static readonly ItemDefinition Coconut = PlaceholderBeachZoneContent.Coconut;
+        private static readonly ItemDefinition Stone = TestItemDefinitions.Stone;
+        private static readonly ItemDefinition Stick = TestItemDefinitions.SmallStick;
+        private static readonly ItemDefinition Shell = TestItemDefinitions.Seashell;
+        private static readonly ItemDefinition Conch = TestItemDefinitions.Conch;
+        private static readonly ItemDefinition Coconut = TestItemDefinitions.Coconut;
 
         private static CountedCollection<ItemDefinition> StoneStickShell(int slotCapacity = 8)
         {

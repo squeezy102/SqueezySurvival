@@ -58,18 +58,14 @@ The first playable version of exploring, built as the real system with placehold
 | Rule | Wireframe value |
 |---|---|
 | Duration | 15 TU |
-| Progress | The Beach takes 24 explores to map, so each explore adds about 4%. Shown rounded down, so 100% appears only when the zone is fully mapped. |
-| Scripted explores | The Beach's first 4: 2 stones and a small stick; 2 small sticks and some seaweed; some seaweed and a seashell; a stone and a coconut. No features. |
+| Progress | Each explore adds `100% / explores to map`, the number set in [the Beach's file](../../../Assets/SqueezySurvival/Content/Zones/Beach.json) (`ExploresToMap`). Shown rounded down, so 100% appears only when the zone is fully mapped. |
+| Scripted explores | The Beach's first few explores are fixed finds, listed in [the Beach's file](../../../Assets/SqueezySurvival/Content/Zones/Beach.json) (`ScriptedExplores`). No features. |
 | Random finds | 1 to 3 loose items per explore, drawn from the zone's find pool by weight. Continues forever, also after the zone is fully explored. |
 | Features | Each random explore has a 25% chance to reveal one feature, drawn from the zone's feature pool by weight, also after the zone is fully explored. |
 | Full ground | A new kind of item that does not fit the ground's slots is asked about: leave it behind or discard something to make room, either gone for good ([Inventory Grids: when the ground is full](../UI/InventoryGrids.md#when-the-ground-is-full)). A feature that does not fit its grid is not revealed. |
 | Event log | "You explored the Beach and found 2 stones and a stick." A revealed feature adds "You came across a tide pool." Mapping the zone fully adds a line saying so. |
 
-The Beach's finds are the items in [Beach Finds](../Content/BeachFinds.md) ([#95](https://github.com/squeezy102/SqueezySurvival/issues/95)); the features are placeholders. How often each is found is a placeholder too:
-
-| Find pool (weight) | Feature pool (weight) |
-|---|---|
-| Stone (30), Small stick (30), Seaweed (15), Seashell (15), Big stick (12), Palm frond (12), Coconut (10), Driftwood (8), Feather (8), Big rock (6), Crab (6), Clam (6), Coral (6), Conch (5), Oyster (5), Sand dollar (5), Bone (4), Sea sponge (3), Lobster (2), Log (1), Gooseneck barnacle (1), Cone snail (1) | Small palm tree (3), Medium palm tree (2), Large palm tree (1), Bush (2), Rock outcrop (1), Tide pool (1), Driftwood pile (2, semi-permanent), Puddle (2, semi-permanent) |
+The Beach's finds are the items in [Beach Finds](../Content/BeachFinds.md) ([#95](https://github.com/squeezy102/SqueezySurvival/issues/95)); the features are placeholders. Which items and features the Beach can turn up, and how often each is found (their weights in the find and feature pools), are placeholders too, kept in [the Beach's file](../../../Assets/SqueezySurvival/Content/Zones/Beach.json) (`FindPool`, `FeaturePool`); the items and features themselves are in [`Items.json`](../../../Assets/SqueezySurvival/Content/Items.json) and [`ZoneFeatures.json`](../../../Assets/SqueezySurvival/Content/ZoneFeatures.json).
 
 Not found yet: **flotsam**, until it can be opened, and **hermit crabs**, until catching them exists ([Encounters](Encounters.md)).
 
@@ -77,7 +73,7 @@ Random features stand in for [milestones](#milestones) until zone content is des
 
 ## Implementation notes
 
-- An explore is resolved by `ZoneExplorer` in `SqueezySurvival.Core.Exploration`; the numbers live in `ExplorationRules`, and placeholder content in `PlaceholderBeachZoneContent`.
+- An explore is resolved by `ZoneExplorer` in `SqueezySurvival.Core.Exploration`; the numbers live in `ExplorationRules`, and the content (items, features, the Beach's pools and scripted explores) in the JSON files under `Assets/SqueezySurvival/Content/` ([ADR-0009](../../Decisions/ADR-0009-Data-Driven-Content.md)). Adding a find to the Beach is a data change, plus a placeholder icon until real art exists.
 - Randomness comes from an injected `IRandomNumberSource`, so tests supply a fixed sequence ([Coding Standards: architecture](../../Engineering/CodingStandards.md#architecture)).
 - Progress is stored as explores completed; the percentage is derived from it.
 

@@ -1,0 +1,5 @@
+<linker>
+  <assembly fullname="SqueezySurvival.Core">
+    <type fullname="SqueezySurvival.Core.Content.Records.*" preserve="all"/>
+  </assembly>
+</linker>

@@ -2,17 +2,16 @@ using System;
 using System.Linq;
 using NUnit.Framework;
 using SqueezySurvival.Core.Items;
-using SqueezySurvival.Core.Zones;
 
 namespace SqueezySurvival.Core.Tests.Items
 {
     [TestFixture]
     public sealed class CountedCollectionTests
     {
-        private static readonly ItemDefinition Stone = PlaceholderBeachZoneContent.Stone;
-        private static readonly ItemDefinition Stick = PlaceholderBeachZoneContent.SmallStick;
-        private static readonly ItemDefinition Shell = PlaceholderBeachZoneContent.Seashell;
-        private static readonly ItemDefinition Conch = PlaceholderBeachZoneContent.Conch;
+        private static readonly ItemDefinition Stone = TestItemDefinitions.Stone;
+        private static readonly ItemDefinition Stick = TestItemDefinitions.SmallStick;
+        private static readonly ItemDefinition Shell = TestItemDefinitions.Seashell;
+        private static readonly ItemDefinition Conch = TestItemDefinitions.Conch;
 
         private static CountedCollection<ItemDefinition> StoneStickShell(int slotCapacity = 8)
         {
@@ -46,7 +45,7 @@ namespace SqueezySurvival.Core.Tests.Items
         public void AddRange_WhenFull_ReturnsNewKindsGroupedInArrivalOrderAndAddsMoreOfPresentKinds()
         {
             CountedCollection<ItemDefinition> collection = StoneStickShell(slotCapacity: 3);
-            var coconut = PlaceholderBeachZoneContent.Coconut;
+            var coconut = TestItemDefinitions.Coconut;
 
             var overflow = collection.AddRange(new[] { Conch, Stone, coconut, Conch });
 
@@ -108,9 +107,9 @@ namespace SqueezySurvival.Core.Tests.Items
             CountedCollection<ItemDefinition> collection = StoneStickShell();
             collection.MoveToSlot(1, 4);
 
-            collection.AddRange(new[] { Stone, PlaceholderBeachZoneContent.Coconut });
+            collection.AddRange(new[] { Stone, TestItemDefinitions.Coconut });
 
-            Assert.That(collection.EntryAtSlot(1).Definition, Is.SameAs(PlaceholderBeachZoneContent.Coconut));
+            Assert.That(collection.EntryAtSlot(1).Definition, Is.SameAs(TestItemDefinitions.Coconut));
             Assert.That(collection.EntryAtSlot(4).Definition, Is.SameAs(Stick));
             Assert.That(collection.CountOf(Stone), Is.EqualTo(2));
         }

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using SqueezySurvival.Core.Items;
-using SqueezySurvival.Core.Zones;
+using SqueezySurvival.Core.Tests.Items;
 using SqueezySurvival.Presentation.Game;
 using SqueezySurvival.Presentation.PixelArt;
 using UnityEngine;
@@ -44,7 +44,7 @@ namespace SqueezySurvival.Presentation.Tests.Game
         [Test]
         public void Show_ShowsTheContent()
         {
-            _tooltip.Show(Content("Stone and minerals", PlaceholderBeachZoneContent.Stone.Id, "Weight: 1 lb each", "Stack of 3: 3 lb"), Cell);
+            _tooltip.Show(Content("Stone and minerals", TestItemDefinitions.Stone.Id, "Weight: 1 lb each", "Stack of 3: 3 lb"), Cell);
 
             Assert.That(Element<VisualElement>("grid-tooltip").style.display.value, Is.EqualTo(DisplayStyle.Flex));
             Assert.That(Element<Label>("grid-tooltip-title").text, Is.EqualTo("Stone"));
@@ -76,11 +76,11 @@ namespace SqueezySurvival.Presentation.Tests.Game
         [Test]
         public void Show_AfterALongerTooltip_CreatesNoElements()
         {
-            _tooltip.Show(Content("Stone and minerals", PlaceholderBeachZoneContent.Stone.Id, "First", "Second"), Cell);
+            _tooltip.Show(Content("Stone and minerals", TestItemDefinitions.Stone.Id, "First", "Second"), Cell);
             List<VisualElement> before = AllTooltipElements();
 
-            _tooltip.Show(Content(string.Empty, PlaceholderBeachZoneContent.SmallStick.Id, "Only"), Cell);
-            _tooltip.Show(Content("Stone and minerals", PlaceholderBeachZoneContent.Stone.Id, "First", "Second"), Cell);
+            _tooltip.Show(Content(string.Empty, TestItemDefinitions.SmallStick.Id, "Only"), Cell);
+            _tooltip.Show(Content("Stone and minerals", TestItemDefinitions.Stone.Id, "First", "Second"), Cell);
 
             Assert.That(AllTooltipElements(), Is.EqualTo(before));
         }

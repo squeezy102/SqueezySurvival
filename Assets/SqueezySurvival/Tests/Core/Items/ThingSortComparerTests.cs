@@ -15,11 +15,11 @@ namespace SqueezySurvival.Core.Tests.Items
             var collection = new CountedCollection<ItemDefinition>(8);
             collection.AddRange(new[]
             {
-                PlaceholderBeachZoneContent.Seashell,
-                PlaceholderBeachZoneContent.Stone,
-                PlaceholderBeachZoneContent.Coral, PlaceholderBeachZoneContent.Coral, PlaceholderBeachZoneContent.Coral,
-                PlaceholderBeachZoneContent.Coral,
-                PlaceholderBeachZoneContent.SmallStick, PlaceholderBeachZoneContent.SmallStick, PlaceholderBeachZoneContent.SmallStick,
+                TestItemDefinitions.Seashell,
+                TestItemDefinitions.Stone,
+                TestItemDefinitions.Coral, TestItemDefinitions.Coral, TestItemDefinitions.Coral,
+                TestItemDefinitions.Coral,
+                TestItemDefinitions.SmallStick, TestItemDefinitions.SmallStick, TestItemDefinitions.SmallStick,
             });
             collection.Sort(new ThingSortComparer<ItemDefinition>(order));
             return collection.Entries.Select(entry => entry.Definition.Id).ToArray();

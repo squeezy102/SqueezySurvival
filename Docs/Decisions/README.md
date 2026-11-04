@@ -14,6 +14,7 @@ An ADR records one significant decision: the context, the choice, and its conseq
 | [0006](ADR-0006-Public-Source-And-Contribution-Workflow.md) | Public source and contribution workflow | Accepted |
 | [0007](ADR-0007-Runtime-UI-And-Assembly-Layout.md) | Runtime UI technology and assembly layout | Accepted |
 | [0008](ADR-0008-Presentation-Testing.md) | Presentation testing | Accepted |
+| [0009](ADR-0009-Data-Driven-Content.md) | Data-driven content | Accepted |
 
 ## Template
 

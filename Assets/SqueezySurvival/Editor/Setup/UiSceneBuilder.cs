@@ -35,7 +35,19 @@ namespace SqueezySurvival.Editor.Setup
         /// Builds a scene holding a camera and one UI Toolkit document with the given components, and saves it.
         /// Replaces any existing scene at the path.
         /// </summary>
-        public static void BuildUiScene(string scenePath, string layoutPath, string documentObjectName, params Type[] components)
+        public static void BuildUiScene(string scenePath, string layoutPath, string documentObjectName, params Type[] components) =>
+            BuildUiScene(scenePath, layoutPath, documentObjectName, null, components);
+
+        /// <summary>
+        /// Builds and saves a UI scene as above, first handing the document's object to <paramref name="configureDocumentObject"/>
+        /// (when not null) so the caller can set the components' serialized references before the scene is saved.
+        /// </summary>
+        public static void BuildUiScene(
+            string scenePath,
+            string layoutPath,
+            string documentObjectName,
+            Action<GameObject> configureDocumentObject,
+            params Type[] components)
         {
             Scene scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
 
@@ -54,6 +66,7 @@ namespace SqueezySurvival.Editor.Setup
                 documentObject.AddComponent(component);
             }
 
+            configureDocumentObject?.Invoke(documentObject);
             EditorSceneManager.SaveScene(scene, scenePath);
         }
 

@@ -1,13 +1,12 @@
 using NUnit.Framework;
 using SqueezySurvival.Core.Items;
-using SqueezySurvival.Core.Zones;
 
 namespace SqueezySurvival.Core.Tests.Items
 {
     [TestFixture]
     public sealed class ItemMoveTextFormatterTests
     {
-        private static readonly ItemDefinition Stone = PlaceholderBeachZoneContent.Stone;
+        private static readonly ItemDefinition Stone = TestItemDefinitions.Stone;
 
         private static ItemMovePreview Preview(int count, ItemPanel to, int destinationSlot = 0, int alreadyThere = 0, int seconds = 10) =>
             new ItemMovePreview(Stone, count, to == ItemPanel.Inventory ? ItemPanel.Ground : ItemPanel.Inventory, to, destinationSlot, alreadyThere, seconds);

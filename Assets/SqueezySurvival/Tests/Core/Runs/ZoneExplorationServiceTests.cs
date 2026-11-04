@@ -5,6 +5,7 @@ using SqueezySurvival.Core.Exploration;
 using SqueezySurvival.Core.Items;
 using SqueezySurvival.Core.Runs;
 using SqueezySurvival.Core.Survivor;
+using SqueezySurvival.Core.Tests.Items;
 using SqueezySurvival.Core.Tests.Randomness;
 using SqueezySurvival.Core.Tests.Zones;
 using SqueezySurvival.Core.Time;
@@ -15,7 +16,7 @@ namespace SqueezySurvival.Core.Tests.Runs
     [TestFixture]
     public sealed class ZoneExplorationServiceTests
     {
-        private static readonly ItemDefinition Log = PlaceholderBeachZoneContent.Log;
+        private static readonly ItemDefinition Log = TestItemDefinitions.Log;
 
         [Test]
         public void Explore_AdvancesFifteenMinutes()
@@ -78,17 +79,15 @@ namespace SqueezySurvival.Core.Tests.Runs
         }
 
         [Test]
-        public void Explore_PlaceholderBeach_FirstExploresFindStonesSticksAndSeaweed()
+        public void Explore_ScriptedExplore_PutsTheScriptedFindsOnTheGround()
         {
-            RunSession session = TestRunSessions.Start(PlaceholderBeachZoneContent.Beach, System.Array.Empty<ITimeDependentSystem>());
+            ZoneDefinition cove = TestZoneDefinitions.Create(4, new[] { TestZoneDefinitions.Pebble, TestZoneDefinitions.Pebble, TestZoneDefinitions.Twig });
+            RunSession session = TestRunSessions.Start(cove, System.Array.Empty<ITimeDependentSystem>());
 
             session.ZoneExploration.Explore();
-            session.ZoneExploration.Explore();
 
-            Zone beach = session.CurrentZone;
-            Assert.That(beach.GroundPool.CountOf(PlaceholderBeachZoneContent.Stone), Is.GreaterThan(0));
-            Assert.That(beach.GroundPool.CountOf(PlaceholderBeachZoneContent.SmallStick), Is.GreaterThan(0));
-            Assert.That(beach.GroundPool.CountOf(PlaceholderBeachZoneContent.Seaweed), Is.GreaterThan(0));
+            Assert.That(session.CurrentZone.GroundPool.CountOf(TestZoneDefinitions.Pebble), Is.EqualTo(2));
+            Assert.That(session.CurrentZone.GroundPool.CountOf(TestZoneDefinitions.Twig), Is.EqualTo(1));
         }
 
         [Test]

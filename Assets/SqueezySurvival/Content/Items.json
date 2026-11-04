@@ -1,0 +1,203 @@
+{
+  "Items": [
+    {
+      "Id": "stone",
+      "Name": "Stone",
+      "SingularPhrase": "a stone",
+      "PluralName": "stones",
+      "Description": "A small, ordinary stone. Good for knapping, campfires and much else; it may break when knapped.",
+      "Category": "StoneAndMinerals",
+      "WeightPounds": 1.0
+    },
+    {
+      "Id": "big-rock",
+      "Name": "Big rock",
+      "SingularPhrase": "a big rock",
+      "PluralName": "big rocks",
+      "Description": "A large, heavy rock. Stones can be knapped against it without it breaking.",
+      "Category": "StoneAndMinerals",
+      "WeightPounds": 15.0
+    },
+    {
+      "Id": "small-stick",
+      "Name": "Small stick",
+      "SingularPhrase": "a small stick",
+      "PluralName": "small sticks",
+      "Description": "A branch about as thick as your thumb. Kindling, fuel, traps and hand tools.",
+      "Category": "Wood",
+      "WeightPounds": 0.25
+    },
+    {
+      "Id": "big-stick",
+      "Name": "Big stick",
+      "SingularPhrase": "a big stick",
+      "PluralName": "big sticks",
+      "Description": "A limb about as thick as your wrist. Firewood, heavier tools and building.",
+      "Category": "Wood",
+      "WeightPounds": 2.0
+    },
+    {
+      "Id": "log",
+      "Name": "Log",
+      "SingularPhrase": "a log",
+      "PluralName": "logs",
+      "Description": "Part of a tree trunk, washed up or fallen. Heavy, and good for building.",
+      "Category": "Wood",
+      "WeightPounds": 30.0
+    },
+    {
+      "Id": "seaweed",
+      "Name": "Seaweed",
+      "SingularPhrase": "some seaweed",
+      "PluralName": "seaweed",
+      "Description": "A rubbery tangle of seaweed. Edible, and its fibers make basic cordage.",
+      "Category": "PlantMatter",
+      "WeightPounds": 0.2
+    },
+    {
+      "Id": "coconut",
+      "Name": "Coconut",
+      "SingularPhrase": "a coconut",
+      "PluralName": "coconuts",
+      "Description": "A coconut in its husk. Food and water, if you can get at them; too much will upset your stomach.",
+      "Category": "Fruit",
+      "WeightPounds": 3.0
+    },
+    {
+      "Id": "palm-frond",
+      "Name": "Palm frond",
+      "SingularPhrase": "a palm frond",
+      "PluralName": "palm fronds",
+      "Description": "A long, fallen palm leaf. Good for weaving baskets, bedding and shelter.",
+      "Category": "PlantMatter",
+      "WeightPounds": 0.75
+    },
+    {
+      "Id": "seashell",
+      "Name": "Seashell",
+      "SingularPhrase": "a seashell",
+      "PluralName": "seashells",
+      "Description": "A small, ridged shell. Pretty, and crushes into a calcium-rich powder.",
+      "Category": "Shells",
+      "WeightPounds": 0.1
+    },
+    {
+      "Id": "crab",
+      "Name": "Crab",
+      "SingularPhrase": "a crab",
+      "PluralName": "crabs",
+      "Description": "A crab scuttling across the sand. Delicious, better cooked; it spoils quickly once caught.",
+      "Category": "Animals",
+      "WeightPounds": 0.5
+    },
+    {
+      "Id": "lobster",
+      "Name": "Lobster",
+      "SingularPhrase": "a lobster",
+      "PluralName": "lobsters",
+      "Description": "A lobster, rarer than crabs. Delicious cooked, but best not eaten raw. It spoils quickly.",
+      "Category": "Animals",
+      "WeightPounds": 1.5
+    },
+    {
+      "Id": "conch",
+      "Name": "Conch",
+      "SingularPhrase": "a conch",
+      "PluralName": "conches",
+      "Description": "A heavy spiral shell. There may be something edible inside.",
+      "Category": "Shells",
+      "WeightPounds": 0.75
+    },
+    {
+      "Id": "clam",
+      "Name": "Clam",
+      "SingularPhrase": "a clam",
+      "PluralName": "clams",
+      "Description": "A closed clam. It may hold something edible, and very rarely a pearl.",
+      "Category": "Shells",
+      "WeightPounds": 0.3
+    },
+    {
+      "Id": "oyster",
+      "Name": "Oyster",
+      "SingularPhrase": "an oyster",
+      "PluralName": "oysters",
+      "Description": "A rough, closed oyster. It may hold something edible, and very rarely a pearl.",
+      "Category": "Shells",
+      "WeightPounds": 0.2
+    },
+    {
+      "Id": "gooseneck-barnacle",
+      "Name": "Gooseneck barnacle",
+      "SingularPhrase": "a gooseneck barnacle",
+      "PluralName": "gooseneck barnacles",
+      "Description": "A rare delicacy clinging to the rocks. You will need a sharp tool to harvest it.",
+      "Category": "MeatAndFish",
+      "WeightPounds": 0.1
+    },
+    {
+      "Id": "coral",
+      "Name": "Coral",
+      "SingularPhrase": "a piece of coral",
+      "PluralName": "pieces of coral",
+      "Description": "A piece of dried, brittle coral. Not much use except crushed.",
+      "Category": "StoneAndMinerals",
+      "WeightPounds": 0.2
+    },
+    {
+      "Id": "driftwood",
+      "Name": "Driftwood",
+      "SingularPhrase": "a piece of driftwood",
+      "PluralName": "pieces of driftwood",
+      "Description": "Sun-bleached, crooked wood. Splits into sticks, or makes a crude shield.",
+      "Category": "Wood",
+      "WeightPounds": 3.0
+    },
+    {
+      "Id": "bone",
+      "Name": "Bone",
+      "SingularPhrase": "a bone",
+      "PluralName": "bones",
+      "Description": "A weathered bone. Ground into bone meal, or shaped into tools.",
+      "Category": "AnimalParts",
+      "WeightPounds": 0.2
+    },
+    {
+      "Id": "feather",
+      "Name": "Feather",
+      "SingularPhrase": "a feather",
+      "PluralName": "feathers",
+      "Description": "A gull feather, gray and white. Fletching, bedding, kindling.",
+      "Category": "AnimalParts",
+      "WeightPounds": 0.01
+    },
+    {
+      "Id": "cone-snail",
+      "Name": "Cone snail",
+      "SingularPhrase": "a cone snail",
+      "PluralName": "cone snails",
+      "Description": "A beautiful patterned shell. You have heard these are very, very dangerous. Best to leave it alone.",
+      "Category": "Animals",
+      "WeightPounds": 0.1,
+      "FoundWarning": "You've heard cone snails are very, very dangerous. Best to leave them alone."
+    },
+    {
+      "Id": "sea-sponge",
+      "Name": "Sea sponge",
+      "SingularPhrase": "a sea sponge",
+      "PluralName": "sea sponges",
+      "Description": "A dried, brittle sponge. It soaks up liquids and helps with washing and cleaning wounds.",
+      "Category": "AnimalParts",
+      "WeightPounds": 0.1
+    },
+    {
+      "Id": "sand-dollar",
+      "Name": "Sand dollar",
+      "SingularPhrase": "a sand dollar",
+      "PluralName": "sand dollars",
+      "Description": "A flat, round shell with a five-petaled pattern. Inedible; crushes into powder.",
+      "Category": "Shells",
+      "WeightPounds": 0.05
+    }
+  ]
+}

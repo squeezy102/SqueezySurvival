@@ -3,15 +3,15 @@ using NUnit.Framework;
 using SqueezySurvival.Core.Items;
 using SqueezySurvival.Core.Runs;
 using SqueezySurvival.Core.Survivor;
-using SqueezySurvival.Core.Zones;
+using SqueezySurvival.Core.Tests.Items;
 
 namespace SqueezySurvival.Core.Tests.Runs
 {
     [TestFixture]
     public sealed class SurvivorInventoryServiceTests
     {
-        private static readonly ItemDefinition Stone = PlaceholderBeachZoneContent.Stone;
-        private static readonly ItemDefinition Log = PlaceholderBeachZoneContent.Log;
+        private static readonly ItemDefinition Stone = TestItemDefinitions.Stone;
+        private static readonly ItemDefinition Log = TestItemDefinitions.Log;
 
         [Test]
         public void New_CarriesNothingAndCanMove()

@@ -1,0 +1,68 @@
+{
+  "ZoneFeatures": [
+    {
+      "Id": "small-palm-tree",
+      "Name": "Small palm tree",
+      "SingularPhrase": "a small palm tree",
+      "PluralName": "small palm trees",
+      "Description": "A young palm, barely taller than you.",
+      "Permanence": "Permanent"
+    },
+    {
+      "Id": "medium-palm-tree",
+      "Name": "Medium palm tree",
+      "SingularPhrase": "a medium palm tree",
+      "PluralName": "medium palm trees",
+      "Description": "A palm with a few coconuts high in its crown.",
+      "Permanence": "Permanent"
+    },
+    {
+      "Id": "large-palm-tree",
+      "Name": "Large palm tree",
+      "SingularPhrase": "a large palm tree",
+      "PluralName": "large palm trees",
+      "Description": "A tall, leaning palm heavy with coconuts.",
+      "Permanence": "Permanent"
+    },
+    {
+      "Id": "beach-bush",
+      "Name": "Bush",
+      "SingularPhrase": "a bush",
+      "PluralName": "bushes",
+      "Description": "A tough, salt-tolerant shrub.",
+      "Permanence": "Permanent"
+    },
+    {
+      "Id": "rock-outcrop",
+      "Name": "Rock outcrop",
+      "SingularPhrase": "a rock outcrop",
+      "PluralName": "rock outcrops",
+      "Description": "Weathered rock breaking through the sand. Loose stones lie around it.",
+      "Permanence": "Permanent"
+    },
+    {
+      "Id": "tide-pool",
+      "Name": "Tide pool",
+      "SingularPhrase": "a tide pool",
+      "PluralName": "tide pools",
+      "Description": "A pool of seawater left behind by the tide.",
+      "Permanence": "Permanent"
+    },
+    {
+      "Id": "driftwood-pile",
+      "Name": "Driftwood pile",
+      "SingularPhrase": "a pile of driftwood",
+      "PluralName": "piles of driftwood",
+      "Description": "Sun-bleached wood washed up by the sea. The next storm may take it.",
+      "Permanence": "SemiPermanent"
+    },
+    {
+      "Id": "puddle",
+      "Name": "Puddle",
+      "SingularPhrase": "a puddle",
+      "PluralName": "puddles",
+      "Description": "Rainwater collected in a hollow. It will dry up in the sun.",
+      "Permanence": "SemiPermanent"
+    }
+  ]
+}

@@ -12,7 +12,7 @@ The game suggests washing off first, then exploring, but never locks the player 
 
 ## Scripted first finds
 
-The first explores always turn up **a stick, a stone and a coconut**, the keys to getting started. Once the survivor has all three, the game explains how to use them. (Today's scripted finds also include extra stones, sticks, seaweed and a seashell ([Exploration: wireframe stage](../Systems/Exploration.md#wireframe-stage)); they change to fit.)
+The first explores always turn up **a stick, a stone and a coconut**, the keys to getting started. Once the survivor has all three, the game explains how to use them. (Today's scripted finds also include extra items beyond these three ([Exploration: wireframe stage](../Systems/Exploration.md#wireframe-stage)); they change to fit.)
 
 ## First crafts
 

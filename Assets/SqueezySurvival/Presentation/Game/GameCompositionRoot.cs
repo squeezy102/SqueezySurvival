@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using SqueezySurvival.Core.Content;
 using SqueezySurvival.Core.Controls;
 using SqueezySurvival.Core.DragAndDrop;
 using SqueezySurvival.Core.EventLog;
@@ -12,6 +14,7 @@ using SqueezySurvival.Core.Runs;
 using SqueezySurvival.Core.Survivor;
 using SqueezySurvival.Core.Time;
 using SqueezySurvival.Core.Zones;
+using SqueezySurvival.Presentation.Content;
 using SqueezySurvival.Presentation.PixelArt;
 using SqueezySurvival.Presentation.Session;
 using UnityEngine;
@@ -30,6 +33,17 @@ namespace SqueezySurvival.Presentation.Game
     [RequireComponent(typeof(UIDocument))]
     public sealed class GameCompositionRoot : MonoBehaviour
     {
+        // The content files, set by SqueezySurvival > Setup > Configure Game Screen (Docs/Engineering/ProjectSetup.md).
+        // The initializers tell the compiler these fields are assigned from outside the code, which the Inspector does.
+        [SerializeField]
+        private TextAsset _itemsFile = null;
+
+        [SerializeField]
+        private TextAsset _zoneFeaturesFile = null;
+
+        [SerializeField]
+        private TextAsset[] _zoneFiles = Array.Empty<TextAsset>();
+
         private readonly List<IDisposable> _ownedInCreationOrder = new List<IDisposable>();
 
         // Start runs after every OnEnable, so the UIDocument has built its visual tree by then.
@@ -41,7 +55,22 @@ namespace SqueezySurvival.Presentation.Game
                 return;
             }
 
-            Compose(CreateSession(configuration), GetComponent<UIDocument>().rootVisualElement);
+            GameContentCatalog content = LoadContent();
+            Compose(CreateSession(configuration, StartingZoneRules.Wireframe.SelectStartingZone(content)), GetComponent<UIDocument>().rootVisualElement);
+        }
+
+        private GameContentCatalog LoadContent()
+        {
+            if (_itemsFile == null || _zoneFeaturesFile == null || _zoneFiles.Length == 0 || _zoneFiles.Any(zoneFile => zoneFile == null))
+            {
+                throw new InvalidOperationException(
+                    "The game scene is missing its content files. Run SqueezySurvival > Setup > Configure Game Screen.");
+            }
+
+            return new GameContentCatalogLoader(new GameContentJsonReader()).Load(
+                _itemsFile.text,
+                _zoneFeaturesFile.text,
+                _zoneFiles.Select(zoneFile => new ZoneJsonText(zoneFile.name, zoneFile.text)).ToList());
         }
 
         private void OnDestroy()
@@ -58,11 +87,11 @@ namespace SqueezySurvival.Presentation.Game
 
         // A new seed each run. Saving the generator's state with the run belongs to saving (#2). Time-dependent
         // systems go in the order Architecture.md documents (Time: one path); none exist yet.
-        private static RunSession CreateSession(NewRunConfiguration configuration) =>
+        private static RunSession CreateSession(NewRunConfiguration configuration, ZoneDefinition startingZone) =>
             RunSessionFactory.StartNewRun(
                 configuration,
                 DayPhaseSchedule.Default,
-                PlaceholderBeachZoneContent.Beach,
+                startingZone,
                 ExplorationRules.Wireframe,
                 SlotCapacities,
                 ItemMoveTimeRules.Wireframe,
