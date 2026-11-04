@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using SqueezySurvival.Core.EventLog;
 using SqueezySurvival.Core.Exploration;
+using SqueezySurvival.Core.Items;
 using SqueezySurvival.Core.Randomness;
 using SqueezySurvival.Core.Time;
 using SqueezySurvival.Core.Zones;
@@ -27,6 +28,9 @@ namespace SqueezySurvival.Core.Runs
             DayPhaseSchedule dayPhaseSchedule,
             ZoneDefinition startingZone,
             ExplorationRules explorationRules,
+            SlotCapacityRules slotCapacityRules,
+            ItemMoveTimeRules itemMoveTimeRules,
+            IItemArrivalStackingSetting arrivalStacking,
             IRandomNumberSource randomNumberSource,
             IReadOnlyList<ITimeDependentSystem> timeDependentSystemsInOrder)
         {
@@ -37,8 +41,8 @@ namespace SqueezySurvival.Core.Runs
 
             var gameTimeAdvancer = new GameTimeAdvancer(GameClock.RunStart, timeDependentSystemsInOrder);
             var eventLog = new RunEventLog();
-            var currentZone = new Zone(startingZone);
-            var survivorInventory = new SurvivorInventoryService();
+            var currentZone = new Zone(startingZone, slotCapacityRules);
+            var survivorInventory = new SurvivorInventoryService(slotCapacityRules);
             var groundInventory = new GroundInventoryService(currentZone, gameTimeAdvancer, eventLog);
             var actionCompletion = new SurvivorActionCompletionService(gameTimeAdvancer, eventLog, groundInventory);
             var zoneExploration = new ZoneExplorationService(
@@ -57,7 +61,7 @@ namespace SqueezySurvival.Core.Runs
                 currentZone,
                 survivorInventory,
                 groundInventory,
-                new InventoryTransferService(survivorInventory, groundInventory, actionCompletion),
+                new InventoryTransferService(survivorInventory, groundInventory, actionCompletion, itemMoveTimeRules, arrivalStacking),
                 zoneExploration,
                 new TimePassingService(actionCompletion));
         }

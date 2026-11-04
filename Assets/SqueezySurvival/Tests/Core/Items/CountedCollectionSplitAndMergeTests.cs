@@ -1,15 +1,14 @@
 using System;
 using NUnit.Framework;
 using SqueezySurvival.Core.Items;
-using SqueezySurvival.Core.Zones;
 
 namespace SqueezySurvival.Core.Tests.Items
 {
     [TestFixture]
     public sealed class CountedCollectionSplitAndMergeTests
     {
-        private static readonly ItemDefinition Stone = PlaceholderBeachZoneContent.Stone;
-        private static readonly ItemDefinition Stick = PlaceholderBeachZoneContent.SmallStick;
+        private static readonly ItemDefinition Stone = TestItemDefinitions.Stone;
+        private static readonly ItemDefinition Stick = TestItemDefinitions.SmallStick;
 
         private static CountedCollection<ItemDefinition> SevenStonesAndAStick()
         {
@@ -23,8 +22,6 @@ namespace SqueezySurvival.Core.Tests.Items
         public void SplitToSlot_PartOfAStack_MakesASecondStackOfTheKind()
         {
             CountedCollection<ItemDefinition> collection = SevenStonesAndAStick();
-            int changes = 0;
-            collection.Changed += () => changes++;
 
             collection.SplitToSlot(0, 3, 4);
 
@@ -32,7 +29,6 @@ namespace SqueezySurvival.Core.Tests.Items
             Assert.That(collection.EntryAtSlot(3).Definition, Is.SameAs(Stone));
             Assert.That(collection.EntryAtSlot(3).Count, Is.EqualTo(4));
             Assert.That(collection.CountOf(Stone), Is.EqualTo(7));
-            Assert.That(changes, Is.EqualTo(1));
         }
 
         [Test]

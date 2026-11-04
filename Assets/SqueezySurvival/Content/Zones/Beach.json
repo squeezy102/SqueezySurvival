@@ -1,0 +1,45 @@
+{
+  "Id": "beach",
+  "Name": "Beach",
+  "ExploresToMap": 24,
+  "FindPool": [
+    { "Id": "stone", "Weight": 30 },
+    { "Id": "big-rock", "Weight": 6 },
+    { "Id": "small-stick", "Weight": 30 },
+    { "Id": "big-stick", "Weight": 12 },
+    { "Id": "log", "Weight": 1 },
+    { "Id": "seaweed", "Weight": 15 },
+    { "Id": "coconut", "Weight": 10 },
+    { "Id": "palm-frond", "Weight": 12 },
+    { "Id": "seashell", "Weight": 15 },
+    { "Id": "crab", "Weight": 6 },
+    { "Id": "lobster", "Weight": 2 },
+    { "Id": "conch", "Weight": 5 },
+    { "Id": "clam", "Weight": 6 },
+    { "Id": "oyster", "Weight": 5 },
+    { "Id": "gooseneck-barnacle", "Weight": 1 },
+    { "Id": "coral", "Weight": 6 },
+    { "Id": "driftwood", "Weight": 8 },
+    { "Id": "bone", "Weight": 4 },
+    { "Id": "feather", "Weight": 8 },
+    { "Id": "cone-snail", "Weight": 1 },
+    { "Id": "sea-sponge", "Weight": 3 },
+    { "Id": "sand-dollar", "Weight": 5 }
+  ],
+  "FeaturePool": [
+    { "Id": "small-palm-tree", "Weight": 3 },
+    { "Id": "medium-palm-tree", "Weight": 2 },
+    { "Id": "large-palm-tree", "Weight": 1 },
+    { "Id": "beach-bush", "Weight": 2 },
+    { "Id": "rock-outcrop", "Weight": 1 },
+    { "Id": "tide-pool", "Weight": 1 },
+    { "Id": "driftwood-pile", "Weight": 2 },
+    { "Id": "puddle", "Weight": 2 }
+  ],
+  "ScriptedExplores": [
+    [ "stone", "stone", "small-stick" ],
+    [ "small-stick", "small-stick", "seaweed" ],
+    [ "seaweed", "seashell" ],
+    [ "stone", "coconut" ]
+  ]
+}

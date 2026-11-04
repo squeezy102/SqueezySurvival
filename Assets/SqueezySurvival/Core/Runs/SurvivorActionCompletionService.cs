@@ -6,31 +6,27 @@ using SqueezySurvival.Core.Time;
 namespace SqueezySurvival.Core.Runs
 {
     /// <summary>
-    /// What every time-taking survivor action shares: whether one may start, and finishing it by logging what happened
-    /// and then advancing time (Docs/Engineering/Architecture.md, Time: one path). It completes actions; the actions
-    /// themselves belong to their own services.
+    /// Completes survivor actions through the one time path (Docs/Engineering/Architecture.md, Time: one path). The
+    /// actions themselves belong to their own services.
     /// </summary>
-    public sealed class SurvivorActionCompletionService
+    public sealed class SurvivorActionCompletionService : ISurvivorActionCompletionService
     {
         private readonly IGameTimeAdvancer _gameTimeAdvancer;
-        private readonly RunEventLog _eventLog;
-        private readonly GroundInventoryService _groundInventory;
+        private readonly IRunEventLog _eventLog;
+        private readonly IGroundInventoryService _groundInventory;
 
         /// <summary>Completes actions on <paramref name="gameTimeAdvancer"/> and <paramref name="eventLog"/>.</summary>
-        public SurvivorActionCompletionService(IGameTimeAdvancer gameTimeAdvancer, RunEventLog eventLog, GroundInventoryService groundInventory)
+        public SurvivorActionCompletionService(IGameTimeAdvancer gameTimeAdvancer, IRunEventLog eventLog, IGroundInventoryService groundInventory)
         {
             _gameTimeAdvancer = gameTimeAdvancer ?? throw new ArgumentNullException(nameof(gameTimeAdvancer));
             _eventLog = eventLog ?? throw new ArgumentNullException(nameof(eventLog));
             _groundInventory = groundInventory ?? throw new ArgumentNullException(nameof(groundInventory));
         }
 
-        /// <summary>
-        /// Whether a time-taking action may start: not while a find waits for room on the ground
-        /// (Docs/Design/UI/InventoryGrids.md, When the ground is full).
-        /// </summary>
+        /// <inheritdoc />
         public bool CanStartAction => !_groundInventory.HasPendingOverflow;
 
-        /// <summary>Throws unless <see cref="CanStartAction"/>.</summary>
+        /// <inheritdoc />
         public void RequireCanStartAction()
         {
             if (!CanStartAction)
@@ -39,11 +35,7 @@ namespace SqueezySurvival.Core.Runs
             }
         }
 
-        /// <summary>
-        /// Finishes an action whose effects are applied: logs <paramref name="messages"/>, stamped with the time the
-        /// action ends, then advances time by <paramref name="duration"/>. Logging first keeps the action's own entries
-        /// ahead of anything time-dependent systems log about the time that passed.
-        /// </summary>
+        /// <inheritdoc />
         public void Complete(ActionDuration duration, IEnumerable<EventLogMessage> messages)
         {
             if (duration == null)
@@ -56,6 +48,8 @@ namespace SqueezySurvival.Core.Runs
                 throw new ArgumentNullException(nameof(messages));
             }
 
+            // Logging before advancing keeps the action's own entries ahead of anything time-dependent systems log
+            // about the time that passed.
             GameClock endsAt = _gameTimeAdvancer.Clock.Advance(duration);
             foreach (EventLogMessage message in messages)
             {

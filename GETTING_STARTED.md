@@ -21,8 +21,9 @@ Everyone follows the [Code of Conduct](CODE_OF_CONDUCT.md): be kind, stay on top
 | **Clone** | Download a copy of the repository to your computer, still connected to GitHub so you can send changes back. |
 | **Commit** | A saved snapshot of your changes, with a short note saying what you changed. |
 | **Branch** | Your own copy of the project where you work on one change without affecting anyone else. When it is ready, it is merged back. |
-| **`main`** | The official branch: the real game. Nobody changes it directly. |
-| **Pull request** (PR) | A request to merge your branch into `main`. squeezy102, the project owner, reviews every one and has the final say. |
+| **`main`** | The official branch: the real game. Nobody works on it or changes it directly. |
+| **Stage branch** | Your own copy of `main`, named whatever you like, that you treat as your main. You make it once; every branch you work on comes from it. |
+| **Pull request** (PR) | A request to merge one branch into another. Your stage branch goes into `main` only when you are ready and squeezy102, the project owner, approves. He reviews every one and has the final say. |
 | **Issue** | A to-do item on GitHub: a feature to build, a bug to fix, or a task. Each has a number, like **#3**, shown in small gray text under its title. Typing `#3` anywhere on GitHub links to it. |
 | **Discussion** | A conversation thread for ideas and questions. Nothing is decided there; decisions go into the docs. |
 | **Docs** | The `Docs/` folder: the game's design and rules, written down. The docs are the single source of truth: if the game and the docs disagree, the docs win. |
@@ -86,15 +87,17 @@ Not sure where to start? Ask in [Discussions: Q&A](https://github.com/squeezy102
 
 All of this happens in GitHub Desktop ([GitHub Docs](https://docs.github.com/en/get-started/learning-to-code/getting-started-with-git)).
 
-1. **Start from the latest `main`.** In **Current Branch**, choose `main`, then click **Fetch origin** (and **Pull origin** if it appears).
-2. **Make a branch.** In **Current Branch**, click **New Branch**, name it after the issue, such as `fix/32-event-log-scroll` or `feature/3-explore-beach`, and click **Create Branch**.
+0. **Once: make your stage branch.** In **Current Branch**, choose `main`, click **Fetch origin**, then **New Branch**, name it whatever you like, and click **Create Branch**. Click **Publish branch**. This is the only time you start a branch from `main`.
+1. **Start from your stage branch.** In **Current Branch**, choose it, then click **Fetch origin** (and **Pull origin** if it appears).
+2. **Make a branch.** In **Current Branch**, click **New Branch**, name it after the issue, such as `fix/32-event-log-scroll` or `feature/3-explore-beach`, and click **Create Branch**. It starts from your stage branch.
 3. **Make your changes**, yourself or with your assistant.
 4. **Commit.** In the bottom left, type a short note saying what you changed, then click **Commit to** *your branch*. Commit as often as you like.
 5. **Publish.** Click **Publish branch** to send your branch to GitHub.
-6. **Open a pull request.** Click **Preview Pull Request**, then **Create Pull Request**. GitHub opens in your browser: fill in the template, including `Closes #N` for the issue you finished, and click **Create pull request**.
-7. **Review.** squeezy102 reviews it and may ask for changes. Make them on the same branch, commit and push again; the pull request updates by itself. When approved, squeezy102 merges it.
+6. **Bring it into your stage branch.** When the change is finished, merge your branch into your stage branch.
+7. **Ask for approval.** When your stage branch holds work ready for `main`, open a pull request from it into `main`: click **Preview Pull Request**, then **Create Pull Request**. GitHub opens in your browser: fill in the template, including `Closes #N` for each issue you finished, and click **Create pull request**.
+8. **Review.** squeezy102 reviews it and may ask for changes. Make them on a branch from your stage branch, bring them in, and push; the pull request updates by itself. When approved, squeezy102 merges it.
 
-Before you open the pull request, run the tests in Unity (**Window > General > Test Runner > EditMode > Run All**) and make sure they all pass. If anything fails, or the tests will not run, ask your assistant to read `Diagnostics/latest-compilation.md` and `Diagnostics/latest-test-summary.md`: Unity writes what went wrong there after every compile and test run, so you never need to copy errors by hand.
+Before you open the pull request into `main`, run the tests in Unity (**Window > General > Test Runner > EditMode > Run All**) and make sure they all pass. If anything fails, or the tests will not run, ask your assistant to read `Diagnostics/latest-compilation.md` and `Diagnostics/latest-test-summary.md`: Unity writes what went wrong there after every compile and test run, so you never need to copy errors by hand.
 
 ## Reporting a problem
 

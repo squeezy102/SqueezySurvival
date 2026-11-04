@@ -19,11 +19,14 @@ namespace SqueezySurvival.Presentation.Game
         }
 
         /// <inheritdoc />
-        public event Action Changed
+        public event EventHandler<CountedCollectionChange> Changed
         {
             add => _collection.Changed += value;
             remove => _collection.Changed -= value;
         }
+
+        /// <inheritdoc />
+        public long Revision => _collection.Revision;
 
         /// <inheritdoc />
         public int SlotCapacity => _collection.SlotCapacity;

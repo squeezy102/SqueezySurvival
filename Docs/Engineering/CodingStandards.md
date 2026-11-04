@@ -11,8 +11,8 @@
 ## Architecture
 
 - **Simulation and presentation are separate.** The simulation (time, stats, inventory, recipes) never references UI or Unity components. The presentation layer observes simulation state and sends player commands. This is what allows animation to be added later without changing game rules.
-- **Dependency injection.** Classes receive their dependencies through constructors, typed as interfaces. Composition happens at a single composition root per scene.
-- **Data-driven content.** Items, resources, recipes and biomes are defined as data (ScriptableObjects), not hard-coded.
+- **Dependency injection.** Classes receive their dependencies through constructors. Services and volatile dependencies (time, randomness, files, anything with behavior a test would replace) are typed as interfaces; stable dependencies (immutable rules classes, definitions, value objects such as `GameClock`) are passed as plain instances, because a test gains nothing by replacing them ([Seemann and van Deursen, *Dependency Injection Principles, Practices, and Patterns*, 1.3: stable and volatile dependencies](https://www.manning.com/books/dependency-injection-principles-practices-patterns)). Composition happens at a single composition root per scene.
+- **Data-driven content.** Items, resources, recipes and biomes are defined as data, not hard-coded: JSON files under `Assets/SqueezySurvival/Content/`, parsed in Presentation and built and checked in Core ([ADR-0009](../Decisions/ADR-0009-Data-Driven-Content.md), [Architecture: rules, content and layout](Architecture.md#rules-content-and-layout)). Adding an item, feature or zone is a data change; tests build their own definitions and do not depend on the shipped files. Record types under `SqueezySurvival.Core.Content.Records` are created by reflection and preserved from code stripping by `link.xml`, so new record types go in that namespace.
 - **Deterministic simulation.** Randomness and time come from injected interfaces (for example `IRandomNumberSource`, `IGameTime`) so tests are repeatable.
 - **How these apply to this codebase**, and where it falls short today: [Architecture](Architecture.md).
 - **Patterns are tools, not goals.** Use factories, builders, strategies, observers and similar patterns where they reduce coupling or simplify testing. Avoid global singletons for game state.
@@ -40,4 +40,4 @@ Code is split into assembly definitions (`.asmdef`) so that dependencies are exp
 
 ## Testing
 
-Unity Test Framework, Edit Mode tests for simulation logic. How tests are designed, what each must prove, and what "done" means: [Testing and Quality Standards](TestingStandards.md).
+Unity Test Framework, Edit Mode tests: unit tests for Core, and Presentation tests for the code that binds the screen to it ([ADR-0008](../Decisions/ADR-0008-Presentation-Testing.md)). How tests are designed, what each must prove, and what "done" means: [Testing and Quality Standards](TestingStandards.md).

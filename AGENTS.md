@@ -38,13 +38,14 @@ Then read the design document for the system you are touching (`Docs/Design/Syst
 | Assembly | Folder | Rule |
 |---|---|---|
 | `SqueezySurvival.Core` | `Assets/SqueezySurvival/Core/` | Plain C#, **no Unity references** (compiler-enforced). All game and screen logic lives here. |
-| `SqueezySurvival.Presentation` | `Assets/SqueezySurvival/Presentation/` | Thin MonoBehaviours that bind UI to Core. No game rules. |
+| `SqueezySurvival.Presentation` | `Assets/SqueezySurvival/Presentation/` | One composition root (a MonoBehaviour) per scene, and thin presenters that bind UI to Core. No game rules. |
 | `SqueezySurvival.Editor` | `Assets/SqueezySurvival/Editor/` | Build and setup commands; `Editor/Diagnostics/` writes compile and test results to `Diagnostics/`. |
 | `*.Tests` | `Assets/SqueezySurvival/Tests/` | Edit Mode tests (NUnit). |
 
 - **UI:** UI Toolkit. Layout in UXML, style in USS, behavior in C# ([ADR-0007](Docs/Decisions/ADR-0007-Runtime-UI-And-Assembly-Layout.md)).
-- **Dependency injection:** constructor injection of interfaces; one composition root per scene. No global singletons for game state.
+- **Dependency injection:** constructor injection; services and volatile dependencies as interfaces, rules and data as plain instances ([Coding Standards: architecture](Docs/Engineering/CodingStandards.md#architecture)); one composition root per scene. No global singletons for game state.
 - **Scenes are generated:** scenes and UI assets are created by commands under the **SqueezySurvival > Setup** menu, never edited by hand ([Project Setup](Docs/Engineering/ProjectSetup.md#setup-commands)).
+- **Content is data:** items, zone features and zones are JSON files in `Assets/SqueezySurvival/Content/`, the one home of their values ([ADR-0009](Docs/Decisions/ADR-0009-Data-Driven-Content.md)). Adding one is a data change, plus a placeholder icon until real art exists; after adding a zone file, run **SqueezySurvival > Setup > Configure Game Screen** so the game scene references it. New record types go under `SqueezySurvival.Core.Content.Records`, which `link.xml` keeps in builds. Tests build their own definitions and do not depend on the shipped files.
 - **Launcher:** a separate .NET solution in `Launcher/` with the same Core and App split ([ADR-0005](Docs/Decisions/ADR-0005-Launcher-Technology.md)).
 
 ## Code conventions
@@ -66,10 +67,10 @@ Applies to docs, UI text, commit messages and issues.
 ## Workflow
 
 1. Find or file the issue ([Work Tracking](Docs/Engineering/WorkTracking.md)). Assign yourself and add `status: in progress`.
-2. Branch from `main` (squeezy102 branches from `PjDev`): `feature/3-explore-beach`, `fix/32-event-log-scroll`, `docs/...`.
+2. Branch from your stage branch, never from `main` (squeezy102's is `PjDev`; a contributor makes theirs from `main` once and names it as they like): `feature/3-explore-beach`, `fix/32-event-log-scroll`, `docs/...`. Nobody works on `main`.
 3. Commit with an imperative subject of 72 characters or fewer; reference the issue (`Refs #3`). Update `CHANGELOG.md` under Unreleased.
-4. Open a pull request with the template; list `Closes #N` for each finished issue.
-5. squeezy102 reviews and squash-merges.
+4. Bring finished work into your stage branch.
+5. When the stage branch holds work ready for `main`, open a pull request from it into `main` with the template, listing `Closes #N` for each finished issue. squeezy102 reviews, approves and merges it ([Source Control: branching](Docs/Engineering/SourceControl.md#branching)).
 
 ## Unity specifics
 
@@ -91,6 +92,10 @@ Applies to docs, UI text, commit messages and issues.
 
 - Claude Code reads this file through [CLAUDE.md](CLAUDE.md). For other tools, point the tool's project instructions at `AGENTS.md`.
 - Before proposing anything, read the design document involved and the open questions for that area ([Open Questions](Docs/Design/OpenQuestions.md)). Do not answer an open question yourself; propose options and let squeezy102 decide.
+- **Preflight, before any work.** A session must be able to read and write this repository's issues (create, assign, label, comment, close), because every change needs an issue ([rule 5](#non-negotiable-rules)) and its lifecycle is part of the work. Check with `gh api repos/squeezy102/SqueezySurvival/issues/1`, and confirm the .NET SDK if the sandbox has no Unity (below). If issue access is missing, stop and tell squeezy102 what to enable. Never skip the issue, the branch or the documentation because a change looks small.
+- **Work in squeezy102's local repository, never in a cloud copy.** He tests in Unity before anything is committed. If the conversation is not linked to the repository folder on his PC, say so and ask him to add it before changing any code. Edit the files there and leave them uncommitted until he has tested them and says to commit. He never runs git: you do, there, including pulling. Follow [Source Control: working on the owner's PC](Docs/Engineering/SourceControl.md#working-on-the-owners-pc), starting by asking for delete permission for the repository folder.
+- **Git on the PC cannot push.** It has no GitHub credentials; push a commit through a bundle as described in [Source Control: committing from a sandbox](Docs/Engineering/SourceControl.md#committing-from-a-sandbox).
+- **No Unity in your sandbox?** Install the .NET SDK at the start of every session and compile Core and its tests before handing work back ([Testing and Quality Standards: checking Core without Unity](Docs/Engineering/TestingStandards.md#checking-core-without-unity)).
 - **Read results from files, not screenshots.** After every compile and test run, Unity writes `Diagnostics/latest-compilation.md`, `Diagnostics/latest-test-summary.md` and `Diagnostics/latest-test-results.xml` at the project root. Read them to see what failed and why; check their timestamps ([Testing and Quality Standards: reading results without Unity](Docs/Engineering/TestingStandards.md#reading-results-without-unity)).
 - State the source for every technical claim.
 - Keep responses concise and work one step at a time with the person you are helping.

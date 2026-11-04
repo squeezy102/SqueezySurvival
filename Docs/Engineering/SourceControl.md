@@ -18,13 +18,56 @@ Binary assets (images, audio, fonts, models) are stored with Git LFS. Rules are 
 
 The cloud session that Claude works in cannot upload Git LFS objects. A commit that adds or changes a binary file is pushed from squeezy102's PC (`git push`); commits with only text files are pushed by Claude, to a feature branch.
 
+## Working on the owner's PC
+
+squeezy102 works and tests in his local repository, and never runs git. **Claude works in that repository, not in a cloud copy.** The conversation is linked to the repository folder on his PC, and Claude edits the files there and runs git there through the PC-side shell (`device_bash`, in the connected repository folder). Changes stay **uncommitted** while squeezy102 tests them in Unity; Claude commits only after he has tested and says yes ([Commits](#commits)). If the conversation is not linked to the folder, Claude says so and asks him to add it before changing any code; it does not start in a cloud copy. The cloud workspace is used only to push, because it has the repository attached with push access ([issue #152](https://github.com/squeezy102/SqueezySurvival/issues/152)).
+
+At the start of a session:
+
+1. Ask for delete permission once, for the repository folder (`device_request_delete_permission`). Without it git cannot remove its own `.lock` files or replace files, so `commit`, `pull`, `checkout` and `merge` fail or leave locks behind.
+2. Run every git command there with the settings below.
+3. Check the branch and `git status` before changing anything.
+
+Settings, passed to every git command (`G` here stands for the whole prefix):
+
+```
+G='git -c core.autocrlf=true -c filter.lfs.process= -c filter.lfs.smudge=cat -c filter.lfs.clean=cat -c filter.lfs.required=false'
+```
+
+- `core.autocrlf=true`: Windows checks files out with CRLF while the shell sees LF, so without it unchanged files look modified ([git-config: core.autocrlf](https://git-scm.com/docs/git-config#Documentation/git-config.txt-coreautocrlf)).
+- The four `filter.lfs.*` settings: the shell has no `git-lfs`, so without them git stops on the missing filter ([git-config: filter](https://git-scm.com/docs/gitattributes#_filter)). Binary files (fonts, images) still show as modified under these settings; never stage them, and never commit a change to one from here.
+- The `git-lfs` hook warnings that `checkout`, `merge` and `commit` print can be ignored.
+
+| Task | How |
+|---|---|
+| Pull a branch | `$G fetch origin <branch>`, `$G checkout <branch>`, `$G merge --ff-only FETCH_HEAD`. Fast-forward only: if it cannot, stop and tell squeezy102. |
+| Start a branch | `$G checkout -b <branch> PjDev` on the PC and in the cloud workspace, from the same commit. |
+| Make a change | Edit the files in the PC repository, on a branch started as above. Leave them uncommitted for squeezy102 to test in Unity. A check that needs tools the PC lacks (the .NET compile of Core) runs on a copy in the cloud workspace and never replaces the PC's files. |
+| Commit and push | Only after squeezy102 says yes: commit on the PC with the settings above, then push the commit through a bundle ([committing from a sandbox](#committing-from-a-sandbox)). |
+| After a merge | Pull `PjDev` as above, then `$G branch -d <merged branch>`. |
+
+The shell has no GitHub credentials, which is why pushes go through the cloud workspace.
+
+A `.lock` file under `.git` is removed only when an earlier command of this session left it, never one that a running git, squeezy102's included, may hold. With delete permission, `rm` it. Without it, `mv` it to a new name directly under `.git` (never under `.git/refs`).
+
+## Committing from a sandbox
+
+Work for squeezy102 is done in his local repository, not in a sandbox copy ([working on the owner's PC](#working-on-the-owners-pc)); this section is how the commits made there reach GitHub, and how a contributor's assistant that works in a sandbox commits. An assistant that works in a sandbox, such as Claude's desktop link to squeezy102's PC, has a git with no GitHub credentials and no Git LFS, so it can commit but not push or fetch LFS files. Text-only commits still reach GitHub without squeezy102 running anything:
+
+1. Commit in the checkout, staging only the files changed. Use the [settings for the owner's PC](#working-on-the-owners-pc), so the sandbox sees the same state Windows does and does not stop on the missing `git-lfs`; never stage binary files.
+2. Bundle the new commits: `git bundle create Temp/<name>.bundle origin/<branch>..<branch>` ([git-bundle](https://git-scm.com/docs/git-bundle)). `Temp/` is git-ignored.
+3. Copy the bundle to an environment that is signed in to GitHub (Claude's cloud workspace has the repository attached with push access), fetch from it and push the branch there: the same commits, with the same ids, so squeezy102's `git pull` is a plain fast-forward.
+4. Delete the bundle.
+
+Commits that add or change binary files still need squeezy102's `git push` from the PC.
+
 ## Ignored files
 
 `.gitignore` follows the [GitHub Unity template](https://github.com/github/gitignore/blob/main/Unity.gitignore). Generated folders and IDE files are never committed.
 
 ## Commits
 
-- **Commit at milestones, not every exchange.** Ideas change during a design discussion, so work is committed only once a substantial change has settled. At a natural stopping point, Claude asks Pj whether to commit, and commits only on a yes.
+- **Commit at milestones, not every exchange.** Ideas change during a design discussion, so work is committed only once a substantial change has settled. Pj tests code in Unity first. Claude leaves it uncommitted until he has tested it, then asks whether to commit, and commits only on a yes.
 - One logical change per commit.
 - Subject line in the imperative mood, 72 characters or fewer: `Add survival stat decay calculator`.
 - The body explains why when it is not obvious.
@@ -33,12 +76,15 @@ The cloud session that Claude works in cannot upload Git LFS objects. A commit t
 
 ## Branching
 
-Nobody pushes directly to `main`. Every change, including the owner's, goes through a pull request ([CONTRIBUTING](../../CONTRIBUTING.md)).
+Nobody works on `main`, and nobody pushes directly to it. Every change, including the owner's, reaches it through a pull request ([CONTRIBUTING](../../CONTRIBUTING.md)).
 
-1. Create a branch from `main`: `design/...`, `feature/...`, `fix/...` or `docs/...`.
-2. Open a pull request into `main`.
-3. squeezy102 reviews and approves it.
-4. Squash merge; the branch is deleted automatically.
+Every contributor has a **stage branch**: their own copy of `main`, named as they like, that they treat as their main. squeezy102's is `PjDev`.
+
+1. **Once**, create your stage branch from `main`. It is the only branch you ever cut from `main`.
+2. Create every working branch (`design/...`, `feature/...`, `fix/...` or `docs/...`) from your stage branch, and bring finished work back into your stage branch.
+3. When your stage branch holds work ready for `main`, ask for approval: open a pull request from the stage branch into `main`.
+4. squeezy102 reviews and approves it, then merges it.
+5. Bring your stage branch up to date with `main` again.
 
 ### squeezy102's integration branch
 
@@ -49,7 +95,7 @@ Nobody pushes directly to `main`. Every change, including the owner's, goes thro
 2. When `PjDev` holds a set of changes ready for `main`, a pull request from `PjDev` into `main` brings them in. squeezy102 merges it with a **merge commit**, never a squash: a merge commit keeps `main` an ancestor of `PjDev`, so the two never drift apart and the next pull request shows only new work. Squash-merging `PjDev` into `main` gave `main` a copy of the same changes under a different history, so every later pull request conflicted until `main` was merged back into `PjDev` (2026-10-20).
 3. Claude handles git for squeezy102: it commits, pushes its branches, and keeps squeezy102's local repository in sync (checking out and pulling the branch to test) through the desktop app's link to their PC. squeezy102 runs git commands only for pushes that need their credentials, such as Git LFS files or `PjDev` after a merge from `main`. On that PC, Windows Git converts line endings (`core.autocrlf`), so git commands Claude runs there pass `-c core.autocrlf=true` to see the same state Windows does.
 
-Contributors branch from `main` as described above.
+Every contributor works the same way from their own stage branch, as described above.
 
 `PjDev` belongs to squeezy102 alone. A second ruleset, `Protect PjDev`, restricts updates, deletions and force pushes on it, with only the repository admin (squeezy102) able to bypass, always. Nobody else can push to it, merge into it, or delete it.
 

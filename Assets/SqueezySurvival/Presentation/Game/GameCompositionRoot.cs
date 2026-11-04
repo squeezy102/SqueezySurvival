@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using SqueezySurvival.Core.Content;
 using SqueezySurvival.Core.Controls;
 using SqueezySurvival.Core.DragAndDrop;
 using SqueezySurvival.Core.EventLog;
@@ -12,6 +14,7 @@ using SqueezySurvival.Core.Runs;
 using SqueezySurvival.Core.Survivor;
 using SqueezySurvival.Core.Time;
 using SqueezySurvival.Core.Zones;
+using SqueezySurvival.Presentation.Content;
 using SqueezySurvival.Presentation.PixelArt;
 using SqueezySurvival.Presentation.Session;
 using UnityEngine;
@@ -30,6 +33,17 @@ namespace SqueezySurvival.Presentation.Game
     [RequireComponent(typeof(UIDocument))]
     public sealed class GameCompositionRoot : MonoBehaviour
     {
+        // The content files, set by SqueezySurvival > Setup > Configure Game Screen (Docs/Engineering/ProjectSetup.md).
+        // The initializers tell the compiler these fields are assigned from outside the code, which the Inspector does.
+        [SerializeField]
+        private TextAsset _itemsFile = null;
+
+        [SerializeField]
+        private TextAsset _zoneFeaturesFile = null;
+
+        [SerializeField]
+        private TextAsset[] _zoneFiles = Array.Empty<TextAsset>();
+
         private readonly List<IDisposable> _ownedInCreationOrder = new List<IDisposable>();
 
         // Start runs after every OnEnable, so the UIDocument has built its visual tree by then.
@@ -41,7 +55,22 @@ namespace SqueezySurvival.Presentation.Game
                 return;
             }
 
-            Compose(CreateSession(configuration), GetComponent<UIDocument>().rootVisualElement);
+            GameContentCatalog content = LoadContent();
+            Compose(CreateSession(configuration, StartingZoneRules.Wireframe.SelectStartingZone(content)), GetComponent<UIDocument>().rootVisualElement);
+        }
+
+        private GameContentCatalog LoadContent()
+        {
+            if (_itemsFile == null || _zoneFeaturesFile == null || _zoneFiles.Length == 0 || _zoneFiles.Any(zoneFile => zoneFile == null))
+            {
+                throw new InvalidOperationException(
+                    "The game scene is missing its content files. Run SqueezySurvival > Setup > Configure Game Screen.");
+            }
+
+            return new GameContentCatalogLoader(new GameContentJsonReader()).Load(
+                _itemsFile.text,
+                _zoneFeaturesFile.text,
+                _zoneFiles.Select(zoneFile => new ZoneJsonText(zoneFile.name, zoneFile.text)).ToList());
         }
 
         private void OnDestroy()
@@ -54,14 +83,19 @@ namespace SqueezySurvival.Presentation.Game
             _ownedInCreationOrder.Clear();
         }
 
+        private static readonly SlotCapacityRules SlotCapacities = SlotCapacityRules.Wireframe;
+
         // A new seed each run. Saving the generator's state with the run belongs to saving (#2). Time-dependent
         // systems go in the order Architecture.md documents (Time: one path); none exist yet.
-        private static RunSession CreateSession(NewRunConfiguration configuration) =>
+        private static RunSession CreateSession(NewRunConfiguration configuration, ZoneDefinition startingZone) =>
             RunSessionFactory.StartNewRun(
                 configuration,
                 DayPhaseSchedule.Default,
-                PlaceholderBeachZoneContent.Beach,
+                startingZone,
                 ExplorationRules.Wireframe,
+                SlotCapacities,
+                ItemMoveTimeRules.Wireframe,
+                new ItemArrivalStackingSetting(),
                 new SystemRandomNumberSource(Environment.TickCount),
                 Array.Empty<ITimeDependentSystem>());
 
@@ -73,6 +107,7 @@ namespace SqueezySurvival.Presentation.Game
             var dropOutcomeResolver = new GridDropOutcomeResolver(new NoThingCombinations());
             VisualElement dragLayer = root.Q<VisualElement>("game-screen-root");
             Zone zone = session.CurrentZone;
+            var gridShapes = new InventoryGridShapes(SlotCapacities);
 
             InventoryGridView CreateGrid(
                 FixedGridShape shape,
@@ -85,21 +120,21 @@ namespace SqueezySurvival.Presentation.Game
             var groundContents = new CountedCollectionInventoryGridContents<ItemDefinition>(session.GroundInventory.Ground, dropOutcomeResolver);
             var inventoryContents = new CountedCollectionInventoryGridContents<ItemDefinition>(session.SurvivorInventory.Inventory, dropOutcomeResolver);
             InventoryGridView zoneFeaturesView = CreateGrid(
-                InventoryGridShapes.ZoneFeatures,
+                gridShapes.ZoneFeatures,
                 FixedGridHorizontalAlignment.Center,
                 new CountedCollectionInventoryGridContents<ZoneFeatureDefinition>(zone.Features, dropOutcomeResolver),
                 "zone-features-grid");
-            InventoryGridView groundView = CreateGrid(InventoryGridShapes.Ground, FixedGridHorizontalAlignment.Center, groundContents, "ground-pool-grid");
-            InventoryGridView inventoryView = CreateGrid(InventoryGridShapes.Inventory, FixedGridHorizontalAlignment.Left, inventoryContents, "inventory-grid");
+            InventoryGridView groundView = CreateGrid(gridShapes.Ground, FixedGridHorizontalAlignment.Center, groundContents, "ground-pool-grid");
+            InventoryGridView inventoryView = CreateGrid(gridShapes.Inventory, FixedGridHorizontalAlignment.Left, inventoryContents, "inventory-grid");
             InventoryGridView handsView = CreateGrid(
-                InventoryGridShapes.Hands,
+                gridShapes.Hands,
                 FixedGridHorizontalAlignment.Left,
                 new CountedCollectionInventoryGridContents<ItemDefinition>(session.SurvivorInventory.Hands, dropOutcomeResolver),
                 "hands-grid",
                 slot => textures.HandGhost(HandSlots.HandAt(slot)));
-            new HandsGridSizer(root.Q<VisualElement>("hands-grid"));
-            new InventoryGridSortController(groundContents, root.Q<Button>("ground-pool-sort-button"), root.Q<Button>("ground-pool-sort-menu-button"));
-            new InventoryGridSortController(inventoryContents, root.Q<Button>("inventory-sort-button"), root.Q<Button>("inventory-sort-menu-button"));
+            new HandsGridSizer(root.Q<VisualElement>("hands-grid"), gridShapes.Hands);
+            Own(new InventoryGridSortController(groundContents, root.Q<Button>("ground-pool-sort-button"), root.Q<Button>("ground-pool-sort-menu-button")));
+            Own(new InventoryGridSortController(inventoryContents, root.Q<Button>("inventory-sort-button"), root.Q<Button>("inventory-sort-menu-button")));
 
             var itemMoves = new ItemPanelMoveCoordinator(session.InventoryTransfers, new KeyboardMoveModifierReader(MoveModifierBindings.Default));
             itemMoves.Register(ItemPanel.Ground, groundView);

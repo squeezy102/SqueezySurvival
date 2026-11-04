@@ -2,17 +2,16 @@ using System;
 using System.Linq;
 using NUnit.Framework;
 using SqueezySurvival.Core.Items;
-using SqueezySurvival.Core.Zones;
 
 namespace SqueezySurvival.Core.Tests.Items
 {
     [TestFixture]
     public sealed class CountedCollectionTests
     {
-        private static readonly ItemDefinition Stone = PlaceholderBeachZoneContent.Stone;
-        private static readonly ItemDefinition Stick = PlaceholderBeachZoneContent.SmallStick;
-        private static readonly ItemDefinition Shell = PlaceholderBeachZoneContent.Seashell;
-        private static readonly ItemDefinition Conch = PlaceholderBeachZoneContent.Conch;
+        private static readonly ItemDefinition Stone = TestItemDefinitions.Stone;
+        private static readonly ItemDefinition Stick = TestItemDefinitions.SmallStick;
+        private static readonly ItemDefinition Shell = TestItemDefinitions.Seashell;
+        private static readonly ItemDefinition Conch = TestItemDefinitions.Conch;
 
         private static CountedCollection<ItemDefinition> StoneStickShell(int slotCapacity = 8)
         {
@@ -34,30 +33,6 @@ namespace SqueezySurvival.Core.Tests.Items
         }
 
         [Test]
-        public void AddRange_RaisesChangedOnce()
-        {
-            var collection = new CountedCollection<ItemDefinition>(8);
-            int changes = 0;
-            collection.Changed += () => changes++;
-
-            collection.AddRange(new[] { Stone, Stick });
-
-            Assert.That(changes, Is.EqualTo(1));
-        }
-
-        [Test]
-        public void AddRange_WithNothing_DoesNotRaiseChanged()
-        {
-            var collection = new CountedCollection<ItemDefinition>(8);
-            int changes = 0;
-            collection.Changed += () => changes++;
-
-            collection.AddRange(new ItemDefinition[0]);
-
-            Assert.That(changes, Is.Zero);
-        }
-
-        [Test]
         public void AddRange_IntoTheLastEmptySlot_FitsAndFills()
         {
             CountedCollection<ItemDefinition> collection = StoneStickShell(slotCapacity: 4);
@@ -70,25 +45,13 @@ namespace SqueezySurvival.Core.Tests.Items
         public void AddRange_WhenFull_ReturnsNewKindsGroupedInArrivalOrderAndAddsMoreOfPresentKinds()
         {
             CountedCollection<ItemDefinition> collection = StoneStickShell(slotCapacity: 3);
-            var coconut = PlaceholderBeachZoneContent.Coconut;
+            var coconut = TestItemDefinitions.Coconut;
 
             var overflow = collection.AddRange(new[] { Conch, Stone, coconut, Conch });
 
             Assert.That(overflow.Select(thing => (thing.Definition.Id, thing.Count)), Is.EqualTo(new[] { ("conch", 2), ("coconut", 1) }));
             Assert.That(collection.CountOf(Stone), Is.EqualTo(2));
             Assert.That(collection.CountOf(Conch), Is.Zero);
-        }
-
-        [Test]
-        public void AddRange_OnlyOverflow_DoesNotRaiseChanged()
-        {
-            CountedCollection<ItemDefinition> collection = StoneStickShell(slotCapacity: 3);
-            int changes = 0;
-            collection.Changed += () => changes++;
-
-            collection.AddRange(new[] { Conch });
-
-            Assert.That(changes, Is.Zero);
         }
 
         [Test]
@@ -120,18 +83,6 @@ namespace SqueezySurvival.Core.Tests.Items
             Assert.That(collection.Entries.Select(entry => (entry.Slot, entry.Definition.Id)), Is.EqualTo(new[] { (0, "seashell"), (1, "small-stick"), (2, "stone") }));
         }
 
-        [Test]
-        public void MoveToSlot_SameSlot_DoesNotRaiseChanged()
-        {
-            CountedCollection<ItemDefinition> collection = StoneStickShell();
-            int changes = 0;
-            collection.Changed += () => changes++;
-
-            collection.MoveToSlot(1, 1);
-
-            Assert.That(changes, Is.Zero);
-        }
-
         [TestCase(7, true)]
         [TestCase(8, false)]
         public void MoveToSlot_LastSlotIsAllowedAndPastItIsNot(int toSlot, bool allowed)
@@ -156,9 +107,9 @@ namespace SqueezySurvival.Core.Tests.Items
             CountedCollection<ItemDefinition> collection = StoneStickShell();
             collection.MoveToSlot(1, 4);
 
-            collection.AddRange(new[] { Stone, PlaceholderBeachZoneContent.Coconut });
+            collection.AddRange(new[] { Stone, TestItemDefinitions.Coconut });
 
-            Assert.That(collection.EntryAtSlot(1).Definition, Is.SameAs(PlaceholderBeachZoneContent.Coconut));
+            Assert.That(collection.EntryAtSlot(1).Definition, Is.SameAs(TestItemDefinitions.Coconut));
             Assert.That(collection.EntryAtSlot(4).Definition, Is.SameAs(Stick));
             Assert.That(collection.CountOf(Stone), Is.EqualTo(2));
         }

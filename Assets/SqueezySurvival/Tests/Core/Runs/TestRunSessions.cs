@@ -24,6 +24,9 @@ namespace SqueezySurvival.Core.Tests.Runs
                 DayPhaseSchedule.Default,
                 startingZone,
                 ExplorationRules.Wireframe,
+                SlotCapacityRules.Wireframe,
+                ItemMoveTimeRules.Wireframe,
+                new ItemArrivalStackingSetting(),
                 new QueuedRandomNumberSource(randomNumbers),
                 timeDependentSystems);
 

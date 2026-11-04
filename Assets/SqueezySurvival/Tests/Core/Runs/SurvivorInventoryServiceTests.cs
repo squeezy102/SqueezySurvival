@@ -1,30 +1,46 @@
+using System;
 using NUnit.Framework;
 using SqueezySurvival.Core.Items;
 using SqueezySurvival.Core.Runs;
 using SqueezySurvival.Core.Survivor;
-using SqueezySurvival.Core.Zones;
+using SqueezySurvival.Core.Tests.Items;
 
 namespace SqueezySurvival.Core.Tests.Runs
 {
     [TestFixture]
     public sealed class SurvivorInventoryServiceTests
     {
-        private static readonly ItemDefinition Stone = PlaceholderBeachZoneContent.Stone;
-        private static readonly ItemDefinition Log = PlaceholderBeachZoneContent.Log;
+        private static readonly ItemDefinition Stone = TestItemDefinitions.Stone;
+        private static readonly ItemDefinition Log = TestItemDefinitions.Log;
 
         [Test]
         public void New_CarriesNothingAndCanMove()
         {
-            var survivorInventory = new SurvivorInventoryService();
+            var survivorInventory = new SurvivorInventoryService(SlotCapacityRules.Wireframe);
 
             Assert.That(survivorInventory.Load.CarriedPounds, Is.Zero);
             Assert.That(survivorInventory.CanMove, Is.True);
         }
 
         [Test]
+        public void New_SizesTheInventoryAndHandsByTheCapacityRules()
+        {
+            var survivorInventory = new SurvivorInventoryService(new SlotCapacityRules(survivorInventorySlots: 5, handSlots: 3, groundSlots: 1, zoneFeatureSlots: 1));
+
+            Assert.That(survivorInventory.Inventory.SlotCapacity, Is.EqualTo(5));
+            Assert.That(survivorInventory.Hands.SlotCapacity, Is.EqualTo(3));
+        }
+
+        [Test]
+        public void New_RejectsMissingCapacityRules()
+        {
+            Assert.Throws<ArgumentNullException>(() => new SurvivorInventoryService(null));
+        }
+
+        [Test]
         public void Load_CountsTheInventoryAndBothHands()
         {
-            var survivorInventory = new SurvivorInventoryService();
+            var survivorInventory = new SurvivorInventoryService(SlotCapacityRules.Wireframe);
             survivorInventory.Inventory.Receive(Stone, 10, -1);
             survivorInventory.Hands.Receive(Log, 1, 0);
 
@@ -36,7 +52,7 @@ namespace SqueezySurvival.Core.Tests.Runs
         [TestCase(4, false)]
         public void CanMove_FalseOnlyAtOrPastTheLimit(int logs, bool expected)
         {
-            var survivorInventory = new SurvivorInventoryService();
+            var survivorInventory = new SurvivorInventoryService(SlotCapacityRules.Wireframe);
             survivorInventory.Inventory.Receive(Log, logs, -1);
 
             Assert.That(survivorInventory.CanMove, Is.EqualTo(expected));

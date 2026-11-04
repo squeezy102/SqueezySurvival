@@ -1,6 +1,6 @@
 # Architecture
 
-**Status:** Draft, for squeezy102's approval ([#116](https://github.com/squeezy102/SqueezySurvival/issues/116))
+**Status:** Approved ([#116](https://github.com/squeezy102/SqueezySurvival/issues/116))
 
 How the game's runtime code is organized: what owns what, how time and changes flow, how a scene is put together, and how each part is tested. The [Coding Standards](CodingStandards.md) state the principles; this document is how they apply to this codebase. The assembly layout is defined in [ADR-0007](../Decisions/ADR-0007-Runtime-UI-And-Assembly-Layout.md).
 
@@ -25,7 +25,9 @@ Code that does not yet match this document is listed in [Known gaps](#known-gaps
 
 ### The run
 
-A run (`RunSession`) holds a set of focused services and nothing else. `RunSessionFactory` builds the services and wires them together, so the game and its tests build a run the same way. Each service has one job, its own tests, and receives its collaborators through its constructor ([Coding Standards: architecture](CodingStandards.md#architecture)). Presentation sends each command to the service that owns it, never to the run.
+A run (`RunSession`) holds a set of focused services, plus the run's configuration, its day-phase schedule and a read-only view of the clock (`IGameTime`); it has no commands of its own. `RunSessionFactory` builds the services and wires them together, so the game and its tests build a run the same way. Each service has one job, its own tests, and receives its collaborators through its constructor ([Coding Standards: architecture](CodingStandards.md#architecture)). Presentation sends each command to the service that owns it, never to the run.
+
+Every service is reached through its interface, named for the class (`IGroundInventoryService` for `GroundInventoryService`): other services, `RunSession` and presenters depend on the interface, never on another service's class. `Zone`, rules classes and definitions are passed as plain instances ([Coding Standards: architecture](CodingStandards.md#architecture)). `RunSessionFactory` is the only Core code that names the service classes.
 
 | Service | Owns | Examples of what it does |
 |---|---|---|
@@ -39,7 +41,7 @@ A run (`RunSession`) holds a set of focused services and nothing else. `RunSessi
 | `Zone` | Each zone's state | Ground pool, features, exploration progress |
 | `RunEventLog` | What happened, in order | Add entries |
 
-`SurvivorActionCompletionService` completes actions; it never holds them. A new action belongs to the service for its system and finishes through this one.
+`SurvivorActionCompletionService` completes actions; it never holds them. The other services share it, and the run does not expose it. A new action belongs to the service for its system and finishes through this one.
 
 Services are added the same way as systems are designed: survival stats, weather and research each become a service with its own rules, not more methods on the run.
 
@@ -52,7 +54,7 @@ Every action advances time through **one entry point**, as [Time: implementation
 3. `GameTimeAdvancer.Advance` moves the clock by the duration and tells each **time-dependent system** (`ITimeDependentSystem`) in a fixed order. Each receives a `GameTimeAdvance`: the clock before, the clock after and the exact duration.
 4. `TimeAdvanced` is raised for Presentation, carrying the same `GameTimeAdvance`.
 
-**Order of time-dependent systems.** The game scene's composition root passes them to `GameTimeAdvancer`'s constructor as an ordered list, so the order is set in one place and changed only deliberately. Order, as they arrive: survival stats, then weather, then research. None exist yet.
+**Order of time-dependent systems.** The game scene's composition root passes them as an ordered list to `RunSessionFactory.StartNewRun`, which hands them to `GameTimeAdvancer`'s constructor, so the order is set in one place and changed only deliberately. Order, as they arrive: survival stats, then weather, then research. None exist yet.
 
 **Rules.**
 
@@ -62,22 +64,25 @@ Every action advances time through **one entry point**, as [Time: implementation
 
 ### Commands, state and change events
 
-- **Commands** are ordinary methods on services (`MoveItems`, `Explore`, `PassTime`). A command checks it is allowed, changes state, and raises events. A command that is not allowed throws; Presentation asks first (`CanExplore`, `PreviewItemMove`) so the player is told why before acting.
+- **Commands** are ordinary methods on services (`Transfer`, `Explore`, `PassTime`). A command checks it is allowed, changes state, and raises events. A command that is not allowed throws; Presentation asks first (`CanExplore`, `PreviewTransfer`) so the player is told why before acting.
 - **Change events say what changed**: which slots of a collection, which entry was added, which stat moved. A listener never has to compare the whole state to find out ([#121](https://github.com/squeezy102/SqueezySurvival/issues/121)).
+- **A collection reports slots, not kinds of change.** `CountedCollection` raises `Changed` with a `CountedCollectionChange` listing each slot whose contents (kind or count) differ after the command, once each, in slot order. A swap reports both slots; a sort reports only the slots it actually changed; a command that changes nothing raises nothing. The event does not say how a slot changed (added, emptied, recounted): listeners re-read the slots they are told about. `CountedCollection.Revision` counts the same changes (it is already new when `Changed` is raised), so a caller that only needs to know the contents are as they were, such as a held drag reusing its drop outcome through `DropOutcomeMemo`, compares two readings instead of subscribing. Reporting how is out of scope until a listener needs it ([decision, 2026-10-21](https://github.com/squeezy102/SqueezySurvival/issues/121#issuecomment-6329884580)).
 - Events are raised **after** state is consistent, synchronously, on the thread that issued the command. A handler must not issue a command from inside an event; if a reaction needs one, Core does it as part of the original command.
 - Events follow .NET's event pattern: a typed payload describing the change ([Microsoft: handling and raising events](https://learn.microsoft.com/en-us/dotnet/standard/events/)).
 
 ### Rules, content and layout
 
-- **Rules** are numbers and decisions the design documents own: inventory slots, durations, weight limits, hold timings. Each lives in one Core rules class that names the document it comes from. Rules never depend on screen layout; grid shapes are derived from rules, not the other way round ([#123](https://github.com/squeezy102/SqueezySurvival/issues/123)).
-- **Content** (items, zones, find pools, features) is data, not code ([Coding Standards](CodingStandards.md#architecture)). Its format and how it reaches Core are decided in an ADR ([#124](https://github.com/squeezy102/SqueezySurvival/issues/124)). Core sees content only as definitions it is given.
+- **Rules** are numbers and decisions the design documents own: inventory slots, durations, weight limits, hold timings. Each lives in one Core rules class that names the document it comes from (`ExplorationRules`, `SlotCapacityRules`, `ItemMoveTimeRules`). Rules never depend on screen layout; grid shapes are derived from rules, not the other way round: `InventoryGridShapes` takes its slot counts from `SlotCapacityRules` and chooses only the columns, and a capacity that does not fill whole rows is rejected. A rules class is handed to the services that need it through their constructors, so tests can use small capacities.
+- **Content** (items, zone features, zones with their find pools, feature pools and scripted explores) is data, not code ([Coding Standards](CodingStandards.md#architecture)): JSON files under `Assets/SqueezySurvival/Content/`, decided in [ADR-0009](../Decisions/ADR-0009-Data-Driven-Content.md). Reading them takes two steps, each in the layer that can do it. Presentation parses each file into a plain record (`GameContentJsonReader`, with Newtonsoft Json, strictly: an unknown key or an enum written as a number is an error). Core's `GameContentCatalogBuilder` checks the records, resolves every id a zone names, and returns a `GameContentCatalog` of the immutable definitions, reporting every problem in one `GameContentValidationException` that names each file and id. `GameContentCatalogLoader` joins the two. The game scene's composition root holds the files as serialized references, loads the catalog once, and passes definitions on; which zone a run starts in is a Core rule (`StartingZoneRules`). Core sees content only as definitions it is given, and the files are the one home of each content value (names, descriptions, weights, pool weights, explores to map).
 - **Words** shown to the player come from Core formatters next to the rules they describe, so wording is tested with the rules.
 
 ## Presentation
 
 ### One composition root per scene
 
-Each scene has one composition root (a MonoBehaviour) that builds everything the scene needs, Core services and views alike, and hands each its collaborators. Nothing else in the scene creates services. The root presents nothing itself; it owns what it builds and disposes it, newest first, when the scene ends. `GameCompositionRoot` and `MainMenuCompositionRoot` are the two roots.
+Each scene has one composition root (a MonoBehaviour) that builds everything the scene needs, Core services and views alike, and hands each its collaborators. Nothing else in the scene creates services. The root presents nothing itself. It owns everything it builds that listens to Core or holds Unity objects, and disposes it, newest first, when the scene ends; objects that listen only to the scene's own elements go with the scene. `GameCompositionRoot` and `MainMenuCompositionRoot` are the two roots.
+
+A MonoBehaviour has no constructor, so the one MonoBehaviour that presents, the main menu's `MainMenuScreenController`, receives its collaborators from its root through a `Bind` method instead. Presenters in the game scene are plain C# classes and take theirs through their constructors.
 
 Cross-scene services live in `GameSessionHost`, the one static access point in the game, kept only because Unity scenes cannot pass objects to each other directly. It holds hand-offs between scenes, never game state.
 
@@ -92,6 +97,7 @@ Cross-scene services live in `GameSessionHost`, the one static access point in t
 Creating elements and adding them to the hierarchy is slow; Unity advises building elements once and reusing them rather than creating and discarding them ([Unity Manual: best practices for managing elements](https://docs.unity3d.com/2022.1/Documentation/Manual/UIE-best-practices-for-managing-elements.html), [Unity 6: optimizing UI performance](https://docs.unity.com/en-us/engine/6000.3/manual/best-practice-guides/bpg-uiad-index/optimizing-performance)).
 
 - **Fixed-size things are built once** and updated in place: grid cells ([#114](https://github.com/squeezy102/SqueezySurvival/issues/114)), tooltips ([#122](https://github.com/squeezy102/SqueezySurvival/issues/122)), HUD fields.
+- **A short list that varies in length keeps its rows.** A row is added only the first time the list is longer than it has ever been; rows not needed are hidden, not removed. The tooltip's detail lines work this way, so after a few hovers it creates nothing.
 - **Long or growing lists are virtualized** with `ListView`, which pools and recycles elements as the player scrolls (same sources). The event log is the first: a `ListView` with dynamic row heights (entries wrap), bound to the log's entries through a read-only items source, so the view never copies or changes Core's list. Whether the log follows new entries (`EventLogFollowState`) and when a warning counts as in view (`ScrolledIntoViewCalculator`) are Core logic.
 - **A change updates only what changed**, using the detail in Core's change events.
 - **Textures are cached**, made once per icon and destroyed with their cache (`PixelArtTextureCache`).
@@ -104,6 +110,8 @@ Creating elements and adding them to the hierarchy is slow; Unity advises buildi
 ## Testing
 
 - **Core** is covered by Edit Mode unit tests designed to the [Testing and Quality Standards](TestingStandards.md). Every rule, command and formatter.
+- **A service is tested on its own**, with hand-written test doubles standing in for its collaborators' interfaces (for example `RecordingSurvivorActionCompletionService`, which records each completed action instead of advancing time); no mocking package is used ([ADR-0003](../Decisions/ADR-0003-Package-Baseline.md)). How the services work together, such as an action reaching the clock and the time-dependent systems, is tested once, through `RunSessionFactory`.
+- **Content** has two kinds of test. The Core builder is tested with small records the tests build themselves, so no Core test depends on shipped content; tests build their definitions with `TestItemDefinitions`. The reader is tested in Presentation with small JSON strings, and one Presentation test loads the shipped files and builds the catalog, so a content mistake fails a test before it reaches a build.
 - **Presentation** holds no decisions that can live in Core. What must stay (binding, element updates, input routing) is covered by `SqueezySurvival.Presentation.Tests`: each presenter is built against the real `GameScreen.uxml` in a UI Test Framework panel and driven with simulated clicks and keys ([ADR-0008](../Decisions/ADR-0008-Presentation-Testing.md)).
 - Runtime objects such as textures are freed through `UnityObjectDestroyer`, which works in both Play Mode and Edit Mode, so presenters can be disposed in tests.
 - A design document change that alters a rule changes its rules class and that class's tests in the same pull request.
@@ -114,11 +122,5 @@ Found in the architecture review of 2026-10-20 ([Architecture pass milestone](ht
 
 | Gap | Issue |
 |---|---|
-| Change events don't say what changed | [#121](https://github.com/squeezy102/SqueezySurvival/issues/121) |
-| The tooltip recreates its elements on every show | [#122](https://github.com/squeezy102/SqueezySurvival/issues/122) |
-| Capacities come from grid layouts | [#123](https://github.com/squeezy102/SqueezySurvival/issues/123) |
-| Content is hard-coded | [#124](https://github.com/squeezy102/SqueezySurvival/issues/124) |
-| The game scene's collaborators aren't injected | [#125](https://github.com/squeezy102/SqueezySurvival/issues/125) |
-| Presentation tests cover the HUD clock, zone bar, load label, actions and overlays so far; the rest of Presentation is untested | [#126](https://github.com/squeezy102/SqueezySurvival/issues/126) |
+| Presentation tests cover the HUD clock, zone bar, load label, actions, overlays and the grid tooltip so far; the rest of Presentation is untested | [#126](https://github.com/squeezy102/SqueezySurvival/issues/126) |
 | Moves assume two panels | [#127](https://github.com/squeezy102/SqueezySurvival/issues/127) |
-| Smaller cleanups | [#128](https://github.com/squeezy102/SqueezySurvival/issues/128) |

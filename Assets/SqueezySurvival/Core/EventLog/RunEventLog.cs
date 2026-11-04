@@ -4,18 +4,18 @@ using SqueezySurvival.Core.Time;
 
 namespace SqueezySurvival.Core.EventLog
 {
-    /// <summary>The run's full event history, oldest first (Docs/Design/UI/HUD.md, Event log).</summary>
-    public sealed class RunEventLog
+    /// <summary>The run's full event history, kept in memory.</summary>
+    public sealed class RunEventLog : IRunEventLog
     {
         private readonly List<EventLogEntry> _entries = new List<EventLogEntry>();
 
-        /// <summary>Raised after an entry is added.</summary>
+        /// <inheritdoc />
         public event Action<EventLogEntry> EntryAdded;
 
-        /// <summary>Every entry, oldest first.</summary>
+        /// <inheritdoc />
         public IReadOnlyList<EventLogEntry> Entries => _entries;
 
-        /// <summary>Adds an entry at the given time.</summary>
+        /// <inheritdoc />
         public void Add(GameClock time, string text, EventLogSeverity severity = EventLogSeverity.Normal)
         {
             var entry = new EventLogEntry(time, text, severity);

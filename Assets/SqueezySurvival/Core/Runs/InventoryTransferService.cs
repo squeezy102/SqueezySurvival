@@ -5,38 +5,42 @@ using SqueezySurvival.Core.Time;
 
 namespace SqueezySurvival.Core.Runs
 {
-    /// <summary>
-    /// Moving things between the survivor's inventory and the ground: previewing a move and carrying it out
-    /// (Docs/Design/UI/DragAndDrop.md, Between panels). How the player asked for the move is not its concern.
-    /// </summary>
-    public sealed class InventoryTransferService
+    /// <summary>Moves things between the survivor's inventory and the current zone's ground, timed by weight.</summary>
+    public sealed class InventoryTransferService : IInventoryTransferService
     {
-        private readonly SurvivorInventoryService _survivorInventory;
-        private readonly GroundInventoryService _groundInventory;
-        private readonly SurvivorActionCompletionService _actionCompletion;
+        private readonly ISurvivorInventoryService _survivorInventory;
+        private readonly IGroundInventoryService _groundInventory;
+        private readonly ISurvivorActionCompletionService _actionCompletion;
+        private readonly ItemMoveTimeRules _itemMoveTimeRules;
+        private readonly IItemArrivalStackingSetting _arrivalStacking;
 
-        /// <summary>Moves things between <paramref name="survivorInventory"/> and <paramref name="groundInventory"/>.</summary>
+        /// <summary>
+        /// Moves things between <paramref name="survivorInventory"/> and <paramref name="groundInventory"/>, each move
+        /// taking the time <paramref name="itemMoveTimeRules"/> gives it and landing as <paramref name="arrivalStacking"/>
+        /// says.
+        /// </summary>
         public InventoryTransferService(
-            SurvivorInventoryService survivorInventory,
-            GroundInventoryService groundInventory,
-            SurvivorActionCompletionService actionCompletion)
+            ISurvivorInventoryService survivorInventory,
+            IGroundInventoryService groundInventory,
+            ISurvivorActionCompletionService actionCompletion,
+            ItemMoveTimeRules itemMoveTimeRules,
+            IItemArrivalStackingSetting arrivalStacking)
         {
             _survivorInventory = survivorInventory ?? throw new ArgumentNullException(nameof(survivorInventory));
             _groundInventory = groundInventory ?? throw new ArgumentNullException(nameof(groundInventory));
             _actionCompletion = actionCompletion ?? throw new ArgumentNullException(nameof(actionCompletion));
+            _itemMoveTimeRules = itemMoveTimeRules ?? throw new ArgumentNullException(nameof(itemMoveTimeRules));
+            _arrivalStacking = arrivalStacking ?? throw new ArgumentNullException(nameof(arrivalStacking));
         }
 
-        /// <summary>Whether anything can be moved now: not while a find waits for room on the ground.</summary>
+        /// <inheritdoc />
         public bool CanTransfer => _actionCompletion.CanStartAction;
 
-        /// <summary>The slots of a panel things move between.</summary>
+        /// <inheritdoc />
         public CountedCollection<ItemDefinition> ContentsOf(ItemPanel panel) =>
             panel == ItemPanel.Inventory ? _survivorInventory.Inventory : _groundInventory.Ground;
 
-        /// <summary>
-        /// What moving <paramref name="quantity"/> of the stack in <paramref name="fromSlot"/> to the other panel would
-        /// do, letting go over <paramref name="targetSlot"/> (-1 for no particular slot). Changes nothing.
-        /// </summary>
+        /// <inheritdoc />
         public ItemMovePreview PreviewTransfer(ItemPanel from, int fromSlot, int targetSlot, ItemTransferQuantity quantity)
         {
             ItemPanel to = Other(from);
@@ -44,20 +48,18 @@ namespace SqueezySurvival.Core.Runs
                 ?? throw new ArgumentOutOfRangeException(nameof(fromSlot), fromSlot, "Nothing is in that slot.");
             CountedCollection<ItemDefinition> destination = ContentsOf(to);
             int count = ItemTransferQuantityCalculator.CountToMove(stack.Count, quantity);
+            int destinationSlot = destination.SlotToReceive(stack.Definition, targetSlot, _arrivalStacking.Stacking);
             return new ItemMovePreview(
                 stack.Definition,
                 count,
                 from,
                 to,
-                destination.SlotToReceive(stack.Definition, targetSlot),
-                destination.CountOf(stack.Definition),
-                ItemMoveTimeRules.SecondsToMove(stack.Definition.WeightPounds * count));
+                destinationSlot,
+                destination.CountInSlot(stack.Definition, destinationSlot),
+                _itemMoveTimeRules.SecondsToMove(stack.Definition.WeightPounds * count));
         }
 
-        /// <summary>
-        /// Moves things to the other panel as <see cref="PreviewTransfer"/> describes: takes its seconds and logs it.
-        /// There is no weight cap. Not available while a find waits for room on the ground, or when there is no room.
-        /// </summary>
+        /// <inheritdoc />
         public void Transfer(ItemPanel from, int fromSlot, int targetSlot, ItemTransferQuantity quantity)
         {
             _actionCompletion.RequireCanStartAction();
@@ -68,7 +70,7 @@ namespace SqueezySurvival.Core.Runs
             }
 
             ContentsOf(from).Take(fromSlot, preview.Count);
-            ContentsOf(preview.To).Receive(preview.Definition, preview.Count, preview.DestinationSlot);
+            ContentsOf(preview.To).Receive(preview.Definition, preview.Count, preview.DestinationSlot, _arrivalStacking.Stacking);
             _actionCompletion.Complete(
                 ActionDuration.FromSeconds(preview.Seconds),
                 new[] { new EventLogMessage(ItemMoveTextFormatter.FormatLog(preview)) });

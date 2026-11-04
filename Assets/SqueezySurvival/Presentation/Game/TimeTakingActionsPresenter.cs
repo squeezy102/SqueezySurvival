@@ -1,4 +1,5 @@
 using System;
+using SqueezySurvival.Core.Items;
 using SqueezySurvival.Core.Runs;
 using SqueezySurvival.Core.Time;
 using UnityEngine.UIElements;
@@ -11,10 +12,10 @@ namespace SqueezySurvival.Presentation.Game
     /// </summary>
     public sealed class TimeTakingActionsPresenter : IDisposable
     {
-        private readonly ZoneExplorationService _zoneExploration;
-        private readonly TimePassingService _timePassing;
-        private readonly SurvivorInventoryService _survivorInventory;
-        private readonly GroundInventoryService _groundInventory;
+        private readonly IZoneExplorationService _zoneExploration;
+        private readonly ITimePassingService _timePassing;
+        private readonly ISurvivorInventoryService _survivorInventory;
+        private readonly IGroundInventoryService _groundInventory;
         private readonly Button _exploreButton;
         private readonly Button _waitButton;
         private readonly Button _restButton;
@@ -25,10 +26,10 @@ namespace SqueezySurvival.Presentation.Game
         /// </summary>
         public TimeTakingActionsPresenter(
             VisualElement root,
-            ZoneExplorationService zoneExploration,
-            TimePassingService timePassing,
-            SurvivorInventoryService survivorInventory,
-            GroundInventoryService groundInventory)
+            IZoneExplorationService zoneExploration,
+            ITimePassingService timePassing,
+            ISurvivorInventoryService survivorInventory,
+            IGroundInventoryService groundInventory)
         {
             if (root == null)
             {
@@ -47,8 +48,8 @@ namespace SqueezySurvival.Presentation.Game
             _restButton = BindTimePassingButton(root.Q<Button>("rest-button"), "Rest", TimePassingAction.Rest);
 
             _groundInventory.PendingOverflowChanged += Refresh;
-            _survivorInventory.Inventory.Changed += Refresh;
-            _survivorInventory.Hands.Changed += Refresh;
+            _survivorInventory.Inventory.Changed += OnCarriedThingsChanged;
+            _survivorInventory.Hands.Changed += OnCarriedThingsChanged;
             Refresh();
         }
 
@@ -59,8 +60,8 @@ namespace SqueezySurvival.Presentation.Game
         public void Dispose()
         {
             _groundInventory.PendingOverflowChanged -= Refresh;
-            _survivorInventory.Inventory.Changed -= Refresh;
-            _survivorInventory.Hands.Changed -= Refresh;
+            _survivorInventory.Inventory.Changed -= OnCarriedThingsChanged;
+            _survivorInventory.Hands.Changed -= OnCarriedThingsChanged;
         }
 
         private Button BindTimePassingButton(Button button, string actionName, TimePassingAction action)
@@ -71,6 +72,9 @@ namespace SqueezySurvival.Presentation.Game
         }
 
         private void OnExploreClicked() => _zoneExploration.Explore();
+
+        // Whether actions are allowed depends on the total load, not on which slots changed.
+        private void OnCarriedThingsChanged(object sender, CountedCollectionChange change) => Refresh();
 
         private void Refresh()
         {

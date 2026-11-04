@@ -14,7 +14,7 @@ namespace SqueezySurvival.Presentation.Game
     {
         private const string DiscardTooltipTitle = "Discard";
 
-        private readonly GroundInventoryService _groundInventory;
+        private readonly IGroundInventoryService _groundInventory;
         private readonly InventoryGridView _groundView;
         private readonly VisualElement _prompt;
         private readonly Label _question;
@@ -25,7 +25,7 @@ namespace SqueezySurvival.Presentation.Game
         private readonly Label _discardHint;
 
         /// <summary>Binds the prompt to the run and the ground's grid. Shows itself whenever a find is waiting.</summary>
-        public GroundOverflowPromptController(GroundInventoryService groundInventory, InventoryGridView groundView, VisualElement prompt, Label discardHint)
+        public GroundOverflowPromptController(IGroundInventoryService groundInventory, InventoryGridView groundView, VisualElement prompt, Label discardHint)
         {
             _groundInventory = groundInventory ?? throw new ArgumentNullException(nameof(groundInventory));
             _groundView = groundView ?? throw new ArgumentNullException(nameof(groundView));

@@ -10,16 +10,16 @@ namespace SqueezySurvival.Presentation.Game
     /// <summary>
     /// Connects the ground's and the inventory's grids so things can be dragged or modifier-clicked from one to the
     /// other (Docs/Design/UI/DragAndDrop.md, Between panels). What a move does, and its wording, come from Core's
-    /// <see cref="InventoryTransferService"/>; this only finds which grid the pointer is over and passes the request on.
+    /// <see cref="IInventoryTransferService"/>; this only finds which grid the pointer is over and passes the request on.
     /// </summary>
     public sealed class ItemPanelMoveCoordinator
     {
-        private readonly InventoryTransferService _inventoryTransfers;
-        private readonly KeyboardMoveModifierReader _modifiers;
+        private readonly IInventoryTransferService _inventoryTransfers;
+        private readonly IMoveModifierReader _modifiers;
         private readonly Dictionary<ItemPanel, InventoryGridView> _views = new Dictionary<ItemPanel, InventoryGridView>();
 
         /// <summary>Moves things through <paramref name="inventoryTransfers"/>, reading modifiers with <paramref name="modifiers"/>.</summary>
-        public ItemPanelMoveCoordinator(InventoryTransferService inventoryTransfers, KeyboardMoveModifierReader modifiers)
+        public ItemPanelMoveCoordinator(IInventoryTransferService inventoryTransfers, IMoveModifierReader modifiers)
         {
             _inventoryTransfers = inventoryTransfers ?? throw new ArgumentNullException(nameof(inventoryTransfers));
             _modifiers = modifiers ?? throw new ArgumentNullException(nameof(modifiers));
@@ -52,6 +52,13 @@ namespace SqueezySurvival.Presentation.Game
             hoveredSlot = other.SlotAtWorldPosition(pointerWorldPosition, out _, out _);
             return other;
         }
+
+        /// <summary>Whether things can be moved between panels now.</summary>
+        public bool CanTransfer => _inventoryTransfers.CanTransfer;
+
+        /// <summary>Changes whenever either panel's contents change, so a held drag can tell its preview is still right.</summary>
+        public long PanelContentsRevision =>
+            _inventoryTransfers.ContentsOf(ItemPanel.Inventory).Revision + _inventoryTransfers.ContentsOf(ItemPanel.Ground).Revision;
 
         /// <summary>How much a drag released now would move: the held modifier's role, or the whole stack.</summary>
         public ItemTransferQuantity QuantityForDrag() => _modifiers.HeldQuantity() ?? ItemTransferQuantity.All;
