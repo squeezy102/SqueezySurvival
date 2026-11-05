@@ -67,10 +67,10 @@ Applies to docs, UI text, commit messages and issues.
 ## Workflow
 
 1. Find or file the issue ([Work Tracking](Docs/Engineering/WorkTracking.md)). Assign yourself and add `status: in progress`.
-2. Branch from your stage branch, never from `main` (squeezy102's is `PjDev`; a contributor makes theirs from `main` once and names it as they like): `feature/3-explore-beach`, `fix/32-event-log-scroll`, `docs/...`. Nobody works on `main`.
+2. Branch from your own stage branch, never from `main` or another collaborator's stage branch ([Source Control: branching](Docs/Engineering/SourceControl.md#branching); squeezy102's is `PjDev`, and a contributor cuts theirs from `main` once): `feature/3-explore-beach`, `fix/32-event-log-scroll`, `docs/...`. Nobody works on `main`.
 3. Commit with an imperative subject of 72 characters or fewer; reference the issue (`Refs #3`). Update `CHANGELOG.md` under Unreleased.
-4. Bring finished work into your stage branch.
-5. When the stage branch holds work ready for `main`, open a pull request from it into `main` with the template, listing `Closes #N` for each finished issue. squeezy102 reviews, approves and merges it ([Source Control: branching](Docs/Engineering/SourceControl.md#branching)).
+4. Merge finished work back into the same stage branch.
+5. When the stage branch holds tested work ready for `main`, open a pull request from it into `main` with the template, listing `Closes #N` for each finished issue. squeezy102 reviews, approves and merges it ([Source Control: branching](Docs/Engineering/SourceControl.md#branching)).
 
 ## Unity specifics
 
