@@ -10,6 +10,7 @@ namespace SqueezySurvival.Core.DragAndDrop
     public readonly struct DropOutcomeKey : IEquatable<DropOutcomeKey>
     {
         private readonly bool _overOtherPanel;
+        private readonly ItemPanel _targetPanel;
         private readonly int _sourceSlot;
         private readonly GridDropTargetKind _targetKind;
         private readonly int _targetSlot;
@@ -20,6 +21,7 @@ namespace SqueezySurvival.Core.DragAndDrop
 
         private DropOutcomeKey(
             bool overOtherPanel,
+            ItemPanel targetPanel,
             int sourceSlot,
             GridDropTargetKind targetKind,
             int targetSlot,
@@ -29,6 +31,7 @@ namespace SqueezySurvival.Core.DragAndDrop
             long contentsRevision)
         {
             _overOtherPanel = overOtherPanel;
+            _targetPanel = targetPanel;
             _sourceSlot = sourceSlot;
             _targetKind = targetKind;
             _targetSlot = targetSlot;
@@ -46,16 +49,21 @@ namespace SqueezySurvival.Core.DragAndDrop
                 throw new ArgumentNullException(nameof(target));
             }
 
-            return new DropOutcomeKey(false, sourceSlot, target.Kind, target.Slot, target.AttemptsCombine, quantity, true, contentsRevision);
+            return new DropOutcomeKey(false, default, sourceSlot, target.Kind, target.Slot, target.AttemptsCombine, quantity, true, contentsRevision);
         }
 
-        /// <summary>A drag held over the other panel, with -1 for <paramref name="hoveredSlot"/> between slots.</summary>
-        public static DropOutcomeKey ForOtherPanel(int sourceSlot, int hoveredSlot, ItemTransferQuantity quantity, bool canTransfer, long contentsRevision) =>
-            new DropOutcomeKey(true, sourceSlot, GridDropTargetKind.Nowhere, hoveredSlot, false, quantity, canTransfer, contentsRevision);
+        /// <summary>
+        /// A drag held over <paramref name="targetPanel"/>, another panel than the dragged cell's own, with -1 for
+        /// <paramref name="hoveredSlot"/> between slots.
+        /// </summary>
+        public static DropOutcomeKey ForOtherPanel(
+            int sourceSlot, ItemPanel targetPanel, int hoveredSlot, ItemTransferQuantity quantity, bool canTransfer, long contentsRevision) =>
+            new DropOutcomeKey(true, targetPanel, sourceSlot, GridDropTargetKind.Nowhere, hoveredSlot, false, quantity, canTransfer, contentsRevision);
 
         /// <inheritdoc />
         public bool Equals(DropOutcomeKey other) =>
             _overOtherPanel == other._overOtherPanel
+            && _targetPanel == other._targetPanel
             && _sourceSlot == other._sourceSlot
             && _targetKind == other._targetKind
             && _targetSlot == other._targetSlot
@@ -69,6 +77,6 @@ namespace SqueezySurvival.Core.DragAndDrop
 
         /// <inheritdoc />
         public override int GetHashCode() =>
-            HashCode.Combine(_overOtherPanel, _sourceSlot, _targetKind, _targetSlot, _attemptsCombine, _quantity, _canTransfer, _contentsRevision);
+            HashCode.Combine(_overOtherPanel, _targetPanel, _sourceSlot, _targetKind, _targetSlot, HashCode.Combine(_attemptsCombine, _quantity, _canTransfer, _contentsRevision));
     }
 }
