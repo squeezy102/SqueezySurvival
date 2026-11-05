@@ -54,7 +54,7 @@ Splitting always works; auto-stack only decides where things arriving from elsew
 Things move between the **ground** and the **inventory** ([#86](https://github.com/squeezy102/SqueezySurvival/issues/86)). Zone features are not things to carry and stay in their own grid; the hands are filled through [Equipment](../Systems/Equipment.md), later.
 
 - **A plain drag moves the whole stack.** Holding a modifier while letting go moves part of it: **Ctrl moves half** (rounded up: half of 7 is 4) and **Alt moves one**. Shift also moves the whole stack. Players can remap which key does which ([Controls: accessibility](Controls.md#accessibility)).
-- **A modified click sends things straight to the other panel**, ground to inventory or inventory to ground, with no drag: **Shift + click** sends the whole stack, **Ctrl + click** half, **Alt + click** one (resolves OQ-085). **An open container comes first** (resolves OQ-086): while a container (a chest, a cupboard) is open in the top panel, a modified click on the ground or in the inventory sends things into the container instead. Where a modified click in the container itself sends things: [OQ-088](../OpenQuestions.md).
+- **A modified click sends things straight to the other panel**, ground to inventory or inventory to ground, with no drag: **Shift + click** sends the whole stack, **Ctrl + click** half, **Alt + click** one (resolves OQ-085). **An open container comes first** (resolves OQ-086): while a container (a chest, a cupboard) is open in the top panel, a modified click on the ground or in the inventory sends things into the container instead. A modified click on something in the container itself sends it to the inventory, or to the ground when the inventory has no room (resolves OQ-088).
 - **Things join their own kind (auto-stack).** When the other panel already holds that kind, what moves joins the stack let go over, or else the kind's first stack. Otherwise it takes the empty slot it was let go over, or, over another thing, the first empty slot; nothing is swapped between panels. - **Auto-stack can be turned off** (Options, Gameplay: on by default; [#106](https://github.com/squeezy102/SqueezySurvival/issues/106)). With it off, what moves never goes to a stack the player did not point at:
   - over a stack of the same kind it still joins that stack, because letting go over it is deliberate;
   - over an empty slot it takes that slot, even when the kind is elsewhere in the panel;
@@ -84,6 +84,28 @@ The top and bottom edges of a cell are reserved for click-and-hold bulk moves be
 
 Designed and built in [#103](https://github.com/squeezy102/SqueezySurvival/issues/103).
 
+## Destinations
+
+Moves are not limited to two panels ([#127](https://github.com/squeezy102/SqueezySurvival/issues/127)). The panels in play are the **ground** and the **inventory**, always, plus the **open container**, if any ([Containers](../Systems/Containers.md#containers), still a concept: only the move rules below and the one-open-container rule are settled).
+
+- **A drag goes where the pointer lets go.** The panel under the pointer is the destination, whichever panel it is, except the one the stack came from. The amounts, auto-stack, no-room and timing rules of [Between panels](#between-panels) apply to every destination.
+- **A modified click asks a destination policy.** The policy lists where the stack may go, best first, and the first with room takes it. If the only listed place has no room, nothing moves and the tooltip says so.
+
+| Clicked in | Goes to |
+|---|---|
+| The ground or the inventory, no container open | The other of the two |
+| The ground or the inventory, a container open | The open container (resolves OQ-086) |
+| An open container | The inventory, or the ground when the inventory has no room (resolves OQ-088) |
+
+- **The policy is told which container, if any, is open.** Only one container is open at a time ([Containers](../Systems/Containers.md#containers)), so a click has at most one container to go to. If a second is ever allowed, which of them takes a click is a new question.
+- **Each destination words its own moves.** The title, the place and the event log entry for each kind of destination:
+
+| Destination | Title | Place | Event log |
+|---|---|---|---|
+| Inventory | Pick up | in your inventory | You picked up 5 stones. |
+| Ground | Put down | on the ground | You put 5 stones on the ground. |
+| A container | Put in | in the (container's name) | You put 5 stones in the (container's name). |
+
 ## Combining
 
 Holding one thing over another and letting go combines them when a recipe allows it: for example a stone on a stone to make a sharpened stone, or a sharpened stone on a crab to get crab meat. Recipes, their results and their time costs belong to crafting, which is not designed yet; until then nothing combines, and the preview says so.
@@ -96,5 +118,5 @@ Every drag needs an alternative that needs neither a drag nor a held button ([Co
 
 - The hold, outcomes and their wording are decided in Core (`CombineHoldTimer`, `GridDropOutcomeResolver`) and unit tested; the presentation layer reports where the pointer is and how much time has passed, and carries out the outcome Core returns.
 - Slots live in Core: `CountedCollection.MoveToSlot` moves a thing into an empty slot or swaps it with the thing there.
-- Moves between panels are decided in Core: `InventoryTransferService.PreviewTransfer` and `Transfer` (with `CountedCollection.SlotToReceive`, `Receive` and `Take`), worded by `ItemMoveTextFormatter`; which modifier means which amount is `MoveModifierBindings`. The presentation layer (`ItemPanelMoveCoordinator`) only finds the grid under the pointer and reads the keyboard.
+- Moves between panels are decided in Core: `ItemMoveDestinationPolicy` (where a modified click sends things, given the open container) and `InventoryTransferService.PreviewTransfer` and `Transfer`, or `PreviewSend` and `Send` for a modified click (with `CountedCollection.SlotToReceive`, `Receive` and `Take`), worded by `ItemMoveTextFormatter`; which modifier means which amount is `MoveModifierBindings`. The presentation layer (`ItemPanelMoveCoordinator`) only finds the grid under the pointer and reads the keyboard.
 - Which things combine is asked of an `IThingCombinationRules`; the wireframe's rules combine nothing.

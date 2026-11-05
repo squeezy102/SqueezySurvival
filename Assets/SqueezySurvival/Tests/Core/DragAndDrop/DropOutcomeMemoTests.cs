@@ -46,7 +46,7 @@ namespace SqueezySurvival.Core.Tests.DragAndDrop
             yield return new TestCaseData(OwnGridKey(target: GridDropTarget.Nowhere)).SetName("NoTarget");
             yield return new TestCaseData(OwnGridKey(quantity: ItemTransferQuantity.Half)).SetName("DifferentQuantity");
             yield return new TestCaseData(OwnGridKey(revision: 1)).SetName("ContentsChanged");
-            yield return new TestCaseData(DropOutcomeKey.ForOtherPanel(1, 3, ItemTransferQuantity.All, true, 0)).SetName("OverTheOtherPanel");
+            yield return new TestCaseData(DropOutcomeKey.ForOtherPanel(1, ItemPanel.Inventory, 3, ItemTransferQuantity.All, true, 0)).SetName("OverTheOtherPanel");
         }
 
         [Test]
@@ -62,10 +62,10 @@ namespace SqueezySurvival.Core.Tests.DragAndDrop
         public void TryGet_OtherPanelCanTransferChanged_FindsNothing()
         {
             var memo = new DropOutcomeMemo();
-            memo.Store(DropOutcomeKey.ForOtherPanel(1, 3, ItemTransferQuantity.All, true, 5), GridDropOutcome.ReturnToPlace);
+            memo.Store(DropOutcomeKey.ForOtherPanel(1, ItemPanel.Inventory, 3, ItemTransferQuantity.All, true, 5), GridDropOutcome.ReturnToPlace);
 
-            Assert.That(memo.TryGet(DropOutcomeKey.ForOtherPanel(1, 3, ItemTransferQuantity.All, false, 5), out _), Is.False);
-            Assert.That(memo.TryGet(DropOutcomeKey.ForOtherPanel(1, 3, ItemTransferQuantity.All, true, 5), out _), Is.True);
+            Assert.That(memo.TryGet(DropOutcomeKey.ForOtherPanel(1, ItemPanel.Inventory, 3, ItemTransferQuantity.All, false, 5), out _), Is.False);
+            Assert.That(memo.TryGet(DropOutcomeKey.ForOtherPanel(1, ItemPanel.Inventory, 3, ItemTransferQuantity.All, true, 5), out _), Is.True);
         }
 
         [Test]
@@ -94,6 +94,16 @@ namespace SqueezySurvival.Core.Tests.DragAndDrop
         public void ForOwnGrid_NoTarget_IsRefused()
         {
             Assert.That(() => DropOutcomeKey.ForOwnGrid(1, null, ItemTransferQuantity.All, 0), Throws.ArgumentNullException);
+        }
+
+        [Test]
+        public void ForOtherPanel_DifferentTargetPanels_AreDifferentKeys()
+        {
+            var memo = new DropOutcomeMemo();
+            memo.Store(DropOutcomeKey.ForOtherPanel(1, ItemPanel.Inventory, 3, ItemTransferQuantity.All, true, 5), GridDropOutcome.ReturnToPlace);
+
+            Assert.That(memo.TryGet(DropOutcomeKey.ForOtherPanel(1, ItemPanel.ForContainer("basket"), 3, ItemTransferQuantity.All, true, 5), out _), Is.False);
+            Assert.That(memo.TryGet(DropOutcomeKey.ForOtherPanel(1, ItemPanel.Inventory, 3, ItemTransferQuantity.All, true, 5), out _), Is.True);
         }
     }
 }

@@ -16,7 +16,16 @@ namespace SqueezySurvival.Core.Items
         /// <param name="destinationSlot">The slot they would land in, or -1 when there is no room.</param>
         /// <param name="alreadyThereCount">How many of the kind are already in the destination; 0 for a new stack.</param>
         /// <param name="seconds">How long the move takes.</param>
-        public ItemMovePreview(ItemDefinition definition, int count, ItemPanel from, ItemPanel to, int destinationSlot, int alreadyThereCount, int seconds)
+        /// <param name="destinationName">The container's name when <paramref name="to"/> is a container; unused otherwise.</param>
+        public ItemMovePreview(
+            ItemDefinition definition,
+            int count,
+            ItemPanel from,
+            ItemPanel to,
+            int destinationSlot,
+            int alreadyThereCount,
+            int seconds,
+            string destinationName = null)
         {
             Definition = definition ?? throw new ArgumentNullException(nameof(definition));
             if (count < 1)
@@ -29,12 +38,18 @@ namespace SqueezySurvival.Core.Items
                 throw new ArgumentException("A move goes between two different panels.", nameof(to));
             }
 
+            if (to.Kind == ItemPanelKind.Container && string.IsNullOrWhiteSpace(destinationName))
+            {
+                throw new ArgumentException("A move into a container names the container.", nameof(destinationName));
+            }
+
             Count = count;
             From = from;
             To = to;
             DestinationSlot = destinationSlot;
             AlreadyThereCount = alreadyThereCount;
             Seconds = seconds;
+            DestinationName = destinationName;
         }
 
         /// <summary>The kind being moved.</summary>
@@ -48,6 +63,9 @@ namespace SqueezySurvival.Core.Items
 
         /// <summary>The panel they go to.</summary>
         public ItemPanel To { get; }
+
+        /// <summary>The container's name when they go to a container; null otherwise.</summary>
+        public string DestinationName { get; }
 
         /// <summary>The slot they would land in, or -1 when there is no room.</summary>
         public int DestinationSlot { get; }

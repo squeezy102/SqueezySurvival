@@ -46,6 +46,7 @@ namespace SqueezySurvival.Presentation.Game
         private ItemPanel _panel;
         private InventoryGridView _shownTargetView;
         private int _shownHoveredSlot = -1;
+        private ItemPanel _shownTargetPanel;
         private ItemTransferQuantity _shownQuantity = ItemTransferQuantity.All;
 
         /// <summary>Creates the controller for one grid.</summary>
@@ -162,8 +163,15 @@ namespace SqueezySurvival.Presentation.Game
         private void RefreshOutcome()
         {
             int hoveredSlot = -1;
-            InventoryGridView otherView = _itemMoves == null ? null : _itemMoves.OtherPanelUnder(_panel, _pointerPosition, out hoveredSlot);
+            ItemPanel otherPanel = default;
+            InventoryGridView otherView = null;
+            if (_itemMoves != null)
+            {
+                _itemMoves.TryFindOtherPanelUnder(_panel, _pointerPosition, out otherPanel, out otherView, out hoveredSlot);
+            }
+
             _shownHoveredSlot = hoveredSlot;
+            _shownTargetPanel = otherPanel;
 
             // Grids that don't take part in moves between panels (zone features, hands) always move whole stacks.
             _shownQuantity = _itemMoves == null ? ItemTransferQuantity.All : _itemMoves.QuantityForDrag();
@@ -172,10 +180,10 @@ namespace SqueezySurvival.Presentation.Game
             {
                 _combineHoldTimer.Reset();
                 DropOutcomeKey key = DropOutcomeKey.ForOtherPanel(
-                    _pressedSlot, _shownHoveredSlot, _shownQuantity, _itemMoves.CanTransfer, _itemMoves.PanelContentsRevision);
+                    _pressedSlot, otherPanel, _shownHoveredSlot, _shownQuantity, _itemMoves.CanTransfer, _itemMoves.PanelContentsRevision);
                 if (!_outcomeMemo.TryGet(key, out outcome))
                 {
-                    outcome = _itemMoves.Resolve(_panel, _pressedSlot, _shownHoveredSlot, _shownQuantity);
+                    outcome = _itemMoves.Resolve(_panel, otherPanel, _pressedSlot, _shownHoveredSlot, _shownQuantity);
                     _outcomeMemo.Store(key, outcome);
                 }
             }
@@ -211,6 +219,7 @@ namespace SqueezySurvival.Presentation.Game
             InventoryGridView targetView = _shownTargetView ?? _view;
             int sourceSlot = _pressedSlot;
             int hoveredSlot = _shownHoveredSlot;
+            ItemPanel targetPanel = _shownTargetPanel;
             ItemTransferQuantity quantity = _shownQuantity;
             Action click = _pressClickAction;
             PointerPressEnding ending = _pressGesture.Release(_pressedCell.worldBound.Contains((Vector2)up.position));
@@ -221,7 +230,7 @@ namespace SqueezySurvival.Presentation.Game
             }
             else if (outcome.Kind == GridDropOutcomeKind.Transfer)
             {
-                _itemMoves.Apply(_panel, sourceSlot, hoveredSlot, quantity);
+                _itemMoves.Apply(_panel, targetPanel, sourceSlot, hoveredSlot, quantity);
             }
             else if (outcome.ChangesSomething)
             {
@@ -315,6 +324,7 @@ namespace SqueezySurvival.Presentation.Game
             _shownTargetView?.HideDropTarget();
             _shownTargetView = null;
             _shownHoveredSlot = -1;
+            _shownTargetPanel = default;
             _shownQuantity = ItemTransferQuantity.All;
 
             _tooltip.Hide();

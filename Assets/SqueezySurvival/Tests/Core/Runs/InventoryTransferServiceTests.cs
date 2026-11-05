@@ -23,7 +23,7 @@ namespace SqueezySurvival.Core.Tests.Runs
             RunSession session = TestRunSessions.WithOnTheGround(Stone, 5);
             int groundSlot = TestRunSessions.SlotOf(session.GroundInventory.Ground, Stone);
 
-            session.InventoryTransfers.Transfer(ItemPanel.Ground, groundSlot, -1, ItemTransferQuantity.All);
+            session.InventoryTransfers.Transfer(ItemPanel.Ground, ItemPanel.Inventory, groundSlot, -1, ItemTransferQuantity.All);
 
             Assert.That(session.SurvivorInventory.Inventory.CountOf(Stone), Is.EqualTo(5));
             Assert.That(session.GroundInventory.Ground.CountOf(Stone), Is.Zero);
@@ -38,10 +38,10 @@ namespace SqueezySurvival.Core.Tests.Runs
             var survivorInventory = new SurvivorInventoryService(SlotCapacityRules.Wireframe);
             var zone = new Zone(TestZoneDefinitions.Create(4), SlotCapacityRules.Wireframe);
             var groundInventory = new GroundInventoryService(zone, new GameTimeAdvancer(GameClock.RunStart, Array.Empty<ITimeDependentSystem>()), new RunEventLog());
-            var transfers = new InventoryTransferService(survivorInventory, groundInventory, completion, new ItemMoveTimeRules(secondsPerPound: 3m), new ItemArrivalStackingSetting());
+            var transfers = new InventoryTransferService(survivorInventory, groundInventory, new NoOpenItemContainerSource(), new ItemMoveDestinationPolicy(), completion, new ItemMoveTimeRules(secondsPerPound: 3m), new ItemArrivalStackingSetting());
             groundInventory.Ground.Receive(Stone, 5, -1);
 
-            transfers.Transfer(ItemPanel.Ground, TestRunSessions.SlotOf(groundInventory.Ground, Stone), -1, ItemTransferQuantity.All);
+            transfers.Transfer(ItemPanel.Ground, ItemPanel.Inventory, TestRunSessions.SlotOf(groundInventory.Ground, Stone), -1, ItemTransferQuantity.All);
 
             int expectedSeconds = new ItemMoveTimeRules(secondsPerPound: 3m).SecondsToMove(Stone.WeightPounds * 5);
             Assert.That(completion.Completed[0].Duration, Is.EqualTo(ActionDuration.FromSeconds(expectedSeconds)));
@@ -54,7 +54,7 @@ namespace SqueezySurvival.Core.Tests.Runs
         {
             RunSession session = TestRunSessions.WithOnTheGround(Stone, 7);
 
-            session.InventoryTransfers.Transfer(ItemPanel.Ground, TestRunSessions.SlotOf(session.GroundInventory.Ground, Stone), -1, quantity);
+            session.InventoryTransfers.Transfer(ItemPanel.Ground, ItemPanel.Inventory, TestRunSessions.SlotOf(session.GroundInventory.Ground, Stone), -1, quantity);
 
             Assert.That(session.SurvivorInventory.Inventory.CountOf(Stone), Is.EqualTo(expectedMoved));
             Assert.That(session.GroundInventory.Ground.CountOf(Stone), Is.EqualTo(expectedLeft));
@@ -65,9 +65,9 @@ namespace SqueezySurvival.Core.Tests.Runs
         {
             RunSession session = TestRunSessions.WithOnTheGround(Stone, 5);
             int groundSlot = TestRunSessions.SlotOf(session.GroundInventory.Ground, Stone);
-            session.InventoryTransfers.Transfer(ItemPanel.Ground, groundSlot, -1, ItemTransferQuantity.Half);
+            session.InventoryTransfers.Transfer(ItemPanel.Ground, ItemPanel.Inventory, groundSlot, -1, ItemTransferQuantity.Half);
 
-            session.InventoryTransfers.Transfer(ItemPanel.Inventory, TestRunSessions.SlotOf(session.SurvivorInventory.Inventory, Stone), -1, ItemTransferQuantity.One);
+            session.InventoryTransfers.Transfer(ItemPanel.Inventory, ItemPanel.Ground, TestRunSessions.SlotOf(session.SurvivorInventory.Inventory, Stone), -1, ItemTransferQuantity.One);
 
             Assert.That(session.GroundInventory.Ground.EntryAtSlot(groundSlot).Count, Is.EqualTo(3));
             Assert.That(session.EventLog.Entries[session.EventLog.Entries.Count - 1].Text, Is.EqualTo("You put a stone on the ground."));
@@ -79,7 +79,7 @@ namespace SqueezySurvival.Core.Tests.Runs
             RunSession session = TestRunSessions.WithOnTheGround(Stone, 5);
 
             ItemMovePreview preview = session.InventoryTransfers.PreviewTransfer(
-                ItemPanel.Ground, TestRunSessions.SlotOf(session.GroundInventory.Ground, Stone), -1, ItemTransferQuantity.All);
+                ItemPanel.Ground, ItemPanel.Inventory, TestRunSessions.SlotOf(session.GroundInventory.Ground, Stone), -1, ItemTransferQuantity.All);
 
             Assert.That(preview.Count, Is.EqualTo(5));
             Assert.That(preview.Seconds, Is.EqualTo(10));
@@ -97,8 +97,8 @@ namespace SqueezySurvival.Core.Tests.Runs
                 inventory.Receive(new ItemDefinition($"filler-{slot}", "Filler", "a filler", "fillers", "Fills a slot.", ItemCategory.Salvage, 0.1m), 1, slot);
             }
 
-            Assert.That(session.InventoryTransfers.PreviewTransfer(ItemPanel.Ground, 0, -1, ItemTransferQuantity.All).CanMove, Is.False);
-            Assert.That(() => session.InventoryTransfers.Transfer(ItemPanel.Ground, 0, -1, ItemTransferQuantity.All), Throws.InvalidOperationException);
+            Assert.That(session.InventoryTransfers.PreviewTransfer(ItemPanel.Ground, ItemPanel.Inventory, 0, -1, ItemTransferQuantity.All).CanMove, Is.False);
+            Assert.That(() => session.InventoryTransfers.Transfer(ItemPanel.Ground, ItemPanel.Inventory, 0, -1, ItemTransferQuantity.All), Throws.InvalidOperationException);
             Assert.That(session.GroundInventory.Ground.CountOf(Stone), Is.EqualTo(1));
             Assert.That(session.Clock.ElapsedSeconds, Is.Zero);
         }
@@ -109,7 +109,7 @@ namespace SqueezySurvival.Core.Tests.Runs
             RunSession session = TestRunSessions.WithOnTheGround(Stone, 1);
 
             Assert.That(
-                () => session.InventoryTransfers.Transfer(ItemPanel.Inventory, 0, -1, ItemTransferQuantity.All),
+                () => session.InventoryTransfers.Transfer(ItemPanel.Inventory, ItemPanel.Ground, 0, -1, ItemTransferQuantity.All),
                 Throws.TypeOf<ArgumentOutOfRangeException>());
         }
 
@@ -118,7 +118,7 @@ namespace SqueezySurvival.Core.Tests.Runs
         {
             RunSession session = TestRunSessions.WithOnTheGround(Log, 5);
 
-            session.InventoryTransfers.Transfer(ItemPanel.Ground, TestRunSessions.SlotOf(session.GroundInventory.Ground, Log), -1, ItemTransferQuantity.All);
+            session.InventoryTransfers.Transfer(ItemPanel.Ground, ItemPanel.Inventory, TestRunSessions.SlotOf(session.GroundInventory.Ground, Log), -1, ItemTransferQuantity.All);
 
             Assert.That(session.SurvivorInventory.Load.CarriedPounds, Is.EqualTo(150m));
             Assert.That(session.SurvivorInventory.Load.State, Is.EqualTo(SurvivorLoadState.Immobile));
@@ -131,7 +131,7 @@ namespace SqueezySurvival.Core.Tests.Runs
             long secondsBefore = session.Clock.ElapsedSeconds;
 
             Assert.That(session.InventoryTransfers.CanTransfer, Is.False);
-            Assert.That(() => session.InventoryTransfers.Transfer(ItemPanel.Ground, 0, -1, ItemTransferQuantity.All), Throws.InvalidOperationException);
+            Assert.That(() => session.InventoryTransfers.Transfer(ItemPanel.Ground, ItemPanel.Inventory, 0, -1, ItemTransferQuantity.All), Throws.InvalidOperationException);
             Assert.That(session.Clock.ElapsedSeconds, Is.EqualTo(secondsBefore));
         }
 
@@ -148,6 +148,8 @@ namespace SqueezySurvival.Core.Tests.Runs
             return new InventoryTransferService(
                 survivorInventory,
                 groundInventory,
+                new NoOpenItemContainerSource(),
+                new ItemMoveDestinationPolicy(),
                 new RecordingSurvivorActionCompletionService(),
                 ItemMoveTimeRules.Wireframe,
                 setting);
@@ -159,7 +161,7 @@ namespace SqueezySurvival.Core.Tests.Runs
             InventoryTransferService transfers = CreateTransfersWithStoneOnGroundAndInInventorySlotFive(
                 new ItemArrivalStackingSetting(), out ISurvivorInventoryService inventory, out _);
 
-            transfers.Transfer(ItemPanel.Ground, 0, 1, ItemTransferQuantity.All);
+            transfers.Transfer(ItemPanel.Ground, ItemPanel.Inventory, 0, 1, ItemTransferQuantity.All);
 
             Assert.That(inventory.Inventory.EntryAtSlot(5).Count, Is.EqualTo(17));
             Assert.That(inventory.Inventory.EntryAtSlot(1), Is.Null);
@@ -172,7 +174,7 @@ namespace SqueezySurvival.Core.Tests.Runs
             InventoryTransferService transfers = CreateTransfersWithStoneOnGroundAndInInventorySlotFive(
                 setting, out ISurvivorInventoryService inventory, out _);
 
-            transfers.Transfer(ItemPanel.Ground, 0, 1, ItemTransferQuantity.All);
+            transfers.Transfer(ItemPanel.Ground, ItemPanel.Inventory, 0, 1, ItemTransferQuantity.All);
 
             Assert.That(inventory.Inventory.EntryAtSlot(1).Count, Is.EqualTo(5));
             Assert.That(inventory.Inventory.EntryAtSlot(5).Count, Is.EqualTo(12));
@@ -185,7 +187,7 @@ namespace SqueezySurvival.Core.Tests.Runs
             InventoryTransferService transfers = CreateTransfersWithStoneOnGroundAndInInventorySlotFive(
                 setting, out ISurvivorInventoryService inventory, out _);
 
-            transfers.Transfer(ItemPanel.Ground, 0, 5, ItemTransferQuantity.All);
+            transfers.Transfer(ItemPanel.Ground, ItemPanel.Inventory, 0, 5, ItemTransferQuantity.All);
 
             Assert.That(inventory.Inventory.EntryAtSlot(5).Count, Is.EqualTo(17));
         }
@@ -197,7 +199,7 @@ namespace SqueezySurvival.Core.Tests.Runs
             InventoryTransferService transfers = CreateTransfersWithStoneOnGroundAndInInventorySlotFive(
                 setting, out ISurvivorInventoryService inventory, out _);
 
-            transfers.Transfer(ItemPanel.Ground, 0, -1, ItemTransferQuantity.One);
+            transfers.Transfer(ItemPanel.Ground, ItemPanel.Inventory, 0, -1, ItemTransferQuantity.One);
 
             Assert.That(inventory.Inventory.EntryAtSlot(0).Count, Is.EqualTo(1));
             Assert.That(inventory.Inventory.EntryAtSlot(5).Count, Is.EqualTo(12));
@@ -209,7 +211,7 @@ namespace SqueezySurvival.Core.Tests.Runs
             var setting = new ItemArrivalStackingSetting { Stacking = ItemArrivalStacking.StartOwnStack };
             InventoryTransferService transfers = CreateTransfersWithStoneOnGroundAndInInventorySlotFive(setting, out _, out _);
 
-            ItemMovePreview preview = transfers.PreviewTransfer(ItemPanel.Ground, 0, 1, ItemTransferQuantity.All);
+            ItemMovePreview preview = transfers.PreviewTransfer(ItemPanel.Ground, ItemPanel.Inventory, 0, 1, ItemTransferQuantity.All);
 
             Assert.That(preview.DestinationSlot, Is.EqualTo(1));
             Assert.That(preview.JoinsStack, Is.False);
@@ -222,7 +224,7 @@ namespace SqueezySurvival.Core.Tests.Runs
             var setting = new ItemArrivalStackingSetting { Stacking = ItemArrivalStacking.StartOwnStack };
             InventoryTransferService transfers = CreateTransfersWithStoneOnGroundAndInInventorySlotFive(setting, out _, out _);
 
-            ItemMovePreview preview = transfers.PreviewTransfer(ItemPanel.Ground, 0, 5, ItemTransferQuantity.All);
+            ItemMovePreview preview = transfers.PreviewTransfer(ItemPanel.Ground, ItemPanel.Inventory, 0, 5, ItemTransferQuantity.All);
 
             Assert.That(preview.JoinsStack, Is.True);
             Assert.That(preview.AlreadyThereCount, Is.EqualTo(12));
@@ -234,10 +236,10 @@ namespace SqueezySurvival.Core.Tests.Runs
             var setting = new ItemArrivalStackingSetting { Stacking = ItemArrivalStacking.StartOwnStack };
             InventoryTransferService transfers = CreateTransfersWithStoneOnGroundAndInInventorySlotFive(
                 setting, out ISurvivorInventoryService inventory, out _);
-            transfers.Transfer(ItemPanel.Ground, 0, 1, ItemTransferQuantity.One);
+            transfers.Transfer(ItemPanel.Ground, ItemPanel.Inventory, 0, 1, ItemTransferQuantity.One);
 
             setting.Stacking = ItemArrivalStacking.AutoStack;
-            transfers.Transfer(ItemPanel.Ground, 0, 2, ItemTransferQuantity.One);
+            transfers.Transfer(ItemPanel.Ground, ItemPanel.Inventory, 0, 2, ItemTransferQuantity.One);
 
             Assert.That(inventory.Inventory.EntryAtSlot(1).Count, Is.EqualTo(2));
             Assert.That(inventory.Inventory.EntryAtSlot(2), Is.Null);
@@ -251,7 +253,7 @@ namespace SqueezySurvival.Core.Tests.Runs
                 new ItemArrivalStackingSetting(), out ISurvivorInventoryService inventory, out _);
             inventory.Inventory.SplitToSlot(5, 3, 4);
 
-            ItemMovePreview preview = transfers.PreviewTransfer(ItemPanel.Ground, 0, -1, ItemTransferQuantity.One);
+            ItemMovePreview preview = transfers.PreviewTransfer(ItemPanel.Ground, ItemPanel.Inventory, 0, -1, ItemTransferQuantity.One);
 
             Assert.That(preview.DestinationSlot, Is.EqualTo(3));
             Assert.That(preview.AlreadyThereCount, Is.EqualTo(4));
