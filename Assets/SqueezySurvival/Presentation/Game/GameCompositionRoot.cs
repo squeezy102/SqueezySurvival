@@ -150,7 +150,7 @@ namespace SqueezySurvival.Presentation.Game
             Own(new EventLogView(root.Q<VisualElement>("event-log-panel"), session.EventLog, textures, new UnreadWarningTracker()));
 
             var overlays = new GameScreenOverlayStack();
-            GameScreenOverlayPresenter overlayPresenter = Own(new GameScreenOverlayPresenter(root, overlays, timeTakingActions.FocusDefault));
+            GameScreenOverlayPresenter overlayPresenter = Own(new GameScreenOverlayPresenter(root, overlays, timeTakingActions.FocusDefault, new UnitySceneLoader()));
             new NavigationBarPresenter(root, textures, tooltip, overlayPresenter);
             Own(new GameScreenEscapeKeyPresenter(
                 new GameScreenEscapeResolver(overlays),

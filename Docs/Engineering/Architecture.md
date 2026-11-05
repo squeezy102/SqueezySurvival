@@ -122,5 +122,5 @@ Found in the architecture review of 2026-10-20 ([Architecture pass milestone](ht
 
 | Gap | Issue |
 |---|---|
-| Presentation tests cover the HUD clock, zone bar, load label, actions, overlays and the grid tooltip so far; the rest of Presentation is untested | [#126](https://github.com/squeezy102/SqueezySurvival/issues/126) |
+| One event log test (scrolling up stops following new entries) is skipped because the test harness returns the log to the bottom after a wheel scroll; the game behaves correctly | [#163](https://github.com/squeezy102/SqueezySurvival/issues/163) |
 | Moves assume two panels | [#127](https://github.com/squeezy102/SqueezySurvival/issues/127) |
