@@ -76,26 +76,28 @@ Commits that add or change binary files still need squeezy102's `git push` from 
 
 ## Branching
 
-Nobody works on `main`, and nobody pushes directly to it. Every change, including the owner's, reaches it through a pull request ([CONTRIBUTING](../../CONTRIBUTING.md)).
+Nobody works on `main`, and nobody pushes directly to it. This section is the one home of the branching rules; [AGENTS.md](../../AGENTS.md#workflow), [CONTRIBUTING](../../CONTRIBUTING.md#how-changes-are-made) and [Getting Started](../../GETTING_STARTED.md) summarize the steps and link here.
 
-Every contributor has a **stage branch**: their own copy of `main`, named as they like, that they treat as their main. squeezy102's is `PjDev`.
+| Branch | What it is | Cut from | Merged into | Deleted |
+|---|---|---|---|---|
+| `main` | The line that releases are made from | - | - | Never |
+| Stage branch | One per collaborator, named as they like, treated as their own `main`. squeezy102's is `PjDev`. | `main`, once | `main`, by a pull request squeezy102 approves | Never |
+| Working branch (`design/`, `feature/`, `fix/` or `docs/`) | One change, named for its issue | The collaborator's own stage branch | The same stage branch | After it is merged |
 
 1. **Once**, create your stage branch from `main`. It is the only branch you ever cut from `main`.
-2. Create every working branch (`design/...`, `feature/...`, `fix/...` or `docs/...`) from your stage branch, and bring finished work back into your stage branch.
-3. When your stage branch holds work ready for `main`, ask for approval: open a pull request from the stage branch into `main`.
-4. squeezy102 reviews and approves it, then merges it.
-5. Bring your stage branch up to date with `main` again.
+2. Cut every working branch from your own stage branch, never from `main` and never from another collaborator's stage branch. Merge finished work back into the same stage branch.
+3. A stage branch reaches `main` only through a pull request from it into `main`, opened when its work is tested and ready. squeezy102 reviews and approves it, then merges it ([CONTRIBUTING](../../CONTRIBUTING.md)).
+4. `main` is pushed to only by those pull requests, including squeezy102's own.
+5. After a merge into `main`, bring your stage branch up to date with it.
 
 ### squeezy102's integration branch
 
-`PjDev` is squeezy102's personal integration branch, created from `main`.
+`PjDev` is squeezy102's stage branch, and the branch his work is integrated in.
 
-1. squeezy102's feature branches (and Claude's) are created from `PjDev` and squash-merged back into it.
+1. squeezy102's working branches (and Claude's) are cut from `PjDev` and merged back into it with a merge commit ("Create a merge commit" on GitHub), never a squash.
    Claude never pushes to `PjDev` itself: it pushes a branch such as `docs/...`, opens a pull request into `PjDev`, and merges it. squeezy102 has asked Claude to handle all git work unless their input is specifically required, such as merging into `main` or pushing what only their credentials can.
 2. When `PjDev` holds a set of changes ready for `main`, a pull request from `PjDev` into `main` brings them in. squeezy102 merges it with a **merge commit**, never a squash: a merge commit keeps `main` an ancestor of `PjDev`, so the two never drift apart and the next pull request shows only new work. Squash-merging `PjDev` into `main` gave `main` a copy of the same changes under a different history, so every later pull request conflicted until `main` was merged back into `PjDev` (2026-10-20).
 3. Claude handles git for squeezy102: it commits, pushes its branches, and keeps squeezy102's local repository in sync (checking out and pulling the branch to test) through the desktop app's link to their PC. squeezy102 runs git commands only for pushes that need their credentials, such as Git LFS files or `PjDev` after a merge from `main`. On that PC, Windows Git converts line endings (`core.autocrlf`), so git commands Claude runs there pass `-c core.autocrlf=true` to see the same state Windows does.
-
-Every contributor works the same way from their own stage branch, as described above.
 
 `PjDev` belongs to squeezy102 alone. A second ruleset, `Protect PjDev`, restricts updates, deletions and force pushes on it, with only the repository admin (squeezy102) able to bypass, always. Nobody else can push to it, merge into it, or delete it.
 
