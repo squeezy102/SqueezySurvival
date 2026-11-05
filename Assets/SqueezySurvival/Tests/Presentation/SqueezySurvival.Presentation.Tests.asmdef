@@ -8,6 +8,8 @@
         "SqueezySurvival.Editor",
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
+        "Unity.InputSystem",
+        "Unity.InputSystem.TestFramework",
         "Unity.UI.TestFramework.Runtime"
     ],
     "includePlatforms": [

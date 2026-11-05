@@ -4,7 +4,6 @@ using SqueezySurvival.Core.GameScreen;
 using SqueezySurvival.Core.Navigation;
 using SqueezySurvival.Presentation.Options;
 using SqueezySurvival.Presentation.Session;
-using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 namespace SqueezySurvival.Presentation.Game
@@ -17,6 +16,7 @@ namespace SqueezySurvival.Presentation.Game
     {
         private readonly GameScreenOverlayStack _overlays;
         private readonly Action _focusGame;
+        private readonly ISceneLoader _sceneLoader;
         private readonly VisualElement _pauseMenu;
         private readonly Button _pauseOptionsButton;
         private readonly OptionsScreenController _optionsScreen;
@@ -27,9 +27,10 @@ namespace SqueezySurvival.Presentation.Game
 
         /// <summary>
         /// Binds the overlays in <paramref name="root"/> to <paramref name="overlays"/>. <paramref name="focusGame"/> gives
-        /// the game screen its default focus when an overlay opened by the keyboard closes.
+        /// the game screen its default focus when an overlay opened by the keyboard closes; <paramref name="sceneLoader"/>
+        /// loads the main menu when the player saves and exits.
         /// </summary>
-        public GameScreenOverlayPresenter(VisualElement root, GameScreenOverlayStack overlays, Action focusGame)
+        public GameScreenOverlayPresenter(VisualElement root, GameScreenOverlayStack overlays, Action focusGame, ISceneLoader sceneLoader)
         {
             if (root == null)
             {
@@ -38,13 +39,14 @@ namespace SqueezySurvival.Presentation.Game
 
             _overlays = overlays ?? throw new ArgumentNullException(nameof(overlays));
             _focusGame = focusGame ?? throw new ArgumentNullException(nameof(focusGame));
+            _sceneLoader = sceneLoader ?? throw new ArgumentNullException(nameof(sceneLoader));
 
             _pauseMenu = root.Q<VisualElement>("pause-menu");
             _pauseOptionsButton = root.Q<Button>("pause-options-button");
             _pauseOptionsButton.clicked += () => OpenOptions(_pauseOptionsButton);
 
             // Saving is not built yet, so Save and exit only exits (Docs/Design/UI/ScreenLayout.md, Wireframe stage).
-            root.Q<Button>("save-and-exit-button").clicked += () => SceneManager.LoadScene(SceneNames.MainMenu);
+            root.Q<Button>("save-and-exit-button").clicked += () => _sceneLoader.Load(SceneNames.MainMenu);
 
             _optionsScreen = new OptionsScreenController(root.Q<VisualElement>("options-screen"));
             _optionsScreen.Closed += OnOptionsBackChosen;
