@@ -307,7 +307,7 @@ namespace SqueezySurvival.Presentation.Game
             });
 
             // While choosing a slot, a click chooses and nothing can be dragged. Otherwise a click selects, or with a
-            // modifier held sends things to the other panel. The drag controller decides what is a click and what is a
+            // modifier held sends things where the destination policy says. The drag controller decides what is a click and what is a
             // drag, so the two are separate behaviors (Docs/Design/UI/DragAndDrop.md, Dragging).
             _dragController.RegisterCell(
                 cell,
@@ -320,7 +320,7 @@ namespace SqueezySurvival.Presentation.Game
                     {
                         _slotChoice.Chosen(slot);
                     }
-                    else if (_itemMoves == null || !_itemMoves.TrySendToOtherPanel(_panel, slot))
+                    else if (_itemMoves == null || !_itemMoves.TrySendModifiedClick(_panel, slot))
                     {
                         Select(slot, cell);
                     }

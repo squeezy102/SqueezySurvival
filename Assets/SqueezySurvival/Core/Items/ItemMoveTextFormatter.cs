@@ -10,7 +10,7 @@ namespace SqueezySurvival.Core.Items
     /// </summary>
     public static class ItemMoveTextFormatter
     {
-        /// <summary>"Pick up", "Put down", "Stack" or "No room".</summary>
+        /// <summary>"Pick up", "Put down", "Put in", "Stack" or "No room".</summary>
         public static string FormatTitle(ItemMovePreview preview)
         {
             Require(preview);
@@ -24,7 +24,17 @@ namespace SqueezySurvival.Core.Items
                 return "Stack";
             }
 
-            return preview.To == ItemPanel.Inventory ? "Pick up" : "Put down";
+            switch (preview.To.Kind)
+            {
+                case ItemPanelKind.Inventory:
+                    return "Pick up";
+                case ItemPanelKind.Ground:
+                    return "Put down";
+                case ItemPanelKind.Container:
+                    return "Put in";
+                default:
+                    throw UnknownPanelKind(preview.To);
+            }
         }
 
         /// <summary>
@@ -36,25 +46,41 @@ namespace SqueezySurvival.Core.Items
             Require(preview);
             if (!preview.CanMove)
             {
-                return $"There's no free slot {PlaceIn(preview.To)}.";
+                return $"There's no free slot {PlaceIn(preview)}.";
             }
 
             string moving = Phrase(preview.Definition, preview.Count);
             string takes = $"Takes {GameClockFormatter.FormatDurationSeconds(preview.Seconds)}.";
             return preview.JoinsStack
-                ? $"Add {moving} to the {preview.AlreadyThereCount} {PlaceIn(preview.To)}. {takes}"
-                : $"Put {moving} {PlaceIn(preview.To)}. {takes}";
+                ? $"Add {moving} to the {preview.AlreadyThereCount} {PlaceIn(preview)}. {takes}"
+                : $"Put {moving} {PlaceIn(preview)}. {takes}";
         }
 
-        /// <summary>The event log entry: "You picked up 5 stones." or "You put a stick on the ground."</summary>
+        /// <summary>The event log entry: "You picked up 5 stones.", "You put a stick on the ground." or "You put a stick in the basket."</summary>
         public static string FormatLog(ItemMovePreview preview)
         {
             Require(preview);
             string moved = Phrase(preview.Definition, preview.Count);
-            return preview.To == ItemPanel.Inventory ? $"You picked up {moved}." : $"You put {moved} on the ground.";
+            return preview.To.Kind == ItemPanelKind.Inventory ? $"You picked up {moved}." : $"You put {moved} {PlaceIn(preview)}.";
         }
 
-        private static string PlaceIn(ItemPanel panel) => panel == ItemPanel.Inventory ? "in your inventory" : "on the ground";
+        private static string PlaceIn(ItemMovePreview preview)
+        {
+            switch (preview.To.Kind)
+            {
+                case ItemPanelKind.Inventory:
+                    return "in your inventory";
+                case ItemPanelKind.Ground:
+                    return "on the ground";
+                case ItemPanelKind.Container:
+                    return $"in the {preview.DestinationName}";
+                default:
+                    throw UnknownPanelKind(preview.To);
+            }
+        }
+
+        private static ArgumentOutOfRangeException UnknownPanelKind(ItemPanel panel) =>
+            new ArgumentOutOfRangeException(nameof(panel), panel.Kind, "Unknown kind of panel.");
 
         private static string Phrase(ItemDefinition definition, int count) =>
             CountedThingTextFormatter.FormatSentencePhrase(Enumerable.Repeat<ICountableThingDefinition>(definition, count));

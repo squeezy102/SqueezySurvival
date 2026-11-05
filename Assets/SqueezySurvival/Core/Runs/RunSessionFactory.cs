@@ -61,7 +61,14 @@ namespace SqueezySurvival.Core.Runs
                 currentZone,
                 survivorInventory,
                 groundInventory,
-                new InventoryTransferService(survivorInventory, groundInventory, actionCompletion, itemMoveTimeRules, arrivalStacking),
+                new InventoryTransferService(
+                    survivorInventory,
+                    groundInventory,
+                    new NoOpenItemContainerSource(),
+                    new ItemMoveDestinationPolicy(),
+                    actionCompletion,
+                    itemMoveTimeRules,
+                    arrivalStacking),
                 zoneExploration,
                 new TimePassingService(actionCompletion));
         }

@@ -55,34 +55,41 @@ namespace SqueezySurvival.Presentation.Tests.Game
         }
 
         [Test]
-        public void OtherPanelUnder_OverTheOtherGrid_ReturnsItWithTheSlotUnderThePointer()
+        public void TryFindOtherPanelUnder_OverTheOtherGrid_ReturnsItWithTheSlotUnderThePointer()
         {
             ComposeMoves(TestRunSessions.Start(), null);
 
-            InventoryGridView other = _moves.OtherPanelUnder(ItemPanel.Ground, _inventoryGrid.SlotWorldBound(2).center, out int hoveredSlot);
+            bool found = _moves.TryFindOtherPanelUnder(
+                ItemPanel.Ground, _inventoryGrid.SlotWorldBound(2).center, out ItemPanel panel, out InventoryGridView other, out int hoveredSlot);
 
+            Assert.That(found, Is.True);
+            Assert.That(panel, Is.EqualTo(ItemPanel.Inventory));
             Assert.That(other, Is.SameAs(_inventoryGrid));
             Assert.That(hoveredSlot, Is.EqualTo(2));
         }
 
         [Test]
-        public void OtherPanelUnder_OverNeitherGrid_ReturnsNothing()
+        public void TryFindOtherPanelUnder_OverNeitherGrid_ReturnsNothing()
         {
             ComposeMoves(TestRunSessions.Start(), null);
 
-            InventoryGridView other = _moves.OtherPanelUnder(ItemPanel.Ground, new Vector2(-10f, -10f), out int hoveredSlot);
+            bool found = _moves.TryFindOtherPanelUnder(
+                ItemPanel.Ground, new Vector2(-10f, -10f), out ItemPanel _, out InventoryGridView other, out int hoveredSlot);
 
+            Assert.That(found, Is.False);
             Assert.That(other, Is.Null);
             Assert.That(hoveredSlot, Is.EqualTo(-1));
         }
 
         [Test]
-        public void OtherPanelUnder_OverItsOwnGrid_ReturnsNothing()
+        public void TryFindOtherPanelUnder_OverItsOwnGrid_ReturnsNothing()
         {
             ComposeMoves(TestRunSessions.Start(), null);
 
-            InventoryGridView other = _moves.OtherPanelUnder(ItemPanel.Ground, _groundGrid.SlotWorldBound(0).center, out int hoveredSlot);
+            bool found = _moves.TryFindOtherPanelUnder(
+                ItemPanel.Ground, _groundGrid.SlotWorldBound(0).center, out ItemPanel _, out InventoryGridView other, out int hoveredSlot);
 
+            Assert.That(found, Is.False);
             Assert.That(other, Is.Null);
             Assert.That(hoveredSlot, Is.EqualTo(-1));
         }
@@ -92,7 +99,7 @@ namespace SqueezySurvival.Presentation.Tests.Game
         {
             ComposeMoves(TestRunSessions.WithPebbleWaitingForRoom(), null);
 
-            GridDropOutcome outcome = _moves.Resolve(ItemPanel.Ground, 0, -1, ItemTransferQuantity.All);
+            GridDropOutcome outcome = _moves.Resolve(ItemPanel.Ground, ItemPanel.Inventory, 0, -1, ItemTransferQuantity.All);
 
             Assert.That(outcome, Is.SameAs(GridDropOutcome.ReturnToPlace));
         }
@@ -102,7 +109,7 @@ namespace SqueezySurvival.Presentation.Tests.Game
         {
             ComposeMoves(TestRunSessions.WithOnTheGround(TestZoneDefinitions.Pebble, PebbleCount), null);
 
-            GridDropOutcome outcome = _moves.Resolve(ItemPanel.Ground, PebbleSlotOnTheGround, -1, ItemTransferQuantity.All);
+            GridDropOutcome outcome = _moves.Resolve(ItemPanel.Ground, ItemPanel.Inventory, PebbleSlotOnTheGround, -1, ItemTransferQuantity.All);
 
             Assert.That(outcome.Kind, Is.EqualTo(GridDropOutcomeKind.Transfer));
         }
@@ -112,31 +119,31 @@ namespace SqueezySurvival.Presentation.Tests.Game
         {
             ComposeMoves(TestRunSessions.WithOnTheGround(TestZoneDefinitions.Pebble, PebbleCount), null);
 
-            _moves.Apply(ItemPanel.Ground, PebbleSlotOnTheGround, -1, ItemTransferQuantity.All);
+            _moves.Apply(ItemPanel.Ground, ItemPanel.Inventory, PebbleSlotOnTheGround, -1, ItemTransferQuantity.All);
 
             Assert.That(_session.GroundInventory.Ground.CountOf(TestZoneDefinitions.Pebble), Is.Zero);
             Assert.That(_session.SurvivorInventory.Inventory.CountOf(TestZoneDefinitions.Pebble), Is.EqualTo(PebbleCount));
         }
 
         [Test]
-        public void TrySendToOtherPanel_WithNoModifierHeld_ReturnsFalseAndMovesNothing()
+        public void TrySendModifiedClick_WithNoModifierHeld_ReturnsFalseAndMovesNothing()
         {
             ComposeMoves(TestRunSessions.WithOnTheGround(TestZoneDefinitions.Pebble, PebbleCount), null);
 
-            bool handled = _moves.TrySendToOtherPanel(ItemPanel.Ground, PebbleSlotOnTheGround);
+            bool handled = _moves.TrySendModifiedClick(ItemPanel.Ground, PebbleSlotOnTheGround);
 
             Assert.That(handled, Is.False);
             Assert.That(_session.GroundInventory.Ground.CountOf(TestZoneDefinitions.Pebble), Is.EqualTo(PebbleCount));
         }
 
         [Test]
-        public void TrySendToOtherPanel_WithAModifierHeldAndNoRoom_IsHandledByTellingThePlayerAndMovesNothing()
+        public void TrySendModifiedClick_WithAModifierHeldAndNoRoom_IsHandledByTellingThePlayerAndMovesNothing()
         {
             RunSession session = TestRunSessions.WithOnTheGround(TestZoneDefinitions.Pebble, PebbleCount);
             session.SurvivorInventory.Inventory.AddRange(TestZoneDefinitions.DistinctItems(session.SurvivorInventory.Inventory.SlotCapacity));
             ComposeMoves(session, ItemTransferQuantity.All);
 
-            bool handled = _moves.TrySendToOtherPanel(ItemPanel.Ground, PebbleSlotOnTheGround);
+            bool handled = _moves.TrySendModifiedClick(ItemPanel.Ground, PebbleSlotOnTheGround);
 
             Assert.That(handled, Is.True);
             Assert.That(Tooltip.IsShowingBriefMessage, Is.True);
@@ -154,6 +161,25 @@ namespace SqueezySurvival.Presentation.Tests.Game
 
             Assert.That(afterGround, Is.Not.EqualTo(before));
             Assert.That(_moves.PanelContentsRevision, Is.Not.EqualTo(afterGround));
+        }
+
+        [Test]
+        public void TryFindOtherPanelUnder_OverTheGridOfARegisteredContainer_ReturnsThatContainersPanel()
+        {
+            ComposeMoves(TestRunSessions.Start(), null);
+            ItemPanel basket = ItemPanel.ForContainer("basket");
+            var shapes = new InventoryGridShapes(SlotCapacityRules.Wireframe);
+            InventoryGridView basketGrid = CreateGrid(
+                shapes.ZoneFeatures, "zone-features-grid", new CountedCollection<ItemDefinition>(shapes.ZoneFeatures.SlotCount));
+            _moves.Register(basket, basketGrid);
+
+            bool found = _moves.TryFindOtherPanelUnder(
+                ItemPanel.Ground, basketGrid.SlotWorldBound(1).center, out ItemPanel panel, out InventoryGridView view, out int hoveredSlot);
+
+            Assert.That(found, Is.True);
+            Assert.That(panel, Is.EqualTo(basket));
+            Assert.That(view, Is.SameAs(basketGrid));
+            Assert.That(hoveredSlot, Is.EqualTo(1));
         }
     }
 }

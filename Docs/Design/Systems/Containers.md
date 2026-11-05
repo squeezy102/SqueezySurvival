@@ -16,6 +16,7 @@ Containers are **placeable storage objects**: they hold items in their own inven
 | How many | As many as there are free slots where they stand. |
 | Names | Each can be renamed. Its tooltip shows its name and how full it is, as a percentage of its capacity. |
 | Empty all | A button tips everything out onto the ground, after an "Are you sure?" with a Don't show this again checkbox. |
+| Opening | One container is open at a time, and it covers the zone features panel. Decided by squeezy102 (2026-11-05): there is no gameplay reason yet to open two, and no room in the layout for it; revisit if a use case surfaces. |
 | First container | The **woven palm basket**, an early craft: large, static storage. It can be picked up and moved, in both hands, with no carrying help (resolves OQ-078). Later: clay vessels, chests, cabinets. |
 
 ### Affinities
