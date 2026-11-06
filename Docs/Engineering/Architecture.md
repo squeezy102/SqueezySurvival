@@ -118,9 +118,8 @@ Creating elements and adding them to the hierarchy is slow; Unity advises buildi
 
 ## Known gaps
 
-Found in the architecture review of 2026-10-20 ([Architecture pass milestone](https://github.com/squeezy102/SqueezySurvival/milestone/5)). Fixed in this order; each fix updates this document and removes its row.
+Found in the architecture review of 2026-10-20 ([Architecture pass milestone](https://github.com/squeezy102/SqueezySurvival/milestone/5)). Each fix updates this document and removes its row.
 
 | Gap | Issue |
 |---|---|
 | One event log test (scrolling up stops following new entries) is skipped because the test harness returns the log to the bottom after a wheel scroll; the game behaves correctly | [#163](https://github.com/squeezy102/SqueezySurvival/issues/163) |
-| Moves assume two panels | [#127](https://github.com/squeezy102/SqueezySurvival/issues/127) |

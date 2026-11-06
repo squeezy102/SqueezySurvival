@@ -118,7 +118,7 @@ A GitHub ruleset on `main` ([GitHub Docs: available rules for rulesets](https://
 | Restrict deletions | On |
 | Block force pushes | On |
 | Require a pull request before merging | On: 1 approval, dismiss stale approvals when new commits are pushed, require review from Code Owners, require approval of the most recent reviewable push |
-| Allowed merge methods | Squash, for every pull request except `PjDev` into `main`; merge commit, for `PjDev` into `main` ([squeezy102's integration branch](#squeezy102s-integration-branch)) |
+| Allowed merge methods | Squash and merge commit. GitHub cannot limit a method by head branch, so "merge commit, never a squash" for `PjDev` into `main` is a convention, not an enforced rule ([squeezy102's integration branch](#squeezy102s-integration-branch)) |
 | Bypass list | Repository admin (squeezy102), for pull requests only |
 
 `.github/CODEOWNERS` makes squeezy102 the owner of every file, so every pull request needs that approval. Because GitHub does not let authors approve their own pull requests, squeezy102 merges their own (and Claude's) pull requests through the bypass, which still requires a pull request.
