@@ -19,7 +19,7 @@ On a personal-account repository, collaborators can only be given write access: 
 | Protection | A GitHub ruleset on `main` requires a pull request, and approval from the code owner, before merging ([Source Control: protecting main](../Engineering/SourceControl.md#protecting-main)). |
 | Code owner | `squeezy102` owns every file through `.github/CODEOWNERS` ([GitHub Docs: about code owners](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners)). |
 | Owner's own changes | Also go through pull requests. GitHub does not let an author approve their own pull request, so the owner merges them through a bypass that applies to pull requests only. |
-| Merge method | Squash merge; head branches deleted automatically. |
+| Merge method | Set in the `main` ruleset ([Source Control: protecting main](../Engineering/SourceControl.md#protecting-main)); head branches are deleted automatically. |
 
 ## Alternatives considered
 

@@ -74,7 +74,7 @@ The records are created by reflection, which the build's code stripping cannot a
 
 ### How the content reaches the game
 
-The game scene's composition root holds the text assets as serialized references, set by **SqueezySurvival > Setup > Game Screen** like the rest of the generated scene ([Project Setup: setup commands](../Engineering/ProjectSetup.md#setup-commands); [Unity Scripting API: SerializedObject](https://docs.unity3d.com/6000.4/Documentation/ScriptReference/SerializedObject.html)). It reads and builds the catalog once, then passes definitions into the run as it does today. Which zone a run starts in is a rule ([Zones](../Design/Systems/Zones.md): the Beach is the starting zone), held in Core, not chosen by Presentation.
+The game scene's composition root holds the text assets as serialized references, set by **SqueezySurvival > Setup > Configure Game Screen** like the rest of the generated scene ([Project Setup: setup commands](../Engineering/ProjectSetup.md#setup-commands); [Unity Scripting API: SerializedObject](https://docs.unity3d.com/6000.4/Documentation/ScriptReference/SerializedObject.html)). It reads and builds the catalog once, then passes definitions into the run as it does today. Which zone a run starts in is a rule ([Zones](../Design/Systems/Zones.md): the Beach is the starting zone), held in Core, not chosen by Presentation.
 
 The `Resources` folder is not used: Unity advises against it beyond prototyping because it slows startup and grows the build ([Unity Manual: Resources folder best practices](https://docs.unity.cn/2023.3/Documentation/Manual/BestPracticeUnderstandingPerformanceInUnity6.html)).
 
